@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 
-public abstract class BoardRobotGenericSearchBlock extends RedstoneBoardRobot {
+public abstract class BoardRobotGenericSearchBlock extends BoardRobotBase {
 
     private BlockPos blockFound;
     private ArrayList<BlockState> blockFilter = new ArrayList<BlockState>();

@@ -17,6 +17,8 @@ import buildcraft.api.transport.pluggable.PipePluggable;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.StackUtil;
 import buildcraft.robotics.BCRoboticsStatements;
+import buildcraft.robotics.statements.ActionRobotWorkInArea;
+import buildcraft.robotics.statements.ActionRobotWorkInArea.AreaType;
 import buildcraft.transport.BCTransportPipes;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourWood;
 import buildcraft.transport.pipe.flow.PipeFlowItems;
@@ -235,13 +237,41 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
     }
 
     @Override
-    public boolean isInitialized() {
-        if (getPipe() == null || getPipe().getPipe() == null) {
+    public boolean hasGate() {
+        IPipeHolder holder = getPipe();
+        if (holder == null) {
             return false;
         }
-        // TODO Calen: is this right?
-        // return ((Pipe<?>) getPipe().getPipe()).isInitialized();
-        return true;
+        for (Direction dir : Direction.values()) {
+            if (holder.getPluggable(dir) instanceof IGateProvider) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isWorkAuthorized() {
+        if (!hasGate()) {
+            return true;
+        }
+        for (StatementSlot slot : getActiveActions()) {
+            if (slot.statement instanceof ActionRobotWorkInArea
+                    && ((ActionRobotWorkInArea) slot.statement).getAreaType() == AreaType.WORK) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isInitialized() {
+        IPipeHolder holder = getPipe();
+        if (holder == null || holder.getPipe() == null) {
+            return false;
+        }
+        BlockEntity tile = holder.getPipeTile();
+        return tile != null && !tile.isRemoved();
     }
 
     @Override

@@ -25,7 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
-public class BoardRobotPump extends RedstoneBoardRobot {
+public class BoardRobotPump extends BoardRobotBase {
 
     private BlockPos blockFound;
     private IFluidFilter fluidFilter = null;

@@ -17,7 +17,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-public class BoardRobotKnight extends RedstoneBoardRobot {
+public class BoardRobotKnight extends BoardRobotBase {
 
     public BoardRobotKnight(EntityRobotBase iRobot) {
         super(iRobot);

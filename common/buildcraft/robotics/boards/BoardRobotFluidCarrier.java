@@ -16,7 +16,7 @@ import buildcraft.robotics.ai.AIRobotGotoStationAndUnloadFluids;
 import buildcraft.robotics.statements.ActionRobotFilter;
 import net.minecraftforge.fluids.FluidStack;
 
-public class BoardRobotFluidCarrier extends RedstoneBoardRobot {
+public class BoardRobotFluidCarrier extends BoardRobotBase {
 
     public BoardRobotFluidCarrier(EntityRobotBase iRobot) {
         super(iRobot);

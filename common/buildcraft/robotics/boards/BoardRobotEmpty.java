@@ -5,7 +5,7 @@ import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.robotics.ai.AIRobotGotoSleep;
 
-public class BoardRobotEmpty extends RedstoneBoardRobot {
+public class BoardRobotEmpty extends BoardRobotBase {
 
     public BoardRobotEmpty(EntityRobotBase iRobot) {
         super(iRobot);

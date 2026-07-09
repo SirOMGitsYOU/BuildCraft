@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-public class BoardRobotBuilder extends RedstoneBoardRobot {
+public class BoardRobotBuilder extends BoardRobotBase {
     private enum EnumRobotBuildStage {
         SEARCH_MARKER,
         DISPOSE_ITEMS,

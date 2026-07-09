@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class BoardRobotFarmer extends RedstoneBoardRobot {
+public class BoardRobotFarmer extends BoardRobotBase {
 
     private BlockPos blockFound;
 

@@ -15,7 +15,7 @@ import buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
 import buildcraft.robotics.ai.AIRobotLoad;
 import buildcraft.robotics.statements.ActionRobotFilter;
 
-public class BoardRobotCarrier extends RedstoneBoardRobot {
+public class BoardRobotCarrier extends BoardRobotBase {
 
     public BoardRobotCarrier(EntityRobotBase iRobot) {
         super(iRobot);

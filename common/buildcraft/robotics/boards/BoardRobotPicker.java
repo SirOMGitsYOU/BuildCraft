@@ -16,7 +16,7 @@ import buildcraft.robotics.statements.ActionRobotFilter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BoardRobotPicker extends RedstoneBoardRobot {
+public class BoardRobotPicker extends BoardRobotBase {
     public static Set<Integer> targettedItems = new HashSet<Integer>();
 
     public BoardRobotPicker(EntityRobotBase iRobot) {

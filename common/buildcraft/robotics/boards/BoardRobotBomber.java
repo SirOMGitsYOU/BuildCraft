@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.items.IItemHandler;
 
-public class BoardRobotBomber extends RedstoneBoardRobot {
+public class BoardRobotBomber extends BoardRobotBase {
 
     private static final IStackFilter TNT_FILTER = new ArrayStackFilter(new ItemStack(Blocks.TNT));
 

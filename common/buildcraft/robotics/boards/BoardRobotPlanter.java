@@ -25,7 +25,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class BoardRobotPlanter extends RedstoneBoardRobot {
+public class BoardRobotPlanter extends BoardRobotBase {
 
     private BlockPos blockFound;
     private IStackFilter filter = new IStackFilter() {

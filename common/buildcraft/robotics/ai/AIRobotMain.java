@@ -7,6 +7,11 @@ package buildcraft.robotics.ai;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.robots.AIRobot;
 import buildcraft.api.robots.EntityRobotBase;
+import buildcraft.robotics.RobotGateAuthorization;
+import buildcraft.robotics.ai.AIRobotGotoSleep;
+import buildcraft.robotics.ai.AIRobotRecharge;
+import buildcraft.robotics.ai.AIRobotShutdown;
+import buildcraft.robotics.ai.AIRobotSleep;
 
 public class AIRobotMain extends AIRobot {
 
@@ -50,8 +55,22 @@ public class AIRobotMain extends AIRobot {
         AIRobot board = robot.getBoard();
 
         if (board != null) {
+            if (!RobotGateAuthorization.isWorkAuthorized(robot)) {
+                if (!isIdleOrSleeping()) {
+                    startDelegateAI(new AIRobotGotoSleep(robot));
+                }
+                return;
+            }
             startDelegateAI(board);
         }
+    }
+
+    private boolean isIdleOrSleeping() {
+        AIRobot active = getActiveAI();
+        return active instanceof AIRobotSleep
+                || active instanceof AIRobotGotoSleep
+                || active instanceof AIRobotRecharge
+                || active instanceof AIRobotShutdown;
     }
 
     @Override

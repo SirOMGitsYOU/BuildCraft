@@ -17,7 +17,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-public class BoardRobotButcher extends RedstoneBoardRobot {
+public class BoardRobotButcher extends BoardRobotBase {
 
     public BoardRobotButcher(EntityRobotBase iRobot) {
         super(iRobot);

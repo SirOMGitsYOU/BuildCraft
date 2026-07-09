@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 
-public class BoardRobotDelivery extends RedstoneBoardRobot {
+public class BoardRobotDelivery extends BoardRobotBase {
 
     private ArrayList<ItemStack> deliveryBlacklist = new ArrayList<ItemStack>();
 
