@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "buildcraftenergy:oil_ocean"
+    {
+      "id": "buildcraftenergy:oil_ocean",
+      "required": false
+    }
   ]
 }

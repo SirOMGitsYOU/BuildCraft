@@ -150,7 +150,7 @@ public class OilGenerator {
             }
             type = GenType.NONE;
         }
-        if (DEBUG_OILGEN_BASIC & log) {
+        if (type != GenType.NONE && DEBUG_OILGEN_BASIC & log) {
             BCLog.logger.info(
                     "[energy.oilgen] Generating an oil well (" + type.name().toLowerCase(Locale.ROOT)
                             + ") in chunk " + cx + ", " + cz + " at " + x + ", " + z

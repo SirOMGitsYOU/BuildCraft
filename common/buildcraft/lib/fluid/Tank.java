@@ -198,7 +198,9 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         toolTip.clear();
         int amount = clientAmount;
 //        FluidStack fluidStack = clientFluid == null ? null : clientFluid.get().copy();
-        FluidStack fluidStack = clientFluid == null ? StackUtil.EMPTY_FLUID : clientFluid.get().copy();
+        FluidStack fluidStack = clientFluid == null || !clientFluid.hasBeenReceived()
+                ? StackUtil.EMPTY_FLUID
+                : clientFluid.get().copy();
 //        if (fluidStack != null && amount > 0)
         if (!fluidStack.isEmpty() && amount > 0) {
 //            toolTip.add(fluidStack.getLocalizedName());
@@ -332,12 +334,14 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
     }
 
     public FluidStack getFluidForRender() {
-        if (clientFluid == null) {
+        if (clientFluid == null || !clientFluid.hasBeenReceived()) {
             return null;
-        } else {
-            FluidStack stackBase = clientFluid.get();
-            return new FluidStack(stackBase, clientAmount);
         }
+        FluidStack stackBase = clientFluid.get();
+        if (stackBase == null || stackBase.isEmpty()) {
+            return null;
+        }
+        return new FluidStack(stackBase, clientAmount);
     }
 
     public int getClientAmount() {

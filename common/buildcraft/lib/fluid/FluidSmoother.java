@@ -72,11 +72,11 @@ public class FluidSmoother implements IDebuggable {
     public FluidStack getFluidForRender() {
         if (data instanceof _Client) {
             _Client client = (_Client) data;
-            if (client.link == null) {
+            if (client.link == null || !client.link.hasBeenReceived()) {
                 return null;
             }
             FluidStack fluid = client.link.get();
-            if (fluid == null) {
+            if (fluid == null || fluid.isEmpty()) {
                 return null;
             }
             return new FluidStack(fluid, client.amount);
@@ -87,11 +87,11 @@ public class FluidSmoother implements IDebuggable {
     public FluidStackInterp getFluidForRender(double partialTicks) {
         if (data instanceof _Client) {
             _Client client = (_Client) data;
-            if (client.link == null) {
+            if (client.link == null || !client.link.hasBeenReceived()) {
                 return null;
             }
             FluidStack fluid = client.link.get();
-            if (fluid == null) {
+            if (fluid == null || fluid.isEmpty()) {
                 return null;
             }
             double amount = client.amountLast * (1 - partialTicks) + client.amount * partialTicks;
@@ -140,7 +140,7 @@ public class FluidSmoother implements IDebuggable {
         @Override
         void tick(Level world) {
             FluidStack fluid = tank.getFluid();
-            boolean hasFluid = fluid != null;
+            boolean hasFluid = !fluid.isEmpty();
             if ((tank.getFluidAmount() != sentAmount || hasFluid != sentHasFluid)) {
                 if (tracker.markTimeIfDelay(world)) {
                     sender.writePacket(this::writeMessage);
@@ -150,7 +150,7 @@ public class FluidSmoother implements IDebuggable {
 
         void writeMessage(PacketBufferBC buffer) {
             FluidStack fluid = tank.getFluid();
-            boolean hasFluid = fluid != null;
+            boolean hasFluid = !fluid.isEmpty();
 
             sentAmount = tank.getFluidAmount();
             sentHasFluid = hasFluid;

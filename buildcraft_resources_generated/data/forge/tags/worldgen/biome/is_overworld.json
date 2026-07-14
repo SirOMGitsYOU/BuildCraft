@@ -1,7 +1,13 @@
 {
   "replace": false,
   "values": [
-    "buildcraftenergy:oil_desert",
-    "buildcraftenergy:oil_ocean"
+    {
+      "id": "buildcraftenergy:oil_desert",
+      "required": false
+    },
+    {
+      "id": "buildcraftenergy:oil_ocean",
+      "required": false
+    }
   ]
 }

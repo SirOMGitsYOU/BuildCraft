@@ -189,8 +189,8 @@ public abstract class OilGenStructurePart {
         }
 
         public static PatternTerrainHeight create(BlockPos start, ReplaceType replaceType, boolean[][] pattern, int depth) {
-            BlockPos min = VecUtil.replaceValue(start, Axis.Y, 1);
-            BlockPos max = min.offset(pattern.length - 1, 255, pattern.length == 0 ? 0 : pattern[0].length - 1);
+            BlockPos min = VecUtil.replaceValue(start, Axis.Y, -64);
+            BlockPos max = min.offset(pattern.length - 1, 384, pattern.length == 0 ? 0 : pattern[0].length - 1);
             Box box = new Box(min, max);
             return new PatternTerrainHeight(box, replaceType, pattern, depth);
         }
@@ -253,9 +253,8 @@ public abstract class OilGenStructurePart {
         }
 
         private static Box createBox(BlockPos start) {
-            // Only a block 1 x 256 x 1 -- that way we area only called once.
-            // FIXME: This 256 will need to be rethought for cubic chunk support
-            return new Box(start, VecUtil.replaceValue(start, Axis.Y, 256));
+            // Cover the full post-1.18 build height so the spout can reach the surface.
+            return new Box(start, VecUtil.replaceValue(start, Axis.Y, 319));
         }
 
         @Override

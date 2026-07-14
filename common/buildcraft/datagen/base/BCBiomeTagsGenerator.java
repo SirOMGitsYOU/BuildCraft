@@ -1,13 +1,10 @@
 package buildcraft.datagen.base;
 
 import buildcraft.api.BCModules;
-import buildcraft.energy.generation.biome.BCBiomeRegistry;
 import buildcraft.lib.oredictionarytag.OreDictionaryTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.Tags.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class BCBiomeTagsGenerator extends BiomeTagsProvider {
@@ -17,26 +14,10 @@ public class BCBiomeTagsGenerator extends BiomeTagsProvider {
 
     @Override
     protected void addTags() {
-        // Add anything but nether, end and void biomes
+        // Oil structures use the vanilla overworld biome tag so generation does not
+        // depend on custom oil biomes being present in the datapack registry.
         tag(OreDictionaryTags.OIL_GEN)
-                .addTag(BiomeTags.IS_OVERWORLD)
-        ;
-        tag(Biomes.IS_HOT)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
-        ;
-        tag(Biomes.IS_DRY)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
-        ;
-        tag(Biomes.IS_SANDY)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
-        ;
-        tag(BiomeTags.IS_OCEAN)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN)
-        ;
-        tag(BiomeTags.IS_OVERWORLD)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
-                .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN)
-        ;
+                .addTag(BiomeTags.IS_OVERWORLD);
     }
 
     @Override

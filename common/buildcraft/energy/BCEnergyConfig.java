@@ -177,11 +177,7 @@ public class BCEnergyConfig {
                         "large_max_height", 20);
 
 
-        String[] _excessive = { //
-                "minecraft:desert", //
-                "minecraft:ocean", //
-        };
-
+        String[] _excessive = {};
         propExcessiveBiomes = config
                 .defineList("worldgen.oil",
                         "Biome registry names (e.g. 'minecraft:ocean','minecraft:plains')"
@@ -189,10 +185,21 @@ public class BCEnergyConfig {
                         world,
                         "excessiveBiomes", Arrays.stream(_excessive).toList());
 
-        String[] _surface = {};
+        String[] _surface = {
+                "minecraft:desert",
+                "minecraft:ocean",
+                "minecraft:lukewarm_ocean",
+                "minecraft:warm_ocean",
+                "minecraft:cold_ocean",
+                "minecraft:frozen_ocean",
+                "minecraft:deep_ocean",
+                "minecraft:deep_lukewarm_ocean",
+                "minecraft:deep_cold_ocean",
+                "minecraft:deep_frozen_ocean",
+        };
         propSurfaceDepositBiomes = config
                 .defineList("worldgen.oil",
-                        "Biome registry names (e.g. 'minecraft:ocean','minecraft:hills') of biomes that should have slightly increased oil generation rates.",
+                        "Biome registry names (e.g. 'minecraft:ocean','minecraft:plains') of biomes that should have slightly increased oil generation rates.",
                         world,
                         "surfaceDepositBiomes", Arrays.stream(_surface).toList());
 
