@@ -122,8 +122,9 @@ public class OilGenerator {
         }
 
         boolean oilBiome = BCEnergyConfig.surfaceDepositBiomes.contains(biomeRegistryName);
-
-        double bonus = oilBiome ? 3.0 : 1.0;
+        // Oceans get a milder boost than deserts so lakes/spouts don't dominate coastlines.
+        double surfaceBonus = biome.is(BiomeTags.IS_OCEAN) ? 1.5 : 3.0;
+        double bonus = oilBiome ? surfaceBonus : 1.0;
         bonus *= BCEnergyConfig.oilWellGenerationRate;
         if (BCEnergyConfig.excessiveBiomes.contains(biomeRegistryName)) {
             bonus *= 30.0;

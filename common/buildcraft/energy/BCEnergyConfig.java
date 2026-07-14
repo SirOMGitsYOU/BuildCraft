@@ -27,6 +27,8 @@ public class BCEnergyConfig {
     @Deprecated(forRemoval = true)
     public static boolean enableOilGeneration;
     public static double oilWellGenerationRate;
+    /** Minimum Chebyshev distance in chunks between oil structures. 0 disables the gap check. */
+    public static int oilMinChunkSeparation;
     public static boolean enableOilSpouts;
     public static boolean enableOilBurn;
     public static boolean oilIsSticky;
@@ -57,6 +59,7 @@ public class BCEnergyConfig {
 
     private static ConfigCategory<Boolean> propEnableOilGeneration;
     private static ConfigCategory<Double> propOilWellGenerationRate;
+    private static ConfigCategory<Integer> propOilMinChunkSeparation;
     private static ConfigCategory<Boolean> propEnableOilSpouts;
     private static ConfigCategory<Boolean> propEnableOilBurn;
     private static ConfigCategory<Boolean> propOilIsSticky;
@@ -126,6 +129,11 @@ public class BCEnergyConfig {
                         world,
                         "generationRate", 1.0);
 
+        propOilMinChunkSeparation = config
+                .defineInRange("worldgen.oil",
+                        "Minimum distance in chunks between oil structures. When two would spawn closer than this, only one is kept. Set to 0 to disable.",
+                        world,
+                        "minChunkSeparation", 75);
 
         propSmallOilGenProb = config
                 .defineInRange("worldgen.oil.spawn_probability",
@@ -274,6 +282,7 @@ public class BCEnergyConfig {
 
         enableOilGeneration = propEnableOilGeneration.get();
         oilWellGenerationRate = propOilWellGenerationRate.get();
+        oilMinChunkSeparation = propOilMinChunkSeparation.get();
         enableOilSpouts = propEnableOilSpouts.get();
         enableOilBurn = propEnableOilBurn.get();
         oilIsSticky = propOilIsSticky.get();
