@@ -15,7 +15,6 @@ import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -60,7 +59,7 @@ public enum PatternParameterYDir implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("direction." + (up ? "up" : "down"));
-        return new TranslatableComponent("direction." + (up ? "up" : "down"));
+        return Component.translatable("direction." + (up ? "up" : "down"));
     }
 
     @Override

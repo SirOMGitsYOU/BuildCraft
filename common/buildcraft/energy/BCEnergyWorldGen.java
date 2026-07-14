@@ -1,14 +1,5 @@
 package buildcraft.energy;
 
-import buildcraft.api.core.BCLog;
-import buildcraft.core.BCCoreConfig;
-import buildcraft.energy.generation.biome.BiomeInitializer;
-import buildcraft.energy.generation.structure.OilStructureRegistry;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
 // TODO Calen: Biome
 public class BCEnergyWorldGen {
     public static void preInit() {
@@ -34,18 +25,18 @@ public class BCEnergyWorldGen {
 //        } else {
 //            BCLog.logger.info("[energy.oilgen] Not registering the desert oil biome, as it has been disabled by the config file.");
 //        }
-        if (BCCoreConfig.worldGen) {
-            IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-            modEventBus.addGenericListener(StructureFeature.class, OilStructureRegistry::register);
-            if (BCEnergyConfig.enableOilOceanBiome || BCEnergyConfig.enableOilDesertBiome) {
-                MinecraftForge.EVENT_BUS.register(new BiomeInitializer());
-                BCLog.logger.info("[energy.oilgen] Registered the oil biome initiializer");
-            } else {
-                BCLog.logger.info("[energy.oilgen] Not registering the oil biome initiializer, as it has been disabled by the config file.");
-            }
-        } else {
-            BCLog.logger.info("[energy.oilgen] Not registering any world-gen, as everything has been disabled by the config file.");
-        }
+//        if (BCCoreConfig.worldGen) {
+//            IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+//            modEventBus.addGenericListener(StructureFeature.class, OilStructureRegistry::register);
+//            if (BCEnergyConfig.enableOilOceanBiome || BCEnergyConfig.enableOilDesertBiome) {
+//                MinecraftForge.EVENT_BUS.register(new BiomeInitializer());
+//                BCLog.logger.info("[energy.oilgen] Registered the oil biome initiializer");
+//            } else {
+//                BCLog.logger.info("[energy.oilgen] Not registering the oil biome initiializer, as it has been disabled by the config file.");
+//            }
+//        } else {
+//            BCLog.logger.info("[energy.oilgen] Not registering any world-gen, as everything has been disabled by the config file.");
+//        }
     }
 
 //    @SubscribeEvent

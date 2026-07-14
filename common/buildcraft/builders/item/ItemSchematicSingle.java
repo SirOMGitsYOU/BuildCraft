@@ -19,9 +19,8 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -50,10 +49,8 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
 //        setMaxStackSize(1); // Calen: moved to properties
     }
 
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
-//        return stack.getItemDamage() == DAMAGE_CLEAN ? 16 : super.getItemStackLimit(stack);
-        return stack.getDamageValue() == DAMAGE_CLEAN ? 16 : super.getItemStackLimit(stack);
+    public int getMaxStackSize(ItemStack stack) {
+        return stack.getDamageValue() == DAMAGE_CLEAN ? 16 : super.getMaxStackSize(stack);
     }
 
     // Calen: not still useful in 1.18.2
@@ -183,25 +180,24 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
 //                                        ),
 //                                        true
 //                                );
-                                MutableComponent message = new TranslatableComponent("chat.buildcraft.schematic_single.not_enough_item").append("\n");
+                                MutableComponent message = Component.translatable("chat.buildcraft.schematic_single.not_enough_item").append("\n");
                                 List<MutableComponent> requiredItemNames = StackUtil.mergeSameItems(requiredItems).stream()
-                                        .map(s -> new TextComponent("    ").append(s.getDisplayName()).append(" x " + s.getCount())).toList();
+                                        .map(s -> Component.literal("    ").append(s.getDisplayName()).append(" x " + s.getCount())).toList();
                                 for (int index = 0; index < requiredItemNames.size(); index++) {
                                     message.append(requiredItemNames.get(index));
                                     if (index != requiredItemNames.size() - 1) {
                                         message.append("\n");
                                     }
                                 }
-                                player.sendMessage(message, Util.NIL_UUID);
+                                player.sendSystemMessage(message);
                             }
                         } else {
 //                            player.sendStatusMessage(
 //                                    new TextComponentString("Schematic requires fluids"),
 //                                    true
 //                            );
-                            player.sendMessage(
-                                    new TranslatableComponent("chat.buildcraft.schematic_single.require_fluid"),
-                                    Util.NIL_UUID
+                            player.sendSystemMessage(
+                                    Component.translatable("chat.buildcraft.schematic_single.require_fluid")
                             );
                         }
                     }
@@ -211,9 +207,8 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
 //                        new TextComponentString("Invalid schematic: " + e.getMessage()),
 //                        true
 //                );
-                player.sendMessage(
-                        new TranslatableComponent("chat.buildcraft.schematic_single.invalid").append(e.getMessage()),
-                        Util.NIL_UUID
+                player.sendSystemMessage(
+                        Component.translatable("chat.buildcraft.schematic_single.invalid").append(e.getMessage())
                 );
                 e.printStackTrace();
                 BCLog.logger.warn("[builders.schematic_single] Invalid schematic ", e);

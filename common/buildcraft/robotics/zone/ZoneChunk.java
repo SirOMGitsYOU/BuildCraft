@@ -14,7 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.BitSet;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class ZoneChunk {
     public BitSet property;
@@ -91,7 +91,7 @@ public class ZoneChunk {
         }
     }
 
-    public BlockPos getRandomBlockPos(Random rand) {
+    public BlockPos getRandomBlockPos(RandomSource rand) {
         int x, z;
 
         if (fullSet) {

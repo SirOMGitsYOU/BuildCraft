@@ -18,7 +18,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -88,16 +88,14 @@ public class BCFactoryModels {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void onModelBake(ModelBakeEvent event) {
-        // Calen: to set model for each blockState
-        // the model path contains blockstate props
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
         ModelHeatExchange modelHeatExchange = new ModelHeatExchange();
-        event.getModelRegistry().replaceAll((rl, m) -> (
+        event.getModels().replaceAll((rl, m) -> (
                 rl.getNamespace().equals(BCFactory.MODID)
                         && rl.getPath().contains("heat_exchange")
                         && !rl.getPath().contains("inventory")
         ) ? modelHeatExchange : m);
-        event.getModelRegistry().replace(
+        event.getModels().replace(
                 new ModelResourceLocation(BCFactoryBlocks.heatExchange.getId(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(BCFactoryModels.HEAT_EXCHANGE_STATIC.getCutoutQuads())

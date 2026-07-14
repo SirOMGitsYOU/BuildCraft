@@ -14,7 +14,6 @@ import buildcraft.api.statements.StatementSlot;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -53,7 +52,7 @@ public class ActionRobotWorkInArea extends BCStatement implements IActionInterna
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent(areaType.getUnlocalizedName());
+        return Component.translatable(areaType.getUnlocalizedName());
     }
 
     @Override

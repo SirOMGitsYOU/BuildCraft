@@ -12,7 +12,6 @@ public class FacadeSwapRecipeSerializer extends SimpleRecipeSerializer<FacadeSwa
 
     static {
         INSTANCE = new FacadeSwapRecipeSerializer(id -> FacadeSwapRecipe.INSTANCE);
-        INSTANCE.setRegistryName(FacadeSwapRecipe.TYPE_ID);
     }
 
     public FacadeSwapRecipeSerializer(Function<ResourceLocation, FacadeSwapRecipe> constructor) {

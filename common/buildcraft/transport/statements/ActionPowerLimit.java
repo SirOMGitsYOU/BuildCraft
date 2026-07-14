@@ -19,7 +19,6 @@ import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.BCTransportStatements;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourLimiter;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -56,7 +55,7 @@ public abstract class ActionPowerLimit extends BCStatement implements IActionInt
             } else {
                 max = pipeInfo.transferPerTick >> limitShift;
             }
-            return new TranslatableComponent("gate.action.pipe.rf_limit", max);
+            return Component.translatable("gate.action.pipe.rf_limit", max);
         }
         PowerTransferInfo pipeInfo = PipeApi.powerTransferData.get(pipe);
         final Object max;
@@ -67,7 +66,7 @@ public abstract class ActionPowerLimit extends BCStatement implements IActionInt
         } else {
             max = (int) ((pipeInfo.transferPerTick >> limitShift) / MjAPI.MJ);
         }
-        return new TranslatableComponent("gate.action.pipe.power_limit", max);
+        return Component.translatable("gate.action.pipe.power_limit", max);
     }
 
     @Override

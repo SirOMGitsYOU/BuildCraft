@@ -6,6 +6,8 @@
  */
 package buildcraft.lib.fluid;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
 import buildcraft.lib.gui.ContainerBC_Neptune;
@@ -22,12 +24,12 @@ import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -202,12 +204,12 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
 //            toolTip.add(fluidStack.getLocalizedName());
             toolTip.add(fluidStack.getDisplayName());
         }
-        toolTip.add(new TextComponent(ChatFormatting.GRAY + LocaleUtil.localizeFluidStaticAmount(amount, getCapacity())));
+        toolTip.add(Component.literal(ChatFormatting.GRAY + LocaleUtil.localizeFluidStaticAmount(amount, getCapacity())));
         FluidStack serverFluid = getFluid();
 //        if (serverFluid != null && serverFluid.getAmount() > 0)
         if (!serverFluid.isEmpty() && serverFluid.getAmount() > 0) {
 //            toolTip.add(TextFormatting.RED + "BUG: Server-side fluid on client!");
-            toolTip.add(new TextComponent(ChatFormatting.RED + "BUG: Server-side fluid on client!"));
+            toolTip.add(Component.literal(ChatFormatting.RED + "BUG: Server-side fluid on client!"));
 //            toolTip.add(serverFluid.getLocalizedName());
             toolTip.add(serverFluid.getDisplayName());
 //            toolTip.add(LocaleUtil.localizeFluidStaticAmount(serverFluid.amount, getCapacity()));
@@ -346,7 +348,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         FluidStack f = getFluidForRender();
         if (f == null) f = getFluid();
 //        return (f == null ? 0 : f.getAmount()) + " / " + capacity + " mB of " + (f != null ? f.getFluid().getRegistryName().getPath() : "n/a");
-        return (f.isEmpty() ? 0 : f.getAmount()) + " / " + capacity + " mB of " + (f.isEmpty() ? "n/a" : f.getRawFluid().getRegistryName().getPath());
+        return (f.isEmpty() ? 0 : f.getAmount()) + " / " + capacity + " mB of " + (f.isEmpty() ? "n/a" : ForgeRegistries.FLUIDS.getKey(f.getRawFluid()).getPath());
     }
 
     public void onGuiClicked(ContainerBC_Neptune container) {

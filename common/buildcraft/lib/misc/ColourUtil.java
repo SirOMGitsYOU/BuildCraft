@@ -14,8 +14,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
@@ -199,18 +197,18 @@ public class ColourUtil {
     public static MutableComponent getTextFullTooltipComponent(MutableComponent base, @Nullable DyeColor colour) {
         if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-//            return base.append(new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour))).append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-//                    .append(new TextComponent(ChatFormatting.RESET.toString()));
+//            return base.append(Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour))).append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+//                    .append(Component.literal(ChatFormatting.RESET.toString()));
             if (formatColour == null) {
-                return base.append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                        .append(new TextComponent(ChatFormatting.RESET.toString()));
+                return base.append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                        .append(Component.literal(ChatFormatting.RESET.toString()));
             } else {
-                return base.append(new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour)))
-                        .append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                        .append(new TextComponent(ChatFormatting.RESET.toString()));
+                return base.append(Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour)))
+                        .append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                        .append(Component.literal(ChatFormatting.RESET.toString()));
             }
         } else {
-            return base.append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)));
+            return base.append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)));
         }
     }
 
@@ -222,17 +220,17 @@ public class ColourUtil {
 //            return base.append(Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour))).append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
 //                    .append(Component.literal(ChatFormatting.RESET.toString()));
             if (formatColour == null) {
-                v = new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour))
-                        .append(new TextComponent(ChatFormatting.RESET.toString()));
+                v = Component.translatable(LocaleUtil.getColorTranslateKey(colour))
+                        .append(Component.literal(ChatFormatting.RESET.toString()));
             } else {
-                v = new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour))
-                        .append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                        .append(new TextComponent(ChatFormatting.RESET.toString()));
+                v = Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour))
+                        .append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                        .append(Component.literal(ChatFormatting.RESET.toString()));
             }
         } else {
-            v = new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour));
+            v = Component.translatable(LocaleUtil.getColorTranslateKey(colour));
         }
-        return new TranslatableComponent(translationKey, v);
+        return Component.translatable(translationKey, v);
     }
 
     // Calen
@@ -243,37 +241,37 @@ public class ColourUtil {
 //            return base.append(Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour))).append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
 //                    .append(Component.literal(ChatFormatting.RESET.toString()));
             if (formatColour == null) {
-                colorStr = new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)).getString()
+                colorStr = Component.translatable(LocaleUtil.getColorTranslateKey(colour)).getString()
                         + ChatFormatting.RESET.toString();
             } else {
                 colorStr = formatColour.toString()
                         + getTextFormatForBlack(formatColour)
-                        + new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)).getString()
+                        + Component.translatable(LocaleUtil.getColorTranslateKey(colour)).getString()
                         + ChatFormatting.RESET.toString();
             }
         } else {
-            colorStr = new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)).getString();
+            colorStr = Component.translatable(LocaleUtil.getColorTranslateKey(colour)).getString();
         }
-        return new TranslatableComponent(translationKey, colorStr).getString();
+        return Component.translatable(translationKey, colorStr).getString();
     }
 
     public static MutableComponent getTextFullTooltipComponent(DyeColor colour) {
         if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-            return new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour)).append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                    .append(new TextComponent(ChatFormatting.RESET.toString()));
+            return Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour)).append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                    .append(Component.literal(ChatFormatting.RESET.toString()));
         } else {
-            return new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour));
+            return Component.translatable(LocaleUtil.getColorTranslateKey(colour));
         }
     }
 
     public static MutableComponent getTextFullTooltipComponent(@Nonnull DyeColor colour, MutableComponent after) {
         if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-            return new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour) + " ").append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                    .append(new TextComponent(ChatFormatting.RESET.toString())).append(after);
+            return Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour) + " ").append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                    .append(Component.literal(ChatFormatting.RESET.toString())).append(after);
         } else {
-            return new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)).append(after);
+            return Component.translatable(LocaleUtil.getColorTranslateKey(colour)).append(after);
         }
     }
 
@@ -300,26 +298,26 @@ public class ColourUtil {
             return getTextFullTooltipComponent(base, colour);
         } else if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-            return base.append(new TextComponent(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId())//
-                    + getTextFormatForBlack(formatColour))).append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour))).append(new TextComponent(ChatFormatting.RESET.toString()));
+            return base.append(Component.literal(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId())//
+                    + getTextFormatForBlack(formatColour))).append(Component.translatable(LocaleUtil.getColorTranslateKey(colour))).append(Component.literal(ChatFormatting.RESET.toString()));
         } else {
-            return base.append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)));
+            return base.append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)));
         }
     }
 
     public static MutableComponent getTextFullTooltipSpecialComponent(DyeColor colour) {
         // Calen
         if (colour == null) {
-            return new TextComponent("");
+            return Component.literal("");
         }
         if (colour == DyeColor.BLACK || colour == DyeColor.BLUE) {
             return getTextFullTooltipComponent(colour);
         } else if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-            return new TextComponent(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId()) + getTextFormatForBlack(formatColour))
-                    .append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour))).append(new TextComponent(ChatFormatting.RESET.toString()));
+            return Component.literal(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId()) + getTextFormatForBlack(formatColour))
+                    .append(Component.translatable(LocaleUtil.getColorTranslateKey(colour))).append(Component.literal(ChatFormatting.RESET.toString()));
         } else {
-            return new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour));
+            return Component.translatable(LocaleUtil.getColorTranslateKey(colour));
         }
     }
 
@@ -331,12 +329,12 @@ public class ColourUtil {
             return getTextFullTooltipComponent(colour, after);
         } else if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
-            return new TextComponent(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId())//
+            return Component.literal(COLOUR_SPECIAL_START + Integer.toHexString(colour.getId())//
                     + getTextFormatForBlack(formatColour))
-                    .append(new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)))
-                    .append(new TextComponent(" " + ChatFormatting.RESET.toString())).append(after);
+                    .append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
+                    .append(Component.literal(" " + ChatFormatting.RESET.toString())).append(after);
         } else {
-            return new TranslatableComponent(LocaleUtil.getColorTranslateKey(colour)).append(after);
+            return Component.translatable(LocaleUtil.getColorTranslateKey(colour)).append(after);
         }
     }
 
@@ -357,8 +355,8 @@ public class ColourUtil {
     public static Component getTextFullTooltipComponent(Direction face) {
         if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertFaceToTextFormat(face);
-            return new TextComponent(formatColour.toString() + getTextFormatForBlack(formatColour)).append(LocaleUtil.localizeFacingComponent(face))
-                    .append(new TextComponent(ChatFormatting.RESET.toString()));
+            return Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour)).append(LocaleUtil.localizeFacingComponent(face))
+                    .append(Component.literal(ChatFormatting.RESET.toString()));
         } else {
             return LocaleUtil.localizeFacingComponent(face);
         }

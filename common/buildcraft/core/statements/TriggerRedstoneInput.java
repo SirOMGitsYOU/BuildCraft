@@ -16,7 +16,6 @@ import buildcraft.core.BCCoreSprites;
 import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class TriggerRedstoneInput extends BCStatement implements ITriggerInternal {
     public final boolean active;
@@ -37,7 +36,7 @@ public class TriggerRedstoneInput extends BCStatement implements ITriggerInterna
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.redstone.input." + (active ? "active" : "inactive"));
-        return new TranslatableComponent("gate.trigger.redstone.input." + (active ? "active" : "inactive"));
+        return Component.translatable("gate.trigger.redstone.input." + (active ? "active" : "inactive"));
     }
 
     @Override

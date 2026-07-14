@@ -13,7 +13,6 @@ import buildcraft.lib.marker.MarkerSubCache;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -77,13 +76,13 @@ public abstract class TileMarker<C extends MarkerConnection<C>> extends TileBC_N
         C current = getCurrentConnection();
         MarkerSubCache<C> cache = getLocalCache();
 //        left.add("Exists = " + (cache.getMarker(getBlockPos()) == this));
-        left.add(new TextComponent("Exists = " + (cache.getMarker(getBlockPos()) == this)));
+        left.add(Component.literal("Exists = " + (cache.getMarker(getBlockPos()) == this)));
         if (current == null) {
 //            left.add("Connection = null");
-            left.add(new TextComponent("Connection = null"));
+            left.add(Component.literal("Connection = null"));
         } else {
 //            left.add("Connection:");
-            left.add(new TextComponent("Connection:"));
+            left.add(Component.literal("Connection:"));
             current.getDebugInfo(getBlockPos(), left);
         }
     }

@@ -11,7 +11,6 @@ import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.engine.TileEngineBase_BC8;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,7 +33,7 @@ public class TriggerEnginePowerStage extends BCStatement implements ITriggerExte
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.engine." + stage.name());
-        return new TranslatableComponent("gate.trigger.engine." + stage.getSerializedName());
+        return Component.translatable("gate.trigger.engine." + stage.getSerializedName());
     }
 
     @Override

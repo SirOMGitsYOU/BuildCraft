@@ -12,7 +12,6 @@ import buildcraft.core.list.ContainerList;
 import buildcraft.core.marker.volume.Addon;
 import buildcraft.core.marker.volume.ItemAddon;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +34,7 @@ public class ItemFillerPlanner extends ItemAddon implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent("filler_planner");
+        return Component.literal("filler_planner");
     }
 
     @Nullable

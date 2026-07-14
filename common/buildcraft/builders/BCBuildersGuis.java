@@ -4,9 +4,10 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.builders;
 
+
+import net.minecraft.network.chat.Component;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +32,10 @@ public enum BCBuildersGuis {
 //        player.openGui(BCBuilders.INSTANCE, ordinal(), player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
         if (player instanceof ServerPlayer serverPlayer) {
 //            player.openMenu(state.getMenuProvider(player.level, pos));
-            if (serverPlayer.level.getBlockEntity(pos) instanceof MenuProvider menuProvider) {
-                NetworkHooks.openGui(serverPlayer, menuProvider, pos);
+            if (serverPlayer.getLevel().getBlockEntity(pos) instanceof MenuProvider menuProvider) {
+                NetworkHooks.openScreen(serverPlayer, menuProvider, pos);
             } else {
-                player.sendMessage(new TranslatableComponent("buildcraft.error.open_null_menu"), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("buildcraft.error.open_null_menu"));
             }
         }
     }

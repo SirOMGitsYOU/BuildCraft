@@ -37,7 +37,7 @@ import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -112,8 +112,8 @@ public class BCTransportModels {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onModelBake(ModelBakeEvent event) {
-        event.getModelRegistry().replaceAll(((resourceLocation, bakedModel) ->
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
+        event.getModels().replaceAll(((resourceLocation, bakedModel) ->
         {
             if (resourceLocation instanceof ModelResourceLocation m) {
                 if (m.getNamespace().equals(BCTransport.MODID)) {
@@ -132,8 +132,8 @@ public class BCTransportModels {
         putModel(event, "plug_power_adaptor#inventory", new ModelPluggableItem(POWER_ADAPTER.getCutoutQuads()));
     }
 
-    private static void putModel(ModelBakeEvent event, String str, BakedModel model) {
-        event.getModelRegistry().replace(new ModelResourceLocation("buildcrafttransport:" + str), model);
+    private static void putModel(ModelEvent.BakingCompleted event, String str, BakedModel model) {
+        event.getModels().replace(new ModelResourceLocation("buildcrafttransport:" + str), model);
     }
 
     public static MutableQuad[] getStripesDynQuads(Direction side) {

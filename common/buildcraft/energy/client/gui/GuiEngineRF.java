@@ -24,8 +24,6 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -66,10 +64,10 @@ public class GuiEngineRF extends GuiBC8<ContainerEngineRF> {
             public void addToolTips(List<ToolTip> tooltips) {
                 if (contains(mainGui.mouse)) {
                     List<Component> lines = new ArrayList<>();
-                    lines.add(new TranslatableComponent("buildcraft.gui.rf_engine.upgrade_types"));
+                    lines.add(Component.translatable("buildcraft.gui.rf_engine.upgrade_types"));
                     for (Map.Entry<RegistryObject<ItemBC_Neptune>, Long> entry : TileEngineRF.RF_UPGRADE.entrySet()) {
                         Component itemName = entry.getKey().get().getName(new ItemStack(entry.getKey().get()));
-                        lines.add(new TextComponent("").append(itemName).append(" = +").append(LocaleUtil.localizeMjFlowComponent(entry.getValue())));
+                        lines.add(Component.literal("").append(itemName).append(" = +").append(LocaleUtil.localizeMjFlowComponent(entry.getValue())));
                     }
                     tooltips.add(new ToolTip(lines));
                 }
@@ -95,7 +93,7 @@ public class GuiEngineRF extends GuiBC8<ContainerEngineRF> {
                     sb.append(LocaleUtil.formatRf(container.tile.getCurrentRF()));
                     sb.append(" / ");
                     sb.append(LocaleUtil.localizeRf(TileEngineRF.MAX_RF));
-                    tooltips.add(new ToolTip(new TextComponent(sb.toString())));
+                    tooltips.add(new ToolTip(Component.literal(sb.toString())));
                 }
             }
         });

@@ -34,7 +34,7 @@ public class ClientDebuggables {
         Minecraft mc = Minecraft.getInstance();
         if (
 //                mc.gameSettings.reducedDebugInfo ||
-                mc.options.reducedDebugInfo ||
+                mc.options.reducedDebugInfo().get() ||
 //                        mc.player.hasReducedDebug() ||
                         mc.player.isReducedDebugInfo() ||
 //                        !mc.gameSettings.showDebugInfo ||

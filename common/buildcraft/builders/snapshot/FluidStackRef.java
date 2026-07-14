@@ -10,7 +10,7 @@ import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -45,7 +45,7 @@ public class FluidStackRef {
 //                        .map(IntTag::getInt)
                         .map(IntTag::getAsInt)
 //                        .orElse(Fluid.BUCKET_VOLUME)
-                        .orElse(FluidAttributes.BUCKET_VOLUME)
+                        .orElse(FluidType.BUCKET_VOLUME)
         );
     }
 }

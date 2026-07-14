@@ -13,31 +13,30 @@ import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.net.MessageManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public enum BCCoreEventDist {
     INSTANCE;
 
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
-//        if (event.world != null && !event.world.isClientSide && event.world.getMinecraftServer() != null)
-        if (event.world != null && !event.world.isClientSide && event.world.getServer() != null) {
-            WorldSavedDataVolumeBoxes.get(event.world).tick();
+    public void onWorldTick(TickEvent.LevelTickEvent event) {
+        if (event.level != null && !event.level.isClientSide && event.level.getServer() != null) {
+            WorldSavedDataVolumeBoxes.get(event.level).tick();
         }
     }
 
     @SubscribeEvent
-    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+    public void onEntityJoinWorld(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             // Delay sending join messages to player as it makes it work when in single-player
             MessageUtil.doDelayedServer(() ->
                     MessageManager.sendTo(
-                            new MessageVolumeBoxes(WorldSavedDataVolumeBoxes.get(event.getEntity().level).volumeBoxes),
+                            new MessageVolumeBoxes(WorldSavedDataVolumeBoxes.get(event.getEntity().getLevel()).volumeBoxes),
                             serverPlayer
                     )
             );
-            WorldSavedDataVolumeBoxes.get(serverPlayer.level).volumeBoxes.stream()
+            WorldSavedDataVolumeBoxes.get(serverPlayer.getLevel()).volumeBoxes.stream()
                     .filter(volumeBox -> volumeBox.isPausedEditingBy(serverPlayer))
                     .forEach(VolumeBox::resumeEditing);
         }

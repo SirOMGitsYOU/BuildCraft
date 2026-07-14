@@ -1,7 +1,8 @@
 package buildcraft.lib.command;
 
+
+import net.minecraft.network.chat.Component;
 import net.minecraft.Util;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 
 //public class CommandChangelog extends CommandBase
@@ -15,7 +16,7 @@ public class CommandChangelog extends BCSubCommandBase {
                 {
                     Entity e = arg.getSource().getEntity();
                     if (e != null) {
-                        e.sendMessage(new TextComponent("TODO: Implement this!"), Util.NIL_UUID);
+                        e.sendSystemMessage(Component.literal("TODO: Implement this!"));
                     }
                     return 0;
                 }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 // TODO: Implement this!
 // (Just a way to make sure people know that RF support is enabled, I'm not sure how detailed this will need to be)
@@ -26,7 +26,7 @@ public class ModelNotifyOfRF implements BakedModel {
 
     @Override
     // public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource rand) {
         // TODO Auto-generated method stub
         throw new AbstractMethodError("// TODO: Implement this!");
     }

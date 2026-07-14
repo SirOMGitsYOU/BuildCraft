@@ -1,27 +1,30 @@
 package buildcraft.factory;
 
 import buildcraft.core.BCCore;
-import buildcraft.factory.loot.LootConditionSpreading;
-import buildcraft.lib.BCLibRegistries;
-import buildcraft.lib.recipe.refinery.DistillationRecipeSerializer;
-import buildcraft.lib.recipe.refinery.HeatExchangeRecipeSerializer;
 import buildcraft.lib.registry.RegistryConfig;
 import buildcraft.lib.registry.TagManager;
+import buildcraft.lib.BCLibRegistries;
+import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
+import buildcraft.lib.recipe.refinery.RefineryRecipeRegistry.CoolableRecipe;
+import buildcraft.lib.recipe.refinery.RefineryRecipeRegistry.HeatableRecipe;
+import buildcraft.factory.loot.LootConditionSpreading;
+import buildcraft.lib.recipe.refinery.DistillationRecipeSerializer;
+import buildcraft.lib.recipe.refinery.HeatExchangeRecipeSerializer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
 
@@ -72,8 +75,17 @@ public class BCFactory {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCFactoryMenuTypes.registerAll(event);
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            ForgeRegistries.RECIPE_SERIALIZERS.register(HeatableRecipe.TYPE_ID, HeatExchangeRecipeSerializer.HEATABLE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(CoolableRecipe.TYPE_ID, HeatExchangeRecipeSerializer.COOLABLE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(IDistillationRecipe.TYPE_ID, DistillationRecipeSerializer.INSTANCE);
+
+            LootConditionSpreading.reg();
+
+            BCFactoryMenuTypes.registerAll();
+        }
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -83,16 +95,6 @@ public class BCFactory {
         ItemBlockRenderTypes.setRenderLayer(BCFactoryBlocks.distiller.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BCFactoryBlocks.heatExchange.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BCFactoryBlocks.chute.get(), RenderType.cutout());
-    }
-
-    @SubscribeEvent
-    public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        IForgeRegistry<RecipeSerializer<?>> registry = event.getRegistry();
-        registry.register(HeatExchangeRecipeSerializer.HEATABLE);
-        registry.register(HeatExchangeRecipeSerializer.COOLABLE);
-        registry.register(DistillationRecipeSerializer.INSTANCE);
-
-        LootConditionSpreading.reg();
     }
 
     private static final TagManager tagManager = new TagManager();

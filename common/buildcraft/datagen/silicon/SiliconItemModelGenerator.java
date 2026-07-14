@@ -22,44 +22,44 @@ public class SiliconItemModelGenerator extends BCBaseItemModelGenerator {
         // gates
         BCSiliconItems.variantGateMap.values().forEach(
                 reg ->
-                        getBuilder(reg.get().getRegistryName().toString()).parent(BUILTIN_ENTITY)
+                        getBuilder(reg.getId().toString()).parent(BUILTIN_ENTITY)
         );
 
         // plugLens
-        getBuilder(BCSiliconItems.plugLens.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCSiliconItems.plugLens.getId().toString()).parent(BUILTIN_ENTITY);
         // plugPulsar
-        getBuilder(BCSiliconItems.plugPulsar.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCSiliconItems.plugPulsar.getId().toString()).parent(BUILTIN_ENTITY);
         // plugLightSensor
-        getBuilder(BCSiliconItems.plugLightSensor.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCSiliconItems.plugLightSensor.getId().toString()).parent(BUILTIN_ENTITY);
         // plugTimer
-        getBuilder(BCSiliconItems.plugTimer.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCSiliconItems.plugTimer.getId().toString()).parent(BUILTIN_ENTITY);
         // plugFacade
-        getBuilder(((Item) BCSiliconItems.plugFacade.get()).getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCSiliconItems.plugFacade.getId().toString()).parent(BUILTIN_ENTITY);
 
         // chipsets
-        withExistingParent(BCSiliconItems.chipsetRedstone.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.chipsetRedstone.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_chipset/red");
-        withExistingParent(BCSiliconItems.chipsetDiamond.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.chipsetDiamond.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_chipset/diamond");
-        withExistingParent(BCSiliconItems.chipsetGold.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.chipsetGold.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_chipset/gold");
-        withExistingParent(BCSiliconItems.chipsetIron.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.chipsetIron.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_chipset/iron");
-        withExistingParent(BCSiliconItems.chipsetQuartz.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.chipsetQuartz.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_chipset/quartz");
 
         // tables
-        withExistingParent(BCSiliconBlocks.advancedCraftingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/advanced_crafting"));
-        withExistingParent(BCSiliconBlocks.assemblyTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/assembly"));
-        withExistingParent(BCSiliconBlocks.chargingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/charging"));
-        withExistingParent(BCSiliconBlocks.integrationTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/integration"));
-        withExistingParent(BCSiliconBlocks.programmingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/programming"));
+        withExistingParent(BCSiliconBlocks.advancedCraftingTable.getId().toString(), new ResourceLocation("buildcraftsilicon:block/table/advanced_crafting"));
+        withExistingParent(BCSiliconBlocks.assemblyTable.getId().toString(), new ResourceLocation("buildcraftsilicon:block/table/assembly"));
+        withExistingParent(BCSiliconBlocks.chargingTable.getId().toString(), new ResourceLocation("buildcraftsilicon:block/table/charging"));
+        withExistingParent(BCSiliconBlocks.integrationTable.getId().toString(), new ResourceLocation("buildcraftsilicon:block/table/integration"));
+        withExistingParent(BCSiliconBlocks.programmingTable.getId().toString(), new ResourceLocation("buildcraftsilicon:block/table/programming"));
 
         // laser
-        withExistingParent(BCSiliconBlocks.laser.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/laser"));
+        withExistingParent(BCSiliconBlocks.laser.getId().toString(), new ResourceLocation("buildcraftsilicon:block/laser"));
 
         // gate_copier
-        ResourceLocation gateCopier = BCSiliconItems.gateCopier.get().getRegistryName();
+        ResourceLocation gateCopier = BCSiliconItems.gateCopier.getId();
         getBuilder(gateCopier.toString())
                 .override()
                 .model(
@@ -78,7 +78,7 @@ public class SiliconItemModelGenerator extends BCBaseItemModelGenerator {
         ;
 
         // redstoneCrystal
-        withExistingParent(BCSiliconItems.redstoneCrystal.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCSiliconItems.redstoneCrystal.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftsilicon:items/redstone_crystal");
     }
 

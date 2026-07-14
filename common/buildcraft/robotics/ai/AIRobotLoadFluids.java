@@ -12,7 +12,7 @@ import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.lib.misc.CapUtil;
 import buildcraft.robotics.statements.ActionRobotFilter;
 import buildcraft.robotics.statements.ActionStationProvideFluids;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
@@ -69,7 +69,7 @@ public class AIRobotLoadFluids extends AIRobot {
 //        Direction side = station.getFluidInputSide().face;
 
 //        FluidStack drainable = handler.drain(side, FluidContainerRegistry.BUCKET_VOLUME, false);
-        FluidStack drainable = handler.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.SIMULATE);
+        FluidStack drainable = handler.drain(FluidType.BUCKET_VOLUME, IFluidHandler.FluidAction.SIMULATE);
         if (drainable == null || drainable.isEmpty() || !filter.matches(drainable)) {
             return 0;
         }

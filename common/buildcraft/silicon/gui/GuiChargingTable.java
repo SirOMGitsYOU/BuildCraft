@@ -10,7 +10,6 @@ import buildcraft.silicon.BCSiliconBlocks;
 import buildcraft.silicon.container.ContainerChargingTable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -39,7 +38,7 @@ public class GuiChargingTable extends GuiBC8<ContainerChargingTable> {
 
     @Override
     protected void drawForegroundLayer(PoseStack poseStack) {
-        String title = new TranslatableComponent(BCSiliconBlocks.chargingTable.get().getDescriptionId()).getString();
+        String title = Component.translatable(BCSiliconBlocks.chargingTable.get().getDescriptionId()).getString();
 //        fontRenderer.drawString(title, guiLeft + (xSize - fontRenderer.getStringWidth(title)) / 2, guiTop + 15, 0x404040);
         font.draw(poseStack, title, leftPos + (float) (imageWidth - font.width(title)) / 2, topPos + 6, 0x404040);
     }

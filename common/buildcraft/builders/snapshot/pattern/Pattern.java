@@ -10,7 +10,6 @@ import buildcraft.builders.BCBuildersStatements;
 import buildcraft.core.statements.BCStatement;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class Pattern extends BCStatement implements IFillerPattern, IActionExternal {
@@ -25,7 +24,7 @@ public abstract class Pattern extends BCStatement implements IFillerPattern, IAc
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize(desc);
-        return new TranslatableComponent(desc);
+        return Component.translatable(desc);
     }
 
     @Override

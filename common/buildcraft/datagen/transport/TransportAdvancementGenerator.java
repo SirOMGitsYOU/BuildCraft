@@ -1,5 +1,7 @@
 package buildcraft.datagen.transport;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.core.BCCoreItems;
 import buildcraft.datagen.base.BCBaseAdvancementGenerator;
 import buildcraft.datagen.core.CoreAdvancementGenerator;
@@ -17,7 +19,6 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,8 +39,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // pipe_dream
         Advancement pipe_dream = Advancement.Builder.advancement().display(
                         (Item) BCTransportItems.pipeStructure.get(null).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_dream.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_dream.description"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_dream.title"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_dream.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -51,8 +52,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // plugging_the_gap
         Advancement plugging_the_gap = Advancement.Builder.advancement().display(
                         BCTransportItems.plugBlocker.get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.plugging_the_gap.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.plugging_the_gap.description"),
+                        Component.translatable("advancements.buildcrafttransport.plugging_the_gap.title"),
+                        Component.translatable("advancements.buildcrafttransport.plugging_the_gap.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -64,8 +65,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // pipe_logic
         Advancement pipe_logic = Advancement.Builder.advancement().display(
                         BCSiliconItems.variantGateMap.get(new GateVariant(new CompoundTag())).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_logic.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_logic.description"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_logic.title"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_logic.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -77,8 +78,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // all_plugged_up
         Advancement all_plugged_up = Advancement.Builder.advancement().display(
                         BCSiliconItems.plugLightSensor.get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.all_plugged_up.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.all_plugged_up.description"),
+                        Component.translatable("advancements.buildcrafttransport.all_plugged_up.title"),
+                        Component.translatable("advancements.buildcrafttransport.all_plugged_up.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false
@@ -90,8 +91,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // categorizing_with_colors
         Advancement categorizing_with_colors = Advancement.Builder.advancement().display(
                         (Item) BCTransportItems.pipeItemEmzuli.get(null).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.categorizing_with_colors.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.categorizing_with_colors.description"),
+                        Component.translatable("advancements.buildcrafttransport.categorizing_with_colors.title"),
+                        Component.translatable("advancements.buildcrafttransport.categorizing_with_colors.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false
@@ -105,8 +106,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         ColourUtil.addColourTagToStack(wireStack_logic_transportation, DyeColor.byId(0));
         Advancement logic_transportation = Advancement.Builder.advancement().display(
                         wireStack_logic_transportation,
-                        new TranslatableComponent("advancements.buildcrafttransport.logic_transportation.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.logic_transportation.description"),
+                        Component.translatable("advancements.buildcrafttransport.logic_transportation.title"),
+                        Component.translatable("advancements.buildcrafttransport.logic_transportation.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -120,8 +121,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         ColourUtil.addColourTagToStack(wireStack_colorful_electrician, DyeColor.byId(5));
         Advancement colorful_electrician = Advancement.Builder.advancement().display(
                         wireStack_colorful_electrician,
-                        new TranslatableComponent("advancements.buildcrafttransport.colorful_electrician.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.colorful_electrician.description"),
+                        Component.translatable("advancements.buildcrafttransport.colorful_electrician.title"),
+                        Component.translatable("advancements.buildcrafttransport.colorful_electrician.description"),
                         null,
                         FrameType.CHALLENGE,
                         true, true, false
@@ -133,8 +134,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // extended_logic
         Advancement extended_logic = Advancement.Builder.advancement().display(
                         BCSiliconItems.variantGateMap.get(new GateVariant(EnumGateLogic.OR, EnumGateMaterial.GOLD, EnumGateModifier.DIAMOND)).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.extended_logic.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.extended_logic.description"),
+                        Component.translatable("advancements.buildcrafttransport.extended_logic.title"),
+                        Component.translatable("advancements.buildcrafttransport.extended_logic.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -146,8 +147,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // pipe_diversification
         Advancement pipe_diversification = Advancement.Builder.advancement().display(
                         (Item) BCTransportItems.pipeItemDiaWood.get(null).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_diversification.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_diversification.description"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_diversification.title"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_diversification.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -159,8 +160,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // pipe_fanatic
         Advancement pipe_fanatic = Advancement.Builder.advancement().display(
                         (Item) BCTransportItems.pipeItemDiamond.get(null).get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_fanatic.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.pipe_fanatic.description"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_fanatic.title"),
+                        Component.translatable("advancements.buildcrafttransport.pipe_fanatic.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false
@@ -172,8 +173,8 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // sealing_fluids
         Advancement sealing_fluids = Advancement.Builder.advancement().display(
                         BCTransportItems.waterproof.get(),
-                        new TranslatableComponent("advancements.buildcrafttransport.sealing_fluids.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.sealing_fluids.description"),
+                        Component.translatable("advancements.buildcrafttransport.sealing_fluids.title"),
+                        Component.translatable("advancements.buildcrafttransport.sealing_fluids.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -185,15 +186,15 @@ public class TransportAdvancementGenerator extends BCBaseAdvancementGenerator {
         // too_many_pipe_filters
         Advancement too_many_pipe_filters = Advancement.Builder.advancement().display(
                         Items.GREEN_DYE,
-                        new TranslatableComponent("advancements.buildcrafttransport.too_many_pipe_filters.title"),
-                        new TranslatableComponent("advancements.buildcrafttransport.too_many_pipe_filters.description"),
+                        Component.translatable("advancements.buildcrafttransport.too_many_pipe_filters.title"),
+                        Component.translatable("advancements.buildcrafttransport.too_many_pipe_filters.description"),
                         null,
                         FrameType.TASK,
                         true, true, true
                 )
                 .parent(pipe_diversification)
                 .requirements(RequirementsStrategy.OR)
-                .rewards(AdvancementRewards.Builder.recipe(BCCoreItems.list.get().getRegistryName()))
+                .rewards(AdvancementRewards.Builder.recipe(BCCoreItems.list.getId()))
                 .addCriterion("code_trigger", IMPOSSIBLE)
                 .save(consumer, NAMESPACE + ":too_many_pipe_filters");
     }

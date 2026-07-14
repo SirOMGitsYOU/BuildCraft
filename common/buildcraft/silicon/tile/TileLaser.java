@@ -29,7 +29,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -273,10 +272,10 @@ public class TileLaser extends TileBC_Neptune implements ITickable, IDebuggable,
 //        left.add("target = " + targetPos);
 //        left.add("laser = " + laserPos);
 //        left.add("average = " + LocaleUtil.localizeMjFlow(averageClient == 0 ? (long) avgPower.getAverage() : averageClient));
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("target = " + targetPos));
-        left.add(new TextComponent("laser = " + laserPos));
-        left.add(new TextComponent("average = ").append(LocaleUtil.localizeMjFlowComponent(averageClient == 0 ? (long) avgPower.getAverage() : averageClient)));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("target = " + targetPos));
+        left.add(Component.literal("laser = " + laserPos));
+        left.add(Component.literal("average = ").append(LocaleUtil.localizeMjFlowComponent(averageClient == 0 ? (long) avgPower.getAverage() : averageClient)));
     }
 
     @Override

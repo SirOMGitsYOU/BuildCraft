@@ -37,7 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 import java.util.concurrent.TimeUnit;
 
 public enum ModelFacadeItem implements BakedModel {
@@ -69,7 +69,7 @@ public enum ModelFacadeItem implements BakedModel {
     @NotNull
     @Override
 //    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState p_119123_, @Nullable Direction p_119124_, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState p_119123_, @Nullable Direction p_119124_, RandomSource rand) {
         return ImmutableList.of();
     }
 

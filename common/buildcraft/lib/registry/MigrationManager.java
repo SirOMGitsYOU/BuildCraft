@@ -6,16 +6,20 @@ package buildcraft.lib.registry;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
-import com.google.common.collect.ImmutableList;
+import buildcraft.lib.misc.BlockUtil;
+import buildcraft.lib.misc.ItemUtil;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.MissingMappingsEvent;
+import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,7 +32,6 @@ public enum MigrationManager {
     private final Map<String, Block> blockMigrations = new HashMap<>();
 
     public void addItemMigration(Item to, String... oldNames) {
-        // If we mistakenly try to migrate null then it must have been disabled.
         if (to == null) {
             return;
         }
@@ -39,14 +42,12 @@ public enum MigrationManager {
             }
             itemMigrations.put(oldLowerCase, to);
             if (DEBUG) {
-                BCLog.logger
-                        .info("[lib.migrate] Adding item migration from " + oldLowerCase + " to " + to.getRegistryName());
+                BCLog.logger.info("[lib.migrate] Adding item migration from " + oldLowerCase + " to " + ItemUtil.getRegistryName(to));
             }
         }
     }
 
     public void addBlockMigration(Block to, String... oldNames) {
-        // If we mistakenly try to migrate null then it must have been disabled.
         if (to == null) {
             return;
         }
@@ -57,45 +58,48 @@ public enum MigrationManager {
             }
             blockMigrations.put(oldLowerCase, to);
             if (DEBUG) {
-                BCLog.logger
-                        .info("[lib.migrate] Adding item migration from " + oldLowerCase + " to " + to.getRegistryName());
+                BCLog.logger.info("[lib.migrate] Adding block migration from " + oldLowerCase + " to " + BlockUtil.getRegistryName(to));
             }
         }
     }
 
     @SubscribeEvent
-    public void onMissingBlocks(RegistryEvent.MissingMappings<Block> missing) {
-        onMissingMappings(missing, blockMigrations);
+    public void onMissingItemsAndBlocks(MissingMappingsEvent missing) {
+        if (missing.getKey() == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            onMissingMappings(missing, ForgeRegistries.BLOCKS.getRegistryKey(), blockMigrations);
+        } else if (missing.getKey() == ForgeRegistries.ITEMS.getRegistryKey()) {
+            onMissingMappings(missing, ForgeRegistries.ITEMS.getRegistryKey(), itemMigrations);
+        }
     }
 
-    @SubscribeEvent
-    public void onMissingItems(RegistryEvent.MissingMappings<Item> missing) {
-        onMissingMappings(missing, itemMigrations);
-    }
-
-    private static <T extends IForgeRegistryEntry<T>> void onMissingMappings(RegistryEvent.MissingMappings<T> missing, Map<String, T> migrations) {
-        ImmutableList<Mapping<T>> all = missing.getAllMappings();
+    private static <T> void onMissingMappings(MissingMappingsEvent missing, ResourceKey<? extends Registry<T>> registryKey, Map<String, T> migrations) {
+        List<Mapping<T>> all = missing.getAllMappings(registryKey);
         if (all.isEmpty()) {
             return;
         }
         if (DEBUG) {
-            BCLog.logger.info("[lib.migrate] Received missing mappings event for " + missing.getGenericType() + " with "
+            BCLog.logger.info("[lib.migrate] Received missing mappings event for " + missing.getKey().location() + " with "
                     + all.size() + " missing.");
         }
         for (Mapping<T> mapping : all) {
-            ResourceLocation loc = mapping.key;
+            ResourceLocation loc = mapping.getKey();
             String domain = loc.getNamespace();
             String path = loc.getPath().toLowerCase(Locale.ROOT);
             if (DEBUG) {
                 BCLog.logger.info("[lib.migrate]  - " + domain + ":" + path);
             }
-            // TECHNICALLY this can pick up non-bc mods, but generally only addons
-            if (!domain.startsWith("buildcraft")) continue;
+            if (!domain.startsWith("buildcraft")) {
+                continue;
+            }
             T to = migrations.get(path);
             if (to != null) {
                 mapping.remap(to);
                 if (DEBUG) {
-                    BCLog.logger.info("[lib.migrate]    -> " + to.getRegistryName());
+                    if (to instanceof Block) {
+                        BCLog.logger.info("[lib.migrate]    -> " + BlockUtil.getRegistryName((Block) to));
+                    } else if (to instanceof Item) {
+                        BCLog.logger.info("[lib.migrate]    -> " + ItemUtil.getRegistryName((Item) to));
+                    }
                 }
             }
         }

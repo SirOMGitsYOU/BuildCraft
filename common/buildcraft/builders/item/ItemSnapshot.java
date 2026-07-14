@@ -14,8 +14,6 @@ import buildcraft.lib.misc.HashUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -102,8 +100,7 @@ public class ItemSnapshot extends ItemBC_Neptune {
         return null;
     }
 
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
+    public int getMaxStackSize(ItemStack stack) {
         return EnumItemSnapshotType.getFromStack(stack).used ? 1 : 16;
     }
 
@@ -146,17 +143,17 @@ public class ItemSnapshot extends ItemBC_Neptune {
     public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level world, List<Component> tooltip, TooltipFlag flag) {
         Header header = getHeader(stack);
         if (header == null) {
-            tooltip.add(new TranslatableComponent("item.blueprint.blank"));
+            tooltip.add(Component.translatable("item.blueprint.blank"));
         } else {
-            tooltip.add(new TextComponent(header.name));
+            tooltip.add(Component.literal(header.name));
             Player owner = header.getOwnerPlayer(world);
             if (owner != null) {
-                tooltip.add(new TranslatableComponent("item.blueprint.author").append(" ").append(owner.getName()));
+                tooltip.add(Component.translatable("item.blueprint.author").append(" ").append(owner.getName()));
             }
             if (flag.isAdvanced()) {
-                tooltip.add(new TextComponent("Hash: " + HashUtil.convertHashToString(header.key.hash)));
-                tooltip.add(new TextComponent("Date: " + header.created));
-                tooltip.add(new TextComponent("Owner UUID: " + header.owner));
+                tooltip.add(Component.literal("Hash: " + HashUtil.convertHashToString(header.key.hash)));
+                tooltip.add(Component.literal("Date: " + header.created));
+                tooltip.add(Component.literal("Owner UUID: " + header.owner));
             }
         }
     }

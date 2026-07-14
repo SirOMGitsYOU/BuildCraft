@@ -7,8 +7,9 @@
 package buildcraft.silicon;
 
 import buildcraft.api.BCModules;
-import buildcraft.lib.config.BCConfig;
+import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.config.ConfigCategory;
+import buildcraft.lib.config.BCConfig;
 import buildcraft.lib.config.Configuration;
 import buildcraft.lib.config.EnumRestartRequirement;
 import buildcraft.silicon.item.ItemPluggableFacade;
@@ -140,7 +141,7 @@ public class BCSiliconConfig {
         if (FORCED_BLOCKS.contains(block)) {
             return true;
         }
-        ResourceLocation id = block.getRegistryName();
+        ResourceLocation id = BlockUtil.getRegistryName(block);
         // id has higher priority
         switch (facadeBlockIdFilterType) {
             case BLACK_LIST:

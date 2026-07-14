@@ -16,9 +16,7 @@
  import com.google.common.collect.ImmutableList;
  import com.mojang.blaze3d.vertex.PoseStack;
  import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.TextComponent;
- import net.minecraft.network.chat.TranslatableComponent;
-
+  
  import java.util.ArrayList;
  import java.util.List;
 
@@ -34,7 +32,7 @@
          super(gui);
          // Calen: here is called when opening guide page
 //         this.title = StringUtilBC.formatStringForWhite(entry.title);
-         this.title = new TextComponent(StringUtilBC.formatStringForWhite(entry.title.getString()));
+         this.title = Component.literal(StringUtilBC.formatStringForWhite(entry.title.getString()));
          this.titleKey = StringUtilBC.formatStringForWhite(entry.titleKey);
          this.chapterContents = new GuideChapterContents(gui);
          this.entry = entry;
@@ -66,7 +64,7 @@
 
          if (!linksToOther.isEmpty()) {
 //             parts.add(new GuideChapterWithin(gui, LocaleUtil.localize("buildcraft.guide.meta.group.linking_to")));
-             parts.add(new GuideChapterWithin(gui, "buildcraft.guide.meta.group.linking_to", new TranslatableComponent("buildcraft.guide.meta.group.linking_to")));
+             parts.add(new GuideChapterWithin(gui, "buildcraft.guide.meta.group.linking_to", Component.translatable("buildcraft.guide.meta.group.linking_to")));
              for (GuidePartGroup g : linksToOther) {
                  parts.add(g);
                  parts.add(new GuidePartNewPage(gui));
@@ -75,7 +73,7 @@
 
          if (!linksToThis.isEmpty()) {
 //             parts.add(new GuideChapterWithin(gui, LocaleUtil.localize("buildcraft.guide.meta.group.linked_from")));
-             parts.add(new GuideChapterWithin(gui, "buildcraft.guide.meta.group.linked_from", new TranslatableComponent("buildcraft.guide.meta.group.linked_from")));
+             parts.add(new GuideChapterWithin(gui, "buildcraft.guide.meta.group.linked_from", Component.translatable("buildcraft.guide.meta.group.linked_from")));
              for (GuidePartGroup g : linksToThis) {
                  parts.add(g);
                  parts.add(new GuidePartNewPage(gui));

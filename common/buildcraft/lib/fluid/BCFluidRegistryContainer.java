@@ -1,13 +1,14 @@
 package buildcraft.lib.fluid;
 
-import net.minecraft.world.item.BucketItem;
+import buildcraft.lib.item.ItemBucketBC;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BCFluidRegistryContainer {
     private RegistryObject<BCFluid.Source> still;
     private RegistryObject<BCFluid.Flowing> flowing;
     private RegistryObject<BCFluidBlock> block;
-    private RegistryObject<BucketItem> bucket;
+    private RegistryObject<ItemBucketBC> bucket;
+    private BCFluidAttributes fluidType;
 
 
     public BCFluid.Source getStill() {
@@ -22,8 +23,12 @@ public class BCFluidRegistryContainer {
         return block.get();
     }
 
-    public BucketItem getBucket() {
+    public ItemBucketBC getBucket() {
         return bucket.get();
+    }
+
+    public BCFluidAttributes getFluidType() {
+        return fluidType;
     }
 
 
@@ -39,7 +44,11 @@ public class BCFluidRegistryContainer {
         this.block = block;
     }
 
-    public void setBucket(RegistryObject<BucketItem> bucket) {
+    public void setBucket(RegistryObject<ItemBucketBC> bucket) {
         this.bucket = bucket;
+    }
+
+    public void setFluidType(BCFluidAttributes fluidType) {
+        this.fluidType = fluidType;
     }
 }

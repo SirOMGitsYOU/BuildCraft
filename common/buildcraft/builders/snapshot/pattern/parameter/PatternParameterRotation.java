@@ -15,7 +15,6 @@ import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -67,7 +66,7 @@ public enum PatternParameterRotation implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("buildcraft.param.rotation." + rotationCount);
-        return new TranslatableComponent("buildcraft.param.rotation." + rotationCount);
+        return Component.translatable("buildcraft.param.rotation." + rotationCount);
     }
 
     @Override

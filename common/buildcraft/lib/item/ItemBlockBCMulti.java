@@ -7,6 +7,8 @@
 package buildcraft.lib.item;
 
 
+import net.minecraft.network.chat.Component;
+
 import buildcraft.lib.block.BlockBCBase_Neptune;
 import net.minecraft.world.item.Item;
 
@@ -40,6 +42,6 @@ public class ItemBlockBCMulti extends ItemBlockBC_Neptune {
 ////    public String getUnlocalizedName(ItemStack stack)
 //    public Component getName(ItemStack stack) {
 ////        return super.getUnlocalizedName() + "." + this.nameFunction.apply(stack);
-//        return new TranslatableComponent(super.getName(stack).getString() + "." + this.nameFunction.apply(stack));
+//        return Component.translatable(super.getName(stack).getString() + "." + this.nameFunction.apply(stack));
 //    }
 }

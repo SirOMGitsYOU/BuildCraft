@@ -23,9 +23,6 @@ import buildcraft.lib.misc.StackUtil;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.Box;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -39,9 +36,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import com.mojang.math.Vector4f;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -70,9 +70,10 @@ public class RenderTickListener {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 2; j++) {
                     float[] from = upFace[i][j];
-                    Vector4f point = new Vector4f(new Vector3f(from));
-                    point.transform(matrix);
-                    Vec3 to = new Vec3(point.x(), point.y(), point.z());
+                    Vector3f point3f = new Vector3f(from);
+                    Vector4f point4f = new Vector4f(point3f);
+                    point4f.transform(matrix);
+                    Vec3 to = new Vec3(point4f.x(), point4f.y(), point4f.z());
                     arr[i][j] = to;
                 }
             }
@@ -84,7 +85,8 @@ public class RenderTickListener {
     }
 
     @SubscribeEvent
-    public static void renderOverlay(RenderGameOverlayEvent.Text event) {
+//    public static void renderOverlay(RenderGameOverlayEvent.Text event)
+    public static void renderOverlay(CustomizeGuiOverlayEvent.DebugText event) {
         Minecraft mc = Minecraft.getInstance();
         IDebuggable debuggable = ClientDebuggables.getDebuggableObject(mc.hitResult);
         if (debuggable != null) {

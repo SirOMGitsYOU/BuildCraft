@@ -239,7 +239,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
     // private static void scanBlock(Block block)
     public static void scanBlock(Block block) {
         try {
-            if (!DEBUG && KNOWN_INVALID_REPORTED_MODS.contains(block.getRegistryName().getNamespace())) {
+            if (!DEBUG && KNOWN_INVALID_REPORTED_MODS.contains(BlockUtil.getRegistryName(block).getNamespace())) {
                 if (BCLib.VERSION.startsWith("7.99")) {
                     BCLog.logger.warn(
                             "[silicon.facade] Skipping " + block + " as it has been added to the list of broken mods!");
@@ -262,13 +262,13 @@ public enum FacadeStateManager implements IFacadeRegistry {
             // These strings are hardcoded, so we can get away with not needing the .equals check
             if (result.getResult() != InteractionResult.PASS && result.getResult() != InteractionResult.SUCCESS) {
                 if (DEBUG) {
-                    BCLog.logger.info("[silicon.facade] Disallowed block " + block.getRegistryName() + " because "
+                    BCLog.logger.info("[silicon.facade] Disallowed block " + BlockUtil.getRegistryName(block) + " because "
                             + result.getResult());
                 }
                 return;
             } else if (DEBUG) {
                 if (result.getResult() == InteractionResult.SUCCESS) {
-                    BCLog.logger.info("[silicon.facade] Allowed block " + block.getRegistryName());
+                    BCLog.logger.info("[silicon.facade] Allowed block " + BlockUtil.getRegistryName(block));
                 }
             }
             Map<BlockState, ItemStack> usedStates = new HashMap<>();
@@ -383,7 +383,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 } catch (Throwable t) {
                     String msg = "Scanning facade states";
                     msg += "\n\tState = " + state;
-                    msg += "\n\tBlock = " + safeToString(() -> state.getBlock().getRegistryName());
+                    msg += "\n\tBlock = " + safeToString(() -> BlockUtil.getRegistryName(state.getBlock()));
                     msg += "\n\tStack = " + stack;
                     msg += "\n\tvarying-properties: {";
                     for (Entry<Property<?>, Comparable<?>> varEntry : vars.entrySet()) {

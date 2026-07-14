@@ -161,9 +161,9 @@ public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implement
 
     @Override
 //    public void updateScreen()
-    public void tick() {
+    public void containerTick() {
 //        super.updateScreen();
-        super.tick();
+        super.containerTick();
 //        if (recipeBook != null) {
 //            recipeBook.tick();
 //        }

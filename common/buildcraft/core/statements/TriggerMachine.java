@@ -17,7 +17,6 @@ import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,7 +36,7 @@ public class TriggerMachine extends BCStatement implements ITriggerExternal {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.machine." + (active ? "scheduled" : "done"));
-        return new TranslatableComponent("gate.trigger.machine." + (active ? "scheduled" : "done"));
+        return Component.translatable("gate.trigger.machine." + (active ? "scheduled" : "done"));
     }
 
     @Override

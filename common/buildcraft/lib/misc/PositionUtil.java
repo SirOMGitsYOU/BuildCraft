@@ -18,7 +18,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -559,7 +559,7 @@ public class PositionUtil {
         void iterate(int a, int b);
     }
 
-    public static BlockPos randomBlockPos(Random rand, BlockPos size) {
+    public static BlockPos randomBlockPos(RandomSource rand, BlockPos size) {
         return new BlockPos(//
                 rand.nextInt(size.getX()), //
                 rand.nextInt(size.getY()), //
@@ -567,7 +567,7 @@ public class PositionUtil {
         );
     }
 
-    public static BlockPos randomBlockPos(Random rand, BlockPos min, BlockPos max) {
+    public static BlockPos randomBlockPos(RandomSource rand, BlockPos min, BlockPos max) {
         return new BlockPos(//
                 min.getX() + rand.nextInt(max.getX() - min.getX()), //
                 min.getY() + rand.nextInt(max.getY() - min.getY()), //

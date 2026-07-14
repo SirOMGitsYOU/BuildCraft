@@ -17,7 +17,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -89,7 +88,7 @@ public class ItemGuide extends ItemBC_Neptune implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent(ItemGuide.DEFAULT_BOOK);
+        return Component.literal(ItemGuide.DEFAULT_BOOK);
     }
 
     @Nullable

@@ -23,8 +23,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -86,7 +84,7 @@ public class ItemPipeHolder extends BlockItem implements IItemBuildCraft, IItemP
 //    public void getSubItems(CreativeModeTab tab, NonNullList<ItemStack> items)
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
 //        if (this.isInCreativeTab(tab))
-        if (allowdedIn(tab)) {
+        if (allowedIn(tab)) {
             items.add(new ItemStack(this));
         }
     }
@@ -120,7 +118,7 @@ public class ItemPipeHolder extends BlockItem implements IItemBuildCraft, IItemP
 //        }
         String colourComponent = this.colour == null ? "" : (ColourUtil.getTextFullTooltipSpecial(this.colour) + " ");
 //        return colourComponent + super.getItemStackDisplayName(stack);
-        return new TextComponent(colourComponent).append(new TranslatableComponent(this.getDescriptionId(stack)));
+        return Component.literal(colourComponent).append(Component.translatable(this.getDescriptionId(stack)));
     }
 
     // TODO Calen getFontRenderer???
@@ -171,20 +169,20 @@ public class ItemPipeHolder extends BlockItem implements IItemBuildCraft, IItemP
         String tipName = "tip." + this.unlocalizedName.replace(".name", "").replace("item.", "");
         String localised = I18n.get(tipName);
         if (!localised.equals(tipName)) {
-            tooltip.add(new TextComponent(ChatFormatting.GRAY + localised));
+            tooltip.add(Component.literal(ChatFormatting.GRAY + localised));
         }
         if (definition.flowType == PipeApi.flowFluids) {
             PipeApi.FluidTransferInfo fti = PipeApi.getFluidTransferInfo(definition);
-//            tooltip.add(new TextComponent(LocaleUtil.localizeFluidFlow(fti.transferPerTick)));
+//            tooltip.add(Component.literal(LocaleUtil.localizeFluidFlow(fti.transferPerTick)));
             tooltip.add(LocaleUtil.localizeFluidFlowToTranslatableComponent(fti.transferPerTick));
             tooltip.add(LocaleUtil.localizeFluidFlowToTranslatableComponent(fti.transferPerTick));
         } else if (definition.flowType == PipeApi.flowPower) {
             PipeApi.PowerTransferInfo pti = PipeApi.getPowerTransferInfo(definition);
-//            tooltip.add(new TextComponent(LocaleUtil.localizeMjFlow(pti.transferPerTick)));
+//            tooltip.add(Component.literal(LocaleUtil.localizeMjFlow(pti.transferPerTick)));
             tooltip.add(LocaleUtil.localizeMjFlowComponent(pti.transferPerTick));
         } else if (definition.flowType == PipeApi.flowRf && PipeApi.flowRf != null) {
             PipeApi.RedstoneFluxTransferInfo pti = PipeApi.getRfTransferInfo(definition);
-            tooltip.add(new TextComponent(pti.transferPerTick + " RF/t"));//TODO: Locale!
+            tooltip.add(Component.literal(pti.transferPerTick + " RF/t"));//TODO: Locale!
         }
     }
 }

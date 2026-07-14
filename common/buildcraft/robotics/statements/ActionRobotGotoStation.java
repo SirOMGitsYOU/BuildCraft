@@ -22,7 +22,6 @@ import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -36,7 +35,7 @@ public class ActionRobotGotoStation extends BCStatement implements IActionIntern
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.robot.goto_station");
+        return Component.translatable("gate.action.robot.goto_station");
     }
 
     @Override

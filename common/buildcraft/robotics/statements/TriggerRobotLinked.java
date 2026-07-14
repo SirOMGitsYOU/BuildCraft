@@ -13,7 +13,6 @@ import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import buildcraft.robotics.RobotUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,7 +27,7 @@ public class TriggerRobotLinked extends BCStatement implements ITriggerInternal 
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.trigger.robot." + (reserved ? "reserved" : "linked"));
+        return Component.translatable("gate.trigger.robot." + (reserved ? "reserved" : "linked"));
     }
 
     @Override

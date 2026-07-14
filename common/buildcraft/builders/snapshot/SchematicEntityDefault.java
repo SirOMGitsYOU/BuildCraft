@@ -18,6 +18,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -42,13 +43,13 @@ public class SchematicEntityDefault implements ISchematicEntity {
 
     public static boolean predicate(SchematicEntityContext context) {
 //        ResourceLocation registryName = EntityList.getKey(context.entity);
-        ResourceLocation registryName = context.entity.getType().getRegistryName();
+        ResourceLocation registryName = ForgeRegistries.ENTITY_TYPES.getKey(context.entity.getType());
         return registryName != null &&
 //                RulesLoader.READ_DOMAINS.contains(registryName.getResourceDomain()) &&
                 RulesLoader.READ_DOMAINS.contains(registryName.getNamespace()) &&
                 RulesLoader.getRules(
 //                                EntityList.getKey(context.entity),
-                                context.entity.getType().getRegistryName(),
+                                ForgeRegistries.ENTITY_TYPES.getKey(context.entity.getType()),
                                 context.entity.serializeNBT()
                         )
                         .stream()

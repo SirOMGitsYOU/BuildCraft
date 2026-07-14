@@ -12,12 +12,14 @@ import buildcraft.lib.registry.TagManager.EnumTagType;
 import buildcraft.lib.registry.TagManager.TagEntry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -120,8 +122,11 @@ public class BCCore {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCCoreMenuTypes.registerAll(event);
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            BCCoreMenuTypes.registerAll();
+        }
     }
 
     // Calen: use TagManager object for thread safety

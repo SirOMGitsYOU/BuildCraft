@@ -15,8 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -100,9 +98,9 @@ public class ItemPaintbrush_BC8 extends ItemBC_Neptune {
 //        return colourComponent + super.getItemStackDisplayName(stack);
         if (this.colour != null) {
             String colourStr = ColourUtil.getTextFullTooltipSpecial(this.colour) + " ";
-            return new TextComponent(colourStr).append(new TranslatableComponent(this.unlocalizedName));
+            return Component.literal(colourStr).append(Component.translatable(this.unlocalizedName));
         } else {
-            return new TranslatableComponent(this.unlocalizedName);
+            return Component.translatable(this.unlocalizedName);
         }
     }
 
@@ -150,7 +148,7 @@ public class ItemPaintbrush_BC8 extends ItemBC_Neptune {
         super.appendHoverText(stack, world, tooltip, flag);
         if (this.colour != null) {
             Brush brush = new Brush(stack);
-            tooltip.add(new TextComponent(brush.usesLeft + " / " + MAX_USES));
+            tooltip.add(Component.literal(brush.usesLeft + " / " + MAX_USES));
         }
     }
 

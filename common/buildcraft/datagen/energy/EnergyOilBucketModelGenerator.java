@@ -5,9 +5,10 @@ import buildcraft.energy.BCEnergy;
 import buildcraft.energy.BCEnergyFluids;
 import buildcraft.energy.event.ChristmasHandler;
 import buildcraft.lib.fluid.BCFluid;
+import buildcraft.lib.misc.ItemUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -30,23 +31,23 @@ public class EnergyOilBucketModelGenerator extends BCBaseItemModelGenerator {
     }
 
     protected void registerBucket(BCFluid.Source fluid) {
-        int density = fluid.getAttributes().getDensity();
+        int density = fluid.getFluidType().getDensity();
         boolean isGaseous = ChristmasHandler.isEnabled() ? (density > 0) : (density < 0);
         // normal
         withExistingParent(
-                fluid.getReg().getBucket().getRegistryName().toString(),
+                ItemUtil.getRegistryName(fluid.getReg().getBucket()).toString(),
                 new ResourceLocation("forge", "item/bucket_drip")
         )
-                .customLoader(DynamicBucketModelBuilder::begin)
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .flipGas(isGaseous)
                 .fluid(fluid.getSource())
         ;
         // christmas
         withExistingParent(
-                fluid.getReg().getBucket().getRegistryName().toString() + "_christmas",
+                ItemUtil.getRegistryName(fluid.getReg().getBucket()).toString() + "_christmas",
                 new ResourceLocation("forge", "item/bucket_drip")
         )
-                .customLoader(DynamicBucketModelBuilder::begin)
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .flipGas(false)
                 .fluid(fluid.getSource())
         ;

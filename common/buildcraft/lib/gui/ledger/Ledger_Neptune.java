@@ -6,6 +6,8 @@
 
 package buildcraft.lib.gui.ledger;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.client.sprite.SpriteNineSliced;
@@ -22,7 +24,6 @@ import buildcraft.lib.misc.GuiUtil.AutoGlScissor;
 import buildcraft.lib.misc.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nullable;
@@ -411,7 +412,7 @@ public class Ledger_Neptune implements IInteractionElement, IContainingElement {
         }
         if (currentWidth != maxWidth || currentHeight != maxHeight) {
             if (contains(gui.mouse)) {
-                tooltips.add(new ToolTip(new TextComponent(getTitle())));
+                tooltips.add(new ToolTip(Component.literal(getTitle())));
             }
         }
     }

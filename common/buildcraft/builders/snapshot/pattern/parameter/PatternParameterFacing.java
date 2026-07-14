@@ -17,7 +17,6 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -82,7 +81,7 @@ public enum PatternParameterFacing implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("buildcraft.param.facing." + face.getName());
-        return new TranslatableComponent("buildcraft.param.facing." + face.getName());
+        return Component.translatable("buildcraft.param.facing." + face.getName());
     }
 
     @Override

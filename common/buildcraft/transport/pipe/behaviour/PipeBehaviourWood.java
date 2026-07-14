@@ -18,7 +18,6 @@ import buildcraft.transport.BCTransportConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -131,6 +130,6 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("Facing = " + currentDir);
-        left.add(new TextComponent("Facing = " + currentDir));
+        left.add(Component.literal("Facing = " + currentDir));
     }
 }

@@ -16,64 +16,48 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /** The static fields are used to create GUI on client thread. */
 public class BCSiliconMenuTypes {
-    public static final MenuType<ContainerAssemblyTable> ASSEMBLY_TABLE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                if (inv.player.level.getBlockEntity(data.readBlockPos()) instanceof TileAssemblyTable tile) {
-                    MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
-                    return new ContainerAssemblyTable(BCSiliconMenuTypes.ASSEMBLY_TABLE, windowId, inv.player, tile);
-                } else {
-                    return null;
-                }
-            }
-    );
-    public static final MenuType<ContainerIntegrationTable> INTEGRATION_TABLE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                if (inv.player.level.getBlockEntity(data.readBlockPos()) instanceof TileIntegrationTable tile) {
-                    MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
-                    return new ContainerIntegrationTable(BCSiliconMenuTypes.INTEGRATION_TABLE, windowId, inv.player, tile);
-                } else {
-                    return null;
-                }
-            }
-    );
-    public static final MenuType<ContainerAdvancedCraftingTable> ADVANCED_CRAFTING_TABLE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                if (inv.player.level.getBlockEntity(data.readBlockPos()) instanceof TileAdvancedCraftingTable tile) {
-                    MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
-                    return new ContainerAdvancedCraftingTable(BCSiliconMenuTypes.INTEGRATION_TABLE, windowId, inv.player, tile);
-                } else {
-                    return null;
-                }
-            }
-    );
-    public static final MenuType<ContainerChargingTable> CHARGING_TABLE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                if (inv.player.level.getBlockEntity(data.readBlockPos()) instanceof TileChargingTable tile) {
-                    MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
-                    return new ContainerChargingTable(BCSiliconMenuTypes.CHARGING_TABLE, windowId, inv.player, tile);
-                } else {
-                    return null;
-                }
-            }
-    );
-    public static final MenuType<ContainerProgrammingTable_Neptune> PROGRAMMING_TABLE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                if (inv.player.level.getBlockEntity(data.readBlockPos()) instanceof TileProgrammingTable_Neptune tile) {
-                    MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
-                    return new ContainerProgrammingTable_Neptune(BCSiliconMenuTypes.PROGRAMMING_TABLE, windowId, inv.player, tile);
-                } else {
-                    return null;
-                }
-            }
-    );
+    public static final MenuType<ContainerAssemblyTable> ASSEMBLY_TABLE = IForgeMenuType.create((windowId, inv, data) -> {
+        if (inv.player.getLevel().getBlockEntity(data.readBlockPos()) instanceof TileAssemblyTable tile) {
+            MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
+            return new ContainerAssemblyTable(BCSiliconMenuTypes.ASSEMBLY_TABLE, windowId, inv.player, tile);
+        }
+        return null;
+    });
+    public static final MenuType<ContainerIntegrationTable> INTEGRATION_TABLE = IForgeMenuType.create((windowId, inv, data) -> {
+        if (inv.player.getLevel().getBlockEntity(data.readBlockPos()) instanceof TileIntegrationTable tile) {
+            MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
+            return new ContainerIntegrationTable(BCSiliconMenuTypes.INTEGRATION_TABLE, windowId, inv.player, tile);
+        }
+        return null;
+    });
+    public static final MenuType<ContainerAdvancedCraftingTable> ADVANCED_CRAFTING_TABLE = IForgeMenuType.create((windowId, inv, data) -> {
+        if (inv.player.getLevel().getBlockEntity(data.readBlockPos()) instanceof TileAdvancedCraftingTable tile) {
+            MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
+            return new ContainerAdvancedCraftingTable(BCSiliconMenuTypes.INTEGRATION_TABLE, windowId, inv.player, tile);
+        }
+        return null;
+    });
+    public static final MenuType<ContainerChargingTable> CHARGING_TABLE = IForgeMenuType.create((windowId, inv, data) -> {
+        if (inv.player.getLevel().getBlockEntity(data.readBlockPos()) instanceof TileChargingTable tile) {
+            MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
+            return new ContainerChargingTable(BCSiliconMenuTypes.CHARGING_TABLE, windowId, inv.player, tile);
+        }
+        return null;
+    });
+    public static final MenuType<ContainerProgrammingTable_Neptune> PROGRAMMING_TABLE = IForgeMenuType.create((windowId, inv, data) -> {
+        if (inv.player.getLevel().getBlockEntity(data.readBlockPos()) instanceof TileProgrammingTable_Neptune tile) {
+            MessageUtil.clientHandleUpdateTileMsgBeforeOpen(tile, data);
+            return new ContainerProgrammingTable_Neptune(BCSiliconMenuTypes.PROGRAMMING_TABLE, windowId, inv.player, tile);
+        }
+        return null;
+    });
     /**
      * {@link IPipeHolder#onPlayerOpen(Player)} is moved from {@link ContainerGate#ContainerGate(MenuType, int, Player, GateLogic)} in 1.12.2
      * to ensure the new gate obj created before GUI opened.
@@ -82,37 +66,32 @@ public class BCSiliconMenuTypes {
      * <p>
      * {@link MessageUtil#clientHandleUpdateTileMsgBeforeOpen(TileBC_Neptune, FriendlyByteBuf, Runnable...)}
      * handles the message created in {@link MessageUtil#serverOpenGUIWithMsg(Player, MenuProvider, BlockPos, int, IMessage)}
-     * in {@link PluggableGate#onPluggableActivate(Player, HitResult, float, float, float)}
+     * in {@link PluggableGate#onPluggableActivate(Player, net.minecraft.world.phys.BlockHitResult, float, float, float)}
      */
-    public static final MenuType<ContainerGate> GATE = IForgeMenuType.create((windowId, inv, data) ->
-            {
-                BlockPos pos = data.readBlockPos();
-                if (inv.player.level.getBlockEntity(pos) instanceof IPipeHolder holder) {
-                    int id = data.readInt();
-                    Direction direction = Direction.from3DDataValue(id >>> 8);
-                    if (holder.getPluggable(direction) instanceof PluggableGate gate) {
-                        MessageUtil.clientHandleUpdateTileMsgBeforeOpen((TileBC_Neptune) holder, data);
-                        gate.logic.getPipeHolder().onPlayerOpen(inv.player);
+    public static final MenuType<ContainerGate> GATE = IForgeMenuType.create((windowId, inv, data) -> {
+        BlockPos pos = data.readBlockPos();
+        if (inv.player.getLevel().getBlockEntity(pos) instanceof IPipeHolder holder) {
+            int id = data.readInt();
+            Direction direction = Direction.from3DDataValue(id >>> 8);
+            if (holder.getPluggable(direction) instanceof PluggableGate gate) {
+                MessageUtil.clientHandleUpdateTileMsgBeforeOpen((TileBC_Neptune) holder, data);
+                gate.logic.getPipeHolder().onPlayerOpen(inv.player);
 
-                        // Refresh the gate object
-                        gate = (PluggableGate) holder.getPluggable(direction);
+                gate = (PluggableGate) holder.getPluggable(direction);
 
-                        return new ContainerGate(BCSiliconMenuTypes.GATE, windowId, inv.player, gate.logic);
-                    }
-                }
-                return null;
+                return new ContainerGate(BCSiliconMenuTypes.GATE, windowId, inv.player, gate.logic);
             }
-    );
+        }
+        return null;
+    });
 
-    public static void registerAll(RegistryEvent.Register<MenuType<?>> event) {
-        event.getRegistry().registerAll(
-                ASSEMBLY_TABLE.setRegistryName("assembly_table"),
-                INTEGRATION_TABLE.setRegistryName("integration_table"),
-                ADVANCED_CRAFTING_TABLE.setRegistryName("advanced_crafting_table"),
-                CHARGING_TABLE.setRegistryName("charging_table"),
-                PROGRAMMING_TABLE.setRegistryName("programming_table"),
-                GATE.setRegistryName("gate")
-        );
+    public static void registerAll() {
+        ForgeRegistries.MENU_TYPES.register("assembly_table", ASSEMBLY_TABLE);
+        ForgeRegistries.MENU_TYPES.register("integration_table", INTEGRATION_TABLE);
+        ForgeRegistries.MENU_TYPES.register("advanced_crafting_table", ADVANCED_CRAFTING_TABLE);
+        ForgeRegistries.MENU_TYPES.register("charging_table", CHARGING_TABLE);
+        ForgeRegistries.MENU_TYPES.register("programming_table", PROGRAMMING_TABLE);
+        ForgeRegistries.MENU_TYPES.register("gate", GATE);
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             MenuScreens.register(ASSEMBLY_TABLE, GuiAssemblyTable::new);

@@ -68,7 +68,7 @@ public class RenderDistiller implements BlockEntityRenderer<TileDistiller_BC8> {
         profiler.push("distiller");
 
         // 1.18.2: provided
-//        int combinedLight = tile.getWorld().getCombinedLight(tile.getBlockPos(), 0);
+//        int combinedLight = tile.getLevel().getCombinedLight(tile.getBlockPos(), 0);
         Direction face = state.getValue(BlockBCBase_Neptune.PROP_FACING);
         TankRenderSizes sizes = TANK_SIZES.get(face);
 
@@ -142,7 +142,7 @@ public class RenderDistiller implements BlockEntityRenderer<TileDistiller_BC8> {
         if (fluid == null || fluid.amount <= 0) {
             return;
         }
-        int blockLight = fluid.fluid.getRawFluid().getAttributes().getLuminosity(fluid.fluid) & 0xF;
+        int blockLight = fluid.fluid.getRawFluid().getFluidType().getLightLevel(fluid.fluid) & 0xF;
         combinedLight |= blockLight << 4;
         FluidRenderer.vertex.lighti(combinedLight);
         FluidRenderer.vertex.overlay(combinedOverlay);

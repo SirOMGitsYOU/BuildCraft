@@ -19,7 +19,6 @@ import buildcraft.silicon.gate.GateVariant;
 import buildcraft.silicon.plug.PluggableGate;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -70,7 +69,7 @@ public class ItemPluggableGate extends ItemBC_Neptune implements IItemPluggable 
     @Override
 //    public String getItemStackDisplayName(ItemStack stack)
     public Component getName(ItemStack stack) {
-//        return new TextComponent(getVariant(StackUtil.asNonNull(stack)).getLocalizedName());
+//        return Component.literal(getVariant(StackUtil.asNonNull(stack)).getLocalizedName());
 //        return getVariant(StackUtil.asNonNull(stack)).getLocalizedName();
         return this.VARIANT.getLocalizedName();
     }
@@ -84,21 +83,21 @@ public class ItemPluggableGate extends ItemBC_Neptune implements IItemPluggable 
         GateVariant variant = this.VARIANT;
 
 //        tooltip.add(LocaleUtil.localize("gate.slots", variant.numSlots));
-        tooltip.add(new TranslatableComponent("gate.slots", variant.numSlots));
+        tooltip.add(Component.translatable("gate.slots", variant.numSlots));
 
         if (variant.numTriggerArgs == variant.numActionArgs) {
             if (variant.numTriggerArgs > 0) {
 //                tooltip.add(LocaleUtil.localize("gate.params", variant.numTriggerArgs));
-                tooltip.add(new TranslatableComponent("gate.params", variant.numTriggerArgs));
+                tooltip.add(Component.translatable("gate.params", variant.numTriggerArgs));
             }
         } else {
             if (variant.numTriggerArgs > 0) {
 //                tooltip.add(LocaleUtil.localize("gate.params.trigger", variant.numTriggerArgs));
-                tooltip.add(new TranslatableComponent("gate.params.trigger", variant.numTriggerArgs));
+                tooltip.add(Component.translatable("gate.params.trigger", variant.numTriggerArgs));
             }
             if (variant.numActionArgs > 0) {
 //                tooltip.add(LocaleUtil.localize("gate.params.action", variant.numTriggerArgs));
-                tooltip.add(new TranslatableComponent("gate.params.action", variant.numTriggerArgs));
+                tooltip.add(Component.translatable("gate.params.action", variant.numTriggerArgs));
             }
         }
     }

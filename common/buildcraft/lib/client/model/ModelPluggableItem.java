@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class ModelPluggableItem implements BakedModel {
 
@@ -35,7 +35,7 @@ public class ModelPluggableItem implements BakedModel {
 
     @Override
 //    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
         return side == null ? quads : ImmutableList.of();
     }
 

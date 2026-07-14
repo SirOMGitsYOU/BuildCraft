@@ -9,16 +9,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class ProgrammingRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IProgrammingRecipe> {
+public class ProgrammingRecipeSerializer implements RecipeSerializer<IProgrammingRecipe> {
     public static final ProgrammingRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new ProgrammingRecipeSerializer();
-        INSTANCE.setRegistryName(IProgrammingRecipe.TYPE_ID);
     }
 
     @Override

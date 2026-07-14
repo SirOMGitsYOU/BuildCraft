@@ -12,7 +12,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,18 +31,18 @@ public class PageLinkStatement extends PageLink {
         List<Component> tip = statement.getTooltip();
         if (tip.isEmpty()) {
             String uniqueTag = statement.getUniqueTag();
-            this.tooltip = ImmutableList.of(new TextComponent(uniqueTag));
+            this.tooltip = ImmutableList.of(Component.literal(uniqueTag));
 //            this.searchText = uniqueTag.toLowerCase(Locale.ROOT);
-            this.searchText = new TextComponent(uniqueTag);
+            this.searchText = Component.literal(uniqueTag);
             this.textKey = statement.getDescriptionKey().toLowerCase(Locale.ROOT);
         } else {
             this.tooltip = tip;
 //            String joinedTooltip = joinedTooltip_StrList.stream().collect(Collectors.joining(" ", "", ""));
-            MutableComponent joinedTooltip = new TextComponent("");
+            MutableComponent joinedTooltip = Component.literal("");
             for (int i = 0; i < tip.size(); i++) {
                 joinedTooltip = joinedTooltip.append(tip.get(i));
                 if (i < tip.size() - 1) {
-                    joinedTooltip.append(new TextComponent(" "));
+                    joinedTooltip.append(Component.literal(" "));
                 }
             }
 //            this.searchText = TextFormatting.getTextWithoutFormattingCodes(joinedTooltip).toLowerCase(Locale.ROOT);
@@ -57,7 +56,7 @@ public class PageLinkStatement extends PageLink {
 
         List<Component> tooltip = statement.getTooltip();
         List<String> tooltipKeys = statement.getTooltipKey();
-        Component title = tooltip.isEmpty() ? new TextComponent(statement.getUniqueTag()) : tooltip.get(0);
+        Component title = tooltip.isEmpty() ? Component.literal(statement.getUniqueTag()) : tooltip.get(0);
         String titleKey = tooltipKeys.isEmpty() ? statement.getDescriptionKey() : tooltipKeys.get(0);
 //        return new PageLine(icon, icon, 2, title, true);
         return new PageLine(icon, icon, 2, titleKey, title, true);

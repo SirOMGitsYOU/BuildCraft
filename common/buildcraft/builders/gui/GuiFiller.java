@@ -67,9 +67,9 @@ public class GuiFiller extends GuiBC8<ContainerFiller> {
 
     @Override
 //    public void updateScreen()
-    public void tick() {
+    public void containerTick() {
 //        super.updateScreen();
-        super.tick();
+        super.containerTick();
         IFillerPattern pattern = container.getPatternStatementClient().get();
         SPRITE_PATTERN.delegate = pattern == null ? null : pattern.getSprite();
         SPRITE_CONTROL_MODE.delegate = BCCoreSprites.ACTION_MACHINE_CONTROL.get(container.tile.getControlMode());

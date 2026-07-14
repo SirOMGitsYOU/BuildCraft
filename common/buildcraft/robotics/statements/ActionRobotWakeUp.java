@@ -11,7 +11,6 @@ import buildcraft.api.statements.IStatementParameter;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +22,7 @@ public class ActionRobotWakeUp extends BCStatement implements IActionInternal {
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.robot.wakeup");
+        return Component.translatable("gate.action.robot.wakeup");
     }
 
     @Override

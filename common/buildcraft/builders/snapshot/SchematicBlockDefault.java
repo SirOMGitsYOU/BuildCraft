@@ -69,7 +69,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (context.blockState.isAir()) {
             return false;
         }
-        ResourceLocation registryName = context.block.getRegistryName();
+        ResourceLocation registryName = BlockUtil.getRegistryName(context.block);
         // noinspection ConstantConditions
         return registryName != null &&
 //                RulesLoader.READ_DOMAINS.contains(registryName.getResourceDomain()) &&

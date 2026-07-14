@@ -4,9 +4,10 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.core.item.ItemList_BC8;
 import net.minecraft.Util;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,9 +29,9 @@ public enum BCCoreGuis {
         if (player instanceof ServerPlayer serverPlayer) {
 //            player.openMenu(state.getMenuProvider(player.level, pos));
             if (stack.getItem() instanceof ItemList_BC8 list) {
-                NetworkHooks.openGui(serverPlayer, list, serverPlayer.blockPosition());
+                NetworkHooks.openScreen(serverPlayer, list, serverPlayer.blockPosition());
             } else {
-                player.sendMessage(new TranslatableComponent("buildcraft.error.open_null_menu"), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("buildcraft.error.open_null_menu"));
             }
         }
     }

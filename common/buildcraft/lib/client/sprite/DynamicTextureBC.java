@@ -107,7 +107,7 @@ public class DynamicTextureBC {
         Tesselator tessellator = Tesselator.getInstance();
 //        BufferBuilder bb = tessellator.getBuffer();
         BufferBuilder bb = tessellator.getBuilder();
-        bb.begin(VertexFormat.Mode.QUADS, bb.getVertexFormat());
+        bb.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         vertexUV(bb, screenX + 0, screenY + clipHeight, zLevel, (clipX + 0) * f, (clipY + clipHeight) * f1);
         vertexUV(bb, screenX + clipWidth, screenY + clipHeight, zLevel, (clipX + clipWidth) * f, (clipY + clipHeight) * f1);
         vertexUV(bb, screenX + clipWidth, screenY + 0, zLevel, (clipX + clipWidth) * f, (clipY + 0) * f1);

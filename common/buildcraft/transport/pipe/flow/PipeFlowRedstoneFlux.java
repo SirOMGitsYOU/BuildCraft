@@ -19,7 +19,6 @@ import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.HitResult;
@@ -173,16 +172,16 @@ public class PipeFlowRedstoneFlux extends PipeFlow implements IFlowRedstoneFlux,
 
     @Override
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
-        left.add(new TextComponent("maxPower = " + maxPower));
-        left.add(new TextComponent("isReceiver = " + isReceiver));
-        left.add(new TextComponent(
+        left.add(Component.literal("maxPower = " + maxPower));
+        left.add(Component.literal("isReceiver = " + isReceiver));
+        left.add(Component.literal(
                 "internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)
         ));
-        left.add(new TextComponent("- powerQuery: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery)));
-        left.add(new TextComponent(
+        left.add(Component.literal("- powerQuery: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery)));
+        left.add(Component.literal(
                 "- power: IN " + arrayToString(s -> s.debugPowerInput) + ", OUT " + arrayToString(s -> s.debugPowerOutput)
         ));
-        left.add(new TextComponent("- power: OFFERED " + arrayToString(s -> s.debugPowerOffered)));
+        left.add(Component.literal("- power: OFFERED " + arrayToString(s -> s.debugPowerOffered)));
     }
 
     private String arrayToString(ToIntFunction<Section> getter) {

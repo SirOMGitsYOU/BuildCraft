@@ -27,8 +27,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -154,7 +152,7 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
             return ((MutableComponent) super.getName(stack)).append(": ").append(displayName);
         } else {
 //            return LocaleUtil.localize("item.FacadePhased.name");
-            return new TranslatableComponent("item.FacadePhased.name");
+            return Component.translatable("item.FacadePhased.name");
         }
     }
 
@@ -178,20 +176,20 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
                     continue;
                 }
 //                tooltip.add(String.format(stateString, LocaleUtil.localizeColour(state.activeColour), getFacadeStateDisplayName(state)));
-                tooltip.add(new TranslatableComponent("item.FacadePhased.state", LocaleUtil.localizeColour(state.activeColour), getFacadeStateDisplayName(state)));
+                tooltip.add(Component.translatable("item.FacadePhased.state", LocaleUtil.localizeColour(state.activeColour), getFacadeStateDisplayName(state)));
             }
             if (defaultState != null) {
 //                tooltip.add(1, String.format(LocaleUtil.localize("item.FacadePhased.state_default"), getFacadeStateDisplayName(defaultState)));
-                tooltip.add(1, new TranslatableComponent("item.FacadePhased.state_default", getFacadeStateDisplayName(defaultState)));
+                tooltip.add(1, Component.translatable("item.FacadePhased.state_default", getFacadeStateDisplayName(defaultState)));
             }
         } else {
             if (flag.isAdvanced()) {
-                tooltip.add(new TextComponent(states.phasedStates[0].stateInfo.state.getBlock().getRegistryName().toString()));
+                tooltip.add(Component.literal(BlockUtil.getRegistryName(states.phasedStates[0].stateInfo.state.getBlock()).toString()));
             }
             String propertiesStart = ChatFormatting.GRAY + "" + ChatFormatting.ITALIC;
             FacadeBlockStateInfo info = states.phasedStates[0].stateInfo;
             BlockUtil.getPropertiesStringMap(info.state, info.varyingProperties)
-                    .forEach((name, value) -> tooltip.add(new TextComponent(propertiesStart + name + " = " + value)));
+                    .forEach((name, value) -> tooltip.add(Component.literal(propertiesStart + name + " = " + value)));
         }
     }
 

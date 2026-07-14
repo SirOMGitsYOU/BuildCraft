@@ -20,7 +20,11 @@ import buildcraft.lib.gui.pos.IGuiArea;
 import buildcraft.lib.gui.pos.IGuiPosition;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector4f;
 import net.minecraft.ChatFormatting;
@@ -29,12 +33,11 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
@@ -203,7 +206,7 @@ public class GuiUtil {
                         if (lineWidth > wrappedTooltipWidth) {
                             wrappedTooltipWidth = lineWidth;
                         }
-                        wrappedTextLines.add(new TextComponent(line));
+                        wrappedTextLines.add(Component.literal(line));
                     }
                 }
                 tooltipTextWidth = wrappedTooltipWidth;
@@ -230,31 +233,27 @@ public class GuiUtil {
                 tooltipY = screenHeight - tooltipHeight - 6;
             }
 
-            Matrix4f mat = poseStack.last().pose();
-            // Calen: should be 400 to render above number text of itemStacks
-//            final int zLevel = 300;
             final int zLevel = 400;
             final int backgroundColor = 0xF0100010;
-            // 1.18.2 GuiUtils.drawGradientRect(Matrix4f mat, int zLevel, int left, int top, int right, int bottom, int startColor, int endColor)
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 4, tooltipX + tooltipTextWidth + 3, tooltipY - 3,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY - 4, tooltipX + tooltipTextWidth + 3, tooltipY - 3,
                     backgroundColor, backgroundColor);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 3,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 3,
                     tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 4, backgroundColor, backgroundColor);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3,
                     tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3,
+            drawGradientRect(poseStack, zLevel, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3,
                     backgroundColor, backgroundColor);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 3, tooltipY - 3,
+            drawGradientRect(poseStack, zLevel, tooltipX + tooltipTextWidth + 3, tooltipY - 3,
                     tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
             final int borderColorStart = 0x505000FF;
             final int borderColorEnd = (borderColorStart & 0xFEFEFE) >> 1 | borderColorStart & 0xFF000000;
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1,
                     tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 2, tooltipY - 3 + 1,
+            drawGradientRect(poseStack, zLevel, tooltipX + tooltipTextWidth + 2, tooltipY - 3 + 1,
                     tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3,
                     tooltipY - 3 + 1, borderColorStart, borderColorStart);
-            GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2,
+            drawGradientRect(poseStack, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2,
                     tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
 
             RenderSystem.disableBlend();
@@ -282,6 +281,30 @@ public class GuiUtil {
             return tooltipHeight + 5;
         }
         return 0;
+    }
+
+    private static void drawGradientRect(PoseStack poseStack, int zLevel, int left, int top, int right, int bottom, int startColor, int endColor) {
+        poseStack.pushPose();
+        poseStack.translate(0, 0, zLevel);
+        if (startColor == endColor) {
+            Gui.fill(poseStack, left, top, right, bottom, startColor);
+        } else {
+            Matrix4f matrix = poseStack.last().pose();
+            Tesselator tesselator = Tesselator.getInstance();
+            BufferBuilder bufferBuilder = tesselator.getBuilder();
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.disableTexture();
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+            bufferBuilder.vertex(matrix, right, top, 0).color(startColor).endVertex();
+            bufferBuilder.vertex(matrix, left, top, 0).color(startColor).endVertex();
+            bufferBuilder.vertex(matrix, left, bottom, 0).color(endColor).endVertex();
+            bufferBuilder.vertex(matrix, right, bottom, 0).color(endColor).endVertex();
+            tesselator.end();
+            RenderSystem.enableTexture();
+            RenderSystem.disableBlend();
+        }
+        poseStack.popPose();
     }
 
     public static void drawHorizontalLine(PoseStack p_93173_, int startX, int endX, int y, int color) {
@@ -348,7 +371,7 @@ public class GuiUtil {
         double endY;
 
 //        if (fluid.getFluid().isGaseous(fluid))
-        if (fluid.getRawFluid().getAttributes().isGaseous(fluid)) {
+        if (fluid.getRawFluid().getFluidType().isLighterThanAir()) {
             startY = position.getY() + height;
             endY = position.getY();
         } else {
@@ -466,13 +489,13 @@ public class GuiUtil {
         List<Component> list = getUnFormattedTooltip(stack);
 
         if (!list.isEmpty()) {
-//            list.set(0, new TextComponent(stack.getRarity().color.toString() + list.get(0).getString()));
-            list.set(0, new TextComponent(stack.getRarity().color.toString()).append(list.get(0)));
+//            list.set(0, Component.literal(stack.getRarity().color.toString() + list.get(0).getString()));
+            list.set(0, Component.literal(stack.getRarity().color.toString()).append(list.get(0)));
         }
 
         for (int i = 1; i < list.size(); ++i) {
-//            list.set(i, new TextComponent(ChatFormatting.GRAY.toString() + list.get(i).getString()));
-            list.set(i, new TextComponent(ChatFormatting.GRAY.toString()).append(list.get(i)));
+//            list.set(i, Component.literal(ChatFormatting.GRAY.toString() + list.get(i).getString()));
+            list.set(i, Component.literal(ChatFormatting.GRAY.toString()).append(list.get(i)));
         }
 
         return list;
@@ -493,9 +516,9 @@ public class GuiUtil {
             // Temp workaround for headcrumbs
             // TODO: Remove this after https://github.com/BuildCraft/BuildCraft/issues/4268 is fixed from their side! */
             Item item = stack.getItem();
-            String info = item.getRegistryName() + " " + item.getClass() + " (" + stack.serializeNBT() + ")";
+            String info = ForgeRegistries.ITEMS.getKey(item) + " " + item.getClass() + " (" + stack.serializeNBT() + ")";
             BCLog.logger.warn("[lib.guide] Found null display name! " + info);
-            name = new TextComponent("!!NULL stack.getDisplayName(): " + info);
+            name = Component.literal("!!NULL stack.getDisplayName(): " + info);
         }
         return name;
     }

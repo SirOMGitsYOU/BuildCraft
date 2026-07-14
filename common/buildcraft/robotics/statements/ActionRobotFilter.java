@@ -13,7 +13,6 @@ import buildcraft.core.statements.BCStatement;
 import buildcraft.lib.inventory.filter.*;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
@@ -31,7 +30,7 @@ public class ActionRobotFilter extends BCStatement implements IActionInternal {
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.robot.filter");
+        return Component.translatable("gate.action.robot.filter");
     }
 
     @Override

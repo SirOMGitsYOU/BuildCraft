@@ -8,7 +8,6 @@ import buildcraft.lib.gui.GuiStack;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.misc.GuiUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 
@@ -83,7 +82,7 @@ public final class PageLinkItemStack extends PageLink {
         this.stack = stack;
         this.tooltip = tooltip;
 //        this.searchText = searchText;
-        this.searchText = new TextComponent(searchText);
+        this.searchText = Component.literal(searchText);
     }
 
     // private PageLinkItemStack(boolean startVisible, ItemStack stack, Profiler prof)
@@ -94,7 +93,7 @@ public final class PageLinkItemStack extends PageLink {
         tooltip = getTooltip(stack);
         prof.popPush("join_tooltip");
 //        searchText = joinTooltip(tooltip);
-        searchText = new TextComponent(joinTooltip(tooltip));
+        searchText = Component.literal(joinTooltip(tooltip));
         prof.pop();
     }
 

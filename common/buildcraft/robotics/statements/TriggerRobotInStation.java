@@ -14,7 +14,6 @@ import buildcraft.robotics.BCRoboticsSprites;
 import buildcraft.robotics.RobotUtils;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,7 +26,7 @@ public class TriggerRobotInStation extends BCStatement implements ITriggerIntern
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.trigger.robot.in.station");
+        return Component.translatable("gate.trigger.robot.in.station");
     }
 
     @Override

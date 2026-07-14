@@ -16,7 +16,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -159,7 +158,7 @@ public class StatementParameterItemStackExact implements IStatementParameter {
 //        if (stack != null) {
 //            return stack.getDisplayName();
 //        } else {
-//            return new TextComponent("");
+//            return Component.literal("");
 //        }
         throw new UnsupportedOperationException("Don't call getDescription directly!");
     }
@@ -183,9 +182,9 @@ public class StatementParameterItemStackExact implements IStatementParameter {
         }
         List<Component> tooltip = stack.getTooltipLines(null, TooltipFlag.Default.NORMAL);
         if (!tooltip.isEmpty()) {
-            tooltip.set(0, new TextComponent(stack.getRarity().color.toString()).append(tooltip.get(0)));
+            tooltip.set(0, Component.literal(stack.getRarity().color.toString()).append(tooltip.get(0)));
             for (int i = 1; i < tooltip.size(); i++) {
-                tooltip.set(i, new TextComponent(ChatFormatting.GRAY.toString()).append(tooltip.get(i)));
+                tooltip.set(i, Component.literal(ChatFormatting.GRAY.toString()).append(tooltip.get(i)));
             }
         }
         return tooltip;
@@ -200,9 +199,9 @@ public class StatementParameterItemStackExact implements IStatementParameter {
         List<Component> tooltip = stack.getTooltipLines(null, TooltipFlag.Default.NORMAL);
         List<String> toolTipRet = new ArrayList<>(tooltip.size());
         if (!tooltip.isEmpty()) {
-            toolTipRet.set(0, new TextComponent(stack.getRarity().color.toString()).append(tooltip.get(0)).getString());
+            toolTipRet.set(0, Component.literal(stack.getRarity().color.toString()).append(tooltip.get(0)).getString());
             for (int i = 1; i < tooltip.size(); i++) {
-                toolTipRet.set(i, new TextComponent(ChatFormatting.GRAY.toString()).append(tooltip.get(i)).getString());
+                toolTipRet.set(i, Component.literal(ChatFormatting.GRAY.toString()).append(tooltip.get(i)).getString());
             }
         }
         return toolTipRet;

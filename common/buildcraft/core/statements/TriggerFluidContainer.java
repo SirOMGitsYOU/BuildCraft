@@ -13,7 +13,6 @@ import buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import buildcraft.lib.misc.CapUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -48,7 +47,7 @@ public class TriggerFluidContainer extends BCStatement implements ITriggerExtern
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.fluid." + state.name().toLowerCase(Locale.ROOT));
-        return new TranslatableComponent("gate.trigger.fluid." + state.name().toLowerCase(Locale.ROOT));
+        return Component.translatable("gate.trigger.fluid." + state.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

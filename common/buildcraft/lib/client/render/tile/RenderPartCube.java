@@ -13,7 +13,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import buildcraft.lib.client.sprite.White;
 
 /** A variable sized element (like LED) that can render somewhere in a TESR. Passing a resolver instance will let you
  * modify the location, colour, lightmap, and size of the single element. This does not allow for different textures. */
@@ -35,7 +35,7 @@ public class RenderPartCube {
     public void setWhiteTex() {
         // Calen: at TextureStitchEvent.Post ForgeModelBakery.White.instance() cannot be called
         // RuntimeException: getAtlasTexture called too early! (ModelManager.java:99)
-        TextureAtlasSprite sprite = ForgeModelBakery.White.instance();
+        TextureAtlasSprite sprite = White.instance();
         // Reset the vertex so that edits don't spill out to other tiles.
         center.texf(sprite.getU(8), sprite.getV(8));
     }

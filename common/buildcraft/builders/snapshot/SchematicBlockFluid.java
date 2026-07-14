@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nonnull;
@@ -60,7 +60,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
     public List<FluidStack> computeRequiredFluids() {
         return Optional.ofNullable(BlockUtil.getFluidWithoutFlowing(blockState))
 //                .map(fluid -> new FluidStack(fluid, Fluid.BUCKET_VOLUME))
-                .map(fluid -> new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME))
+                .map(fluid -> new FluidStack(fluid, FluidType.BUCKET_VOLUME))
                 .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
     }

@@ -25,7 +25,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Inventory;
@@ -145,7 +144,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMe
                 deltaFuelLeft.addDelta(0, totalBurnTime, -100);
 
                 ItemStack fuel = invFuel.extractItem(0, 1, false);
-                ItemStack container = fuel.getItem().getContainerItem(fuel);
+                ItemStack container = fuel.getCraftingRemainingItem();
                 if (!container.isEmpty()) {
                     if (invFuel.getStackInSlot(0).isEmpty()) {
                         isForceInserting = false;
@@ -217,11 +216,11 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMe
 //        left.add("burnTime = " + burnTime);
 //        left.add("delta = " + deltaFuelLeft.getDynamic(0));
         super.getDebugInfo(left, right, side);
-        left.add(new TextComponent("esum = " + MjAPI.formatMj(esum) + " M"));
+        left.add(Component.literal("esum = " + MjAPI.formatMj(esum) + " M"));
         long e = 3 * getMaxPower() / 8 - power;
-        left.add(new TextComponent("output = " + MjAPI.formatMj(clamp(e + esum / 20, MIN_OUTPUT, MAX_OUTPUT)) + " MJ"));
-        left.add(new TextComponent("burnTime = " + burnTime));
-        left.add(new TextComponent("delta = " + deltaFuelLeft.getDynamic(0)));
+        left.add(Component.literal("output = " + MjAPI.formatMj(clamp(e + esum / 20, MIN_OUTPUT, MAX_OUTPUT)) + " MJ"));
+        left.add(Component.literal("burnTime = " + burnTime));
+        left.add(Component.literal("delta = " + deltaFuelLeft.getDynamic(0)));
     }
 
     // MenuProvider

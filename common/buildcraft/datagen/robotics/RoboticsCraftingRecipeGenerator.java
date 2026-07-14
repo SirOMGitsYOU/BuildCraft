@@ -1,6 +1,7 @@
 package buildcraft.datagen.robotics;
 
 import buildcraft.api.boards.RedstoneBoardRegistry;
+import buildcraft.core.BCCoreItems;
 import buildcraft.factory.BCFactory;
 import buildcraft.lib.oredictionarytag.OreDictionaryTags;
 import buildcraft.robotics.BCRoboticsBlocks;
@@ -72,6 +73,15 @@ public class RoboticsCraftingRecipeGenerator extends RecipeProvider {
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .define('P', Items.PAPER)
                 .unlockedBy("has_item", has(Tags.Items.DUSTS_REDSTONE))
+                .group(MOD_ID)
+                .save(consumer);
+        // robotGoggles
+        ShapedRecipeBuilder.shaped(BCRoboticsItems.robotGoggles.get())
+                .pattern("g g")
+                .pattern("l l")
+                .define('g', Tags.Items.INGOTS_GOLD)
+                .define('l', Tags.Items.DYES_GREEN)
+                .unlockedBy("has_item", has(BCCoreItems.goggles.get()))
                 .group(MOD_ID)
                 .save(consumer);
         // robotStation

@@ -43,7 +43,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,7 +57,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -113,7 +112,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
     public TileBuilder(BlockPos pos, BlockState blockState) {
         super(BCBuildersBlocks.builderTile.get(), pos, blockState);
         for (int i = 1; i <= 4; i++) {
-            tankManager.add(new Tank("tank" + i, FluidAttributes.BUCKET_VOLUME * 8, this) {
+            tankManager.add(new Tank("tank" + i, FluidType.BUCKET_VOLUME * 8, this) {
                 @Override
                 protected void onContentsChanged() {
                     super.onContentsChanged();
@@ -468,10 +467,10 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
 //        left.add("basePoses = " + (basePoses == null ? "null" : basePoses.size()));
 //        left.add("currentBasePosIndex = " + currentBasePosIndex);
 //        left.add("isDone = " + isDone);
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("basePoses = " + (basePoses == null ? "null" : basePoses.size())));
-        left.add(new TextComponent("currentBasePosIndex = " + currentBasePosIndex));
-        left.add(new TextComponent("isDone = " + isDone));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("basePoses = " + (basePoses == null ? "null" : basePoses.size())));
+        left.add(Component.literal("currentBasePosIndex = " + currentBasePosIndex));
+        left.add(Component.literal("isDone = " + isDone));
     }
 
     @Override

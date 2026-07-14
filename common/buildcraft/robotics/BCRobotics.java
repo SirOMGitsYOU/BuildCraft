@@ -20,12 +20,14 @@ import buildcraft.robotics.boards.*;
 import buildcraft.robotics.client.model.RoboticsNodeTypes;
 import buildcraft.robotics.client.particle.EntityRobotEnergyParticle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -128,14 +130,17 @@ public class BCRobotics {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCRoboticsMenuTypes.registerAll(event);
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            BCRoboticsMenuTypes.registerAll();
+        }
     }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public static void registerParticleFactories(ParticleFactoryRegisterEvent event) {
-        Minecraft.getInstance().particleEngine.register(BCRoboticsParticleTypes.robot.get(), EntityRobotEnergyParticle.Factory::new);
+    public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        event.register(BCRoboticsParticleTypes.robot.get(), EntityRobotEnergyParticle.Factory::new);
     }
 
     // Calen: for thread safety
@@ -149,7 +154,7 @@ public class BCRobotics {
         registerTag("item.robot").reg("robot").locale("robot").tab("buildcraft.boards");
         registerTag("item.redstone_board").reg("redstone_board").locale("redstone_board").tab("buildcraft.boards");
         registerTag("item.plug.robot_station").reg("robot_station").locale("PipeRobotStation").tab("buildcraft.boards");
-        registerTag("item.robot_googles").reg("robot_googles").locale("robotGoogles");
+        registerTag("item.robot_goggles").reg("robot_goggles").locale("buildcraft.robot_goggles").tab("buildcraft.boards");
 
         // Item Blocks
         registerTag("item.block.zone_planner").reg("zone_planner").locale("zonePlannerBlock");

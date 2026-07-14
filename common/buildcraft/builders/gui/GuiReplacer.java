@@ -16,7 +16,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -42,7 +41,7 @@ public class GuiReplacer extends GuiBC8<ContainerReplacer> {
 
         this.removeWidget(this.nameField);
 //        nameField = new GuiTextField(0, fontRenderer, guiLeft + 30, guiTop + 117, 138, 12);
-        nameField = new EditBox(font, leftPos + 30, topPos + 117, 138, 12, new TextComponent(""));
+        nameField = new EditBox(font, leftPos + 30, topPos + 117, 138, 12, Component.literal(""));
         this.addWidget(nameField);
     }
 
@@ -69,9 +68,9 @@ public class GuiReplacer extends GuiBC8<ContainerReplacer> {
 
     @Override
 //    public void updateScreen()
-    public void tick() {
-        // Calen FIXED: in 1.12.2 without super.tick(), ledgers will not spread
-        super.tick();
+    public void containerTick() {
+        // Calen FIXED: in 1.12.2 without super.containerTick(), ledgers will not spread
+        super.containerTick();
 //        nameField.updateCursorCounter();
         nameField.tick();
     }

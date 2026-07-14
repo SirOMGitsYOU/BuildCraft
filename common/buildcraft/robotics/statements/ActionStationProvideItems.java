@@ -11,7 +11,6 @@ import buildcraft.core.statements.BCStatement;
 import buildcraft.lib.inventory.filter.StatementParameterStackFilter;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -25,7 +24,7 @@ public class ActionStationProvideItems extends BCStatement implements IActionInt
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.station.provide_items");
+        return Component.translatable("gate.action.station.provide_items");
     }
 
     @Override

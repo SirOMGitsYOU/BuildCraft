@@ -16,7 +16,7 @@ public class SpecialColourFontRenderer extends Font {
 
     private SpecialColourFontRenderer() {
         // TODO Calen textureManager?
-        super((resourceLocation -> new FontSet(Minecraft.getInstance().textureManager, new ResourceLocation("textures/font/ascii.png"))));
+        super((resourceLocation -> new FontSet(Minecraft.getInstance().textureManager, new ResourceLocation("textures/font/ascii.png"))), false);
 //        super(Minecraft.getInstance().gameSettings, new ResourceLocation("textures/font/ascii.png"),
 //            Minecraft.getInstance().renderEngine, false);
     }

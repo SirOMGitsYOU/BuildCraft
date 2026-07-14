@@ -44,7 +44,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -409,7 +408,7 @@ public class TileQuarry extends TileBC_Neptune implements ITickable, IDebuggable
         }
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
 //        return fluid == null || fluid.getViscosity() <= 1000;
-        return fluid == null || fluid.getAttributes().getViscosity() <= 1000;
+        return fluid == null || fluid.getFluidType().getViscosity() <= 1000;
     }
 
     private boolean canMoveThrough(BlockPos blockPos) {
@@ -420,7 +419,7 @@ public class TileQuarry extends TileBC_Neptune implements ITickable, IDebuggable
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, blockPos);
         // Calen: one more condition for waterLogged block
 //        return fluid != null && fluid.getViscosity() <= 1000;
-        return fluid != null && (fluid == Fluids.WATER ? level.getBlockState(blockPos).is(Blocks.WATER) : true) && fluid.getAttributes().getViscosity() <= 1000;
+        return fluid != null && (fluid == Fluids.WATER ? level.getBlockState(blockPos).is(Blocks.WATER) : true) && fluid.getFluidType().getViscosity() <= 1000;
     }
 
     private boolean canMoveDownTo(BlockPos blockPos) {
@@ -924,32 +923,32 @@ public class TileQuarry extends TileBC_Neptune implements ITickable, IDebuggable
 //        }
 //        left.add("drill = " + drillPos);
 
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("rate = ").append(LocaleUtil.localizeMjFlowComponent(debugPowerRate)));
-        left.add(new TextComponent("frameBox"));
-        left.add(new TextComponent(" - min = " + frameBox.min()));
-        left.add(new TextComponent(" - max = " + frameBox.max()));
-        left.add(new TextComponent("miningBox:"));
-        left.add(new TextComponent(" - min = " + miningBox.min()));
-        left.add(new TextComponent(" - max = " + miningBox.max()));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("rate = ").append(LocaleUtil.localizeMjFlowComponent(debugPowerRate)));
+        left.add(Component.literal("frameBox"));
+        left.add(Component.literal(" - min = " + frameBox.min()));
+        left.add(Component.literal(" - max = " + frameBox.max()));
+        left.add(Component.literal("miningBox:"));
+        left.add(Component.literal(" - min = " + miningBox.min()));
+        left.add(Component.literal(" - max = " + miningBox.max()));
 
-        left.add(new TextComponent("firstCheckedPoses = " + firstCheckedPoses.size()));
-        left.add(new TextComponent("frameBoxPosesCount = " + frameBoxPosesCount));
-        left.add(new TextComponent("firstChecked = " + firstChecked));
+        left.add(Component.literal("firstCheckedPoses = " + firstCheckedPoses.size()));
+        left.add(Component.literal("frameBoxPosesCount = " + frameBoxPosesCount));
+        left.add(Component.literal("firstChecked = " + firstChecked));
 
         BoxIterator iter = boxIterator;
-        left.add(new TextComponent("current = " + (iter == null ? "null" : iter.getCurrent())));
+        left.add(Component.literal("current = " + (iter == null ? "null" : iter.getCurrent())));
 
         Task task = currentTask;
         if (task != null) {
-            left.add(new TextComponent("task:"));
-            left.add(new TextComponent(" - class = ").append(task.getClass().getName()));
-            left.add(new TextComponent(" - power = ").append(LocaleUtil.localizeMjComponent(task.power)));
-            left.add(new TextComponent(" - target = ").append(LocaleUtil.localizeMjComponent(task.getTarget())));
+            left.add(Component.literal("task:"));
+            left.add(Component.literal(" - class = ").append(task.getClass().getName()));
+            left.add(Component.literal(" - power = ").append(LocaleUtil.localizeMjComponent(task.power)));
+            left.add(Component.literal(" - target = ").append(LocaleUtil.localizeMjComponent(task.getTarget())));
         } else {
-            left.add(new TextComponent("task = null"));
+            left.add(Component.literal("task = null"));
         }
-        left.add(new TextComponent("drill = " + drillPos));
+        left.add(Component.literal("drill = " + drillPos));
     }
 
     @Nonnull

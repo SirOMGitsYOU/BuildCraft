@@ -15,16 +15,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class CoolantRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ICoolant> {
+public class CoolantRecipeSerializer implements RecipeSerializer<ICoolant> {
     public static final CoolantRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new CoolantRecipeSerializer();
-        INSTANCE.setRegistryName(ICoolant.TYPE_ID);
     }
 
     @Override

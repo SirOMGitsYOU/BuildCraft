@@ -19,7 +19,7 @@ public class BCBiomeTagsGenerator extends BiomeTagsProvider {
     protected void addTags() {
         // Add anything but nether, end and void biomes
         tag(OreDictionaryTags.OIL_GEN)
-                .addTag(Tags.Biomes.IS_OVERWORLD)
+                .addTag(BiomeTags.IS_OVERWORLD)
         ;
         tag(Biomes.IS_HOT)
                 .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
@@ -33,7 +33,7 @@ public class BCBiomeTagsGenerator extends BiomeTagsProvider {
         tag(BiomeTags.IS_OCEAN)
                 .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN)
         ;
-        tag(Biomes.IS_OVERWORLD)
+        tag(BiomeTags.IS_OVERWORLD)
                 .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
                 .add(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN)
         ;

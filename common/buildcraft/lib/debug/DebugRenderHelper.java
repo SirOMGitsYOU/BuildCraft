@@ -20,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import buildcraft.lib.client.sprite.White;
 
 @OnlyIn(Dist.CLIENT)
 public enum DebugRenderHelper implements IDetachedRenderer {
@@ -50,7 +50,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
             MutableQuad quad = ModelUtil.createFace(face, center, radius, null);
             // Calen: "white" is missingno in 1.18.2
             // fixed by loading "white" in SpriteHolderRegistry
-            quad.texFromSprite(ForgeModelBakery.White.instance());
+            quad.texFromSprite(White.instance());
             quad.lightf(1, 1);
             quad.overlay(OverlayTexture.NO_OVERLAY); // Calen add
             smallCuboidInner[face.ordinal()] = quad;
@@ -99,7 +99,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
             );
             quad.colouri(colour);
 //            quad.texFromSprite(IModelLoader.White.INSTANCE);
-            quad.texFromSprite(ForgeModelBakery.White.instance());
+            quad.texFromSprite(White.instance());
             quad.overlay(OverlayTexture.NO_OVERLAY);
             quad.lightf(1, 1);
 //            quad.normalf(1, 1, 1);

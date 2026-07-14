@@ -21,7 +21,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -637,12 +636,12 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
 //        left.add("stage = " + powerStage);
 //        left.add("progress = " + progress);
 //        left.add("last = " + LocaleUtil.localizeMjFlow(lastPower));
-        left.add(new TextComponent("facing = " + currentDirection));
-        left.add(new TextComponent("heat = ").append(new TextComponent(LocaleUtil.localizeHeat(heat) + " -- " + String.format("%.2f %%", getHeatLevel()))));
-        left.add(new TextComponent("power = ").append(LocaleUtil.localizeMjComponent(power)));
-        left.add(new TextComponent("stage = " + powerStage));
-        left.add(new TextComponent("progress = " + progress));
-        left.add(new TextComponent("last = ").append(LocaleUtil.localizeMjFlow(lastPower)));
+        left.add(Component.literal("facing = " + currentDirection));
+        left.add(Component.literal("heat = ").append(Component.literal(LocaleUtil.localizeHeat(heat) + " -- " + String.format("%.2f %%", getHeatLevel()))));
+        left.add(Component.literal("power = ").append(LocaleUtil.localizeMjComponent(power)));
+        left.add(Component.literal("stage = " + powerStage));
+        left.add(Component.literal("progress = " + progress));
+        left.add(Component.literal("last = ").append(LocaleUtil.localizeMjFlow(lastPower)));
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -35,7 +35,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -335,10 +334,10 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
     @Override
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         if (station == null) {
-            left.add(new TextComponent("PluggableRobotStation: No station found!"));
+            left.add(Component.literal("PluggableRobotStation: No station found!"));
         } else {
             refreshRenderState();
-            left.add(new TextComponent("Docking Station (side " + side.name() + ", " + renderState.name() + ")"));
+            left.add(Component.literal("Docking Station (side " + side.name() + ", " + renderState.name() + ")"));
             if (station.robotTaking() != null && station.robotTaking() instanceof IDebuggable) {
                 ((IDebuggable) station.robotTaking()).getDebugInfo(left, right, side);
             }

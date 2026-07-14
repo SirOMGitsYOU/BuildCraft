@@ -13,9 +13,9 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -79,9 +79,9 @@ public class MapManager implements Runnable {
     }
 
     @SubscribeEvent
-    public void tickDelayedWorlds(TickEvent.WorldTickEvent event) {
+    public void tickDelayedWorlds(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
-            MapWorld w = worldMap.get(event.world);
+            MapWorld w = worldMap.get(event.level);
             if (w != null) {
                 w.tick();
             }
@@ -89,37 +89,37 @@ public class MapManager implements Runnable {
     }
 
     @SubscribeEvent
-    public void worldUnloaded(WorldEvent.Unload event) {
-        if (worldMap.containsKey(event.getWorld())) {
-            worldMap.get(event.getWorld()).save();
+    public void worldUnloaded(LevelEvent.Unload event) {
+        if (worldMap.containsKey(event.getLevel())) {
+            worldMap.get(event.getLevel()).save();
             synchronized (worldMap) {
-                worldMap.remove(event.getWorld());
+                worldMap.remove(event.getLevel());
             }
         }
     }
 
     @SubscribeEvent
     public void chunkLoaded(ChunkEvent.Load event) {
-        // updateChunkDelayed(event.getWorld(), event.getChunk(), false, (byte) (40 + VecUtil.RANDOM.nextInt(20)));
-        updateChunkDelayed(event.getWorld(), event.getChunk(), false, (byte) (40 + rand.nextInt(20)));
+        // updateChunkDelayed(event.getLevel(), event.getChunk(), false, (byte) (40 + VecUtil.RANDOM.nextInt(20)));
+        updateChunkDelayed(event.getLevel(), event.getChunk(), false, (byte) (40 + rand.nextInt(20)));
     }
 
     @SubscribeEvent
     public void chunkUnloaded(ChunkEvent.Unload event) {
-        updateChunk(event.getWorld(), event.getChunk(), false);
+        updateChunk(event.getLevel(), event.getChunk(), false);
     }
 
     @SubscribeEvent
     // public void blockPlaced(BlockEvent.PlaceEvent placeEvent)
     public void blockPlaced(BlockEvent.EntityPlaceEvent placeEvent) {
         // LevelChunk chunk = placeEvent.world.getChunkFromBlockCoords(placeEvent.pos);
-        ChunkAccess chunk = placeEvent.getWorld().getChunk(placeEvent.getPos());
+        ChunkAccess chunk = placeEvent.getLevel().getChunk(placeEvent.getPos());
         // MapWorld world = getWorld(placeEvent.world);
-        MapWorld world = getWorld(placeEvent.getWorld());
+        MapWorld world = getWorld(placeEvent.getLevel());
         // if (world != null && doUpdate(world, chunk))
         if (world != null && chunk instanceof LevelChunk && doUpdate(world, chunk)) {
             // int hv = placeEvent.world.getHeight(placeEvent.pos).getY();
-            int hv = placeEvent.getWorld().getHeight(Heightmap.Types.WORLD_SURFACE, placeEvent.getPos().getX(), placeEvent.getPos().getZ());
+            int hv = placeEvent.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, placeEvent.getPos().getX(), placeEvent.getPos().getZ());
             // if (placeEvent.pos.getY() >= (hv - 3))
             if (placeEvent.getPos().getY() >= (hv - 3)) {
                 world.updateChunk((LevelChunk) chunk);
@@ -130,12 +130,12 @@ public class MapManager implements Runnable {
     @SubscribeEvent
     public void blockBroken(BlockEvent.BreakEvent placeEvent) {
         // Chunk chunk = placeEvent.world.getChunkFromBlockCoords(placeEvent.pos);
-        ChunkAccess chunk = placeEvent.getWorld().getChunk(placeEvent.getPos());
-        MapWorld world = getWorld(placeEvent.getWorld());
+        ChunkAccess chunk = placeEvent.getLevel().getChunk(placeEvent.getPos());
+        MapWorld world = getWorld(placeEvent.getLevel());
         // if (world != null && doUpdate(world, chunk))
         if (world != null && chunk instanceof LevelChunk && doUpdate(world, chunk)) {
-            // int hv = placeEvent.getWorld().getHeight(placeEvent.getPos()).getY();
-            int hv = placeEvent.getWorld().getHeight(Heightmap.Types.WORLD_SURFACE, placeEvent.getPos().getX(), placeEvent.getPos().getZ());
+            // int hv = placeEvent.getLevel().getHeight(placeEvent.getPos()).getY();
+            int hv = placeEvent.getLevel().getHeight(Heightmap.Types.WORLD_SURFACE, placeEvent.getPos().getX(), placeEvent.getPos().getZ());
             if (placeEvent.getPos().getY() >= (hv - 3)) {
                 world.updateChunk((LevelChunk) chunk);
             }

@@ -1,9 +1,9 @@
 package buildcraft.lib.recipe;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.crafting.NBTIngredient;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 
-public class IngredientNBTBC extends NBTIngredient {
+public class IngredientNBTBC extends StrictNBTIngredient {
 
     public IngredientNBTBC(ItemStack stack) {
         super(stack);

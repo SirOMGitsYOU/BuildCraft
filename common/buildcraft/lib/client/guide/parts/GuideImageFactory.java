@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 
+import java.io.InputStream;
 import java.io.IOException;
 import java.util.function.Function;
 
@@ -63,9 +64,8 @@ public class GuideImageFactory implements GuidePartFactory {
             ISprite s;
             int sw, sh;
             ResourceLocation resLoc = new ResourceLocation(location);
-            try (Resource resource = Minecraft.getInstance().getResourceManager().getResource(resLoc)) {
-//                PngSizeInfo size = PngSizeInfo.makeFromResource(resource);
-                PngInfo png = new PngInfo(resource.getSourceName(), resource.getInputStream());
+            try (InputStream in = Minecraft.getInstance().getResourceManager().getResource(resLoc).orElseThrow(() -> new IOException("Missing " + resLoc)).open()) {
+                PngInfo png = new PngInfo(() -> resLoc.toString(), in);
                 s = new SpriteRaw(resLoc, 0, 0, 1, 1);
 //                sw = size.pngWidth;
                 sw = png.width;

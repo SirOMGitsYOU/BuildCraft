@@ -17,7 +17,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.event.world.ChunkEvent;
+import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.security.InvalidParameterException;
@@ -401,10 +401,10 @@ public class RobotRegistry extends SavedData implements IRobotRegistry {
 
     @SubscribeEvent
     public void onChunkUnload(ChunkEvent.Unload e) {
-        if (e.getWorld() == this.world) {
+        if (e.getLevel() == this.world) {
             for (EntityRobot robot : new ArrayList<EntityRobot>(robotsLoadedSet)) {
-                // if (!e.getWorld().loadedEntityList.contains(robot))
-                if (e.getWorld() instanceof Level && !((ServerLevel) e.getWorld()).getChunkSource().chunkMap.entityMap.values().stream().anyMatch(trackedEntity -> trackedEntity.entity == robot)) {
+                // if (!e.getLevel().loadedEntityList.contains(robot))
+                if (e.getLevel() instanceof Level && !((ServerLevel) e.getLevel()).getChunkSource().chunkMap.entityMap.values().stream().anyMatch(trackedEntity -> trackedEntity.entity == robot)) {
                     robot.onChunkUnload();
                 }
             }

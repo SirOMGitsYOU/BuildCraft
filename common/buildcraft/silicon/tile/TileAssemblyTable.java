@@ -31,7 +31,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -295,9 +294,9 @@ public class TileAssemblyTable extends TileLaserTableBase implements IAssemblyCr
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         super.getDebugInfo(left, right, side);
 //        left.add("recipes - " + recipesStates.size());
-        left.add(new TextComponent("recipes - " + recipesStates.size()));
+        left.add(Component.literal("recipes - " + recipesStates.size()));
 //        left.add("target - " + LocaleUtil.localizeMj(getTarget()));
-        left.add(new TextComponent("target - ").append(LocaleUtil.localizeMjComponent(getTarget())));
+        left.add(Component.literal("target - ").append(LocaleUtil.localizeMjComponent(getTarget())));
     }
 
     @Nullable

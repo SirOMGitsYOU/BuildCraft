@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.stream.Stream;
@@ -63,11 +64,11 @@ public class BCItemTagsGenerator extends ItemTagsProvider {
 
         // misc
         tag(OreDictionaryTags.WORKBENCHES_ITEM)
-                .addOptional(Items.CRAFTING_TABLE.getRegistryName())
+                .addOptional(ForgeRegistries.ITEMS.getKey(Items.CRAFTING_TABLE))
         ;
 
         tag(OreDictionaryTags.CLAY)
-                .addOptional(Items.CLAY.getRegistryName())
+                .addOptional(ForgeRegistries.ITEMS.getKey(Items.CLAY))
         ;
 
         // pipe plugs
@@ -79,7 +80,7 @@ public class BCItemTagsGenerator extends ItemTagsProvider {
         OreDictionaryTags.pipeColorTags.forEach((c, t) ->
         {
             TagsProvider.TagAppender<Item> tagProvider = tag(t);
-            PipeRegistry.INSTANCE.getAllRegisteredPipes().forEach(d -> tagProvider.addOptional(((Item) PipeRegistry.INSTANCE.getItemForPipe(d, c)).getRegistryName()));
+            PipeRegistry.INSTANCE.getAllRegisteredPipes().forEach(d -> tagProvider.addOptional(ForgeRegistries.ITEMS.getKey((Item) PipeRegistry.INSTANCE.getItemForPipe(d, c))));
         });
 
         addAllOptional(tag(OreDictionaryTags.pipeStructure), BCTransportItems.pipeStructure.values().stream().map(reg -> reg));

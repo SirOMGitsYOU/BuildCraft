@@ -36,7 +36,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -137,9 +137,9 @@ public class BCSiliconModels {
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
 //        putModel(event, "gate_item#inventory", ModelGateItem.INSTANCE);
-        event.getModelRegistry().replaceAll((rl, model) ->
+        event.getModels().replaceAll((rl, model) ->
                 {
                     if (rl instanceof ModelResourceLocation m && m.getPath().startsWith("plug_gate")) {
                         return ModelGateItem.INSTANCE;
@@ -165,9 +165,9 @@ public class BCSiliconModels {
         PlugGateRenderer.onModelBake();
     }
 
-    private static void putModel(ModelBakeEvent event, String str, BakedModel model) {
-//        event.getModelRegistry().put(BCModules.SILICON.createModelLocation(str), model);
-        event.getModelRegistry().replace(BCModules.SILICON.createModelLocation(str), model);
+    private static void putModel(ModelEvent.BakingCompleted event, String str, BakedModel model) {
+//        event.getModels().put(BCModules.SILICON.createModelLocation(str), model);
+        event.getModels().replace(BCModules.SILICON.createModelLocation(str), model);
     }
 
     public static MutableQuad[] getGateStaticQuads(Direction side, GateVariant variant) {

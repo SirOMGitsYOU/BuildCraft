@@ -18,7 +18,6 @@ import buildcraft.transport.BCTransportStatements;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -38,7 +37,7 @@ public class ActionPipeDirection extends BCStatement implements IActionInternal 
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.action.pipe.direction", ColourUtil.getTextFullTooltip(direction));
-        return new TranslatableComponent("gate.action.pipe.direction", ColourUtil.getTextFullTooltipComponent(direction));
+        return Component.translatable("gate.action.pipe.direction", ColourUtil.getTextFullTooltipComponent(direction));
     }
 
     @Override

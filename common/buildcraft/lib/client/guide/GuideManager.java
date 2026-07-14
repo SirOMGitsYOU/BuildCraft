@@ -38,8 +38,6 @@ import com.google.common.base.Stopwatch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.LanguageInfo;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -227,9 +225,7 @@ public enum GuideManager implements ResourceManagerReloadListener {
                 ResourceLocation fLoc = new ResourceLocation(domain, path + "." + entry.getKey());
 
                 try (IProfilerSection s = p.start("get_resource");
-                     InputStream stream = resourceManager.getResource(
-                             fLoc
-                     ).getInputStream();
+                     InputStream stream = resourceManager.getResource(fLoc).orElseThrow(() -> new IOException("Missing " + fLoc)).open();
                      IProfilerSection l = p.start("load"))
                 {
                     GuidePageFactory factory = entry.getValue().loadPage(stream, entryKey, mapEntry.getValue(), prof);
@@ -300,7 +296,7 @@ public enum GuideManager implements ResourceManagerReloadListener {
 
         prof.popPush("add_default");
 //        ContentsNode othersRoot = new ContentsNode(LocaleUtil.localize("buildcraft.guide.contents.all_group"), 0);
-        ContentsNode othersRoot = new ContentsNode("buildcraft.guide.contents.all_group", new TranslatableComponent("buildcraft.guide.contents.all_group"), 0);
+        ContentsNode othersRoot = new ContentsNode("buildcraft.guide.contents.all_group", Component.translatable("buildcraft.guide.contents.all_group"), 0);
         for (Entry<GuideBook, Map<TypeOrder, ContentsNode>> bookEntry : contents.entrySet()) {
             @Nullable
             GuideBook book = bookEntry.getKey();
@@ -321,7 +317,7 @@ public enum GuideManager implements ResourceManagerReloadListener {
             }
 //            String title = LocaleUtil.localize(tags.type);
             String titleKey = tags.type;
-            Component title = new TranslatableComponent(titleKey);
+            Component title = Component.translatable(titleKey);
 //            IContentsNode subNode = othersRoot.getChild(title);
             IContentsNode subNode = othersRoot.getChild(titleKey);
             if (subNode instanceof ContentsNode) {
@@ -359,7 +355,7 @@ public enum GuideManager implements ResourceManagerReloadListener {
         contents.put(book, map);
         for (TypeOrder order : GuiGuide.SORTING_TYPES) {
 //            map.put(order, new ContentsNode("root", -1));
-            map.put(order, new ContentsNode("root", new TextComponent("root"), -1));
+            map.put(order, new ContentsNode("root", Component.literal("root"), -1));
         }
     }
 
@@ -385,7 +381,7 @@ public enum GuideManager implements ResourceManagerReloadListener {
                     // Calen: here lang file has not loaded
 //                    String title = LocaleUtil.localize(ordered[i]);
                     String titleKey = ordered[i];
-                    Component title = new TranslatableComponent(ordered[i]);
+                    Component title = Component.translatable(ordered[i]);
 //                    IContentsNode subNode = node.getChild(title);
                     IContentsNode subNode = node.getChild(titleKey);
                     if (subNode instanceof ContentsNode) {

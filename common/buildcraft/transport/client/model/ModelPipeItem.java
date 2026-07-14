@@ -38,7 +38,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 @OnlyIn(Dist.CLIENT)
 public enum ModelPipeItem implements BakedModel {
@@ -141,7 +141,7 @@ public enum ModelPipeItem implements BakedModel {
 
     @Override
 //    public List<BakedQuad> getQuads(IBlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
         return ImmutableList.of();
     }
 

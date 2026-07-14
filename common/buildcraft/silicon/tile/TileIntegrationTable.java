@@ -24,7 +24,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -180,9 +179,9 @@ public class TileIntegrationTable extends TileLaserTableBase implements IHasWork
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         super.getDebugInfo(left, right, side);
 //        left.add("recipe - " + recipe);
-        left.add(new TextComponent("recipe - " + recipe));
+        left.add(Component.literal("recipe - " + recipe));
 //        left.add("target - " + getTarget());
-        left.add(new TextComponent("target - " + getTarget()));
+        left.add(Component.literal("target - " + getTarget()));
     }
 
     private IntegrationRecipe lookupRecipe(String name) {

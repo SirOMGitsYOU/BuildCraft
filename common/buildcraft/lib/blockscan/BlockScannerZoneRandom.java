@@ -4,11 +4,11 @@ import buildcraft.api.core.IZone;
 import net.minecraft.core.BlockPos;
 
 import java.util.Iterator;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class BlockScannerZoneRandom implements Iterable<BlockPos> {
 
-    private Random rand;
+    private RandomSource rand;
     private IZone zone;
     private BlockPos pos;
 
@@ -29,7 +29,7 @@ public class BlockScannerZoneRandom implements Iterable<BlockPos> {
         public void remove() {}
     }
 
-    public BlockScannerZoneRandom(BlockPos pos, Random iRand, IZone iZone) {
+    public BlockScannerZoneRandom(BlockPos pos, RandomSource iRand, IZone iZone) {
         this.pos = pos;
         rand = iRand;
         zone = iZone;

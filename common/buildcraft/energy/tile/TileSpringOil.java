@@ -12,7 +12,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -86,16 +85,16 @@ public class TileSpringOil extends BlockEntity implements IDebuggable, ITileOilS
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("totalSources = " + totalSources);
-        left.add(new TextComponent("totalSources = " + totalSources));
+        left.add(Component.literal("totalSources = " + totalSources));
         boolean added = false;
         for (PlayerPumpInfo info : pumpProgress.values()) {
             if (!added) {
 //                left.add("Player Progress:");
-                left.add(new TextComponent("Player Progress:"));
+                left.add(Component.literal("Player Progress:"));
                 added = true;
             }
 //            left.add("  " + info.profile.getName() + " = " + info.sourcesPumped + " ( " + (level.getGameTime() - info.lastPumpTick) / 20 + "s )");
-            left.add(new TextComponent("  " + info.profile.getName() + " = " + info.sourcesPumped + " ( " + (level.getGameTime() - info.lastPumpTick) / 20 + "s )"));
+            left.add(Component.literal("  " + info.profile.getName() + " = " + info.sourcesPumped + " ( " + (level.getGameTime() - info.lastPumpTick) / 20 + "s )"));
         }
     }
 

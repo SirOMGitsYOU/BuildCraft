@@ -35,7 +35,7 @@ public class FluidManager {
 
 //    @SubscribeEvent
 //    @SideOnly(Side.CLIENT)
-//    public static void onModelBake(ModelBakeEvent event) {
+//    public static void onModelBake(ModelEvent.BakingCompleted event) {
 //        for (BCFluidBlock fluid : fluidBlocks) {
 //            event.getModelManager().getBlockModelShapes().registerBlockWithStateMapper(fluid,
 //                new StateMap.Builder().ignore(BlockFluidBase.LEVEL).build());

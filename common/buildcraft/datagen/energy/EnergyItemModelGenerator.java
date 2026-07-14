@@ -17,15 +17,15 @@ public class EnergyItemModelGenerator extends BCBaseItemModelGenerator {
     @Override
     protected void registerModels() {
         // Block Items
-        getBuilder(BCEnergyBlocks.engineStone.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
-        getBuilder(BCEnergyBlocks.engineIron.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
-        getBuilder(BCEnergyBlocks.engineRf.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
-        getBuilder(BCEnergyBlocks.mjDynamo.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCEnergyBlocks.engineStone.getId().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCEnergyBlocks.engineIron.getId().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCEnergyBlocks.engineRf.getId().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCEnergyBlocks.mjDynamo.getId().toString()).parent(BUILTIN_ENTITY);
 
         // Items
-        withExistingParent(BCEnergyItems.globOil.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCEnergyItems.globOil.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftenergy:items/glob_oil");
-        withExistingParent(BCEnergyItems.oilPlacer.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCEnergyItems.oilPlacer.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftenergy:items/glob_oil");
     }
 

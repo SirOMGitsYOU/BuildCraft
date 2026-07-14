@@ -47,6 +47,8 @@ public class BCLibRegistries {
         CropManager.setDefaultHandler(CropHandlerPlantable.INSTANCE);
         CropManager.registerHandler(CropHandlerReeds.INSTANCE);
         CropManager.registerHandler(CropHandlerGlowBerries.INSTANCE);
+
+        initRecipeRegistry();
     }
 
     public static void initRecipeRegistry() {

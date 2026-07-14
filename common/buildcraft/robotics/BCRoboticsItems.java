@@ -55,6 +55,6 @@ public class BCRoboticsItems {
                 robot.put(robotNBT, itemRobot);
             }
         }
-        robotGoggles = HELPER.addItem("item.robot_googles", ItemPropertiesCreator.common1(), ItemRobotGoggles::new);
+        robotGoggles = HELPER.addItem("item.robot_goggles", ItemPropertiesCreator.common1(), ItemRobotGoggles::new);
     }
 }

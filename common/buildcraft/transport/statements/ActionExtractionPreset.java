@@ -17,7 +17,6 @@ import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.BCTransportStatements;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli.SlotIndex;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -37,7 +36,7 @@ public class ActionExtractionPreset extends BCStatement implements IActionIntern
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.action.extraction", ColourUtil.getTextFullTooltip(index.colour));
-        return new TranslatableComponent("gate.action.extraction", ColourUtil.getTextFullTooltipComponent(index.colour));
+        return Component.translatable("gate.action.extraction", ColourUtil.getTextFullTooltipComponent(index.colour));
     }
 
     @Override

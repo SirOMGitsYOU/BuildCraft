@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "buildcraftfactory",
+  "pattern": [
+    "g g",
+    "l l"
+  ],
+  "key": {
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "l": {
+      "tag": "forge:dyes/green"
+    }
+  },
+  "result": {
+    "item": "buildcraftrobotics:robot_goggles"
+  }
+}

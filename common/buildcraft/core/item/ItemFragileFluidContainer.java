@@ -12,8 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -63,16 +61,16 @@ public class ItemFragileFluidContainer extends ItemBC_Neptune implements IItemFl
 
         if (fluid == null) {
 //            localized = "ERROR! NULL FLUID!";
-            localized = new TextComponent("ERROR! NULL FLUID!");
+            localized = Component.literal("ERROR! NULL FLUID!");
         } else if (fluid.getRawFluid() instanceof BCFluid bcFluid) {
 //            BCFluid bcFluid = (BCFluid) fluid.getRawFluid();
-            if (((BCFluidAttributes) bcFluid.getAttributes()).isHeatable()) {
+            if (((BCFluidAttributes) bcFluid.getFluidType()).isHeatable()) {
                 // Add the heatable bit to the end of the name
 //                localized = bcFluid.getBareLocalizedName(fluid);
-                localized = bcFluid.getAttributes().getDisplayName(fluid);
+                localized = bcFluid.getFluidType().getDescription(fluid);
 //                String whole = LocaleUtil.localize(getUnlocalizedName() + ".name", localized);
 //                return whole + LocaleUtil.localize("buildcraft.fluid.heat_" + bcFluid.getHeatValue());
-                return new TranslatableComponent(getDescriptionId(stack), localized);
+                return Component.translatable(getDescriptionId(stack), localized);
             } else {
 //                localized = fluid.getDisplayName().getString();
                 localized = fluid.getDisplayName();
@@ -81,8 +79,8 @@ public class ItemFragileFluidContainer extends ItemBC_Neptune implements IItemFl
 //            localized = fluid.getDisplayName().getString();
             localized = fluid.getDisplayName();
         }
-//        return new TextComponent(LocaleUtil.localize(this.getDescriptionId(stack), localized));
-        return new TranslatableComponent(this.getDescriptionId(stack), localized);
+//        return Component.literal(LocaleUtil.localize(this.getDescriptionId(stack), localized));
+        return Component.translatable(this.getDescriptionId(stack), localized);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -44,7 +44,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -279,19 +278,19 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
 
             logic.readConfigData(stored);
 
-            player.sendMessage(new TranslatableComponent("chat.gateCopier.gatePasted"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("chat.gateCopier.gatePasted"));
 
         } else {
             stored = logic.writeToNbt();
             stored.remove("wireBroadcasts");
 
             if (stored.size() == 1) {
-                player.sendMessage(new TranslatableComponent("chat.gateCopier.noInformation"), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("chat.gateCopier.noInformation"));
                 return false;
             }
 
             ItemGateCopier.setCopiedGateData(stack, stored);
-            player.sendMessage(new TranslatableComponent("chat.gateCopier.gateCopied"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("chat.gateCopier.gateCopied"));
         }
 
         return true;

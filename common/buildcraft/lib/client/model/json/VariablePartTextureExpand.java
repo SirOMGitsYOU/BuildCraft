@@ -19,11 +19,12 @@ import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.ItemLayerModel;
-import net.minecraftforge.client.model.StandaloneModelConfiguration;
+import net.minecraftforge.client.model.ItemLayerModel.Loader;
+import net.minecraftforge.client.model.geometry.StandaloneGeometryBakingContext;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 import java.util.Set;
 
 public class VariablePartTextureExpand extends JsonVariableModelPart {
@@ -62,17 +63,17 @@ public class VariablePartTextureExpand extends JsonVariableModelPart {
             VariablePartCuboidBase.VariableFaceData data = faceUv.evaluate(spriteLookup);
             // TODO: Use the UV data! (only take part of the texture)
 //            ItemLayerModel model = new ItemLayerModel(ImmutableList.of(new ResourceLocation(".")));
-            ItemLayerModel model = new ItemLayerModel(ImmutableList.of());
+            ItemLayerModel model = Loader.INSTANCE.read(new JsonObject(), null);
 //            BakedModel baked = model.bake(ModelRotation.X0_Y0, DefaultVertexFormats.ITEM, (loc) -> data.sprite);
             BakedModel baked = model.bake(
-                    StandaloneModelConfiguration.create(new ResourceLocation("")),
+                    StandaloneGeometryBakingContext.create(new ResourceLocation("")),
                     null,
                     (loc) -> data.sprite.get(),
                     BlockModelRotation.X0_Y0,
                     ItemOverrides.EMPTY,
                     null
             );
-            List<BakedQuad> quads = baked.getQuads(null, null, new Random(0));
+            List<BakedQuad> quads = baked.getQuads(null, null, RandomSource.create(0));
             for (BakedQuad q : quads) {
                 MutableQuad mut = new MutableQuad();
                 mut.fromBakedItem(q);

@@ -31,7 +31,7 @@ public class ItemBC_Neptune extends Item implements IItemBuildCraft, IForgeItem 
 //    public final void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
     public final void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
 //        if (isInCreativeTab(tab))
-        if (allowdedIn(tab)) {
+        if (allowedIn(tab)) {
             addSubItems(tab, items);
         }
     }

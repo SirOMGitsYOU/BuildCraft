@@ -17,7 +17,6 @@ import buildcraft.silicon.BCSiliconStatements;
 import buildcraft.silicon.plug.PluggablePulsar;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class ActionPowerPulsar extends BCStatement implements IActionInternalSided, IActionSingle {
 
@@ -34,7 +33,7 @@ public class ActionPowerPulsar extends BCStatement implements IActionInternalSid
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize(constant ? "gate.action.pulsar.constant" : "gate.action.pulsar.single");
-        return new TranslatableComponent(constant ? "gate.action.pulsar.constant" : "gate.action.pulsar.single");
+        return Component.translatable(constant ? "gate.action.pulsar.constant" : "gate.action.pulsar.single");
     }
 
     @Override

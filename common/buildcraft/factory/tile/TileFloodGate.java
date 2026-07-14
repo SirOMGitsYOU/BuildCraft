@@ -24,7 +24,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NumericTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -60,7 +59,7 @@ public class TileFloodGate extends TileBC_Neptune implements ITickable, IDebugga
     private static final int[] REBUILD_DELAYS = { 16, 32, 64, 128, 256 };
 
     // private final Tank tank = new Tank("tank", 2 * Fluid.BUCKET_VOLUME, this);
-    private final Tank tank = new Tank("tank", 2 * FluidAttributes.BUCKET_VOLUME, this);
+    private final Tank tank = new Tank("tank", 2 * FluidType.BUCKET_VOLUME, this);
     public final Set<Direction> openSides = EnumSet.copyOf(BlockFloodGate.CONNECTED_MAP.keySet());
     public final Deque<BlockPos> queue = new ArrayDeque<>();
     private final Map<BlockPos, List<BlockPos>> paths = new HashMap<>();
@@ -95,7 +94,7 @@ public class TileFloodGate extends TileBC_Neptune implements ITickable, IDebugga
             nextPosesToCheck.add(offset);
             paths.put(offset, ImmutableList.of(offset));
         }
-        Direction[] directions = fluid.getFluid().getAttributes().isGaseous(fluid) ? SEARCH_GASEOUS : SEARCH_NORMAL;
+        Direction[] directions = fluid.getFluid().getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
         level.getProfiler().popPush("build");
         outer:
         while (!nextPosesToCheck.isEmpty()) {
@@ -171,7 +170,7 @@ public class TileFloodGate extends TileBC_Neptune implements ITickable, IDebugga
         }
 
 //        if (tank.getFluidAmount() < Fluid.BUCKET_VOLUME)
-        if (tank.getFluidAmount() < FluidAttributes.BUCKET_VOLUME) {
+        if (tank.getFluidAmount() < FluidType.BUCKET_VOLUME) {
             return;
         }
 
@@ -179,9 +178,9 @@ public class TileFloodGate extends TileBC_Neptune implements ITickable, IDebugga
         if (tick % 16 == 0) {
             if (!tank.isEmpty() && !queue.isEmpty()) {
 //                FluidStack fluid = tank.drain(Fluid.BUCKET_VOLUME, false);
-                FluidStack fluid = tank.drain(FluidAttributes.BUCKET_VOLUME, FluidAction.SIMULATE);
+                FluidStack fluid = tank.drain(FluidType.BUCKET_VOLUME, FluidAction.SIMULATE);
 //                if (fluid != null && fluid.getAmount() >= Fluid.BUCKET_VOLUME)
-                if (!fluid.isEmpty() && fluid.getAmount() >= FluidAttributes.BUCKET_VOLUME) {
+                if (!fluid.isEmpty() && fluid.getAmount() >= FluidType.BUCKET_VOLUME) {
                     BlockPos currentPos = queue.removeLast();
                     List<BlockPos> path = paths.get(currentPos);
                     boolean canFill = true;
@@ -313,10 +312,10 @@ public class TileFloodGate extends TileBC_Neptune implements ITickable, IDebugga
 //        left.add("delay = " + getCurrentDelay());
 //        left.add("tick = " + tick);
 //        left.add("queue size = " + queue.size());
-        left.add(new TextComponent("fluid = " + tank.getDebugString()));
-        left.add(new TextComponent("open sides = " + openSides.stream().map(Enum::name).collect(Collectors.joining(", "))));
-        left.add(new TextComponent("delay = " + getCurrentDelay()));
-        left.add(new TextComponent("tick = " + tick));
-        left.add(new TextComponent("queue size = " + queue.size()));
+        left.add(Component.literal("fluid = " + tank.getDebugString()));
+        left.add(Component.literal("open sides = " + openSides.stream().map(Enum::name).collect(Collectors.joining(", "))));
+        left.add(Component.literal("delay = " + getCurrentDelay()));
+        left.add(Component.literal("tick = " + tick));
+        left.add(Component.literal("queue size = " + queue.size()));
     }
 }

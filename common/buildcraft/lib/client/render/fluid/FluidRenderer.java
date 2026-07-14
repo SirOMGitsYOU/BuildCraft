@@ -105,8 +105,8 @@ public class FluidRenderer {
                 continue;
             }
             // BC 1.12.2
-            ResourceLocation still = fluid.getAttributes().getStillTexture();
-            ResourceLocation flowing = fluid.getAttributes().getFlowingTexture();
+            ResourceLocation still = FluidUtilBC.getStillTexture(fluid);
+            ResourceLocation flowing = FluidUtilBC.getFlowingTexture(fluid);
             if (still == null || flowing == null) {
                 // Calen: for uncompleted fluid, continue
 //                throw new IllegalStateException("Encountered a fluid with a null still sprite! (" + fluid.getRegistryName().toString()
@@ -155,12 +155,12 @@ public class FluidRenderer {
                 if (fluid.getClass() == EmptyFluid.class) {
                     continue;
                 }
-                ResourceLocation still = fluid.getAttributes().getStillTexture();
-                ResourceLocation flowing = fluid.getAttributes().getFlowingTexture();
-                ResourceLocation registryName = fluid.getRegistryName();
+                ResourceLocation still = FluidUtilBC.getStillTexture(fluid);
+                ResourceLocation flowing = FluidUtilBC.getFlowingTexture(fluid);
+                ResourceLocation registryName = ForgeRegistries.FLUIDS.getKey(fluid);
                 if (still == null || flowing == null) {
                     // Calen: for uncompleted fluid, continue
-                    BCLog.logger.warn("[lib.fluid.renderder] Found fluid [" + fluid.getRegistryName() + "] has no still or flow textuer ResourceLocation, unable to get sprite.");
+                    BCLog.logger.warn("[lib.fluid.renderder] Found fluid [" + registryName + "] has no still or flow textuer ResourceLocation, unable to get sprite.");
                     continue;
                 }
                 TextureAtlasSprite stillSprite = map.getSprite(still);
@@ -169,7 +169,7 @@ public class FluidRenderer {
                 srcSprites.put(registryName, stillSprite);
             }
             FROZEN_ATLAS.setSrcSprites(srcSprites);
-            TextureAtlas.Preparations preparations = FROZEN_ATLAS.prepareToStitch(Minecraft.getInstance().getResourceManager(), srcSprites.keySet().stream(), Minecraft.getInstance().getProfiler(), Minecraft.getInstance().options.mipmapLevels);
+            TextureAtlas.Preparations preparations = FROZEN_ATLAS.prepareToStitch(Minecraft.getInstance().getResourceManager(), srcSprites.keySet().stream(), Minecraft.getInstance().getProfiler(), Minecraft.getInstance().options.mipmapLevels().get());
             FROZEN_ATLAS.reload(preparations);
             FROZEN_ATLAS.texturesByName.values().forEach(sprite -> {
                 if (sprite instanceof SpriteFluidFrozen) {
@@ -256,7 +256,7 @@ public class FluidRenderer {
 //        double height = MathHelper.clamp(amount / cap, 0, 1);
         double height = Mth.clamp(amount / cap, 0, 1);
         final Vec3 realMin, realMax;
-        if (fluid.getRawFluid().getAttributes().isGaseous(fluid)) {
+        if (fluid.getRawFluid().getFluidType().isLighterThanAir()) {
             realMin = VecUtil.replaceValue(min, Axis.Y, MathUtil.interp(1 - height, min.y, max.y));
             realMax = max;
         } else {
@@ -309,7 +309,7 @@ public class FluidRenderer {
             zTexDiff = 0;
         }
 
-        vertex.colouri(RenderUtil.swapARGBforABGR(fluid.getRawFluid().getAttributes().getColor(fluid)));
+        vertex.colouri(RenderUtil.swapARGBforABGR(FluidUtilBC.getColor(fluid.getRawFluid())));
 
         texmap = TexMap.XZ;
         // TODO: Enable/disable inversion for the correct faces
@@ -374,7 +374,7 @@ public class FluidRenderer {
         if (fluid == null) {
             return SpriteUtil.missingSprite();
         }
-        TextureAtlasSprite s = fluidSprites.get(type).get(fluid.getRegistryName().toString());
+        TextureAtlasSprite s = fluidSprites.get(type).get(ForgeRegistries.FLUIDS.getKey(fluid).toString());
         return s != null ? s : SpriteUtil.missingSprite();
     }
 
@@ -391,7 +391,7 @@ public class FluidRenderer {
         PoseStack.Pose pose = poseStack.last();
         Matrix4f poseMatrix = pose.pose();
 
-        sprite = FluidRenderer.fluidSprites.get(FluidSpriteType.STILL).get(fluid.getRawFluid().getRegistryName().toString());
+        sprite = FluidRenderer.fluidSprites.get(FluidSpriteType.STILL).get(ForgeRegistries.FLUIDS.getKey(fluid.getRawFluid()).toString());
         if (sprite == null) {
 //            sprite = Minecraft.getInstance().getTextureMapBlocks().getMissingSprite();
             sprite = SpriteUtil.missingSprite();
@@ -399,7 +399,7 @@ public class FluidRenderer {
 //        Minecraft.getInstance().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         SpriteUtil.bindTexture(TextureAtlas.LOCATION_BLOCKS);
 //        RenderUtil.setGLColorFromInt(fluid.getFluid().getColor(fluid));
-        RenderUtil.setGLColorFromInt(fluid.getRawFluid().getAttributes().getColor(fluid));
+        RenderUtil.setGLColorFromInt(FluidUtilBC.getColor(fluid.getRawFluid()));
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
 //        Tessellator tess = Tessellator.getInstance();

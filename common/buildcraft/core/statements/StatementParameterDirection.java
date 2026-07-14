@@ -19,8 +19,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -123,9 +121,9 @@ public class StatementParameterDirection implements IStatementParameter {
     public Component getDescription() {
         Direction dir = getDirection();
         if (dir == null) {
-            return new TextComponent("");
+            return Component.literal("");
         } else {
-            return new TranslatableComponent("direction." + dir.name().toLowerCase());
+            return Component.translatable("direction." + dir.name().toLowerCase());
         }
     }
 

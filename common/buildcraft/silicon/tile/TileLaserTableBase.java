@@ -23,7 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -126,9 +125,9 @@ public abstract class TileLaserTableBase extends TileBC_Neptune implements ILase
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("power - " + LocaleUtil.localizeMj(power));
-        left.add(new TextComponent("power - ").append(LocaleUtil.localizeMjComponent(power)));
+        left.add(Component.literal("power - ").append(LocaleUtil.localizeMjComponent(power)));
 //        left.add("target - " + LocaleUtil.localizeMj(getTarget()));
-        left.add(new TextComponent("target - ").append(LocaleUtil.localizeMjComponent(getTarget())));
+        left.add(Component.literal("target - ").append(LocaleUtil.localizeMjComponent(getTarget())));
     }
 
     protected boolean extract(ItemHandlerSimple inv, Collection<IngredientStack> items, boolean simulate, boolean precise) {

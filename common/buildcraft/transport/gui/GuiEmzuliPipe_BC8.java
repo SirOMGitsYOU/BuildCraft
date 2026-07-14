@@ -23,7 +23,6 @@ import buildcraft.transport.container.ContainerEmzuliPipe_BC8;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli.SlotIndex;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
@@ -116,10 +115,10 @@ public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
             Component line;
             if (colour == null) {
 //                line = LocaleUtil.localize("gui.pipes.emzuli.nopaint");
-                line = new TranslatableComponent("gui.pipes.emzuli.nopaint");
+                line = Component.translatable("gui.pipes.emzuli.nopaint");
             } else {
 //                line = LocaleUtil.localize("gui.pipes.emzuli.paint", ColourUtil.getTextFullTooltip(colour));
-                line = new TranslatableComponent("gui.pipes.emzuli.paint", ColourUtil.getTextFullTooltip(colour));
+                line = Component.translatable("gui.pipes.emzuli.paint", ColourUtil.getTextFullTooltip(colour));
             }
 //            list.add(new ToolTip(line));
             list.add(new ToolTip(line));

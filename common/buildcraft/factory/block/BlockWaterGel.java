@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -117,7 +118,7 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
 
     @Override
 //    public void updateTick(Level world, BlockPos pos, BlockState state, Random rand)
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
         GelStage stage = state.getValue(PROP_STAGE);
         GelStage next = stage.next();
         BlockState nextState = state.setValue(PROP_STAGE, next);

@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.loader;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.registry.IScriptableRegistry.OptionallyDisabled;
@@ -29,8 +31,6 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
@@ -82,8 +82,8 @@ public enum XmlPageLoader implements IPageLoaderText {
 
         @Override
         public GuidePart createNew(GuiGuide gui) {
-//            return new GuideText(gui, new TextComponent(text));
-            return new GuideText(gui, text, new TextComponent(text));
+//            return new GuideText(gui, Component.literal(text));
+            return new GuideText(gui, text, Component.literal(text));
         }
     }
 
@@ -699,14 +699,14 @@ public enum XmlPageLoader implements IPageLoaderText {
 
     public static GuidePartFactory chapter(String after, int level) {
 //        return (gui) -> new GuideChapterWithin(gui, level, LocaleUtil.localize(after));
-//        return (gui) -> new GuideChapterWithin(gui, level, new TranslatableComponent(after));
-        return (gui) -> new GuideChapterWithin(gui, level, after, new TranslatableComponent(after));
+//        return (gui) -> new GuideChapterWithin(gui, level, Component.translatable(after));
+        return (gui) -> new GuideChapterWithin(gui, level, after, Component.translatable(after));
     }
 
     public static GuidePartFactory translate(String text) {
-//        return gui -> new GuideText(gui, new PageLine(0, new TextComponent(LocaleUtil.localize(text)), false));
-//        return gui -> new GuideText(gui, new PageLine(0, new TranslatableComponent(text), false));
-        return gui -> new GuideText(gui, new PageLine(0, text, new TranslatableComponent(text), false));
+//        return gui -> new GuideText(gui, new PageLine(0, Component.literal(LocaleUtil.localize(text)), false));
+//        return gui -> new GuideText(gui, new PageLine(0, Component.translatable(text), false));
+        return gui -> new GuideText(gui, new PageLine(0, text, Component.translatable(text), false));
     }
 
     public static GuidePartFactory loadGroup(XmlTag tag, ProfilerFiller prof) {

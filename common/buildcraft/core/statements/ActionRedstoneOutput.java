@@ -16,7 +16,6 @@ import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -37,7 +36,7 @@ public class ActionRedstoneOutput extends BCStatement implements IActionInternal
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.action.redstone.signal");
-        return new TranslatableComponent("gate.action.redstone.signal");
+        return Component.translatable("gate.action.redstone.signal");
     }
 
     @Override

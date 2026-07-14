@@ -11,19 +11,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class HeatExchangeRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IHeatExchangerRecipe> {
+public class HeatExchangeRecipeSerializer implements RecipeSerializer<IHeatExchangerRecipe> {
     public static final HeatExchangeRecipeSerializer HEATABLE;
     public static final HeatExchangeRecipeSerializer COOLABLE;
 
     static {
         HEATABLE = new HeatExchangeRecipeSerializer(EnumHeatExchangeRecipeType.HEATABLE);
         COOLABLE = new HeatExchangeRecipeSerializer(EnumHeatExchangeRecipeType.COOLABLE);
-        HEATABLE.setRegistryName(HeatableRecipe.TYPE_ID);
-        COOLABLE.setRegistryName(CoolableRecipe.TYPE_ID);
     }
 
     private final EnumHeatExchangeRecipeType type;

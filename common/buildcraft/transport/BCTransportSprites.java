@@ -18,7 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -144,7 +144,7 @@ public class BCTransportSprites {
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
         PipeModelCacheAll.clearModels();
         PipeFlowRendererItems.onModelBake();
     }

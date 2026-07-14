@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class BlockMarkerVolume extends BlockMarkerBase {
     public BlockMarkerVolume(String idBC, BlockBehaviour.Properties properties) {
@@ -40,7 +40,7 @@ public class BlockMarkerVolume extends BlockMarkerBase {
 
     @Override
 //    public void updateTick(Level world, BlockPos pos, BlockState state, Random rand)
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
         checkSignalState(world, pos);
     }
 

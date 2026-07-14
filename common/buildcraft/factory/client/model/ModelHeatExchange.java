@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class ModelHeatExchange extends ModelItemSimple {
 
@@ -99,7 +99,7 @@ public class ModelHeatExchange extends ModelItemSimple {
 
     @Override
 //    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand) {
+    public List<BakedQuad> getQuads(BlockState state, Direction side, RandomSource rand) {
         // Calen: state == null
         // NullPointerException: Cannot invoke "net.minecraft.world.level.block.state.BlockState.m_61143_(net.minecraft.world.level.block.state.properties.Property)" because "state" is null
         // at buildcraft.factory.client.model.ModelHeatExchange.getIndexOf(ModelHeatExchange.java:124)

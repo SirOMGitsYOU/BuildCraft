@@ -10,7 +10,6 @@ import buildcraft.core.statements.BCStatement;
 import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.pipe.flow.PipeFlowFluids;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class TriggerFluidsTraversing extends BCStatement implements ITriggerInternal {
 
@@ -21,7 +20,7 @@ public class TriggerFluidsTraversing extends BCStatement implements ITriggerInte
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.pipe.containsFluids");
-        return new TranslatableComponent("gate.trigger.pipe.containsFluids");
+        return Component.translatable("gate.trigger.pipe.containsFluids");
     }
 
     @Override

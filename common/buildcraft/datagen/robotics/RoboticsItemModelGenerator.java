@@ -20,17 +20,21 @@ public class RoboticsItemModelGenerator extends BCBaseItemModelGenerator {
     @Override
     protected void registerModels() {
         // blocks
-        withExistingParent(BCRoboticsBlocks.zonePlanner.get().getRegistryName().toString(), new ResourceLocation("buildcraftrobotics:block/zone_planner"));
-        withExistingParent(BCRoboticsBlocks.requester.get().getRegistryName().toString(), new ResourceLocation("buildcraftrobotics:block/requester"));
+        withExistingParent(BCRoboticsBlocks.zonePlanner.getId().toString(), new ResourceLocation("buildcraftrobotics:block/zone_planner"));
+        withExistingParent(BCRoboticsBlocks.requester.getId().toString(), new ResourceLocation("buildcraftrobotics:block/requester"));
 
         // robotStation
-        getBuilder(BCRoboticsItems.robotStation.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCRoboticsItems.robotStation.getId().toString()).parent(BUILTIN_ENTITY);
 
         // board
         BCRoboticsItems.redstoneBoard.forEach((nbt, item) -> {
-            withExistingParent(item.get().getRegistryName().toString(), GENERATED)
+            withExistingParent(item.getId().toString(), GENERATED)
                     .texture("layer0", nbt.getBoardTexture());
         });
+
+        // robotGoggles
+        withExistingParent(BCRoboticsItems.robotGoggles.getId().toString(), GENERATED)
+                .texture("layer0", "buildcraftcore:items/goggles");
 
         // robot
         String robot = "buildcraftrobotics:item/robot";
@@ -80,7 +84,7 @@ public class RoboticsItemModelGenerator extends BCBaseItemModelGenerator {
                 .end()
         ;
         BCRoboticsItems.robot.forEach((nbt, item) -> {
-            withExistingParent(BCRoboticsItems.robot.get(nbt).get().getRegistryName().toString(), robot)
+            withExistingParent(BCRoboticsItems.robot.get(nbt).getId().toString(), robot)
                     .texture("all", nbt.getRobotTexture());
         });
     }

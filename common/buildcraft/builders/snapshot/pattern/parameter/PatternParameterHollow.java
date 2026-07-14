@@ -15,7 +15,6 @@ import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -82,7 +81,7 @@ public enum PatternParameterHollow implements IStatementParameter {
     public Component getDescription() {
         String after = filled ? (outerFilled ? "filled_outer" : "filled") : "hollow";
 //        return LocaleUtil.localize("fillerpattern.parameter." + after);
-        return new TranslatableComponent("fillerpattern.parameter." + after);
+        return Component.translatable("fillerpattern.parameter." + after);
     }
 
     @Override

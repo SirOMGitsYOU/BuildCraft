@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import buildcraft.lib.client.sprite.White;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -135,7 +135,7 @@ public class SpriteUtil {
     }
 
     // Calen
-    private static LazyLoadedValue<TextureAtlasSprite> WHITE = new LazyLoadedValue<>(ForgeModelBakery.White::instance);
+    private static LazyLoadedValue<TextureAtlasSprite> WHITE = new LazyLoadedValue<>(White::instance);
 
     public static TextureAtlasSprite white() {
         return WHITE.get();

@@ -15,13 +15,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.nio.file.Path;
 
 public class BCBlockTagsGenerator extends BlockTagsProvider {
+    private final DataGenerator dataGenerator;
+
     public BCBlockTagsGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, BCModules.BUILDCRAFT, existingFileHelper);
+        this.dataGenerator = generator;
     }
 
     @Override
@@ -69,20 +73,20 @@ public class BCBlockTagsGenerator extends BlockTagsProvider {
         BCCoreBlocks.engineBlockMap.values().stream().forEach(reg -> mineable_with_pickaxe.addOptional(reg.getId()));
 
         tag(OreDictionaryTags.WORKBENCHES_BLOCK)
-                .addOptional(Blocks.CRAFTING_TABLE.getRegistryName())
+                .addOptional(ForgeRegistries.BLOCKS.getKey(Blocks.CRAFTING_TABLE))
         ;
 
         tag(OreDictionaryTags.SOFT)
-                .addOptional(Blocks.AIR.getRegistryName())
-                .addOptional(Blocks.SNOW.getRegistryName())
-                .addOptional(Blocks.VINE.getRegistryName())
-                .addOptional(Blocks.FIRE.getRegistryName())
+                .addOptional(ForgeRegistries.BLOCKS.getKey(Blocks.AIR))
+                .addOptional(ForgeRegistries.BLOCKS.getKey(Blocks.SNOW))
+                .addOptional(ForgeRegistries.BLOCKS.getKey(Blocks.VINE))
+                .addOptional(ForgeRegistries.BLOCKS.getKey(Blocks.FIRE))
         ;
     }
 
     @Override
     protected Path getPath(ResourceLocation id) {
-        return this.generator.getOutputFolder()
+        return this.dataGenerator.getOutputFolder()
                 .resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
     }
 

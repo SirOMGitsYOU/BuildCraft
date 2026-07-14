@@ -16,7 +16,6 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -101,7 +100,7 @@ public class StatementParameterRedstoneLevel implements IStatementParameter {
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.trigger.redstone.input.level", level);
+        return Component.translatable("gate.trigger.redstone.input.level", level);
     }
 
     @Override

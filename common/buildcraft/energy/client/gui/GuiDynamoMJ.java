@@ -23,8 +23,6 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.RenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -67,7 +65,7 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                     // List<String> lines = new ArrayList<>();
                     List<Component> lines = new ArrayList<>();
                     // lines.add(LocaleUtil.localize("buildcraft.gui.rf_engine.upgrade_types"));
-                    lines.add(new TranslatableComponent("buildcraft.gui.rf_engine.upgrade_types"));
+                    lines.add(Component.translatable("buildcraft.gui.rf_engine.upgrade_types"));
                     // for (Map.Entry<Item, Long> entry : TileEngineRF.RF_UPGRADE.entrySet())
                     for (Map.Entry<RegistryObject<ItemBC_Neptune>, Long> entry : TileEngineRF.RF_UPGRADE.entrySet()) {
                         // String itemName = entry.getKey().getItemStackDisplayName(new ItemStack(entry.getKey()));
@@ -75,7 +73,7 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                         long mj = entry.getValue();
                         int rf = (int) (mj / BCLibConfig.mjRfConversion.mjPerRf);
                         // lines.add(itemName + " = +" + LocaleUtil.localizeRfFlow(rf));
-                        lines.add(new TextComponent("").append(itemName).append(" = +").append(LocaleUtil.localizeRfFlowComponent(rf)));
+                        lines.add(Component.literal("").append(itemName).append(" = +").append(LocaleUtil.localizeRfFlowComponent(rf)));
                     }
                     tooltips.add(new ToolTip(lines));
                 }
@@ -102,7 +100,7 @@ public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
                     sb.append(" / ");
                     sb.append(LocaleUtil.localizeRf(TileEngineRF.MAX_RF));
                     // tooltips.add(new ToolTip(sb.toString()));
-                    tooltips.add(new ToolTip(new TextComponent(sb.toString())));
+                    tooltips.add(new ToolTip(Component.literal(sb.toString())));
                 }
             }
         });

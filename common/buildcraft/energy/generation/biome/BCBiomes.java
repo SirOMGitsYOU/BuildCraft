@@ -9,15 +9,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
 // Calen: OverworldBiomes.class https://forums.minecraftforge.net/topic/104296-solved1165-custom-biome-not-generating-in-overworld-dimension/
-@Mod.EventBusSubscriber(modid = BCEnergy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+// TODO 1.19.2: migrate to datagen biome registration (see 1.20.1 branch)
 public class BCBiomes {
     @Nullable
     private static final Music NORMAL_MUSIC = null;
@@ -35,18 +31,18 @@ public class BCBiomes {
 //        reg.register(FMLJavaModLoadingContext.get().getModEventBus());
 //    }
 
-    @SubscribeEvent
-    public static void initBiome(RegistryEvent.Register<Biome> event) {
-        Biome oil_desert = makeOilDesertBiome().setRegistryName(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT);
-        Biome oil_ocean = makeOilOceanBiome().setRegistryName(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN);
+//    @SubscribeEvent
+//    public static void initBiome(RegistryEvent.Register<Biome> event) {
+//        Biome oil_desert = makeOilDesertBiome().setRegistryName(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT);
+//        Biome oil_ocean = makeOilOceanBiome().setRegistryName(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN);
 ////        event.getRegistry().register();
 ////        event.getRegistry().register();
 ////        BiomeManager.addAdditionalOverworldBiomes(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT);
 ////        BiomeManager.addAdditionalOverworldBiomes(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN);
 //
-        ForgeRegistries.BIOMES.register(oil_desert);
-        ForgeRegistries.BIOMES.register(oil_ocean);
-    }
+//        ForgeRegistries.BIOMES.register(oil_desert);
+//        ForgeRegistries.BIOMES.register(oil_ocean);
+//    }
 
     // Calen: the same as Desert
     public static Biome makeOilDesertBiome() {
@@ -66,7 +62,6 @@ public class BCBiomes {
 
         return biome(
                 Biome.Precipitation.NONE,
-                Biome.BiomeCategory.DESERT,
                 2.0F,
                 0.0F,
                 4159204,
@@ -98,7 +93,6 @@ public class BCBiomes {
 
         return biome(
                 Biome.Precipitation.RAIN,
-                Biome.BiomeCategory.OCEAN,
                 0.5F,
                 0.5F,
                 4159204,
@@ -111,7 +105,6 @@ public class BCBiomes {
 
     private static Biome biome(
             Biome.Precipitation p_194852_,
-            Biome.BiomeCategory p_194853_,
             float temperature,
             float downfall,
             int waterColor,
@@ -122,7 +115,6 @@ public class BCBiomes {
     ) {
         return (new Biome.BiomeBuilder())
                 .precipitation(p_194852_)
-                .biomeCategory(p_194853_)
                 .temperature(temperature)
                 .downfall(downfall)
                 .specialEffects(

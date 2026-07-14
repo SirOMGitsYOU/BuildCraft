@@ -1,6 +1,7 @@
 package buildcraft.silicon.plug;
 
 import buildcraft.api.facades.IFacadeState;
+import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.world.SingleBlockAccess;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
@@ -25,8 +26,8 @@ public class FacadeBlockStateInfo implements IFacadeState {
     public FacadeBlockStateInfo(BlockState state, ItemStack requiredStack, ImmutableSet<Property<?>> varyingProperties) {
         this.state = Objects.requireNonNull(state, "state must not be null!");
         Objects.requireNonNull(state.getBlock(), "state.getBlock must not be null!");
-        Objects.requireNonNull(state.getBlock().getRegistryName(),
-                "state.getBlock.getRegistryName() must not be null!");
+        Objects.requireNonNull(BlockUtil.getRegistryName(state.getBlock()),
+                "state.getBlock registry name must not be null!");
         this.requiredStack = requiredStack;
         this.varyingProperties = varyingProperties;
 //        this.isTransparent = !state.isOpaqueCube();

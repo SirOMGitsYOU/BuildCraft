@@ -4,6 +4,8 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.tile;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.MjAPI;
@@ -16,7 +18,6 @@ import buildcraft.lib.net.PacketBufferBC;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -131,7 +132,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
 //                        true
 //                );
                 player.displayClientMessage(
-                        new TranslatableComponent("chat.pipe.power.iron.mode", outputs[currentOutputIndex]),
+                        Component.translatable("chat.pipe.power.iron.mode", outputs[currentOutputIndex]),
                         true
                 );
                 sendNetworkUpdate(NET_RENDER_DATA);

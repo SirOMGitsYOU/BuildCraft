@@ -18,7 +18,6 @@ import buildcraft.transport.BCTransportSprites;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
@@ -110,7 +109,7 @@ public class ActionParameterSignal implements IStatementParameter {
 //        String format = LocaleUtil.localize("gate.action.pipe.wire");
 //        Object[] args = { ColourUtil.getTextFullTooltip(c) };
 //        return String.format(format, args);
-        return new TranslatableComponent("gate.action.pipe.wire", ColourUtil.getTextFullTooltipComponent(c));
+        return Component.translatable("gate.action.pipe.wire", ColourUtil.getTextFullTooltipComponent(c));
     }
 
     @Override

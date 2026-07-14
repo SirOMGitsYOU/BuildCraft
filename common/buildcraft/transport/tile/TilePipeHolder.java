@@ -36,8 +36,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,8 +48,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.model.data.IModelData;
-import net.minecraftforge.client.model.data.ModelDataMap;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
@@ -617,22 +614,22 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         if (pipe == null) {
 //            left.add("Pipe = null");
-            left.add(new TextComponent("Pipe = null"));
+            left.add(Component.literal("Pipe = null"));
         } else {
 //            left.add("Pipe:");
-            left.add(new TextComponent("Pipe:"));
+            left.add(Component.literal("Pipe:"));
             pipe.getDebugInfo(left, right, side);
         }
 //        left.add("Parts:");
-        left.add(new TextComponent("Parts:"));
+        left.add(Component.literal("Parts:"));
         wireManager.parts
 //                .forEach((part, color) -> left.add(" - " + part + " = " + color + " = " + wireManager.isPowered(part)));
-                .forEach((part, color) -> left.add(new TextComponent(" - " + part + " = " + color + " = " + wireManager.isPowered(part))));
+                .forEach((part, color) -> left.add(Component.literal(" - " + part + " = " + color + " = " + wireManager.isPowered(part))));
 //        left.add("All wire systems in world count = " + (level.isClientSide ? 0 : wireManager.getWireSystems().wireSystems.size()));
-        left.add(new TextComponent("All wire systems in world count = " + (level.isClientSide ? 0 : wireManager.getWireSystems().wireSystems.size())));
+        left.add(Component.literal("All wire systems in world count = " + (level.isClientSide ? 0 : wireManager.getWireSystems().wireSystems.size())));
         if (unknownData != null) {
 //            left.add(unknownData.toString());
-            left.add(new TextComponent(unknownData.toString()));
+            left.add(Component.literal(unknownData.toString()));
         }
     }
 
@@ -643,8 +640,8 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 
     @Nonnull
     @Override
-    public IModelData getModelData() {
-        return new ModelDataMap.Builder().withInitial(BlockPipeHolder.PROP_TILE, this).build();
+    public ModelData getModelData() {
+        return ModelData.builder().with(BlockPipeHolder.PROP_TILE, this).build();
     }
 
     // MenuProvider
@@ -654,7 +651,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     public Component getDisplayName() {
         ResourceLocation reg = this.getPipe().getDefinition().identifier;
         String tagId = "item.pipe." + reg.getNamespace() + "." + reg.getPath();
-        return new TranslatableComponent("item." + TagManager.getTag(tagId, TagManager.EnumTagType.UNLOCALIZED_NAME) + ".name");
+        return Component.translatable("item." + TagManager.getTag(tagId, TagManager.EnumTagType.UNLOCALIZED_NAME) + ".name");
     }
 
     @Nullable

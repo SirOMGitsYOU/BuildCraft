@@ -77,7 +77,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
         }
 
         for (Item item : ForgeRegistries.ITEMS) {
-            ResourceLocation regName = item.getRegistryName();
+            ResourceLocation regName = ForgeRegistries.ITEMS.getKey(item);
             if (regName == null || (limitDomains && !domains.contains(regName.getNamespace()))) {
                 continue;
             }
@@ -108,7 +108,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
                     consumer.addChild(TAGS, PageLinkItemStack.create(false, stack, prof));
                 } catch (RuntimeException e) {
                     throw new Error(
-                            "Failed to create a page link for " + item.getRegistryName() + " " + item.getClass() + " ("
+                            "Failed to create a page link for " + ForgeRegistries.ITEMS.getKey(item) + " " + item.getClass() + " ("
                                     + stack.serializeNBT() + ")", e
                     );
                 }

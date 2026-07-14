@@ -33,7 +33,7 @@ public class RenderFiller implements BlockEntityRenderer<TileFiller> {
         Minecraft.getInstance().getProfiler().push("main");
         VertexConsumer bb = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
         if (tile.getBuilder() != null) {
-//            RenderSnapshotBuilder.render(tile.getBuilder(), tile.getWorld(), tile.getPos(), x, y, z, partialTicks, bb);
+//            RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getPos(), x, y, z, partialTicks, bb);
             RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getBlockPos(), partialTicks, poseStack, bb);
         }
         Minecraft.getInstance().getProfiler().pop();

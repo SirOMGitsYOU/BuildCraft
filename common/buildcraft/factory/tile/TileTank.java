@@ -24,7 +24,6 @@ import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,7 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -64,7 +63,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     private int lastComparatorLevel;
 
     public TileTank(BlockPos pos, BlockState blockState) {
-        this(pos, blockState, 16 * FluidAttributes.BUCKET_VOLUME);
+        this(pos, blockState, 16 * FluidType.BUCKET_VOLUME);
     }
 
     public TileTank(BlockPos pos, BlockState blockState, int capacity) {
@@ -143,7 +142,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         if (fluid.isEmpty()) {
             return;
         }
-        if (fluid.getRawFluid().getAttributes().isGaseous()) {
+        if (fluid.getRawFluid().getFluidType().isLighterThanAir()) {
             Collections.reverse(tanks);
         }
         TileTank prev = null;
@@ -210,7 +209,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("fluid = " + tank.getDebugString());
-        left.add(new TextComponent("fluid = " + tank.getDebugString()));
+        left.add(Component.literal("fluid = " + tank.getDebugString()));
         smoothedTank.getDebugInfo(left, right, side);
     }
 
@@ -374,7 +373,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
                 return 0;
             }
         }
-        boolean gas = resource.getRawFluid().getAttributes().isGaseous();
+        boolean gas = resource.getRawFluid().getFluidType().isLighterThanAir();
         if (gas) {
             Collections.reverse(tanks);
         }
@@ -427,7 +426,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
             FluidStack fluid = tile.tank.getFluid();
 //            if (fluid != null)
             if (!fluid.isEmpty()) {
-                gas = fluid.getRawFluid().getAttributes().isGaseous();
+                gas = fluid.getRawFluid().getFluidType().isLighterThanAir();
                 break;
             }
         }

@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
@@ -90,12 +89,12 @@ public class TilePowerConsumerTester extends TileBC_Neptune implements IMjReceiv
     // public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         // left.add("");
-        left.add(new TextComponent(""));
+        left.add(Component.literal(""));
         // left.add("Last received = " + LocaleUtil.localizeMj(lastReceived));
-        left.add(new TextComponent("Last received = ").append(LocaleUtil.localizeMjComponent(lastReceived)));
+        left.add(Component.literal("Last received = ").append(LocaleUtil.localizeMjComponent(lastReceived)));
         // left.add("Tick received = " + LocaleUtil.localizeMj(lastTickReceived));
-        left.add(new TextComponent("Tick received = ").append(LocaleUtil.localizeMjComponent(lastTickReceived)));
+        left.add(Component.literal("Tick received = ").append(LocaleUtil.localizeMjComponent(lastTickReceived)));
         // left.add("Total received = " + LocaleUtil.localizeMj(totalReceived));
-        left.add(new TextComponent("Total received = ").append(LocaleUtil.localizeMjComponent(totalReceived)));
+        left.add(Component.literal("Total received = ").append(LocaleUtil.localizeMjComponent(totalReceived)));
     }
 }

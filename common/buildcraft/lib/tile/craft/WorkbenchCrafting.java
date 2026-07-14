@@ -288,6 +288,11 @@ public class WorkbenchCrafting extends CraftingContainer {
         }
 
         @Override
+        public ItemStack quickMoveStack(Player player, int index) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
 //        public boolean canInteractWith(Player playerIn)
         public boolean stillValid(Player playerIn) {
             return false;

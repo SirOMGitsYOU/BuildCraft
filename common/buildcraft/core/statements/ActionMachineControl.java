@@ -18,7 +18,6 @@ import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -39,7 +38,7 @@ public class ActionMachineControl extends BCStatement implements IActionExternal
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.action.machine." + mode.name().toLowerCase(Locale.ROOT));
-        return new TranslatableComponent("gate.action.machine." + mode.name().toLowerCase(Locale.ROOT));
+        return Component.translatable("gate.action.machine." + mode.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

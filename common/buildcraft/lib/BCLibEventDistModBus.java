@@ -16,7 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,7 +26,7 @@ public enum BCLibEventDistModBus {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public void modelBake(ModelBakeEvent event) {
+    public void modelBake(ModelEvent.BakingCompleted event) {
 //        SpriteHolderRegistry.exportTextureMap();
         SpriteHolderRegistry.exportTextureMap((TextureAtlas) Minecraft.getInstance().textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS));
         SpriteHolderRegistry.exportTextureMap(FluidRenderer.FROZEN_ATLAS);

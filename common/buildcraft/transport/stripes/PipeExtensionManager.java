@@ -72,21 +72,21 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
     }
 
     @SubscribeEvent
-    public void tick(TickEvent.WorldTickEvent event) {
+    public void tick(TickEvent.LevelTickEvent event) {
 //        if (event.phase != Phase.END || event.side != Side.SERVER)
         if (event.phase != TickEvent.Phase.END || event.side != LogicalSide.SERVER) {
             return;
         }
 //        List<PipeExtensionRequest> rList = requests.get(event.world.provider.getDimension());
-        List<PipeExtensionRequest> rList = requests.get(event.world.dimension().location().toString());
+        List<PipeExtensionRequest> rList = requests.get(event.level.dimension().location().toString());
         if (rList == null) {
             return;
         }
         for (PipeExtensionRequest r : rList) {
             if (retractionPipeDefs.contains(r.pipeDef)) {
-                retract(event.world, r);
+                retract(event.level, r);
             } else {
-                extend(event.world, r);
+                extend(event.level, r);
             }
         }
         rList.clear();

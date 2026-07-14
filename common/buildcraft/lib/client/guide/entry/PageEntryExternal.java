@@ -5,8 +5,6 @@ import buildcraft.lib.gui.ISimpleDrawable;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.profiling.ProfilerFiller;
 
@@ -32,7 +30,7 @@ public class PageEntryExternal extends PageValueType<String> {
 
     @Override
     public List<Component> getTooltip(String value) {
-        return Collections.singletonList(new TextComponent(value));
+        return Collections.singletonList(Component.literal(value));
     }
 
     @Override
@@ -42,8 +40,8 @@ public class PageEntryExternal extends PageValueType<String> {
 
     @Override
     public Component getTitle(String value) {
-//        return new TextComponent(value);
-        return new TranslatableComponent(value);
+//        return Component.literal(value);
+        return Component.translatable(value);
     }
 
     // Calen

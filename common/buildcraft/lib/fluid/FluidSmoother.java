@@ -10,7 +10,6 @@ import buildcraft.lib.net.cache.BuildCraftObjectCaches;
 import buildcraft.lib.net.cache.NetworkedFluidStackCache;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -175,8 +174,8 @@ public class FluidSmoother implements IDebuggable {
 //            left.add("current = " + tank.getFluidAmount() + " of " + contents);
 //            left.add("lastSent = " + sentAmount + " of " + (sentHasFluid ? "Something" : "Nothing"));
             String contents = (tank.getFluid() != null) ? "Something" : "Nothing";
-            left.add(new TextComponent("current = " + tank.getFluidAmount() + " of " + contents));
-            left.add(new TextComponent("lastSent = " + sentAmount + " of " + (sentHasFluid ? "Something" : "Nothing")));
+            left.add(Component.literal("current = " + tank.getFluidAmount() + " of " + contents));
+            left.add(Component.literal("lastSent = " + sentAmount + " of " + (sentHasFluid ? "Something" : "Nothing")));
         }
     }
 
@@ -220,8 +219,8 @@ public class FluidSmoother implements IDebuggable {
         public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //            left.add("shown = " + amount + ", target = " + target);
 //            left.add("lastMsg = " + lastMessage + ", lastMsg-1 = " + lastMessageMinus1 + ", diff = " + (lastMessage - lastMessageMinus1));
-            left.add(new TextComponent("shown = " + amount + ", target = " + target));
-            left.add(new TextComponent("lastMsg = " + lastMessage + ", lastMsg-1 = " + lastMessageMinus1 + ", diff = " + (lastMessage - lastMessageMinus1)));
+            left.add(Component.literal("shown = " + amount + ", target = " + target));
+            left.add(Component.literal("lastMsg = " + lastMessage + ", lastMsg-1 = " + lastMessageMinus1 + ", diff = " + (lastMessage - lastMessageMinus1)));
         }
     }
 }

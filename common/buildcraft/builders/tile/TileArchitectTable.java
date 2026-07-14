@@ -46,7 +46,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -411,11 +410,11 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
 //        left.add(" - max = " + box.max());
 //        left.add("scanning = " + scanning);
 //        left.add("current = " + (boxIterator == null ? null : boxIterator.getCurrent()));
-        left.add(new TextComponent("box:"));
-        left.add(new TextComponent(" - min = " + box.min()));
-        left.add(new TextComponent(" - max = " + box.max()));
-        left.add(new TextComponent("scanning = " + scanning));
-        left.add(new TextComponent("current = " + (boxIterator == null ? null : boxIterator.getCurrent())));
+        left.add(Component.literal("box:"));
+        left.add(Component.literal(" - min = " + box.min()));
+        left.add(Component.literal(" - max = " + box.max()));
+        left.add(Component.literal("scanning = " + scanning));
+        left.add(Component.literal("current = " + (boxIterator == null ? null : boxIterator.getCurrent())));
     }
 
     // Rendering

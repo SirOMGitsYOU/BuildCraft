@@ -43,7 +43,7 @@ public enum BCTransportGuis {
 //            PacketBufferBC buffer = new PacketBufferBC(Unpooled.buffer());
 
             IMessage msg = holder.onServerPlayerOpenNoSend(player);
-            NetworkHooks.openGui(
+            NetworkHooks.openScreen(
                     serverPlayer, holder, buf ->
                     {
                         buf.writeBlockPos(pos);

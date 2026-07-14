@@ -77,7 +77,7 @@ public class FactoryBlockStateGenerator extends BCBaseBlockStateGenerator {
         // auto_workbench_item
         getVariantBuilder(BCFactoryBlocks.autoWorkbenchItems.get()).forAllStates(s ->
                 ConfiguredModel.builder().modelFile(
-                                models().withExistingParent(BCFactoryBlocks.autoWorkbenchItems.get().getRegistryName().toString(), CUBE_ALL)
+                                models().withExistingParent(BCFactoryBlocks.autoWorkbenchItems.getId().toString(), CUBE_ALL)
                                         .texture("particle", "buildcraftfactory:blocks/auto_workbench_item/side")
                                         .texture("up", "buildcraftfactory:blocks/auto_workbench_item/top")
                                         .texture("down", "buildcraftfactory:blocks/auto_workbench_item/top")
@@ -283,7 +283,7 @@ public class FactoryBlockStateGenerator extends BCBaseBlockStateGenerator {
         ;
 
         // waterGel
-        ResourceLocation waterGel = BCFactoryBlocks.waterGel.get().getRegistryName();
+        ResourceLocation waterGel = BCFactoryBlocks.waterGel.getId();
         getVariantBuilder(BCFactoryBlocks.waterGel.get()).forAllStates(state ->
                 ConfiguredModel.builder().modelFile(
                                 models().withExistingParent(waterGel.getNamespace() + ":block/" + waterGel.getPath() + "/" + state.getValue(BlockWaterGel.PROP_STAGE).name().toLowerCase(), CUBE_ALL)
@@ -310,7 +310,7 @@ public class FactoryBlockStateGenerator extends BCBaseBlockStateGenerator {
         );
 
         // flood_gate
-        ResourceLocation floodGate = BCFactoryBlocks.floodGate.get().getRegistryName();
+        ResourceLocation floodGate = BCFactoryBlocks.floodGate.getId();
         ResourceLocation floodGate_top = new ResourceLocation("buildcraftfactory:blocks/flood_gate/top");
         ResourceLocation floodGate_closed = new ResourceLocation("buildcraftfactory:blocks/flood_gate/closed");
         ResourceLocation floodGate_open = new ResourceLocation("buildcraftfactory:blocks/flood_gate/open");
@@ -344,7 +344,7 @@ public class FactoryBlockStateGenerator extends BCBaseBlockStateGenerator {
                 180,
                 270,
                 0,
-                models().withExistingParent(BCFactoryBlocks.miningWell.get().getRegistryName().toString(), CUBE)
+                models().withExistingParent(BCFactoryBlocks.miningWell.getId().toString(), CUBE)
                         .texture("particle", "buildcraftfactory:blocks/mining_well/side")
                         .texture("down", "buildcraftfactory:blocks/mining_well/bottom")
                         .texture("up", "buildcraftfactory:blocks/mining_well/top")

@@ -5,7 +5,6 @@ import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -63,6 +62,6 @@ public class RedstoneBoardRobotEmptyNBT extends RedstoneBoardRobotNBT {
 
     @Override
     public Component getDisplayNameComponent() {
-        return new TranslatableComponent("buildcraft.boardRobotClean");
+        return Component.translatable("buildcraft.boardRobotClean");
     }
 }

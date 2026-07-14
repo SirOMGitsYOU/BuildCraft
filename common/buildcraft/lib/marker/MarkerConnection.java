@@ -11,7 +11,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -58,7 +57,7 @@ public abstract class MarkerConnection<C extends MarkerConnection<C>> {
             s += getTypeInfo(pos, marker);
             s += ChatFormatting.RESET + "]";
 //            left.add(s);
-            left.add(new TextComponent(s));
+            left.add(Component.literal(s));
         }
     }
 

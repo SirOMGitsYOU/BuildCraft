@@ -1,12 +1,13 @@
 package buildcraft.lib.client;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.misc.RenderUtil;
 import buildcraft.lib.misc.SpriteUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class ToastInformation implements Toast {
     public final String localeKey;
@@ -39,7 +40,7 @@ public class ToastInformation implements Toast {
             x = 30;
         }
 //        toastGui.getMinecraft().fontRenderer.drawString(LocaleUtil.localize(localeKey), x, 13, -1);
-        toastGui.getMinecraft().font.draw(poseStack, new TranslatableComponent(localeKey), x, 13, -1);
+        toastGui.getMinecraft().font.draw(poseStack, Component.translatable(localeKey), x, 13, -1);
         return delta >= 5000L ? Visibility.HIDE : Visibility.SHOW;
     }
 

@@ -5,7 +5,6 @@ import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -71,8 +70,8 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
     @Override
 //    public void addInformation(ItemStack stack, Player player, List list, boolean advanced)
     public void addInformation(ItemStack stack, @Nullable Level world, List<Component> list, TooltipFlag flag) {
-        // list.add(new TextComponent(ChatFormatting.BOLD.toString()).append(new TranslatableComponent("buildcraft.boardRobot" + this.upperName)));
-        list.add(new TranslatableComponent("buildcraft.boardRobot" + upperName + ".desc"));
+        // list.add(Component.literal(ChatFormatting.BOLD.toString()).append(Component.translatable("buildcraft.boardRobot" + this.upperName)));
+        list.add(Component.translatable("buildcraft.boardRobot" + upperName + ".desc"));
     }
 
     @Override
@@ -115,6 +114,6 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
 
     @Override
     public Component getDisplayNameComponent() {
-        return new TranslatableComponent("buildcraft.boardRobot" + upperName);
+        return Component.translatable("buildcraft.boardRobot" + upperName);
     }
 }

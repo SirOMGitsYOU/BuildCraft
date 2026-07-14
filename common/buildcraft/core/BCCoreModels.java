@@ -30,7 +30,7 @@ import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -98,7 +98,7 @@ public class BCCoreModels {
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
         ENGINE_PROGRESS.value = 0.2;
         ENGINE_STAGE.value = EnumPowerStage.BLUE;
         ENGINE_FACING.value = Direction.UP;
@@ -106,7 +106,7 @@ public class BCCoreModels {
         varData.setNodes(ENGINE_REDSTONE.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(EnumEngineType.WOOD.getItemModelLocation(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(ENGINE_REDSTONE.getCutoutQuads())
@@ -120,7 +120,7 @@ public class BCCoreModels {
         varData.setNodes(ENGINE_CREATIVE.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(EnumEngineType.CREATIVE.getItemModelLocation(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(ENGINE_CREATIVE.getCutoutQuads())

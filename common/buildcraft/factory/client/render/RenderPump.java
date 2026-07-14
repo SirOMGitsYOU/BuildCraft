@@ -149,9 +149,9 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
             Direction dir = Direction.from2DDataValue(i);
 //            BlockPos pos = tile.getPos().offset(dir);
             BlockPos pos = tile.getBlockPos().relative(dir);
-//            int block = tile.getWorld().getLightFor(EnumSkyBlock.BLOCK, pos);
+//            int block = tile.getLevel().getLightFor(EnumSkyBlock.BLOCK, pos);
             byte block = (byte) tile.getLevel().getLightEmission(pos);
-//            int sky = tile.getWorld().getLightFor(EnumSkyBlock.SKY, pos);
+//            int sky = tile.getLevel().getLightFor(EnumSkyBlock.SKY, pos);
             byte sky = (byte) tile.getLevel().getLightEngine().getRawBrightness(pos, 0);
 
             LED_POWER[i].center.colouri(powerColour);

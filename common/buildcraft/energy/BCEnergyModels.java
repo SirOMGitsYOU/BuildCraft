@@ -35,8 +35,7 @@ import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -102,7 +101,7 @@ public class BCEnergyModels {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void onModelRegistry(ModelRegistryEvent event) {
+    public static void onModelRegistry(ModelEvent.RegisterAdditional event) {
 //        for (BCFluid fluid : BCEnergyFluids.allFluids) {
 //            ModelLoader.setCustomStateMapper(fluid.getBlock(), b -> Collections.emptyMap());
 //        }
@@ -110,7 +109,7 @@ public class BCEnergyModels {
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
         ENGINE_PROGRESS.value = 0.2;
         ENGINE_STAGE.value = EnumPowerStage.BLUE;
         ENGINE_FACING.value = Direction.UP;
@@ -118,7 +117,7 @@ public class BCEnergyModels {
         varData.setNodes(ENGINE_STONE.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(EnumEngineType.STONE.getItemModelLocation(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(ENGINE_STONE.getCutoutQuads())
@@ -131,7 +130,7 @@ public class BCEnergyModels {
         varData.setNodes(ENGINE_IRON.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(EnumEngineType.IRON.getItemModelLocation(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(ENGINE_IRON.getCutoutQuads())
@@ -144,7 +143,7 @@ public class BCEnergyModels {
         varData.setNodes(ENGINE_RF.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(EnumEngineType.RF.getItemModelLocation(), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(ENGINE_RF.getCutoutQuads())
@@ -157,7 +156,7 @@ public class BCEnergyModels {
         varData.setNodes(MJ_DYNAMO.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModelRegistry().put(
+        event.getModels().put(
                 new ModelResourceLocation(BCEnergy.MODID, TagManager.getTag("block.mj_dynamo", TagManager.EnumTagType.REGISTRY_NAME), "inventory"),
                 new ModelItemSimple(
                         Arrays.stream(MJ_DYNAMO.getCutoutQuads())

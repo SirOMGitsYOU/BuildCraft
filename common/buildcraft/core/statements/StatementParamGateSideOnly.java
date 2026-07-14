@@ -15,8 +15,6 @@ import buildcraft.core.BCCoreSprites;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -78,7 +76,7 @@ public enum StatementParamGateSideOnly implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return isSpecific ? LocaleUtil.localize("gate.parameter.redstone.gateSideOnly") : "";
-        return isSpecific ? new TranslatableComponent("gate.parameter.redstone.gateSideOnly") : new TextComponent("");
+        return isSpecific ? Component.translatable("gate.parameter.redstone.gateSideOnly") : Component.literal("");
     }
 
     @Override

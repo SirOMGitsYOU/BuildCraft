@@ -8,16 +8,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class FuelRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IFuel> {
+public class FuelRecipeSerializer implements RecipeSerializer<IFuel> {
     public static final FuelRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new FuelRecipeSerializer();
-        INSTANCE.setRegistryName(IFuel.TYPE_ID);
     }
 
     @Override

@@ -17,7 +17,6 @@ import buildcraft.silicon.BCSiliconStatements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,7 +34,7 @@ public class TriggerLightSensor extends BCStatement implements ITriggerInternalS
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.light." + (bright ? "bright" : "dark"));
-        return new TranslatableComponent("gate.trigger.light." + (bright ? "bright" : "dark"));
+        return Component.translatable("gate.trigger.light." + (bright ? "bright" : "dark"));
     }
 
     @Override

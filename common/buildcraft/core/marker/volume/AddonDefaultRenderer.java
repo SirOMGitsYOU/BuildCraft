@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.ForgeModelBakery.White;
+import buildcraft.lib.client.sprite.White;
 import net.minecraftforge.common.util.LazyOptional;
 
 @OnlyIn(Dist.CLIENT)

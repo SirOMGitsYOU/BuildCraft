@@ -15,11 +15,11 @@ public class LibItemModelProvider extends BCBaseItemModelGenerator {
 
     @Override
     protected void registerModels() {
-        withExistingParent(BCLibItems.debugger.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCLibItems.debugger.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftlib:items/debugger");
-        withExistingParent(BCLibItems.guide.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCLibItems.guide.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftlib:items/guide_book");
-        withExistingParent(BCLibItems.guideNote.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCLibItems.guideNote.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftlib:items/guide_note");
     }
 

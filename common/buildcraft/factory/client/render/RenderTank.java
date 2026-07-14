@@ -69,8 +69,8 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
         Vec3 min = connectedDown ? MIN_CONNECTED : MIN;
         Vec3 max = connectedUp ? MAX_CONNECTED : MAX;
         FluidStack fluid = forRender.fluid;
-        int blocklight = fluid.getRawFluid().getAttributes().getLuminosity(fluid);
-//        int combinedLight = tile.getWorld().getCombinedLight(tile.getPos(), blocklight);
+        int blocklight = fluid.getRawFluid().getFluidType().getLightLevel(fluid);
+//        int combinedLight = tile.getLevel().getCombinedLight(tile.getPos(), blocklight);
         combinedLight = RenderUtil.combineWithFluidLight(combinedLight, (byte) blocklight);
 
         FluidRenderer.vertex.lighti(combinedLight);
@@ -120,7 +120,7 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
             {
                 return false;
             }
-            if (fluid.getRawFluid().getAttributes().isGaseous(fluid)) {
+            if (fluid.getRawFluid().getFluidType().isLighterThanAir()) {
                 face = face.getOpposite();
             }
             return forRender.amount >= oTank.tank.getCapacity() || face == Direction.UP;

@@ -1,10 +1,8 @@
 package buildcraft.energy.item;
 
-import buildcraft.lib.fluid.BCFluidAttributes;
 import buildcraft.lib.registry.CreativeTabManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -21,7 +19,7 @@ public class BCBucketItem extends BucketItem {
 
     @Override
     public Component getName(ItemStack stack) {
-        return new TranslatableComponent("item.buildcraft.bucket_filled", ((BCFluidAttributes) getFluid().getAttributes()).getDisplayName().getString());
+        return Component.translatable("item.buildcraft.bucket_filled", getFluid().getFluidType().getDescription().getString());
     }
 
     @Override

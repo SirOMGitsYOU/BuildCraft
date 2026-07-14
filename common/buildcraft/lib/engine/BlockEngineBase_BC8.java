@@ -38,7 +38,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IBlockRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -279,8 +279,8 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType> exten
     // Calen for particles instead of missingno
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IBlockRenderProperties> consumer) {
-        consumer.accept(new IBlockRenderProperties() {
+    public void initializeClient(Consumer<IClientBlockExtensions> consumer) {
+        consumer.accept(new IClientBlockExtensions() {
             @Override
             public boolean addHitEffects(BlockState state, Level worldIn, HitResult hitIn, ParticleEngine manager) {
                 if (hitIn.getType() != HitResult.Type.BLOCK) {

@@ -27,7 +27,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
@@ -68,7 +67,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
     /* Default to an additional second of fluid inserting and removal. This means that (for a normal pipe like cobble)
      * it will be 20 * (10 + 12) = 20 * 22 = 440 - oh that's not good is it */
-    public final int capacity = Math.max(FluidAttributes.BUCKET_VOLUME, fluidTransferInfo.transferPerTick * (10));// TEMP!
+    public final int capacity = Math.max(FluidType.BUCKET_VOLUME, fluidTransferInfo.transferPerTick * (10));// TEMP!
 
     private final Map<EnumPipePart, Section> sections = new EnumMap<>(EnumPipePart.class);
     private FluidStack currentFluid;
@@ -387,7 +386,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
 
         FluidStack fluid = isRemote ? getFluidStackForRender() : currentFluid;
 //        left.add(" - FluidType = " + (fluid == null ? "empty" : fluid.getDisplayName()));
-        left.add(new TextComponent(" - FluidType = ").append(fluid == null ? new TextComponent("empty") : fluid.getDisplayName()));
+        left.add(Component.literal(" - FluidType = ").append(fluid == null ? Component.literal("empty") : fluid.getDisplayName()));
 
         for (EnumPipePart part : EnumPipePart.VALUES) {
             Section section = sections.get(part);
@@ -395,7 +394,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
                 continue;
             }
 //            StringBuilder line = new StringBuilder(" - " + LocaleUtil.localizeFacing(part.face) + " = ");
-            MutableComponent firstPart = new TextComponent(" - ").append(LocaleUtil.localizeFacingComponent(part.face)).append(new TextComponent(" = "));
+            MutableComponent firstPart = Component.literal(" - ").append(LocaleUtil.localizeFacingComponent(part.face)).append(Component.literal(" = "));
             StringBuilder line = new StringBuilder();
             int amount = isRemote ? section.target : section.amount;
             line.append(amount > 0 ? ChatFormatting.GREEN : "");
@@ -427,7 +426,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
             line.append("0]");
 
 //            left.add(line.toString());
-            left.add(firstPart.append(new TextComponent(line.toString())));
+            left.add(firstPart.append(Component.literal(line.toString())));
         }
     }
 

@@ -51,29 +51,33 @@ public class EnergyCraftingRecipeGenerator extends RecipeProvider {
                 .group(MOD_ID)
                 .save(consumer, MOD_ID + ":engine_stone");
         // engineRf
-        ShapedRecipeBuilder.shaped(BCEnergyBlocks.engineRf.get())
-                .pattern("www")
-                .pattern(" g ")
-                .pattern("GpG")
-                .define('w', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .define('g', Ingredient.of(Tags.Items.GLASS_COLORLESS))
-                .define('G', Ingredient.of(OreDictionaryTags.GEAR_IRON))
-                .define('p', Ingredient.of(Items.PISTON))
-                .unlockedBy("has_item", has(OreDictionaryTags.GEAR_IRON))
-                .group(MOD_ID)
-                .save(consumer, MOD_ID + ":engine_rf");
+        if (BCEnergyBlocks.engineRf != null) {
+            ShapedRecipeBuilder.shaped(BCEnergyBlocks.engineRf.get())
+                    .pattern("www")
+                    .pattern(" g ")
+                    .pattern("GpG")
+                    .define('w', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                    .define('g', Ingredient.of(Tags.Items.GLASS_COLORLESS))
+                    .define('G', Ingredient.of(OreDictionaryTags.GEAR_IRON))
+                    .define('p', Ingredient.of(Items.PISTON))
+                    .unlockedBy("has_item", has(OreDictionaryTags.GEAR_IRON))
+                    .group(MOD_ID)
+                    .save(consumer, MOD_ID + ":engine_rf");
+        }
         // mjDynamo
-        ShapedRecipeBuilder.shaped(BCEnergyBlocks.mjDynamo.get())
-                .pattern("wgw")
-                .pattern(" p ")
-                .pattern("GwG")
-                .define('w', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
-                .define('g', Ingredient.of(Tags.Items.GLASS_COLORLESS))
-                .define('G', Ingredient.of(OreDictionaryTags.GEAR_IRON))
-                .define('p', Ingredient.of(Items.PISTON))
-                .unlockedBy("has_item", has(OreDictionaryTags.GEAR_IRON))
-                .group(MOD_ID)
-                .save(consumer);
+        if (BCEnergyBlocks.mjDynamo != null) {
+            ShapedRecipeBuilder.shaped(BCEnergyBlocks.mjDynamo.get())
+                    .pattern("wgw")
+                    .pattern(" p ")
+                    .pattern("GwG")
+                    .define('w', Ingredient.of(Tags.Items.DUSTS_REDSTONE))
+                    .define('g', Ingredient.of(Tags.Items.GLASS_COLORLESS))
+                    .define('G', Ingredient.of(OreDictionaryTags.GEAR_IRON))
+                    .define('p', Ingredient.of(Items.PISTON))
+                    .unlockedBy("has_item", has(OreDictionaryTags.GEAR_IRON))
+                    .group(MOD_ID)
+                    .save(consumer);
+        }
         // waterproof
         ShapelessRecipeBuilder.shapeless(BCTransportItems.waterproof.get(), 8)
                 .requires(BCEnergyFluids.oilResidue[0].get().getBucket())

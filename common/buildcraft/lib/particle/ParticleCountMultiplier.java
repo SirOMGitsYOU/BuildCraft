@@ -19,7 +19,7 @@ public enum ParticleCountMultiplier implements IParticlePositionPipe {
 
     public static ParticleCountMultiplier getForOption() {
         Options gs = Minecraft.getInstance().options;
-        int count = gs.particles.getId() % 3;
+        int count = gs.particles().get().ordinal() % 3;
         if (count == 0) {
             return ALL;
         } else if (count == 1) {

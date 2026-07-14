@@ -21,7 +21,7 @@ public class RoboticsBlockStateGenerator extends BCBaseBlockStateGenerator {
                 180,
                 270,
                 0,
-                models().withExistingParent(BCRoboticsBlocks.zonePlanner.get().getRegistryName().toString(), CUBE)
+                models().withExistingParent(BCRoboticsBlocks.zonePlanner.getId().toString(), CUBE)
                         .texture("particle", "buildcraftrobotics:blocks/zone_planner/default")
                         .texture("down", "buildcraftrobotics:blocks/zone_planner/default")
                         .texture("up", "buildcraftrobotics:blocks/zone_planner/top")
@@ -37,7 +37,7 @@ public class RoboticsBlockStateGenerator extends BCBaseBlockStateGenerator {
                 180,
                 270,
                 0,
-                models().withExistingParent(BCRoboticsBlocks.requester.get().getRegistryName().toString(), CUBE)
+                models().withExistingParent(BCRoboticsBlocks.requester.getId().toString(), CUBE)
                         .texture("particle", "buildcraftrobotics:blocks/requester/side")
                         .texture("down", "buildcraftrobotics:blocks/requester/bottom")
                         .texture("up", "buildcraftrobotics:blocks/requester/top")

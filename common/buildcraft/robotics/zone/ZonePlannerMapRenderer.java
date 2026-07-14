@@ -169,9 +169,11 @@ public enum ZonePlannerMapRenderer {
 //        int glList = GL11.glGenLists(1);
 //        GL11.glNewList(glList, GL11.GL_COMPILE);
 //        Tessellator.getInstance().draw();
-        builder.end();
+        BufferBuilder.RenderedBuffer rendered = builder.end();
 //        GL11.glEndList();
-        vertexBuffer.upload(builder);
+        vertexBuffer.bind();
+        vertexBuffer.upload(rendered);
+        VertexBuffer.unbind();
 //        CHUNK_GL_CACHE.put(key, glList);
         CHUNK_GL_CACHE.put(key, vertexBuffer);
     }

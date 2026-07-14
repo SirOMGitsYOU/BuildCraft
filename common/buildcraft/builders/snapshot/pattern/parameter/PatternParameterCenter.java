@@ -15,7 +15,6 @@ import buildcraft.builders.BCBuildersSprites;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -78,7 +77,7 @@ public enum PatternParameterCenter implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("direction.center." + ordinal());
-        return new TranslatableComponent("direction.center." + ordinal());
+        return Component.translatable("direction.center." + ordinal());
     }
 
     @Override

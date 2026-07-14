@@ -12,7 +12,7 @@ public class SpringPopulate {
 //    @SubscribeEvent
 //    public void populate(PopulateChunkEvent.Post event) {
 //
-//        World world = event.getWorld();
+//        World world = event.getLevel();
 //        Random rand = event.getRand();
 //        int chunkX = event.getChunkX();
 //        int chunkZ = event.getChunkZ();

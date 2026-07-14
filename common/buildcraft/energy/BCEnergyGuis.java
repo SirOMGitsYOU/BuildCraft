@@ -6,10 +6,11 @@
 
 package buildcraft.energy;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.net.IMessage;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.Util;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -38,10 +39,10 @@ public enum BCEnergyGuis {
         if (player instanceof ServerPlayer serverPlayer) {
 //            player.openMenu(state.getMenuProvider(player.level, pos));
             if (tile instanceof MenuProvider menuProvider) {
-//                NetworkHooks.openGui(serverPlayer, menuProvider, pos);
+//                NetworkHooks.openScreen(serverPlayer, menuProvider, pos);
 
                 IMessage msg = tile.onServerPlayerOpenNoSend(player);
-                NetworkHooks.openGui(
+                NetworkHooks.openScreen(
                         serverPlayer, menuProvider, buf ->
                         {
                             buf.writeBlockPos(tile.getBlockPos());
@@ -50,7 +51,7 @@ public enum BCEnergyGuis {
                         }
                 );
             } else {
-                player.sendMessage(new TranslatableComponent("buildcraft.error.open_null_menu"), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("buildcraft.error.open_null_menu"));
             }
         }
     }

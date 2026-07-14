@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 /** Provides a simple way of rendering an item model with just a list of quads. This provides some transforms to use
  * that make it simple to render as a block, item or tool (todo) */
@@ -134,7 +134,7 @@ public class ModelItemSimple implements BakedModel {
 
     @Override
 //    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, RandomSource rand) {
         return face == null ? quads : ImmutableList.of();
     }
 

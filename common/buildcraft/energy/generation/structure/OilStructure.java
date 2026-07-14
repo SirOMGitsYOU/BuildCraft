@@ -9,7 +9,7 @@ import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -18,14 +18,14 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class OilStructure extends StructurePiece {
     public final List<OilGenStructurePart> pieces;
     public final Box containingBox;
 
     public OilStructure(Box containingBox, List<OilGenStructurePart> pieces) {
-        super(OilStructureRegistry.STRUCTURE_PIECE_TYPE, 0, containingBox.getBB());
+        super(OilStructureRegistry.STRUCTURE_PIECE_TYPE.get(), 0, containingBox.getBB());
         this.pieces = pieces;
         this.containingBox = containingBox;
     }
@@ -34,9 +34,9 @@ public class OilStructure extends StructurePiece {
     @Override
     public void postProcess(
             WorldGenLevel level,
-            StructureFeatureManager featureManager,
+            StructureManager featureManager,
             ChunkGenerator chunkGeneratorIn,
-            Random rand,
+            RandomSource rand,
             BoundingBox bounds,
             ChunkPos chunkPos,
             BlockPos centerPos

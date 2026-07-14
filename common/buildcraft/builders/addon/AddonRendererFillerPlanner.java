@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import buildcraft.lib.client.sprite.White;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -66,7 +66,7 @@ public class AddonRendererFillerPlanner implements IFastAddonRenderer<AddonFille
         for (BlockPos p : list) {
             AABB bb = new AABB(p, p.offset(1, 1, 1)).inflate(-0.1);
 //            TextureAtlasSprite s = ModelLoader.White.INSTANCE;
-            TextureAtlasSprite s = ForgeModelBakery.White.instance();
+            TextureAtlasSprite s = White.instance();
 
             vb.vertex(posePose, (float) bb.minX, (float) bb.maxY, (float) bb.minZ).color(204, 204, 204, 127).uv(s.getU0(), s.getV0()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(240, 0).normal(normal, 1, 1, 1).endVertex();
             vb.vertex(posePose, (float) bb.maxX, (float) bb.maxY, (float) bb.minZ).color(204, 204, 204, 127).uv(s.getU0(), s.getV1()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(240, 0).normal(normal, 1, 1, 1).endVertex();

@@ -14,18 +14,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class AssemblyRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IAssemblyRecipe> {
+public class AssemblyRecipeSerializer implements RecipeSerializer<IAssemblyRecipe> {
     public static final AssemblyRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new AssemblyRecipeSerializer();
-        INSTANCE.setRegistryName(AssemblyRecipe.TYPE_ID);
     }
 
     @Override

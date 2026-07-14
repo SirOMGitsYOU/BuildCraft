@@ -21,7 +21,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -74,14 +74,14 @@ public class BCRoboticsModels {
     }
 
     @SubscribeEvent
-    public static void onModelBake(ModelBakeEvent event) {
+    public static void onModelBake(ModelEvent.BakingCompleted event) {
         PluggableRobotStation.setModelVariablesForItem();
         putModel(event, "robot_station#inventory", new ModelPluggableItem(ROBOT_STATION_STATIC.getCutoutQuads(), ROBOT_STATION_DYNAMIC.getCutoutQuads()));
 
         PlugRobotStationRenderer.onModelBake();
     }
 
-    private static void putModel(ModelBakeEvent event, String str, BakedModel model) {
-        event.getModelRegistry().replace(BCModules.ROBOTICS.createModelLocation(str), model);
+    private static void putModel(ModelEvent.BakingCompleted event, String str, BakedModel model) {
+        event.getModels().replace(BCModules.ROBOTICS.createModelLocation(str), model);
     }
 }

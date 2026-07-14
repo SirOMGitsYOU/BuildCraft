@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -40,8 +39,8 @@ public class BCFluidBlock extends LiquidBlock {
                 this.stateDefinition.any()
                         .setValue(LEVEL, Integer.valueOf(0))
         );
-        displaceWater = new LazyLoadedValue<>(() -> this.getFluid().getAttributes().getDensity() > 1000);
-        displaceLava = new LazyLoadedValue<>(() -> this.getFluid().getAttributes().getDensity() > 9000);
+        displaceWater = new LazyLoadedValue<>(() -> this.getFluid().getFluidType().getDensity() > 1000);
+        displaceLava = new LazyLoadedValue<>(() -> this.getFluid().getFluidType().getDensity() > 9000);
 
         this.sticky = sticky;
 //        renderLayer = BlockRenderLayer.SOLID; // Calen: moved to BCEnergy#clientInit
@@ -97,8 +96,7 @@ public class BCFluidBlock extends LiquidBlock {
     }
 
     @Nullable
-    @Override
-    public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob entity) {
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Entity entity) {
         return BlockPathTypes.LAVA;
     }
 }

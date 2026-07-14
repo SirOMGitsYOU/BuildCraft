@@ -28,8 +28,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.*;
 
@@ -54,7 +52,7 @@ public class GuidePageContents extends GuidePageBase {
 //        FontRenderer fr = new ConfigurableFontRenderer(gui.mc.fontRenderer).disableShadow();
         Font fr = Minecraft.getInstance().font;
 //        searchText = new GuiTextField(0, fr, 0, 0, 80, fr.FONT_HEIGHT + 5);
-        searchText = new EditBox(fr, 0, 0, 80, fr.lineHeight + 5, new TextComponent(""));
+        searchText = new EditBox(fr, 0, 0, 80, fr.lineHeight + 5, Component.literal(""));
 //        searchText.setEnableBackgroundDrawing(false);
         searchText.setBordered(false);
         // TODO Calen: something wrong if use custom Font, so... change text colour?
@@ -227,7 +225,7 @@ public class GuidePageContents extends GuidePageBase {
                 if (icon.containsGuiPos(oX, oY, gui.mouse)) {
                     icon = icon.offset(0, 28);
 //                    gui.tooltips.add(Collections.singletonList(LocaleUtil.localize(typeOrder.localeKey)));
-                    gui.tooltips.add(Collections.singletonList(new TranslatableComponent(typeOrder.localeKey)));
+                    gui.tooltips.add(Collections.singletonList(Component.translatable(typeOrder.localeKey)));
 
                 }
                 icon.drawAt(poseStack, oX, oY);

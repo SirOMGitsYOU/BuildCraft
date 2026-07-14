@@ -13,7 +13,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -40,7 +39,7 @@ public class GuiArchitectTable extends GuiBC8<ContainerArchitectTable> {
         super.initWhenOpenGuiOrResizeWindow();
         this.removeWidget(this.nameField);
 //        nameField = new GuiTextField(0, fontRenderer, guiLeft + 90, guiTop + 62, 156, 12);
-        nameField = new EditBox(font, leftPos + 90, topPos + 62, 156, 12, new TextComponent(""));
+        nameField = new EditBox(font, leftPos + 90, topPos + 62, 156, 12, Component.literal(""));
         this.addWidget(nameField);
 //        nameField.setText(container.tile.name);
         nameField.setValue(container.tile.name);
@@ -68,9 +67,9 @@ public class GuiArchitectTable extends GuiBC8<ContainerArchitectTable> {
 
     @Override
 //    public void updateScreen()
-    public void tick() {
-        // Calen FIXED: in 1.12.2 without super.tick(), the ledgers will not spread
-        super.tick();
+    public void containerTick() {
+        // Calen FIXED: in 1.12.2 without super.containerTick(), the ledgers will not spread
+        super.containerTick();
 //        nameField.updateCursorCounter();
         nameField.tick();
     }

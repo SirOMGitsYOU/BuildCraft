@@ -32,7 +32,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -193,9 +192,9 @@ public class TileZonePlanner extends TileBC_Neptune implements ITickable, IDebug
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("progress_input = " + progressInput);
-        left.add(new TextComponent("progress_input = " + progressInput));
+        left.add(Component.literal("progress_input = " + progressInput));
 //        left.add("progress_output = " + progressOutput);
-        left.add(new TextComponent("progress_output = " + progressOutput));
+        left.add(Component.literal("progress_output = " + progressOutput));
     }
 
     @Override

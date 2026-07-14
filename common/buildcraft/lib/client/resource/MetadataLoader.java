@@ -29,34 +29,6 @@ public class MetadataLoader {
     /** @param samePack If true, then only the data in the same resource pack will be returned. */
     @Nullable
     public static DataMetadataSection getData(ResourceLocation location, boolean samePack) {
-        ResourceManager resManager = Minecraft.getInstance().getResourceManager();
-        register();
-        try {
-//            List<IResource> resources = resManager.getAllResources(location);
-            List<Resource> resources = resManager.getResources(location);
-            DataMetadataSection section = null;
-            for (Resource resource : resources) {
-//                section = resource.getMetadata(DataMetadataSection.SECTION_NAME);
-                section = resource.getMetadata(DataMetadataSection.DESERIALISER);
-                if (section != null || samePack) {
-                    break;
-                }
-            }
-            for (Resource res : resources) {
-                try {
-                    res.close();
-                } catch (IOException io) {
-                    io.printStackTrace();
-                }
-            }
-            return section;
-        } catch (FileNotFoundException fnfe) {
-            // That's fine
-            return null;
-        } catch (IOException e) {
-            // That's not fine
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 }

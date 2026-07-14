@@ -64,9 +64,7 @@ public class GuiScreenBuildCraft<C extends ContainerBC_Neptune<?>> extends Scree
     }
 
     @Override
-//    public void updateScreen()
     public void tick() {
-//        super.updateScreen();
         super.tick();
         mainGui.tick();
     }

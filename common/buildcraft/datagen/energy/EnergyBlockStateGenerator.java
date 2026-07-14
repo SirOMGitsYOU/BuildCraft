@@ -5,6 +5,7 @@ import buildcraft.energy.BCEnergy;
 import buildcraft.energy.BCEnergyBlocks;
 import buildcraft.energy.BCEnergyFluids;
 import buildcraft.lib.fluid.BCFluid;
+import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,8 +28,8 @@ public class EnergyBlockStateGenerator extends BCBaseBlockStateGenerator {
         for (RegistryObject<BCFluid.Source> fluid : BCEnergyFluids.allStill) {
             simpleBlock(
                     fluid.get().getReg().getBlock(),
-                    models().getBuilder(fluid.get().getReg().getBlock().getRegistryName().toString())
-                            .texture("particle", fluid.get().getSource().getAttributes().getStillTexture())
+                    models().getBuilder(BlockUtil.getRegistryName(fluid.get().getReg().getBlock()).toString())
+                            .texture("particle", fluid.get().getReg().getFluidType().getStillTexture())
             );
         }
     }

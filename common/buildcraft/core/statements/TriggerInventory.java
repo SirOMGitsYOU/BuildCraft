@@ -15,7 +15,6 @@ import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
@@ -46,7 +45,7 @@ public class TriggerInventory extends BCStatement implements ITriggerExternal {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.inventory." + state.name().toLowerCase(Locale.ROOT));
-        return new TranslatableComponent("gate.trigger.inventory." + state.name().toLowerCase(Locale.ROOT));
+        return Component.translatable("gate.trigger.inventory." + state.name().toLowerCase(Locale.ROOT));
     }
 
     @Override

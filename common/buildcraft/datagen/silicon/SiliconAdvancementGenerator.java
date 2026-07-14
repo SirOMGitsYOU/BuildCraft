@@ -1,5 +1,7 @@
 package buildcraft.datagen.silicon;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.datagen.base.BCBaseAdvancementGenerator;
 import buildcraft.silicon.BCSilicon;
 import buildcraft.silicon.BCSiliconBlocks;
@@ -8,7 +10,6 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Consumer;
@@ -25,8 +26,8 @@ public class SiliconAdvancementGenerator extends BCBaseAdvancementGenerator {
         // fluid_storage
         Advancement laser_power = Advancement.Builder.advancement().display(
                         BCSiliconBlocks.laser.get(),
-                        new TranslatableComponent("advancements.buildcraftsilicon.laser_power.title"),
-                        new TranslatableComponent("advancements.buildcraftsilicon.laser_power.description"),
+                        Component.translatable("advancements.buildcraftsilicon.laser_power.title"),
+                        Component.translatable("advancements.buildcraftsilicon.laser_power.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -40,8 +41,8 @@ public class SiliconAdvancementGenerator extends BCBaseAdvancementGenerator {
         // precision_crafting
         Advancement precision_crafting = Advancement.Builder.advancement().display(
                         BCSiliconBlocks.assemblyTable.get(),
-                        new TranslatableComponent("advancements.buildcraftsilicon.precision_crafting.title"),
-                        new TranslatableComponent("advancements.buildcraftsilicon.precision_crafting.description"),
+                        Component.translatable("advancements.buildcraftsilicon.precision_crafting.title"),
+                        Component.translatable("advancements.buildcraftsilicon.precision_crafting.description"),
                         null,
                         FrameType.TASK,
                         true, true, false

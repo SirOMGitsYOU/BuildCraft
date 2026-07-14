@@ -11,8 +11,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.text.DecimalFormat;
@@ -33,7 +33,7 @@ public final class StringUtilBC {
     public static List<Component> splitIntoLines(String string) {
         return newLineSplitter
                 .splitToList(string.replaceAll("\\n", "\n"))
-                .stream().map(s -> (Component) new TextComponent(s))
+                .stream().map(s -> (Component) Component.literal(s))
                 .toList();
     }
 
@@ -100,7 +100,7 @@ public final class StringUtilBC {
         if (fluid == null) {
             return "null";
         }
-        return fluid.getAmount() + "mb " + fluid.getRawFluid().getRegistryName().getPath();
+        return fluid.getAmount() + "mb " + ForgeRegistries.FLUIDS.getKey(fluid.getRawFluid()).getPath();
     }
 
     // Displaying objects

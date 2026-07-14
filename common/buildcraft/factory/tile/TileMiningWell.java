@@ -115,7 +115,7 @@ public class TileMiningWell extends TileMiner {
         }
 
         Fluid fluid = BlockUtil.getFluidWithFlowing(level, currentPos);
-        return fluid == null || fluid.getAttributes().getViscosity() <= 1000;
+        return fluid == null || fluid.getFluidType().getViscosity() <= 1000;
     }
 
     private void nextPos() {

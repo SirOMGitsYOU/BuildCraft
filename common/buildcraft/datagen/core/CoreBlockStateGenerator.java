@@ -6,6 +6,7 @@ import buildcraft.core.BCCore;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.block.BlockDecoration;
 import buildcraft.datagen.base.BCBaseBlockStateGenerator;
+import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
@@ -47,7 +48,7 @@ public class CoreBlockStateGenerator extends BCBaseBlockStateGenerator {
         BCCoreBlocks.decoratedMap.values().forEach(decorated ->
                 {
                     BlockDecoration block = decorated.get();
-                    ResourceLocation rl = block.getRegistryName();
+                    ResourceLocation rl = BlockUtil.getRegistryName(block);
                     EnumDecoratedBlock type = block.DECORATED_TYPE;
                     String texture = switch (type) {
                         case BLUEPRINT -> "buildcraftcore:blocks/blueprint/blue";

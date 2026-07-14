@@ -47,7 +47,7 @@ public class BCFactoryBlocks {
                 BlockBehaviour.Properties.of(Material.METAL)
                         .strength(-1.0F, 3600000.0F) // setBlockUnbreakable()
                         .noOcclusion()
-                        .noDrops()
+                        .noLootTable()
                         .isSuffocating((state, world, pos) -> false)
                 ,
                 BlockTube::new

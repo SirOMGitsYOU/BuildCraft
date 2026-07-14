@@ -25,8 +25,7 @@ public class ItemRedstoneBoard extends ItemBC_Neptune {
         this.boardNBT = boardNBT;
     }
 
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
+    public int getMaxStackSize(ItemStack stack) {
         return getBoardNBT(stack) != RedstoneBoardRegistry.instance.getEmptyRobotBoard() ? 1 : 16;
     }
 

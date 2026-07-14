@@ -12,7 +12,6 @@ import buildcraft.api.statements.StatementParameterItemStack;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -24,7 +23,7 @@ public class ActionStationProvideFluids extends BCStatement implements IActionIn
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.station.povide_fluids");
+        return Component.translatable("gate.action.station.povide_fluids");
     }
 
     @Override

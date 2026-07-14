@@ -39,10 +39,10 @@ public enum BCSiliconGuis {
 //            player.openMenu(state.getMenuProvider(player.level, pos));
 //            if (player.level.getBlockEntity(pos) instanceof MenuProvider tile)
 //            {
-//                NetworkHooks.openGui(serverPlayer, tile, pos);
+//                NetworkHooks.openScreen(serverPlayer, tile, pos);
 //            }
             if (this == GATE) {
-                NetworkHooks.openGui(
+                NetworkHooks.openScreen(
                         serverPlayer, provider, buf ->
                         {
                             buf.writeBlockPos(pos);
@@ -52,7 +52,7 @@ public enum BCSiliconGuis {
                         }
                 );
             } else {
-                NetworkHooks.openGui(serverPlayer, provider, pos);
+                NetworkHooks.openScreen(serverPlayer, provider, pos);
             }
         }
     }

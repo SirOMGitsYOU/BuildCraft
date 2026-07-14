@@ -7,13 +7,14 @@ import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.fluid.BCFluidAttributes;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -29,7 +30,7 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    protected void generateTextures(CachedOutput output) throws IOException {
         ResourceLocation[][] fromSprites = new ResourceLocation[3][2];
         for (int h = 0; h < 3; h++) {
             fromSprites[h][0] = new ResourceLocation("buildcraftlib:fluids/heat_" + h + "_still");
@@ -39,28 +40,29 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
         Path mainOutput = generator.getOutputFolder();
         for (int index = 0; index < BCEnergyFluids.allStill.size(); index++) {
             BCFluid.Source fluid = BCEnergyFluids.allStill.get(index).get();
-            ResourceLocation[] sprites = fromSprites[((BCFluidAttributes) fluid.getAttributes()).getHeat()];
-            int lightColour = ((BCFluidAttributes) fluid.getAttributes()).getLightColour();
-            int darkColour = ((BCFluidAttributes) fluid.getAttributes()).getDarkColour();
+            BCFluidAttributes fluidType = fluid.getReg().getFluidType();
+            ResourceLocation[] sprites = fromSprites[fluidType.getHeat()];
+            int lightColour = fluidType.getLightColour();
+            int darkColour = fluidType.getDarkColour();
             int lightColour_christmas = ChristmasHandler.colours[index / 3][0];
             int darkColour_christmas = ChristmasHandler.colours[index / 3][1];
             // when datagen runs at Christmas...
-            String normalStillTexture = fluid.getSource().getAttributes().getStillTexture().toString().replace("_christmas", "");
-            String normalFlowTexture = fluid.getSource().getAttributes().getFlowingTexture().toString().replace("_christmas", "");
+            String normalStillTexture = fluidType.getStillTexture().toString().replace("_christmas", "");
+            String normalFlowTexture = fluidType.getFlowingTexture().toString().replace("_christmas", "");
             try {
                 // Normal
-                recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture), lightColour, darkColour, sprites[0], cache);
-                recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture), lightColour, darkColour, sprites[1], cache);
+                recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture), lightColour, darkColour, sprites[0], output);
+                recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture), lightColour, darkColour, sprites[1], output);
                 // Christmas
-                recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[0], cache);
-                recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[1], cache);
+                recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[0], output);
+                recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[1], output);
             } catch (IOException e) {
-                LOGGER.error("Couldn't save texture of {}", fluid.getRegistryName(), e);
+                LOGGER.error("Couldn't save texture of {}", ForgeRegistries.FLUIDS.getKey(fluid), e);
             }
         }
     }
 
-    private void recolourAndSave(Path mainOutput, ResourceLocation fluid, int light, int dark, ResourceLocation baseTexture, HashCache cache) throws IOException {
+    private void recolourAndSave(Path mainOutput, ResourceLocation fluid, int light, int dark, ResourceLocation baseTexture, CachedOutput output) throws IOException {
         Resource basePngResource = exFileHelper.getResource(baseTexture, PackType.CLIENT_RESOURCES, ".png", "textures");
         Resource baseMcmetaResource = exFileHelper.getResource(baseTexture, PackType.CLIENT_RESOURCES, ".png.mcmeta", "textures");
 
@@ -71,7 +73,7 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
         Path mcmetaOutputPath = mainOutput.resolve(mcmetaPathStr);
 
         // generate png
-        InputStream basePngInputStream = basePngResource.getInputStream();
+        InputStream basePngInputStream = basePngResource.open();
         BufferedImage bi = ImageIO.read(basePngInputStream);
         int width = bi.getWidth();
         int height = bi.getHeight();
@@ -86,12 +88,12 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
 
             }
         }
-        save(bo, cache, pngOutputPath);
+        save(bo, output, pngOutputPath);
 
         // copy mcmeta
-        Reader reader = new BufferedReader(new InputStreamReader(baseMcmetaResource.getInputStream(), StandardCharsets.UTF_8));
+        Reader reader = new BufferedReader(new InputStreamReader(baseMcmetaResource.open(), StandardCharsets.UTF_8));
         JsonObject mcmeta = GsonHelper.fromJson(GSON, reader, JsonObject.class);
-        DataProvider.save(GSON, cache, mcmeta, mcmetaOutputPath);
+        DataProvider.saveStable(output, mcmeta, mcmetaOutputPath);
 
         // set generated or the model provider will throw exception
         // IllegalArgumentException: Texture buildcraftenergy:blocks/fluids/oil_heat_0_still does not exist in any known resource pack

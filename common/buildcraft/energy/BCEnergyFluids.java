@@ -1,7 +1,7 @@
 package buildcraft.energy;
 
 import buildcraft.api.BCModules;
-import buildcraft.energy.item.BCBucketItem;
+import buildcraft.lib.item.ItemBucketBC;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.fluid.BCFluidAttributes;
 import buildcraft.lib.fluid.BCFluidBlock;
@@ -19,9 +19,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.DispenseFluidContainer;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fluids.DispenseFluidContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 import net.minecraftforge.registries.DeferredRegister;
@@ -140,56 +140,40 @@ public class BCEnergyFluids {
         int tempAdjustedViscosity = baseViscosity * (4 - heat) / 4;
         int boilAdjustedDensity = density * (heat >= boilPoint ? -1 : 1);
 
+        if (boilAdjustedDensity < 0 && !allowGas) {
+            boilAdjustedDensity = 1;
+        }
+
         String fluidTexture = "buildcraftenergy:fluids/" + fullName;
         BCFluidRegistryContainer fluidRegistryContainer = new BCFluidRegistryContainer();
 
-        // Attributes
-        FluidAttributes.Builder attributeBuilder = BCFluidAttributes.builder(
-                        new ResourceLocation(fluidTexture + STILL_SUFFIX),
-                        new ResourceLocation(fluidTexture + FLOW_SUFFIX)
-                )
-                // def.setHeat(heat)
-                .setHeat(heat)
-                // def.setHeatable(true)
-                .setHeatable(true)
-                // def.setColour(texLight, texDark)
-                .setColour(texLight, texDark)
-                // def.setUnlocalizedName(name)
-                .translationKey(HEAT_TRANSLATION_PREFIX + name)
-                .sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
-                // Calen: if use color filter on white texture of water, here should be Water Overlay
-                // if the texture is colored, [.overlay(WATER_OVERLAY) and .color(0xFFFFFFFF)] will make the fluid block looks white behind glass block
-                .overlay(null)
-                // def.setTemperature(300 + 20 * heat)
-                .temperature(300 + 20 * heat)
-                // def.setDensity(boilAdjustedDensity)
-                .density(boilAdjustedDensity)
-                // def.setViscosity(tempAdjustedViscosity)
-                .viscosity(tempAdjustedViscosity)
-                // 1.12.2: BCFluid#colour
-                .color(0xFFFFFFFF);
-
         // Properties
         ForgeFlowingFluid.Properties fluidProperties = new ForgeFlowingFluid.Properties(
+                fluidRegistryContainer::getFluidType,
                 fluidRegistryContainer::getStill,
-                fluidRegistryContainer::getFlowing,
-                attributeBuilder
+                fluidRegistryContainer::getFlowing
         )
                 .bucket(fluidRegistryContainer::getBucket)
                 .block(fluidRegistryContainer::getBlock)
-                // 1.12.2 BlockFluidBase#<init>: this.tickRate = fluid.viscosity / 200
-                // 1.18.2: should set by ourselves
                 .tickRate(tempAdjustedViscosity / 200)
-                // Distance that the fluid will travel: 1->16
-                // Higher heat values travel a little further
-                // 1.12.2: block.setQuantaPerBlock(baseQuanta + (baseQuanta > 6 ? heat : heat / 2));
-                // 1.12.2 max = 16 Block#setQuantaPerBlock(range)
-                // 1.18.2 max = 8 Properties#levelDecreasePerBlock(decrease)
                 .levelDecreasePerBlock(8 / Math.min((baseQuanta + (baseQuanta > 6 ? heat : heat / 2)) / 2, 8));
-        // def.setGaseous(def.getDensity() < 0)
-        if (boilAdjustedDensity < 0 && allowGas) {
-            attributeBuilder.gaseous();
-        }
+
+        // Attributes
+        BCFluidAttributes.Builder attributeBuilder = BCFluidAttributes.builder(
+                        new ResourceLocation(fluidTexture + STILL_SUFFIX),
+                        new ResourceLocation(fluidTexture + FLOW_SUFFIX)
+                )
+                .setHeat(heat)
+                .setHeatable(true)
+                .setColour(texLight, texDark)
+                .overlay(null)
+                .descriptionId(HEAT_TRANSLATION_PREFIX + name)
+                .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+                .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+                .temperature(300 + 20 * heat)
+                .density(boilAdjustedDensity)
+                .viscosity(tempAdjustedViscosity);
+        fluidRegistryContainer.setFluidType(attributeBuilder.build());
 
         // Still
         String stillId = fullName;
@@ -221,9 +205,9 @@ public class BCEnergyFluids {
         Item.Properties bucketProp = new Item.Properties()
                 .stacksTo(1)
                 .craftRemainder(Items.BUCKET);
-        RegistryObject<BucketItem> bucket = bucketRegister.register(
+        RegistryObject<ItemBucketBC> bucket = bucketRegister.register(
                 bucketId,
-                () -> new BCBucketItem(
+                () -> new ItemBucketBC(
                         fluidRegistryContainer::getStill,
                         bucketProp
                 )
@@ -243,7 +227,7 @@ public class BCEnergyFluids {
                 .noCollission()
                 .randomTicks()
                 .strength(100.0F)
-                .noDrops();
+                .noLootTable();
         RegistryObject<BCFluidBlock> block = blockRegister.register(
                 blockId,
                 () -> new BCFluidBlock(

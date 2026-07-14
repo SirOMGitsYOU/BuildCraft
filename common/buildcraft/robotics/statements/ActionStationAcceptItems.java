@@ -10,7 +10,6 @@ import buildcraft.api.statements.StatementManager;
 import buildcraft.api.statements.StatementParameterItemStack;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +22,7 @@ public class ActionStationAcceptItems extends ActionStationInputItems {
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.station.accept_items");
+        return Component.translatable("gate.action.station.accept_items");
     }
 
     @Override

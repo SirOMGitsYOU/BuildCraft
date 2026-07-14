@@ -16,7 +16,6 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.fluids.IFluidTank;
 
@@ -67,7 +66,7 @@ public class LocaleUtil {
      * @return The localized key, or the input key if no localization was found. */
     public static String localize(String key) {
 //        String localized = I18n.get(key);
-        String localized = new TranslatableComponent(key).getString();
+        String localized = Component.translatable(key).getString();
         if (localized == key) {
             if (DEBUG && failedStrings.add(localized)) {
                 BCLog.logger.warn("[lib.locale] Attempted to localize '" + key + "' but no localization existed!");
@@ -98,7 +97,7 @@ public class LocaleUtil {
 //        }
 
         try {
-            String localized = new TranslatableComponent(key, args).getString();
+            String localized = Component.translatable(key, args).getString();
             if (Objects.equals(localized, key)) {
                 if (DEBUG && failedStrings.add(localized)) {
                     BCLog.logger.warn("[lib.locale] Attempted to localize '" + key + "' but no localization existed!");
@@ -141,7 +140,7 @@ public class LocaleUtil {
 
     // Calen
     public static Component localizeFacingComponent(@Nullable Direction face) {
-        return new TranslatableComponent("direction." + (face == null ? "center" : face.getName()));
+        return Component.translatable("direction." + (face == null ? "center" : face.getName()));
     }
 
     public static String localizeFluidStaticAmount(IFluidTank tank) {
@@ -200,9 +199,9 @@ public class LocaleUtil {
                 } else {
                     cap = FORMAT_FLUID.format(capacity);
                 }
-                return new TranslatableComponent(localeKeyFluidStaticEmpty, cap);
+                return Component.translatable(localeKeyFluidStaticEmpty, cap);
             }
-            return new TranslatableComponent("buildcraft.fluid.empty");
+            return Component.translatable("buildcraft.fluid.empty");
         } else {
             String amount;
             String cap;
@@ -214,9 +213,9 @@ public class LocaleUtil {
                 cap = FORMAT_FLUID.format(capacity);
             }
             if (capacity == fluidAmount) {
-                return new TranslatableComponent(localeKeyFluidStaticFull, amount);
+                return Component.translatable(localeKeyFluidStaticFull, amount);
             }
-            return new TranslatableComponent(capacity > 0 ? localeKeyFluidStaticCap : localeKeyFluidStatic, amount, cap);
+            return Component.translatable(capacity > 0 ? localeKeyFluidStaticCap : localeKeyFluidStatic, amount, cap);
         }
     }
 
@@ -231,14 +230,14 @@ public class LocaleUtil {
     }
 
     // Calen
-    public static TranslatableComponent localizeFluidFlowToTranslatableComponent(int milliBucketsPerTick) {
+    public static MutableComponent localizeFluidFlowToTranslatableComponent(int milliBucketsPerTick) {
         String amount;
         if (BCLibConfig.useBucketsFlow) {
             amount = FORMAT_FLUID.format(milliBucketsPerTick / 50.0);
         } else {
             amount = FORMAT_FLUID.format(milliBucketsPerTick);
         }
-        return new TranslatableComponent(localeKeyFluidFlow, amount);
+        return Component.translatable(localeKeyFluidFlow, amount);
     }
 
     public static String localizeMj(long mj) {
@@ -253,7 +252,7 @@ public class LocaleUtil {
         if (BCLibConfig.powerMode == PowerMode.DISPLAY_RF) {
             return localizeRfComponent((int) (mj / MjAPI.getRfConversion().mjPerRf));
         }
-        return new TranslatableComponent(localeKeyMjStatic, MjAPI.formatMj(mj));
+        return Component.translatable(localeKeyMjStatic, MjAPI.formatMj(mj));
     }
 
     public static String localizeMjFlow(long mj) {
@@ -265,20 +264,20 @@ public class LocaleUtil {
     }
 
     // Calen
-    public static TranslatableComponent localizeMjFlowComponent(long mj) {
+    public static MutableComponent localizeMjFlowComponent(long mj) {
         if (BCLibConfig.powerMode == PowerMode.DISPLAY_RF) {
             return localizeRfFlowComponent((int) (mj / MjAPI.getRfConversion().mjPerRf));
         }
         mj = BCLibConfig.displayTimeGap.convertTicksToGap(mj);
-        return new TranslatableComponent(localeKeyMjFlow, MjAPI.formatMj(mj));
+        return Component.translatable(localeKeyMjFlow, MjAPI.formatMj(mj));
     }
 
     public static String localizeRf(int rf) {
         return localize(localeKeyRfStatic, formatRf(rf));
     }
 
-    public static TranslatableComponent localizeRfComponent(int rf) {
-        return new TranslatableComponent(localeKeyRfStatic, formatRf(rf));
+    public static MutableComponent localizeRfComponent(int rf) {
+        return Component.translatable(localeKeyRfStatic, formatRf(rf));
     }
 
     public static String localizeRfFlow(int rf) {
@@ -286,9 +285,9 @@ public class LocaleUtil {
         return localize(localeKeyRfFlow, formatRf(rf));
     }
 
-    public static TranslatableComponent localizeRfFlowComponent(int rf) {
+    public static MutableComponent localizeRfFlowComponent(int rf) {
         rf = BCLibConfig.displayTimeGap.convertTicksToGap(rf);
-        return new TranslatableComponent(localeKeyRfFlow, formatRf(rf));
+        return Component.translatable(localeKeyRfFlow, formatRf(rf));
     }
 
     public static String formatRf(int rf) {
@@ -305,6 +304,6 @@ public class LocaleUtil {
 
     // Calen
     public static boolean modLangResourceNotLoaded() {
-        return new TranslatableComponent("color.clear").getString().equals("color.clear");
+        return Component.translatable("color.clear").getString().equals("color.clear");
     }
 }

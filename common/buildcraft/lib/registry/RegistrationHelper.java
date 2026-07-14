@@ -54,8 +54,8 @@ public final class RegistrationHelper {
     public RegistrationHelper(String namespace) {
         BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, namespace);
         ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, namespace);
-        TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, namespace);
-        ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, namespace);
+        TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
+        ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, namespace);
         PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, namespace);
         MOD_EVENT_BUS = ((FMLModContainer) ModList.get().getModContainerById(namespace).get()).getEventBus(); // Calen: don't use FMLJavaModLoadingContext.get().getModEventBus()
         BLOCKS.register(MOD_EVENT_BUS);

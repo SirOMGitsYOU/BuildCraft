@@ -17,15 +17,17 @@ import buildcraft.lib.registry.TagManager.EnumTagType;
 import buildcraft.lib.registry.TagManager.TagEntry;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
 
@@ -111,8 +113,11 @@ public class BCBuilders {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCBuildersMenuTypes.registerAll(event);
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            BCBuildersMenuTypes.registerAll();
+        }
     }
 
     private static final TagManager tagManager = new TagManager();

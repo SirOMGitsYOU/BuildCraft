@@ -4,7 +4,9 @@ import buildcraft.lib.BCLib;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.VanillaGameEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -46,7 +48,8 @@ public class LocalBlockUpdateNotifier {
                     (level, notifier) ->
                     {
                         if (level == event.getLevel()) {
-                            notifier.notifySubscribersInRange(event.getLevel(), event.getEventPosition());
+                            Vec3 eventPos = event.getEventPosition();
+                            notifier.notifySubscribersInRange(event.getLevel(), new BlockPos(Mth.floor(eventPos.x), Mth.floor(eventPos.y), Mth.floor(eventPos.z)));
                         }
                     }
             );

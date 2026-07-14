@@ -29,14 +29,14 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 @OnlyIn(Dist.CLIENT)
 public class ItemRenderUtil {
 
 //    private static final LoadingCache<ItemStackKey, Integer> glListCache;
 
-    private static final Random modelOffsetRandom = new Random(0);
+    private static final RandomSource modelOffsetRandom = RandomSource.create(0);
 
     // Calen: maybe not used, null value will cause exception when TC3 EquipmentChangeWatcher attach caps
 //    private static final EntityItem dummyEntityItem = new EntityItem(null);
@@ -178,7 +178,7 @@ public class ItemRenderUtil {
                 MutableQuad q = new MutableQuad(-1, null);
                 for (EnumPipePart part : EnumPipePart.VALUES) {
 //                    for (BakedQuad quad : model.getQuads(null, part.face, 0))
-                    for (BakedQuad quad : model.getQuads(null, part.face, new Random())) {
+                    for (BakedQuad quad : model.getQuads(null, part.face, RandomSource.create())) {
                         q.fromBakedItem(quad);
                         q.translated(-0.5, -0.5, -0.5);
                         q.scaled(scale);
@@ -234,7 +234,7 @@ public class ItemRenderUtil {
         if (stack.isEmpty()) {
             seed = 137;
         } else {
-            ResourceLocation regName = stack.getItem().getRegistryName();
+            ResourceLocation regName = ForgeRegistries.ITEMS.getKey(stack.getItem());
             if (regName == null) {
                 seed = 127;
             } else {

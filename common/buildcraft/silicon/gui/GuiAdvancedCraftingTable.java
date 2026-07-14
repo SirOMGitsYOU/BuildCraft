@@ -157,9 +157,9 @@ public class GuiAdvancedCraftingTable extends GuiBC8<ContainerAdvancedCraftingTa
 
     @Override
 //    public void updateScreen()
-    public void tick() {
+    public void containerTick() {
 //        super.updateScreen();
-        super.tick();
+        super.containerTick();
 //        if (recipeBook != null) {
 //            recipeBook.tick();
 //        }

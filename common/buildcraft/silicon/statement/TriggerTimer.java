@@ -15,7 +15,6 @@ import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import buildcraft.silicon.BCSiliconSprites;
 import buildcraft.silicon.BCSiliconStatements;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,7 +45,7 @@ public class TriggerTimer extends BCStatement implements ITriggerInternal {
     @Override
     public Component getDescription() {
         // return LocaleUtil.localize("gate.trigger.timer", duration.duration);
-        return new TranslatableComponent("gate.trigger.timer", duration.duration);
+        return Component.translatable("gate.trigger.timer", duration.duration);
     }
 
     @Override

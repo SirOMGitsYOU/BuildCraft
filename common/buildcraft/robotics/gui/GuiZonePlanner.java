@@ -643,16 +643,20 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
         RenderSystem.disableTexture();
         RenderSystem.setShaderColor(1, 1, 1, 1);
         FogRenderer.setupNoFog();
+        vertexBuffer.bind();
         vertexBuffer.drawWithShader(modelViewStack.last().pose(), projectionMatrix, GameRenderer.getPositionColorShader());
+        VertexBuffer.unbind();
     }
 
     private void uploadBufferBuilderAndRender(BufferBuilder builder, PoseStack modelViewStack, Matrix4f projectionMatrix, ShaderInstance shader) {
-        builder.end();
+        BufferBuilder.RenderedBuffer rendered = builder.end();
         RenderSystem.setShaderColor(1, 1, 1, 1);
         FogRenderer.setupNoFog();
         VertexBuffer vertexBuffer = new VertexBuffer();
-        vertexBuffer.upload(builder);
+        vertexBuffer.bind();
+        vertexBuffer.upload(rendered);
         vertexBuffer.drawWithShader(modelViewStack.last().pose(), projectionMatrix, shader);
+        VertexBuffer.unbind();
     }
 
     private static void normalize(Vector3d vector3d) {

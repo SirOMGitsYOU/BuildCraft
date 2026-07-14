@@ -13,6 +13,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.Vec3;
 
@@ -169,7 +170,7 @@ public class ZonePlan implements IZone {
     }
 
     @Override
-    public BlockPos getRandomBlockPos(Random rand) {
+    public BlockPos getRandomBlockPos(RandomSource rand) {
         if (chunkMapping.size() == 0) {
             return null;
         }

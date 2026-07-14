@@ -29,13 +29,12 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.MinecraftForgeClient;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -86,7 +85,7 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
                                                   BakedModel model,
                                                   Direction side,
                                                   Vec3 pos0, Vec3 pos1, Vec3 pos2, Vec3 pos3) {
-        Random random = new Random(0); // Calen
+        RandomSource random = RandomSource.create(0); // Calen
 //        return model.getQuads(state, side, 0).stream()
         return model.getQuads(state, side, random).stream()
                 .map(quad ->
@@ -210,10 +209,8 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
     public List<MutableQuad> bakeForKey(KeyPlugFacade key) {
 //        BakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(key.state);
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(key.state);
-//        BlockRenderLayer renderLayer = MinecraftForgeClient.getRenderLayer();
-        RenderType renderLayer = MinecraftForgeClient.getRenderType();
 //        ForgeHooksClient.setRenderLayer(null);
-        ForgeHooksClient.setRenderType(null);
+//        ForgeHooksClient.setRenderType(null);
         List<MutableQuad> quads = new ArrayList<>();
         int pS = PluggableFacade.SIZE;
         int nS = 16 - pS;
@@ -288,7 +285,7 @@ public enum PlugBakerFacade implements IPluggableStaticBaker<KeyPlugFacade> {
             }
         }
 //        ForgeHooksClient.setRenderLayer(renderLayer);
-        ForgeHooksClient.setRenderType(renderLayer);
+//        ForgeHooksClient.setRenderType(null);
         for (MutableQuad quad : quads) {
             int tint = quad.getTint();
             if (tint != -1) {

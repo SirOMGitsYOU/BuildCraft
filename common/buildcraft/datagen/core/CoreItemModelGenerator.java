@@ -4,14 +4,15 @@ import buildcraft.api.enums.EnumDecoratedBlock;
 import buildcraft.core.BCCore;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
-import buildcraft.core.block.BlockDecoration;
+import buildcraft.lib.misc.BlockUtil;
 import buildcraft.core.client.CoreItemModelPredicates;
+import buildcraft.core.block.BlockDecoration;
 import buildcraft.datagen.base.BCBaseItemModelGenerator;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
@@ -24,19 +25,19 @@ public class CoreItemModelGenerator extends BCBaseItemModelGenerator {
     @Override
     protected void registerModels() {
         // gears
-        withExistingParent(BCCoreItems.gearDiamond.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.gearDiamond.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/gear_diamond");
-        withExistingParent(BCCoreItems.gearWood.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.gearWood.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/gear_wood");
-        withExistingParent(BCCoreItems.gearStone.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.gearStone.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/gear_stone");
-        withExistingParent(BCCoreItems.gearIron.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.gearIron.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/gear_iron");
-        withExistingParent(BCCoreItems.gearGold.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.gearGold.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/gear_gold");
 
         // list
-        ResourceLocation list = BCCoreItems.list.get().getRegistryName();
+        ResourceLocation list = BCCoreItems.list.getId();
         getBuilder(list.toString())
                 .override()
                 .model(
@@ -54,7 +55,7 @@ public class CoreItemModelGenerator extends BCBaseItemModelGenerator {
                 .end()
         ;
         // mapLocation
-        ResourceLocation mapLocation = BCCoreItems.mapLocation.get().getRegistryName();
+        ResourceLocation mapLocation = BCCoreItems.mapLocation.getId();
         getBuilder(mapLocation.toString())
                 .override()
                 .model(
@@ -101,50 +102,50 @@ public class CoreItemModelGenerator extends BCBaseItemModelGenerator {
         ;
 
         // wrench
-        withExistingParent(BCCoreItems.wrench.get().getRegistryName().toString(), HANDHELD)
+        withExistingParent(BCCoreItems.wrench.getId().toString(), HANDHELD)
                 .texture("layer0", "buildcraftcore:items/wrench");
 
         // marker_connector
-        withExistingParent(BCCoreItems.markerConnector.get().getRegistryName().toString(), HANDHELD)
+        withExistingParent(BCCoreItems.markerConnector.getId().toString(), HANDHELD)
                 .texture("layer0", "buildcraftcore:items/marker_connector");
 
         // goggles
-        withExistingParent(BCCoreItems.goggles.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreItems.goggles.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/goggles");
 
         // fragile fluid shard
         withExistingParent(
-                BCCoreItems.fragileFluidShard.get().getRegistryName().toString(),
+                BCCoreItems.fragileFluidShard.getId().toString(),
                 new ResourceLocation("forge", "item/bucket")
         )
                 .texture("base", "buildcraftcore:items/fragile_fluid_shard_base")
                 .texture("fluid", "buildcraftcore:items/fragile_fluid_shard_fluid")
-                .customLoader(DynamicBucketModelBuilder::begin)
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .fluid(Fluids.WATER.getSource())
         ;
 
         // springs
-        withExistingParent(BCCoreBlocks.springOil.get().getRegistryName().toString(), "minecraft:block/bedrock");
-        withExistingParent(BCCoreBlocks.springWater.get().getRegistryName().toString(), "minecraft:block/bedrock");
+        withExistingParent(BCCoreBlocks.springOil.getId().toString(), "minecraft:block/bedrock");
+        withExistingParent(BCCoreBlocks.springWater.getId().toString(), "minecraft:block/bedrock");
 
         // markerVolume
-        withExistingParent(BCCoreBlocks.markerVolume.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreBlocks.markerVolume.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/marker_volume")
         ;
         // markerPath
-        withExistingParent(BCCoreBlocks.markerPath.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCCoreBlocks.markerPath.getId().toString(), GENERATED)
                 .texture("layer0", "buildcraftcore:items/marker_path")
         ;
 
         // power_tester
-        withExistingParent(BCCoreBlocks.powerTester.get().getRegistryName().toString(), new ResourceLocation("buildcraftcore:block/power_tester"));
+        withExistingParent(BCCoreBlocks.powerTester.getId().toString(), new ResourceLocation("buildcraftcore:block/power_tester"));
 
         // engine
-        getBuilder(BCCoreBlocks.engineWood.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
-        getBuilder(BCCoreBlocks.engineCreative.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCCoreBlocks.engineWood.getId().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCCoreBlocks.engineCreative.getId().toString()).parent(BUILTIN_ENTITY);
         BCCoreItems.colourBrushMap.forEach((colour, item) ->
         {
-            withExistingParent(item.get().getRegistryName().toString(), HANDHELD)
+            withExistingParent(item.getId().toString(), HANDHELD)
                     .texture("layer0", "buildcraftcore:items/paintbrush/" + (colour == null ? "clean" : colour.getName()));
         });
 
@@ -152,7 +153,7 @@ public class CoreItemModelGenerator extends BCBaseItemModelGenerator {
         BCCoreBlocks.decoratedMap.values().forEach(decorated ->
                 {
                     BlockDecoration block = decorated.get();
-                    ResourceLocation rl = block.getRegistryName();
+                    ResourceLocation rl = BlockUtil.getRegistryName(block);
                     EnumDecoratedBlock type = block.DECORATED_TYPE;
                     withExistingParent(rl.toString(), rl.getNamespace() + ":block/decorated/" + type.getSerializedName());
 
@@ -160,7 +161,7 @@ public class CoreItemModelGenerator extends BCBaseItemModelGenerator {
         );
 
         // volumeBox
-        withExistingParent(BCCoreItems.volumeBox.get().getRegistryName().toString(), BLOCK)
+        withExistingParent(BCCoreItems.volumeBox.getId().toString(), BLOCK)
                 .element()
                 .from(2, 0, 0).to(14, 2, 2)
                 .face(Direction.DOWN).texture("#main").end()

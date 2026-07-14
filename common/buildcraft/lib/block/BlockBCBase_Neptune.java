@@ -195,7 +195,7 @@ public class BlockBCBase_Neptune extends Block {
     }
 
     protected static boolean isExceptionBlockForAttaching(Block attachBlock) {
-        return attachBlock instanceof ShulkerBoxBlock || attachBlock instanceof LeavesBlock || attachBlock instanceof TrapDoorBlock || attachBlock == Blocks.BEACON || attachBlock == Blocks.CAULDRON || attachBlock == Blocks.GLASS || attachBlock == Blocks.GLOWSTONE || attachBlock == Blocks.ICE || attachBlock == Blocks.SEA_LANTERN || attachBlock.builtInRegistryHolder().is(Tags.Blocks.STAINED_GLASS);
+        return attachBlock instanceof ShulkerBoxBlock || attachBlock instanceof LeavesBlock || attachBlock instanceof TrapDoorBlock || attachBlock == Blocks.BEACON || attachBlock == Blocks.CAULDRON || attachBlock == Blocks.GLASS || attachBlock == Blocks.GLOWSTONE || attachBlock == Blocks.ICE || attachBlock == Blocks.SEA_LANTERN || attachBlock.defaultBlockState().is(Tags.Blocks.STAINED_GLASS);
     }
 
     // Calen:

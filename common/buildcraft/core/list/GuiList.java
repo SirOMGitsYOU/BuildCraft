@@ -29,7 +29,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -169,7 +168,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
 
         this.removeWidget(this.textField);
 //        textField = new GuiTextField(6, this.fontRenderer, guiLeft + 10, guiTop + 10, 156, 12);
-        textField = new EditBox(this.font, leftPos + 10, topPos + 10, 156, 12, new TextComponent(""));
+        textField = new EditBox(this.font, leftPos + 10, topPos + 10, 156, 12, Component.literal(""));
         this.addWidget(textField);
 //        textField.setMaxStringLength(32);
         textField.setMaxLength(32);

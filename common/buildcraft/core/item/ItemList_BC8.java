@@ -16,7 +16,6 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
@@ -78,7 +77,7 @@ public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider 
 //        if (StringUtils.isNullOrEmpty(name)) return;
         if (StringUtil.isNullOrEmpty(name)) return;
 //        tooltip.add(TextFormatting.ITALIC + name);
-        tooltip.add(new TextComponent(ChatFormatting.ITALIC + name));
+        tooltip.add(Component.literal(ChatFormatting.ITALIC + name));
     }
 
     // IList
@@ -86,8 +85,8 @@ public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider 
     @Override
 //    public Component getName(@Nonnull ItemStack stack)
     public String getName_INamedItem(@Nonnull ItemStack stack) {
-//        return new TextComponent(NBTUtilBC.getItemData(stack).getString("label"));
-//        return new TextComponent(NBTUtilBC.getItemData(stack).getString(NBT_KEY));
+//        return Component.literal(NBTUtilBC.getItemData(stack).getString("label"));
+//        return Component.literal(NBTUtilBC.getItemData(stack).getString(NBT_KEY));
         return NBTUtilBC.getItemData(stack).getString(NBT_KEY);
     }
 
@@ -112,7 +111,7 @@ public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider 
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent("list");
+        return Component.literal("list");
     }
 
     @Nullable

@@ -53,7 +53,7 @@ public class BCCoreBlocks {
     private static final BlockBehaviour.Properties SPRING_PROPERTIES =
             BlockBehaviour.Properties.of(Material.STONE)
                     .strength(-1.0F, 3600000.0F)
-                    .noDrops()
+                    .noLootTable()
                     .sound(SoundType.STONE)
                     .randomTicks();
 
@@ -105,21 +105,24 @@ public class BCCoreBlocks {
     }
 
     public static RegistryObject<BlockEngine_BC8> registerEngine(EnumEngineType type, BiFunction<BlockPos, BlockState, ? extends TileEngineBase_BC8> engineTileConstructor) {
+        return registerEngine(type, engineTileConstructor, false);
+    }
+
+    public static RegistryObject<BlockEngine_BC8> registerEngine(EnumEngineType type, BiFunction<BlockPos, BlockState, ? extends TileEngineBase_BC8> engineTileConstructor, boolean force) {
         RegistryObject<BlockEngine_BC8> engine = null;
         String regName = TagManager.getTag("block.engine.bc." + type.unlocalizedTag, TagManager.EnumTagType.REGISTRY_NAME).replace(BCCore.MODID + ":", "");
-        if (RegistryConfig.isEnabled(
+        if (force || RegistryConfig.isEnabled(
                 "engines",
                 type.getSerializedName() + "/" + type.name().toLowerCase(Locale.ROOT),
                 TagManager.getTag("block.engine.bc." + type.unlocalizedTag, TagManager.EnumTagType.UNLOCALIZED_NAME)
         )) {
             String id = "block.engine.bc." + type.unlocalizedTag;
-//            engine = HELPER.addBlockAndItem(id, ENGINE_PROPERTIES, (idBC, properties) -> new BlockEngine_BC8(idBC, properties, type), ItemEngine_BC8::new);
             engine = HELPER.addBlockAndItem(id,
                     BlockBehaviour.Properties.of(Material.METAL)
                             .strength(5.0F, 10.0F)
                             .sound(SoundType.METAL)
                             .noOcclusion()
-                    , (idBC, properties) -> new BlockEngine_BC8(idBC, properties, type, engineTileConstructor), ItemEngine_BC8::new);
+                    , (idBC, properties) -> new BlockEngine_BC8(idBC, properties, type, engineTileConstructor), force, ItemEngine_BC8::new);
             engineBlockMap.put(type, engine);
         }
         return engine;

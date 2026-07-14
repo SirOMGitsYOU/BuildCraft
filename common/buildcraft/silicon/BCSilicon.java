@@ -6,6 +6,9 @@ import buildcraft.api.facades.FacadeAPI;
 import buildcraft.api.imc.BcImcMessage;
 import buildcraft.core.BCCore;
 import buildcraft.lib.BCLibRegistries;
+import buildcraft.api.recipes.IAssemblyRecipe;
+import buildcraft.api.recipes.IProgrammingRecipe;
+import buildcraft.api.recipes.IntegrationRecipe;
 import buildcraft.lib.recipe.assembly.AssemblyRecipeRegistry;
 import buildcraft.lib.recipe.assembly.AssemblyRecipeSerializer;
 import buildcraft.lib.recipe.integration.IntegrationRecipeSerializer;
@@ -22,20 +25,21 @@ import buildcraft.silicon.plug.FacadeBlockStateInfo;
 import buildcraft.silicon.plug.FacadeInstance;
 import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.silicon.recipe.FacadeAssemblyRecipes;
+import buildcraft.silicon.recipe.FacadeSwapRecipe;
 import buildcraft.silicon.recipe.FacadeSwapRecipeSerializer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.*;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
 
@@ -108,15 +112,23 @@ public class BCSilicon {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCSiliconMenuTypes.registerAll(event);
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            ForgeRegistries.RECIPE_TYPES.register(IAssemblyRecipe.TYPE_ID, IAssemblyRecipe.TYPE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(IAssemblyRecipe.TYPE_ID, AssemblyRecipeSerializer.INSTANCE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(FacadeSwapRecipe.TYPE_ID, FacadeSwapRecipeSerializer.INSTANCE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(IProgrammingRecipe.TYPE_ID, ProgrammingRecipeSerializer.INSTANCE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(IntegrationRecipe.TYPE_ID, IntegrationRecipeSerializer.INSTANCE);
+
+            AssemblyRecipeRegistry.FACADE_ASSEMBLY_RECIPE = FacadeAssemblyRecipes.INSTANCE;
+
+            BCSiliconMenuTypes.registerAll();
+        }
     }
 
     @SubscribeEvent
-//    public static void onImcEvent(IMCEvent imc)
     public static void onImcEvent(InterModProcessEvent imc) {
-
-//        for (InterModComms.IMCMessage message : imc.getMessages())
         InterModComms.getMessages(MODID).forEach(message ->
         {
             Object inner = message.messageSupplier().get();
@@ -126,17 +138,6 @@ public class BCSilicon {
                 BCLog.logger.error("[silicon.imc] Unknown IMC message type: " + inner.getClass().getName());
             }
         });
-    }
-
-    @SubscribeEvent
-    public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        IForgeRegistry<RecipeSerializer<?>> registry = event.getRegistry();
-        registry.register(AssemblyRecipeSerializer.INSTANCE);
-        registry.register(FacadeSwapRecipeSerializer.INSTANCE);
-        registry.register(ProgrammingRecipeSerializer.INSTANCE);
-        registry.register(IntegrationRecipeSerializer.INSTANCE);
-
-        AssemblyRecipeRegistry.FACADE_ASSEMBLY_RECIPE = FacadeAssemblyRecipes.INSTANCE;
     }
 
     @OnlyIn(Dist.CLIENT)

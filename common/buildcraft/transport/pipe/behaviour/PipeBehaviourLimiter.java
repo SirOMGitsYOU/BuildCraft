@@ -1,5 +1,7 @@
 package buildcraft.transport.pipe.behaviour;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.transport.pipe.*;
@@ -13,7 +15,6 @@ import buildcraft.transport.statements.ActionPowerLimit;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -110,7 +111,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
                 limit = (int) ((transferInfo.transferPerTick >> limitShift) / MjAPI.MJ);
             }
             String key = "chat.pipe." + (isRf ? "rf" : "power") + ".iron.mode";
-            TranslatableComponent chat = new TranslatableComponent(key, limit);
+            Component chat = Component.translatable(key, limit);
             // player.sendStatusMessage(chat, true);
             player.displayClientMessage(chat, true);
 

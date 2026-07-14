@@ -12,6 +12,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenCustomHashMap;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class NetworkedFluidStackCache extends NetworkedObjectCache<FluidStack> {
 //        Fluid f = obj.getFluid();
         Fluid f = obj.getRawFluid();
 //        buffer.writeString(FluidRegistry.getFluidName(f));
-        buffer.writeRegistryId(f); // Calen: just like FluidStack#writeToPacket
+        buffer.writeRegistryId(ForgeRegistries.FLUIDS, f);
 //        if (obj.tag == null)
         if (obj.getTag() == null) {
             buffer.writeBoolean(false);
@@ -71,7 +72,7 @@ public class NetworkedFluidStackCache extends NetworkedObjectCache<FluidStack> {
     @Override
     protected FluidStack readObject(PacketBufferBC buffer) throws IOException {
 //        Fluid fluid = FluidRegistry.getFluid(buffer.readString(255));
-        Fluid fluid = buffer.readRegistryId(); // Calen: just like FluidStack#readFromPacket
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(buffer.readRegistryId());
         FluidStack stack = new FluidStack(fluid, FLUID_AMOUNT);
         if (buffer.readBoolean()) {
 //            stack.tag = buffer.readCompoundTag();

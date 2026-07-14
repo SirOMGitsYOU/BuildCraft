@@ -8,23 +8,24 @@ import buildcraft.energy.generation.structure.OilGenStructurePart.GenByPredicate
 import buildcraft.energy.generation.structure.OilGenStructurePart.ReplaceType;
 import buildcraft.lib.misc.VecUtil;
 import buildcraft.lib.misc.data.Box;
+import net.minecraft.core.Holder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class OilGenerator {
     /** Random number, used to differentiate generators */
@@ -45,7 +46,11 @@ public class OilGenerator {
         NONE
     }
 
-    public static void generatePieces(StructurePiecesBuilder piecesBuilder, PieceGenerator.Context<OilFeatureConfiguration> context) {
+    public static void generatePieces(
+            StructurePiecesBuilder piecesBuilder,
+            Structure.GenerationContext context,
+            OilFeatureConfiguration.Info info
+    ) {
         int minHeight = context.heightAccessor().getMinBuildHeight();
         int maxHeight = context.heightAccessor().getMaxBuildHeight();
         ChunkPos chunkPos = context.chunkPos();
@@ -70,7 +75,6 @@ public class OilGenerator {
 //                QuartPos.fromBlock(zForGen)
 //        ).value();
 //        GenType type = getPieceTypeByRand(rand, biome, cx, cz, xForGen, zForGen, true);
-        OilFeatureConfiguration.Info info = context.config().get(chunkPos);
         if (info == null) {
             BCLog.logger.error("[energy.oilgen] Tried to gen structure pieces in chunk [" + chunkPos + "], but found none prepared data for this chunk. Something works wrong.");
             return;
@@ -93,8 +97,8 @@ public class OilGenerator {
     /** To find out which type to gen
      * {@link GenType#NONE} means skipped and nothing for gen */
     @Nonnull
-    public static GenType getPieceTypeByRand(Random rand, Biome biome, int cx, int cz, int x, int z, boolean log) {
-        ResourceLocation biomeRegistryName = biome.getRegistryName();
+    public static GenType getPieceTypeByRand(RandomSource rand, Holder<Biome> biome, int cx, int cz, int x, int z, boolean log) {
+        ResourceLocation biomeRegistryName = biome.unwrapKey().map(ResourceKey::location).orElse(null);
         // Do not generate oil in excluded biomes
         boolean isExcludedBiome = BCEnergyConfig.excludedBiomes.contains(biomeRegistryName);
         if (isExcludedBiome == BCEnergyConfig.excludedBiomesIsBlackList) {
@@ -107,7 +111,7 @@ public class OilGenerator {
             return GenType.NONE;
         }
 
-        if (ForgeRegistries.BIOMES.tags().getTag(Tags.Biomes.IS_END).contains(biome) && (Math.abs(x) < 1200 || Math.abs(z) < 1200)) {
+        if (biome.is(BiomeTags.IS_END) && (Math.abs(x) < 1200 || Math.abs(z) < 1200)) {
             if (DEBUG_OILGEN_BASIC & log) {
                 BCLog.logger.info(
                         "[energy.oilgen] Not generating oil in chunk " + cx + ", " + cz
@@ -155,7 +159,7 @@ public class OilGenerator {
         return type;
     }
 
-    public static OilStructure createStructureByType(final GenType type, Random rand, int x, int z, int worldBottomHeight, int worldTopHeight, Box box) {
+    public static OilStructure createStructureByType(final GenType type, RandomSource rand, int x, int z, int worldBottomHeight, int worldTopHeight, Box box) {
         List<OilGenStructurePart> structures = new ArrayList<>();
         final int lakeRadius;
         final int tendrilRadius;
@@ -260,7 +264,7 @@ public class OilGenerator {
         return new OilGenStructurePart.GenByPredicate(box, OilGenStructurePart.ReplaceType.ALWAYS, new Object[] { center, radiusSq });
     }
 
-    public static OilGenStructurePart createTendril(BlockPos center, int lakeRadius, int radius, Random rand) {
+    public static OilGenStructurePart createTendril(BlockPos center, int lakeRadius, int radius, RandomSource rand) {
         BlockPos start = center.offset(-radius, 0, -radius);
         int diameter = radius * 2 + 1;
         boolean[][] pattern = new boolean[diameter][diameter];
@@ -298,7 +302,7 @@ public class OilGenerator {
         return OilGenStructurePart.PatternTerrainHeight.create(start, OilGenStructurePart.ReplaceType.IS_FOR_LAKE, pattern, depth);
     }
 
-    private static void fillPatternIfProba(Random rand, float proba, int x, int z, boolean[][] pattern) {
+    private static void fillPatternIfProba(RandomSource rand, float proba, int x, int z, boolean[][] pattern) {
         if (rand.nextFloat() <= proba) {
             pattern[x][z] = isSet(pattern, x, z - 1) | isSet(pattern, x, z + 1) //
                     | isSet(pattern, x - 1, z) | isSet(pattern, x + 1, z);

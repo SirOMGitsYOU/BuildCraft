@@ -17,7 +17,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -102,7 +101,7 @@ public enum PatternParameterXZDir implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("direction." + dir.getName());
-        return new TranslatableComponent("direction." + dir.getName());
+        return Component.translatable("direction." + dir.getName());
     }
 
     @Override

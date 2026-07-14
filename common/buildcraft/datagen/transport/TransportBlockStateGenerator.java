@@ -18,7 +18,7 @@ public class TransportBlockStateGenerator extends BCBaseBlockStateGenerator {
         // filteredBuffer
         getVariantBuilder(BCTransportBlocks.filteredBuffer.get()).forAllStates(s ->
                 ConfiguredModel.builder().modelFile(
-                                models().withExistingParent(BCTransportBlocks.filteredBuffer.get().getRegistryName().toString(), CUBE_ALL)
+                                models().withExistingParent(BCTransportBlocks.filteredBuffer.getId().toString(), CUBE_ALL)
                                         .texture("all", "buildcrafttransport:blocks/filtered_buffer/default")
                                         .texture("particle", "buildcrafttransport:blocks/filtered_buffer/default")
                         )

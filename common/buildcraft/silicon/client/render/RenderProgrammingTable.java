@@ -40,7 +40,7 @@ public class RenderProgrammingTable implements BlockEntityRenderer<TileProgrammi
         poseStack.pushPose();
 //        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(new ResourceLocation("blocks/glass_white"));
         TextureAtlasSprite sprite = glass_white.get();
-//        int combinedLight = tile.getWorld().getCombinedLight(tile.getPos(), 0);
+//        int combinedLight = tile.getLevel().getCombinedLight(tile.getPos(), 0);
         int light1 = combinedLight >> 16 & 65535;
         int light2 = combinedLight & 65535;
 //        buffer.pos(x + 4 / 16D, y + 9 / 16D, z + 4 / 16D).color(255, 255, 255, 255).tex(sprite.getInterpolatedU(4), sprite.getInterpolatedV(4)).lightmap(light1, light2).endVertex();

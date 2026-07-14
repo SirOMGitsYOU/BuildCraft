@@ -55,8 +55,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.event.level.BlockEvent.BreakEvent;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -270,7 +270,7 @@ public final class BlockUtil {
 //            Fluid f = ((IFluidBlock) block).getFluid();
             Fluid f = fluidBlock.getFluid();
 //            if (f.getDensity(world, pos) >= 3000)
-            if (f.getAttributes().getDensity(world, pos) >= 3000) {
+            if (f.getFluidType().getDensity(state.getFluidState(), world, pos) >= 3000) {
                 return false;
             }
         }
@@ -424,7 +424,7 @@ public final class BlockUtil {
             handler = FluidUtil.getFluidHandler(world, pos, null).orElse(null);
         }
         if (handler != null) {
-            return handler.drain(FluidAttributes.BUCKET_VOLUME, doDrain);
+            return handler.drain(FluidType.BUCKET_VOLUME, doDrain);
         } else {
             return StackUtil.EMPTY_FLUID;
         }
@@ -599,7 +599,7 @@ public final class BlockUtil {
             Block blockA = blockStateA.getBlock();
             Block blockB = blockStateB.getBlock();
             if (blockA != blockB) {
-                return blockA.getRegistryName().toString().compareTo(blockB.getRegistryName().toString());
+                return getRegistryName(blockA).toString().compareTo(getRegistryName(blockB).toString());
             }
             for (Property<?> property : Sets.intersection(new HashSet<>(blockStateA.getProperties()),
                     new HashSet<>(blockStateB.getProperties()))) {
@@ -677,5 +677,9 @@ public final class BlockUtil {
                 blockState.getBlock() instanceof LiquidBlock ||
                 blockState.getBlock() instanceof IPlantable ||
                 blockState.getMaterial().isReplaceable();
+    }
+
+    public static ResourceLocation getRegistryName(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
 }

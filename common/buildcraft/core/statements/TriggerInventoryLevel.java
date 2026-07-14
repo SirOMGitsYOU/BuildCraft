@@ -17,7 +17,6 @@ import buildcraft.lib.misc.ObjectUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -51,7 +50,7 @@ public class TriggerInventoryLevel extends BCStatement implements ITriggerExtern
     @Override
     public Component getDescription() {
 //        return String.format(LocaleUtil.localize("gate.trigger.inventorylevel.below"), (int) (type.level * 100));
-        return new TranslatableComponent("gate.trigger.inventorylevel.below", (int) (type.level * 100));
+        return Component.translatable("gate.trigger.inventorylevel.below", (int) (type.level * 100));
     }
 
     // Calen

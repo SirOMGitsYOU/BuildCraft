@@ -14,7 +14,6 @@ import buildcraft.api.statements.StatementSlot;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +27,7 @@ public class ActionStationForbidRobot extends BCStatement implements IActionInte
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.station." + (invert ? "force" : "forbid") + "_robot");
+        return Component.translatable("gate.action.station." + (invert ? "force" : "forbid") + "_robot");
     }
 
     @Override

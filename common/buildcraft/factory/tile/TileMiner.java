@@ -26,7 +26,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -230,13 +229,13 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
 //        left.add("lastLength = " + lastLength);
 //        left.add("isComplete = " + isComplete());
 //        left.add("progress = " + LocaleUtil.localizeMj(progress));
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("current = " + currentPos));
-        left.add(new TextComponent("wantedLength = " + wantedLength));
-        left.add(new TextComponent("currentLength = " + currentLength));
-        left.add(new TextComponent("lastLength = " + lastLength));
-        left.add(new TextComponent("isComplete = " + isComplete()));
-        left.add(new TextComponent("progress = ").append(LocaleUtil.localizeMjComponent(progress)));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("current = " + currentPos));
+        left.add(Component.literal("wantedLength = " + wantedLength));
+        left.add(Component.literal("currentLength = " + currentLength));
+        left.add(Component.literal("lastLength = " + lastLength));
+        left.add(Component.literal("isComplete = " + isComplete()));
+        left.add(Component.literal("progress = ").append(LocaleUtil.localizeMjComponent(progress)));
     }
 
     @Nonnull

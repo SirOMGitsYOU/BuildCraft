@@ -85,9 +85,11 @@ public abstract class LaserCompiledList {
             VertexBuffer vertexBuffer = new VertexBuffer();
 //            bufferBuilder.finishDrawing();
 //            bufferBuilder.reset();
-            bufferBuilder.end();
+            BufferBuilder.RenderedBuffer rendered = bufferBuilder.end();
 //            vertexBuffer.bufferData(bufferBuilder.getByteBuffer());
-            vertexBuffer.upload(bufferBuilder);
+            vertexBuffer.bind();
+            vertexBuffer.upload(rendered);
+            VertexBuffer.unbind();
 //            return new Vbo(useColour, vertexBuffer);
             return new Vbo(vertexBuffer);
 //            } else {
@@ -137,7 +139,9 @@ public abstract class LaserCompiledList {
         public void render(PoseStack.Pose modelViewMatrix) {
             LASER_RENDER_TYPE_FORMAT_ALL.setupRenderState();
             RenderSystem.setShaderColor(1, 1, 1, 1);
+            vertexBuffer.bind();
             vertexBuffer.drawWithShader(modelViewMatrix.pose(), RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorTexLightmapShader());
+            VertexBuffer.unbind();
             LASER_RENDER_TYPE_FORMAT_ALL.clearRenderState();
         }
 

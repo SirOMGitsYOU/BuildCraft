@@ -1,5 +1,7 @@
 package buildcraft.datagen.energy;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
 import buildcraft.datagen.base.BCBaseAdvancementGenerator;
@@ -14,9 +16,8 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EnterBlockTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.advancements.critereon.LocationTrigger;
+import net.minecraft.advancements.critereon.PlayerTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -34,8 +35,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // engine
         Advancement engine = Advancement.Builder.advancement().display(
                         BCEnergyBlocks.engineStone.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.engine.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.engine.description"),
+                        Component.translatable("advancements.buildcraftcore.engine.title"),
+                        Component.translatable("advancements.buildcraftcore.engine.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -58,8 +59,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // powering_up
         Advancement powering_up = Advancement.Builder.advancement().display(
                         BCEnergyBlocks.engineStone.get(),
-                        new TranslatableComponent("advancements.buildcraftenergy.poweringUp.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.poweringUp.description"),
+                        Component.translatable("advancements.buildcraftenergy.poweringUp.title"),
+                        Component.translatable("advancements.buildcraftenergy.poweringUp.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -74,8 +75,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // lava_power
         Advancement lava_power = Advancement.Builder.advancement().display(
                         Items.LAVA_BUCKET,
-                        new TranslatableComponent("advancements.buildcraftenergy.lava_power.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.lava_power.description"),
+                        Component.translatable("advancements.buildcraftenergy.lava_power.title"),
+                        Component.translatable("advancements.buildcraftenergy.lava_power.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -90,8 +91,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // ice_cool
         Advancement ice_cool = Advancement.Builder.advancement().display(
                         Items.WATER_BUCKET,
-                        new TranslatableComponent("advancements.buildcraftenergy.ice_cool.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.ice_cool.description"),
+                        Component.translatable("advancements.buildcraftenergy.ice_cool.title"),
+                        Component.translatable("advancements.buildcraftenergy.ice_cool.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -106,8 +107,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // fine_riches
         Advancement fine_riches = Advancement.Builder.advancement().display(
                         BCEnergyItems.globOil.get(),
-                        new TranslatableComponent("advancements.buildcraftenergy.fine_riches.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.fine_riches.description"),
+                        Component.translatable("advancements.buildcraftenergy.fine_riches.title"),
+                        Component.translatable("advancements.buildcraftenergy.fine_riches.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false
@@ -116,13 +117,13 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
                 .requirements(RequirementsStrategy.OR)
                 .addCriterion(
                         "oil_desert_biome",
-                        LocationTrigger.TriggerInstance.located(
+                        PlayerTrigger.TriggerInstance.located(
                                 LocationPredicate.inBiome(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT)
                         )
                 )
                 .addCriterion(
                         "oil_ocean_biome",
-                        LocationTrigger.TriggerInstance.located(
+                        PlayerTrigger.TriggerInstance.located(
                                 LocationPredicate.inBiome(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN)
                         )
                 )
@@ -130,8 +131,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // sticky_dipping
         Advancement sticky_dipping = Advancement.Builder.advancement().display(
                         BCEnergyItems.globOil.get(),
-                        new TranslatableComponent("advancements.buildcraftenergy.sticky_dipping.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.sticky_dipping.description"),
+                        Component.translatable("advancements.buildcraftenergy.sticky_dipping.title"),
+                        Component.translatable("advancements.buildcraftenergy.sticky_dipping.description"),
                         null,
                         FrameType.TASK,
                         true, true, true
@@ -146,8 +147,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // refine_and_redefine
         Advancement refine_and_redefine = Advancement.Builder.advancement().display(
                         BCEnergyItems.globOil.get(),
-                        new TranslatableComponent("advancements.buildcraftenergy.refine_and_redefine.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.refine_and_redefine.description"),
+                        Component.translatable("advancements.buildcraftenergy.refine_and_redefine.title"),
+                        Component.translatable("advancements.buildcraftenergy.refine_and_redefine.description"),
                         null,
                         FrameType.CHALLENGE,
                         true, true, false
@@ -162,8 +163,8 @@ public class EnergyAdvancementGenerator extends BCBaseAdvancementGenerator {
         // to_much_power
         Advancement to_much_power = Advancement.Builder.advancement().display(
                         BCCoreItems.wrench.get(),
-                        new TranslatableComponent("advancements.buildcraftenergy.to_much_power.title"),
-                        new TranslatableComponent("advancements.buildcraftenergy.to_much_power.description"),
+                        Component.translatable("advancements.buildcraftenergy.to_much_power.title"),
+                        Component.translatable("advancements.buildcraftenergy.to_much_power.description"),
                         null,
                         FrameType.TASK,
                         true, true, false

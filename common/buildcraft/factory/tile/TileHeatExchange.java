@@ -29,7 +29,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +45,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkDirection;
@@ -485,10 +484,10 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
         if (section == null) {
 //            left.add("section = null");
-            left.add(new TextComponent("section = null"));
+            left.add(Component.literal("section = null"));
         } else {
 //            left.add("section = " + (section instanceof ExchangeSectionStart ? "start" : "end"));
-            left.add(new TextComponent("section = " + (section instanceof ExchangeSectionStart ? "start" : "end")));
+            left.add(Component.literal("section = " + (section instanceof ExchangeSectionStart ? "start" : "end")));
             section.getDebugInfo(left, right, side);
         }
     }
@@ -501,8 +500,8 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
         private TileHeatExchange tile;
 
         ExchangeSection(TileHeatExchange tile) {
-            tankInput = new Tank("input", 2 * FluidAttributes.BUCKET_VOLUME, tile);
-            tankOutput = new Tank("output", 2 * FluidAttributes.BUCKET_VOLUME, tile);
+            tankInput = new Tank("input", 2 * FluidType.BUCKET_VOLUME, tile);
+            tankOutput = new Tank("output", 2 * FluidType.BUCKET_VOLUME, tile);
             tankOutput.setCanFill(false);
             tankManager = new TankManager(tankOutput, tankInput);
             smoothedTankInput = createFluidSmoother(tankInput, NET_ID_TANK_IN);
@@ -569,14 +568,14 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
         // void getDebugInfo(List<String> left, List<String> right, Direction side)
         public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //            left.add("tank_input = " + tankInput.getDebugString());
-            left.add(new TextComponent("tank_input = " + tankInput.getDebugString()));
+            left.add(Component.literal("tank_input = " + tankInput.getDebugString()));
 //            left.add("tank_output = " + tankOutput.getDebugString());
-            left.add(new TextComponent("tank_output = " + tankOutput.getDebugString()));
+            left.add(Component.literal("tank_output = " + tankOutput.getDebugString()));
 //            left.add("smoothed_input: ");
-            left.add(new TextComponent("smoothed_input: "));
+            left.add(Component.literal("smoothed_input: "));
             smoothedTankInput.getDebugInfo(left, right, side);
 //            left.add("smoothed_output: ");
-            left.add(new TextComponent("smoothed_output: "));
+            left.add(Component.literal("smoothed_output: "));
             smoothedTankOutput.getDebugInfo(left, right, side);
         }
 
@@ -825,7 +824,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
             double z = from.z;
 
             Vec3 motion = VecUtil.scale(vecDir, 0.4);
-            int particleCount = Minecraft.getInstance().options.particles.getId();
+            int particleCount = Minecraft.getInstance().options.particles().get().ordinal();
             Level w = getTile().getLevel();
             if (particleCount == 2 || w == null) {
                 return;
@@ -911,11 +910,11 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 //            left.add("has_end = " + (endSection != null));
 //            // left.add("heatProvided = " + heatProvided);
 //            // left.add("coolingProvided = " + coolingProvided);
-            left.add(new TextComponent("progress = " + progress));
-            left.add(new TextComponent("state = " + progressState));
-            left.add(new TextComponent("has_end = " + (endSection != null)));
-            // left.add(new TextComponent("heatProvided = " + heatProvided));
-            // left.add(new TextComponent("coolingProvided = " + coolingProvided));
+            left.add(Component.literal("progress = " + progress));
+            left.add(Component.literal("state = " + progressState));
+            left.add(Component.literal("has_end = " + (endSection != null)));
+            // left.add(Component.literal("heatProvided = " + heatProvided));
+            // left.add(Component.literal("coolingProvided = " + coolingProvided));
         }
     }
 

@@ -28,7 +28,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.profiling.ActiveProfiler;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -38,7 +37,7 @@ import net.minecraft.world.level.material.EmptyFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.network.NetworkDirection;
@@ -84,7 +83,7 @@ public class TilePump extends TileMiner {
     private static final ResourceLocation ADVANCEMENT_DRAIN_OIL
             = new ResourceLocation("buildcraftfactory:oil_platform");
 
-    private final Tank tank = new Tank("tank", 16 * FluidAttributes.BUCKET_VOLUME, this);
+    private final Tank tank = new Tank("tank", 16 * FluidType.BUCKET_VOLUME, this);
     private boolean queueBuilt = false;
     private final Map<BlockPos, FluidPath> paths = new HashMap<>();
     private BlockPos fluidConnection;
@@ -159,7 +158,7 @@ public class TilePump extends TileMiner {
             ProfilerEntry prof, Fluid queueFluid, List<BlockPos> nextPosesToCheck, Set<BlockPos> checked
     ) {
         prof.startSection("build");
-        Direction[] directions = queueFluid.getAttributes().isGaseous() ? SEARCH_GASEOUS : SEARCH_NORMAL;
+        Direction[] directions = queueFluid.getFluidType().isLighterThanAir() ? SEARCH_GASEOUS : SEARCH_NORMAL;
         boolean isWater
 //                = !BCCoreConfig.pumpsConsumeWater && FluidUtilBC.areFluidsEqual(queueFluid, Fluids.WATER);
                 = !BCCoreConfig.pumpsConsumeWater && FluidUtilBC.areFluidsEqualIgnoringStillOrFlow(queueFluid, Fluids.WATER);
@@ -464,9 +463,9 @@ public class TilePump extends TileMiner {
 //        left.add("fluid = " + tank.getDebugString());
 //        left.add("queue size = " + queue.size());
 //        left.add("infinite = " + isInfiniteWaterSource);
-        left.add(new TextComponent("fluid = " + tank.getDebugString()));
-        left.add(new TextComponent("queue size = " + queue.size()));
-        left.add(new TextComponent("infinite = " + isInfiniteWaterSource));
+        left.add(Component.literal("fluid = " + tank.getDebugString()));
+        left.add(Component.literal("queue size = " + queue.size()));
+        left.add(Component.literal("infinite = " + isInfiniteWaterSource));
     }
 
     @Override

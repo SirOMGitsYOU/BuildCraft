@@ -192,10 +192,8 @@ public abstract class GuiBC8<C extends ContainerBC_Neptune<?>> extends AbstractC
     }
 
     @Override
-//    public void updateScreen()
-    public void tick() {
-//        super.updateScreen();
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
         mainGui.tick();
     }
 

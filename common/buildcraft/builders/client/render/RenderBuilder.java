@@ -80,7 +80,7 @@ public class RenderBuilder implements BlockEntityRenderer<TileBuilder> {
 
         if (tile.getBuilder() != null) {
             buffer = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
-//            RenderSnapshotBuilder.render(tile.getBuilder(), tile.getWorld(), tile.getPos(), x, y, z, partialTicks, buffer);
+//            RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getPos(), x, y, z, partialTicks, buffer);
             RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getBlockPos(), partialTicks, poseStack, buffer);
         }
 

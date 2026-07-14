@@ -28,8 +28,8 @@ public class ResourceLoaderContext {
             throw new JsonSyntaxException("Already loaded " + location + " from " + loadingStack.peek());
         }
         loadingStack.push(location);
-        Resource res = Minecraft.getInstance().getResourceManager().getResource(location);
-        return new InputStreamReader(res.getInputStream(), StandardCharsets.UTF_8);
+        Resource res = Minecraft.getInstance().getResourceManager().getResource(location).orElseThrow(() -> new IOException("Missing resource " + location));
+        return new InputStreamReader(res.open(), StandardCharsets.UTF_8);
     }
 
     public void finishLoading() {

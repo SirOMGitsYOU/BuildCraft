@@ -13,6 +13,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
+import net.minecraftforge.registries.ForgeRegistries;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +128,7 @@ public class RecipeBuilderShaped {
 
     public void register() {
         ensureValid();
-        ResourceLocation name = result.getItem().getRegistryName();
+        ResourceLocation name = ForgeRegistries.ITEMS.getKey(result.getItem());
 //        ShapedOreRecipe recipe = new ShapedOreRecipe(name, result, createRecipeObjectArray());
 //        ForgeRegistries.RECIPES.register(recipe.setRegistryName(name));
     }

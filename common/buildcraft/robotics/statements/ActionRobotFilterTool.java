@@ -13,7 +13,6 @@ import buildcraft.lib.inventory.filter.ArrayStackOrListFilter;
 import buildcraft.lib.inventory.filter.PassThroughStackFilter;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -30,7 +29,7 @@ public class ActionRobotFilterTool extends BCStatement implements IActionInterna
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.action.robot.filter_tool");
+        return Component.translatable("gate.action.robot.filter_tool");
     }
 
     @Override

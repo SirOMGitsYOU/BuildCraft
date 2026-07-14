@@ -13,7 +13,6 @@ import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import buildcraft.lib.misc.CapUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -45,7 +44,7 @@ public class TriggerFluidContainerLevel extends BCStatement implements ITriggerE
     @Override
     public Component getDescription() {
 //        return String.format(LocaleUtil.localize("gate.trigger.fluidlevel.below"), (int) (type.level * 100));
-        return new TranslatableComponent("gate.trigger.fluidlevel.below", (int) (type.level * 100));
+        return Component.translatable("gate.trigger.fluidlevel.below", (int) (type.level * 100));
     }
 
     @Override

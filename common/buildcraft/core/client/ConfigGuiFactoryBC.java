@@ -6,6 +6,8 @@
 
 package buildcraft.core.client;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.config.ConfigCategory;
 import net.minecraft.client.gui.screens.Screen;
@@ -17,7 +19,7 @@ public class ConfigGuiFactoryBC {
     public static class GuiConfigManager {
         // public GuiConfigManager(GuiScreen parentScreen)
         public GuiConfigManager(Screen parentScreen) {
-//            super(parentScreen, new ArrayList<>(), "buildcraftcore", "config", false, false, new TranslatableComponent("config.buildcraftcore").getContents());
+//            super(parentScreen, new ArrayList<>(), "buildcraftcore", "config", false, false, Component.translatable("config.buildcraftcore").getContents());
 
 //            for (String s : BCCoreConfig.config.getCategoryNames())
             for (ConfigCategory<?> s : BCCoreConfig.config.getAll()) {

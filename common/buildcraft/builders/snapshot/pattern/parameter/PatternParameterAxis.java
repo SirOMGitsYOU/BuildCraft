@@ -16,7 +16,6 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -52,7 +51,7 @@ public enum PatternParameterAxis implements IStatementParameter {
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("buildcraft.param.axis." + name().toLowerCase(Locale.ROOT));
-        return new TranslatableComponent("buildcraft.param.axis." + name().toLowerCase(Locale.ROOT));
+        return Component.translatable("buildcraft.param.axis." + name().toLowerCase(Locale.ROOT));
     }
 
     @Override

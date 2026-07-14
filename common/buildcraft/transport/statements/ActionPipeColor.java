@@ -16,7 +16,6 @@ import buildcraft.lib.misc.ColourUtil;
 import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.BCTransportStatements;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,7 +35,7 @@ public class ActionPipeColor extends BCStatement implements IActionInternal {
     @Override
     public Component getDescription() {
 //        return String.format(LocaleUtil.localize("gate.action.pipe.item.color"), ColourUtil.getTextFullTooltip(color));
-        return new TranslatableComponent("gate.action.pipe.item.color", ColourUtil.getTextFullTooltipComponent(color));
+        return Component.translatable("gate.action.pipe.item.color", ColourUtil.getTextFullTooltipComponent(color));
     }
 
     @Override

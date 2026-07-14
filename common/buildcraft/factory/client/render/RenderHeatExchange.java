@@ -187,7 +187,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
         if (fluid == null || fluid.amount <= 0) {
             return;
         }
-        int blockLight = fluid.fluid.getRawFluid().getAttributes().getLuminosity(fluid.fluid) & 0xF;
+        int blockLight = fluid.fluid.getRawFluid().getFluidType().getLightLevel(fluid.fluid) & 0xF;
         combinedLight |= blockLight << 4;
         FluidRenderer.vertex.lighti(combinedLight);
         FluidRenderer.vertex.overlay(combinedOverlay);
@@ -250,7 +250,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
                 sides[face.ordinal()] = false;
             }
             // Calen FIX: without the light, the flow of amount 0 will be dark, the water outside of lava will be light, which appears in 1.12.2, that seems wrong
-            int blockLight = fluid.getRawFluid().getAttributes().getLuminosity(fluid) & 0xF;
+            int blockLight = fluid.getRawFluid().getFluidType().getLightLevel(fluid) & 0xF;
             combinedLight |= blockLight << 4;
             FluidRenderer.vertex.lighti(combinedLight);
             FluidRenderer.vertex.overlay(combinedOverlay);

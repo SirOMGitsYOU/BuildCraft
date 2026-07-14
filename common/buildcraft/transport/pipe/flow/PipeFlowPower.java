@@ -21,7 +21,6 @@ import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.HitResult;
@@ -210,12 +209,12 @@ public class PipeFlowPower extends PipeFlow implements IFlowPower, IDebuggable {
 //        left.add("- powerQuery: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery));
 //        left.add("- power: IN " + arrayToString(s -> s.debugPowerInput) + ", OUT " + arrayToString(s -> s.debugPowerOutput));
 //        left.add("- power: OFFERED " + arrayToString(s -> s.debugPowerOffered));
-        left.add(new TextComponent("maxPower = ").append(LocaleUtil.localizeMjComponent(maxPower)));
-        left.add(new TextComponent("isReceiver = " + isReceiver));
-        left.add(new TextComponent("internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)));
-        left.add(new TextComponent("- powerQuery: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery)));
-        left.add(new TextComponent("- power: IN " + arrayToString(s -> s.debugPowerInput) + ", OUT " + arrayToString(s -> s.debugPowerOutput)));
-        left.add(new TextComponent("- power: OFFERED " + arrayToString(s -> s.debugPowerOffered)));
+        left.add(Component.literal("maxPower = ").append(LocaleUtil.localizeMjComponent(maxPower)));
+        left.add(Component.literal("isReceiver = " + isReceiver));
+        left.add(Component.literal("internalPower = " + arrayToString(s -> s.internalPower) + " <- " + arrayToString(s -> s.internalNextPower)));
+        left.add(Component.literal("- powerQuery: " + arrayToString(s -> s.powerQuery) + " <- " + arrayToString(s -> s.nextPowerQuery)));
+        left.add(Component.literal("- power: IN " + arrayToString(s -> s.debugPowerInput) + ", OUT " + arrayToString(s -> s.debugPowerOutput)));
+        left.add(Component.literal("- power: OFFERED " + arrayToString(s -> s.debugPowerOffered)));
     }
 
     private String arrayToString(ToLongFunction<Section> getter) {

@@ -13,7 +13,7 @@ import buildcraft.lib.block.LocalBlockUpdateNotifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class DebuggingTools {
@@ -27,9 +27,9 @@ public class DebuggingTools {
 
     private static class EventHook {
         @SubscribeEvent
-        public void worldLoadEvent(WorldEvent.Load load) {
-//            load.getWorld().addEventListener(new WorldListener());
-            LocalBlockUpdateNotifier.instance(load.getWorld()).registerSubscriberForUpdateNotifications(new WorldListener());
+        public void worldLoadEvent(LevelEvent.Load load) {
+//            load.getLevel().addEventListener(new WorldListener());
+            LocalBlockUpdateNotifier.instance(load.getLevel()).registerSubscriberForUpdateNotifications(new WorldListener());
         }
     }
 

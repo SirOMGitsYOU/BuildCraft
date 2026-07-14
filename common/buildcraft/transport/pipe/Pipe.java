@@ -20,7 +20,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -422,33 +421,33 @@ public final class Pipe implements IPipe, IDebuggable {
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("Colour = " + colour);
-        left.add(new TextComponent("Colour = " + colour));
+        left.add(Component.literal("Colour = " + colour));
 //        left.add("Definition = " + definition.identifier);
-        left.add(new TextComponent("Definition = " + definition.identifier));
+        left.add(Component.literal("Definition = " + definition.identifier));
         if (behaviour instanceof IDebuggable) {
 //            left.add("Behaviour:");
-            left.add(new TextComponent("Behaviour:"));
+            left.add(Component.literal("Behaviour:"));
             ((IDebuggable) behaviour).getDebugInfo(left, right, side);
 //            left.add("");
-            left.add(new TextComponent(""));
+            left.add(Component.literal(""));
         } else {
 //            left.add("Behaviour = " + behaviour.getClass());
-            left.add(new TextComponent("Behaviour = " + behaviour.getClass()));
+            left.add(Component.literal("Behaviour = " + behaviour.getClass()));
         }
 
         if (flow instanceof IDebuggable) {
 //            left.add("Flow:");
-            left.add(new TextComponent("Flow:"));
+            left.add(Component.literal("Flow:"));
             ((IDebuggable) flow).getDebugInfo(left, right, side);
 //            left.add("");
-            left.add(new TextComponent(""));
+            left.add(Component.literal(""));
         } else {
 //            left.add("Flow = " + flow.getClass());
-            left.add(new TextComponent("Flow = " + flow.getClass()));
+            left.add(Component.literal("Flow = " + flow.getClass()));
         }
         for (Direction face : Direction.values()) {
 //            right.add(face + " = " + types.get(face) + ", " + getConnectedDist(face));
-            right.add(new TextComponent(face + " = " + types.get(face) + ", " + getConnectedDist(face)));
+            right.add(Component.literal(face + " = " + types.get(face) + ", " + getConnectedDist(face)));
         }
     }
 }

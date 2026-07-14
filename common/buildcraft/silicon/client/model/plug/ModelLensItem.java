@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public enum ModelLensItem implements BakedModel {
     INSTANCE;
@@ -65,7 +65,7 @@ public enum ModelLensItem implements BakedModel {
 
     @Override
 //    public List<BakedQuad> getQuads(BlockState state, Direction side, long rand)
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
         return ImmutableList.of();
     }
 

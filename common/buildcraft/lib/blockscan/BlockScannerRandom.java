@@ -4,11 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 
 import java.util.Iterator;
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class BlockScannerRandom implements Iterable<BlockPos> {
 
-    private Random rand;
+    private RandomSource rand;
     private int maxDistance;
 
     class BlockIt implements Iterator<BlockPos> {
@@ -35,7 +35,7 @@ public class BlockScannerRandom implements Iterable<BlockPos> {
         public void remove() {}
     }
 
-    public BlockScannerRandom(Random iRand, int iMaxDistance) {
+    public BlockScannerRandom(RandomSource iRand, int iMaxDistance) {
         rand = iRand;
         maxDistance = iMaxDistance;
     }

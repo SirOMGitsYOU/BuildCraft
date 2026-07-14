@@ -12,18 +12,18 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.ChunkWatchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public enum BCTransportEventDist {
     INSTANCE;
 
     @SubscribeEvent
-    public void onWorldTick(TickEvent.WorldTickEvent event) {
+    public void onWorldTick(TickEvent.LevelTickEvent event) {
 //        if (!event.world.isRemote && event.world.getMinecraftServer() != null)
-        if (!event.world.isClientSide && event.world.getServer() != null) {
-            WorldSavedDataWireSystems.get(event.world).tick();
+        if (!event.level.isClientSide && event.level.getServer() != null) {
+            WorldSavedDataWireSystems.get(event.level).tick();
         }
     }
 

@@ -21,6 +21,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Map;
@@ -155,7 +156,7 @@ public class TransportCraftingRecipeGenerator extends RecipeProvider {
                 .define('r', right)
                 .unlockedBy("has_item", has(Tags.Items.GLASS))
                 .group(MOD_ID)
-                .save(consumer, MOD_ID + ":" + colourless.getRegistryName().getPath() + "_colorless");
+                .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(colourless).getPath() + "_colorless");
         for (DyeColor colour : DyeColor.values()) {
             Item coloured = (Item) pipe.get(colour).get();
             ShapedRecipeBuilder.shaped(coloured, 8)
@@ -165,7 +166,7 @@ public class TransportCraftingRecipeGenerator extends RecipeProvider {
                     .define('r', right)
                     .unlockedBy("has_item", has(Tags.Items.GLASS))
                     .group(MOD_ID)
-                    .save(consumer, MOD_ID + ":" + coloured.getRegistryName().getPath() + "_" + colour.getName());
+                    .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(coloured).getPath() + "_" + colour.getName());
         }
     }
 
@@ -182,13 +183,13 @@ public class TransportCraftingRecipeGenerator extends RecipeProvider {
                 .requires(to_colourless)
                 .unlockedBy("has_item", has(Tags.Items.GLASS))
                 .group(MOD_ID)
-                .save(consumer, MOD_ID + ":" + to_colourless.getRegistryName().getPath() + "_colorless_undo");
+                .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(to_colourless).getPath() + "_colorless_undo");
         ShapelessRecipeBuilder.shapeless(to_colourless)
                 .requires(from_colourless)
                 .requires(additional)
                 .unlockedBy("has_item", has(Tags.Items.GLASS))
                 .group(MOD_ID)
-                .save(consumer, MOD_ID + ":" + to_colourless.getRegistryName().getPath() + "_colorless");
+                .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(to_colourless).getPath() + "_colorless");
 
         for (DyeColor colour : ColourUtil.COLOURS) {
             Item from_coloured = (Item) from.get(colour).get();
@@ -197,13 +198,13 @@ public class TransportCraftingRecipeGenerator extends RecipeProvider {
                     .requires(to_coloured)
                     .unlockedBy("has_item", has(Tags.Items.GLASS))
                     .group(MOD_ID)
-                    .save(consumer, MOD_ID + ":" + to_coloured.getRegistryName().getPath() + "_" + colour.getName() + "_undo");
+                    .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(to_coloured).getPath() + "_" + colour.getName() + "_undo");
             ShapelessRecipeBuilder.shapeless(to_coloured)
                     .requires(from_coloured)
                     .requires(additional)
                     .unlockedBy("has_item", has(Tags.Items.GLASS))
                     .group(MOD_ID)
-                    .save(consumer, MOD_ID + ":" + to_coloured.getRegistryName().getPath() + "_" + colour.getName());
+                    .save(consumer, MOD_ID + ":" + ForgeRegistries.ITEMS.getKey(to_coloured).getPath() + "_" + colour.getName());
         }
     }
 

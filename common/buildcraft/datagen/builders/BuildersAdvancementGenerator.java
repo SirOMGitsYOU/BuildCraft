@@ -1,5 +1,7 @@
 package buildcraft.datagen.builders;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.builders.BCBuilders;
 import buildcraft.builders.BCBuildersBlocks;
 import buildcraft.core.BCCoreBlocks;
@@ -8,7 +10,6 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Consumer;
@@ -25,8 +26,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // architect
         Advancement architect = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.architect.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.architect.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.architect.description"),
+                        Component.translatable("advancements.buildcraftbuilders.architect.title"),
+                        Component.translatable("advancements.buildcraftbuilders.architect.description"),
                         null,
                         FrameType.TASK,
                         true, true, false)
@@ -37,8 +38,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // shaping_the_world
         Advancement shaping_the_world = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.quarry.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.shaping_the_world.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.shaping_the_world.description"),
+                        Component.translatable("advancements.buildcraftbuilders.shaping_the_world.title"),
+                        Component.translatable("advancements.buildcraftbuilders.shaping_the_world.description"),
                         null,
                         FrameType.TASK,
                         true, true, false)
@@ -49,8 +50,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // building_for_the_future
         Advancement building_for_the_future = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.filler.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.building_for_the_future.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.building_for_the_future.description"),
+                        Component.translatable("advancements.buildcraftbuilders.building_for_the_future.title"),
+                        Component.translatable("advancements.buildcraftbuilders.building_for_the_future.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false)
@@ -61,8 +62,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // diggy_diggy_hole
         Advancement diggy_diggy_hole = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.quarry.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.diggy.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.diggy.description"),
+                        Component.translatable("advancements.buildcraftbuilders.diggy.title"),
+                        Component.translatable("advancements.buildcraftbuilders.diggy.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false)
@@ -73,8 +74,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // destroying_the_world
         Advancement destroying_the_world = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.filler.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.destroying_the_world.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.destroying_the_world.description"),
+                        Component.translatable("advancements.buildcraftbuilders.destroying_the_world.title"),
+                        Component.translatable("advancements.buildcraftbuilders.destroying_the_world.description"),
                         null,
                         FrameType.CHALLENGE,
                         true, true, false)
@@ -85,8 +86,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // paving_the_way
         Advancement paving_the_way = Advancement.Builder.advancement().display(
                         BCCoreBlocks.markerPath.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.paving_the_way.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.paving_the_way.description"),
+                        Component.translatable("advancements.buildcraftbuilders.paving_the_way.title"),
+                        Component.translatable("advancements.buildcraftbuilders.paving_the_way.description"),
                         null,
                         FrameType.TASK,
                         true, true, false)
@@ -97,8 +98,8 @@ public class BuildersAdvancementGenerator extends BCBaseAdvancementGenerator {
         // start_of_something_big
         Advancement start_of_something_big = Advancement.Builder.advancement().display(
                         BCBuildersBlocks.builder.get(),
-                        new TranslatableComponent("advancements.buildcraftbuilders.start_of_something_big.title"),
-                        new TranslatableComponent("advancements.buildcraftbuilders.start_of_something_big.description"),
+                        Component.translatable("advancements.buildcraftbuilders.start_of_something_big.title"),
+                        Component.translatable("advancements.buildcraftbuilders.start_of_something_big.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false)

@@ -23,11 +23,12 @@ import buildcraft.lib.registry.MigrationManager;
 import buildcraft.lib.registry.TagManager;
 import buildcraft.lib.registry.TagManager.TagEntry;
 import buildcraft.lib.script.ReloadableRegistryManager;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModContainer;
@@ -37,6 +38,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
 
@@ -79,10 +82,12 @@ public class BCLib {
         ExpressionCompat.setup();
     }
 
-    // Calen: recipe type registry is frozen at FMLConstructModEvent
     @SubscribeEvent
-    public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        BCLibRegistries.initRecipeRegistry();
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            BCLibMenuTypes.registerAll();
+        }
     }
 
     @SubscribeEvent
@@ -175,11 +180,6 @@ public class BCLib {
         VanillaListHandlers.fmlPostInit();
         MarkerCache.postInit();
         MessageManager.fmlPostInit();
-    }
-
-    @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCLibMenuTypes.registerAll(event);
     }
 
     // Calen: moved to BCLibEventDistForgeBus#serverStarting because it is Forge Bus Event in 1.18.2

@@ -22,7 +22,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -173,9 +172,9 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
 //        left.add("Min = " + min());
 //        left.add("Max = " + max());
 //        left.add("Signals = " + showSignals);
-        left.add(new TextComponent("Min = " + min()));
-        left.add(new TextComponent("Max = " + max()));
-        left.add(new TextComponent("Signals = " + showSignals));
+        left.add(Component.literal("Min = " + min()));
+        left.add(Component.literal("Max = " + max()));
+        left.add(Component.literal("Signals = " + showSignals));
     }
 
     // ITileAreaProvider

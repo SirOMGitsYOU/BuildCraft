@@ -8,16 +8,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class DistillationRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IDistillationRecipe> {
+public class DistillationRecipeSerializer implements RecipeSerializer<IDistillationRecipe> {
     public static final DistillationRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new DistillationRecipeSerializer();
-        INSTANCE.setRegistryName(RefineryRecipeRegistry.DistillationRecipe.TYPE_ID);
     }
 
     @Override

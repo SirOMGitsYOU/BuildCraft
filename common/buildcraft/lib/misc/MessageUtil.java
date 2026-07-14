@@ -196,7 +196,7 @@ public class MessageUtil {
     public static void writeBlockState(FriendlyByteBuf buf, BlockState state) {
 //        buf.writeNbt(NbtUtils.writeBlockState(state));
         Block block = state.getBlock();
-        buf.writeResourceLocation(block.getRegistryName());
+        buf.writeResourceLocation(BlockUtil.getRegistryName(block));
 //        int meta = block.getMetaFromState(state);
 //        buf.writeByte(meta);
 //        BlockState readState = block.getStateFromMeta(meta);
@@ -395,7 +395,7 @@ public class MessageUtil {
     public static void serverOpenTileGui(Player player, IBCTileMenuProvider tile, BlockPos pos) {
         if (player instanceof ServerPlayer serverPlayer) {
             IMessage msg = tile.onServerPlayerOpenNoSend(player);
-            NetworkHooks.openGui(
+            NetworkHooks.openScreen(
                     serverPlayer, tile, buf ->
                     {
                         buf.writeBlockPos(pos);
@@ -409,7 +409,7 @@ public class MessageUtil {
     public static <T extends TileBC_Neptune & IBCTileMenuProvider> void serverOpenTileGui(Player player, T tile) {
         if (player instanceof ServerPlayer serverPlayer) {
             IMessage msg = tile.onServerPlayerOpenNoSend(player);
-            NetworkHooks.openGui(
+            NetworkHooks.openScreen(
                     serverPlayer, tile, buf ->
                     {
                         buf.writeBlockPos(tile.getBlockPos());
@@ -423,7 +423,7 @@ public class MessageUtil {
     public static void serverOpenGUIWithMsg(Player player, MenuProvider provider, BlockPos pos, int data, IMessage msg) {
         int fullId = data << 8;
         if (player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openGui(
+            NetworkHooks.openScreen(
                     serverPlayer, provider, buf ->
                     {
                         buf.writeBlockPos(pos);
@@ -438,7 +438,7 @@ public class MessageUtil {
     // Calen
     public static <I extends Item & MenuProvider> void serverOpenItemGui(Player player, I item) {
         if (player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openGui(serverPlayer, item, serverPlayer.blockPosition());
+            NetworkHooks.openScreen(serverPlayer, item, serverPlayer.blockPosition());
         }
     }
 }

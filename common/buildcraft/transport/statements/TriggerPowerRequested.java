@@ -11,7 +11,6 @@ import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.pipe.flow.PipeFlowPower;
 import buildcraft.transport.pipe.flow.PipeFlowRedstoneFlux;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 
@@ -39,7 +38,7 @@ public class TriggerPowerRequested extends BCStatement implements ITriggerIntern
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.pipe.requestsEnergy");
-        return new TranslatableComponent("gate.trigger.pipe.requestsEnergy");
+        return Component.translatable("gate.trigger.pipe.requestsEnergy");
     }
 
     @Override

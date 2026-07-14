@@ -21,7 +21,6 @@ import buildcraft.silicon.plug.PluggableLens;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -77,7 +76,7 @@ public class ItemPluggableLens extends ItemBC_Neptune implements IItemPluggable 
                 : ColourUtil.getTextFullTooltipSpecial(data.colour);
         String first = LocaleUtil.localize(data.isFilter ? "item.Filter.name" : "item.Lens.name");
 //        return colour + " " + first;
-        return new TextComponent(colour + " " + first);
+        return Component.literal(colour + " " + first);
     }
 
     // TODO Calen getFontRenderer???

@@ -28,7 +28,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -55,8 +54,7 @@ public class ItemRobot extends ItemBC_Neptune implements IMjContainerItem {
         this.robotNBT = robotNBT;
     }
 
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
+    public int getMaxStackSize(ItemStack stack) {
         // CompoundTag cpt = getNBT(stack);
         // RedstoneBoardRobotNBT boardNBT = getRobotNBT(cpt);
         RedstoneBoardRobotNBT boardNBT = this.robotNBT;
@@ -126,7 +124,7 @@ public class ItemRobot extends ItemBC_Neptune implements IMjContainerItem {
             }
             enInfo = (pct >= 80 ? ChatFormatting.GREEN : (pct >= 50 ? ChatFormatting.YELLOW : (pct >= 30 ? ChatFormatting.GOLD
                     : (pct >= 20 ? ChatFormatting.RED : ChatFormatting.DARK_RED)))) + enInfo;
-            list.add(new TextComponent(enInfo));
+            list.add(Component.literal(enInfo));
         }
     }
 

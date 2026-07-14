@@ -18,7 +18,6 @@ import buildcraft.lib.misc.ColourUtil;
 import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.BCTransportStatements;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 
 import java.util.Locale;
@@ -56,7 +55,7 @@ public class TriggerPipeSignal extends BCStatement implements ITriggerInternal {
     public Component getDescription() {
 //        return String.format(LocaleUtil.localize("gate.trigger.pipe.wire." + (active ? "active" : "inactive")),
 //                ColourUtil.getTextFullTooltip(colour));
-        return new TranslatableComponent("gate.trigger.pipe.wire." + (active ? "active" : "inactive"),
+        return Component.translatable("gate.trigger.pipe.wire." + (active ? "active" : "inactive"),
                 ColourUtil.getTextFullTooltipComponent(colour));
     }
 

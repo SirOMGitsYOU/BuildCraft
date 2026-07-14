@@ -122,7 +122,7 @@ public class RenderMiningWell implements BlockEntityRenderer<TileMiningWell> {
             }
         }
 
-        // int combinedLight = tile.getWorld().getCombinedLight(tile.getPos().offset(facing), 0);
+        // int combinedLight = tile.getLevel().getCombinedLight(tile.getPos().offset(facing), 0);
         combinedLight = RenderUtil.getCombinedLight(tile.getLevel(), tile.getBlockPos().relative(facing));
         LED_POWER.center.lighti(combinedLight);
         LED_STATUS.center.lighti(combinedLight);

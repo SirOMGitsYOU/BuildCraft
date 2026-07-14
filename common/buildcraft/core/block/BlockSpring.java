@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 import java.util.function.BiFunction;
 
 public class BlockSpring extends BlockBCBase_Neptune implements EntityBlock, ISpring {
@@ -81,7 +81,7 @@ public class BlockSpring extends BlockBCBase_Neptune implements EntityBlock, ISp
 
     @Override
 //    public void updateTick(World world, BlockPos pos, IBlockState state, Random random)
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         generateSpringBlock(world, pos, state);
     }
 

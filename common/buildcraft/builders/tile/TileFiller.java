@@ -46,7 +46,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -432,14 +431,14 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
 //        left.add("lockedTicks = " + lockedTicks);
 //        left.add("addon = " + addon);
 //        left.add("markerBox = " + markerBox);
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("box = " + box));
-        left.add(new TextComponent("pattern = " + patternStatement.get()));
-        left.add(new TextComponent("mode = " + mode));
-        left.add(new TextComponent("is_finished = " + finished));
-        left.add(new TextComponent("lockedTicks = " + lockedTicks));
-        left.add(new TextComponent("addon = " + addon));
-        left.add(new TextComponent("markerBox = " + markerBox));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("box = " + box));
+        left.add(Component.literal("pattern = " + patternStatement.get()));
+        left.add(Component.literal("mode = " + mode));
+        left.add(Component.literal("is_finished = " + finished));
+        left.add(Component.literal("lockedTicks = " + lockedTicks));
+        left.add(Component.literal("addon = " + addon));
+        left.add(Component.literal("markerBox = " + markerBox));
     }
 
     @Override

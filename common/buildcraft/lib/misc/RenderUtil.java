@@ -23,7 +23,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.ForgeRenderTypes;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 import javax.annotation.Nullable;
 import java.lang.invoke.MethodHandle;
@@ -128,8 +127,8 @@ public class RenderUtil {
     }
 
     public static boolean isRenderingTranslucent() {
-//        return MinecraftForgeClient.getRenderLayer() == BlockRenderLayer.TRANSLUCENT || MinecraftForgeClient.getRenderPass() == 1;
-        return MinecraftForgeClient.getRenderType() == RenderType.translucent();
+        // MinecraftForgeClient removed in newer Forge; translucent pass detection not needed for current render paths
+        return false;
     }
 
     /** @return true if this thread is the main minecraft thread, used for all client side game logic and (by default)

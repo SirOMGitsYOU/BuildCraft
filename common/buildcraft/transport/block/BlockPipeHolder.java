@@ -73,12 +73,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IBlockRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import net.minecraft.util.RandomSource;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -885,7 +886,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
         HitSpriteInfo info = getHitSpriteInfo(subHit, pipe);
         if (info != null) {
 
-            Random random = pipe.getLevel().random;
+            RandomSource random = pipe.getLevel().random;
 
             for (int i = 0; i < numberOfParticles; i++) {
 
@@ -893,7 +894,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
                 double speedY = random.nextGaussian() * 0.15;
                 double speedZ = random.nextGaussian() * 0.15;
 
-                // ParticleDigging particle = new ParticleBlockDust(pipe.getWorld(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
+                // ParticleDigging particle = new ParticleBlockDust(pipe.getLevel(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
                 TerrainParticle particle = new TerrainParticle((ClientLevel) pipe.getLevel(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
                 // particle.setBlockPos(pipe.getPos());
                 particle.setPos(pipe.getBlockPos().getX(), pipe.getBlockPos().getY(), pipe.getBlockPos().getZ());
@@ -914,7 +915,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
         HitSpriteInfo info = getHitSpriteInfo(subHit, pipe);
         if (info != null) {
 
-            Random random = pipe.getLevel().random;
+            RandomSource random = pipe.getLevel().random;
 
             posX += (random.nextFloat() - 0.5) * entityWidth;
             posY += 0.1;
@@ -924,7 +925,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             double speedY = 0.15;
             double speedZ = motionZ * -0.4;
 
-            // ParticleDigging particle = new ParticleBlockDust(pipe.getWorld(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
+            // ParticleDigging particle = new ParticleBlockDust(pipe.getLevel(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
             TerrainParticle particle = new TerrainParticle((ClientLevel) pipe.getLevel(), posX, posY, posZ, speedX, speedY, speedZ, pipe.getCurrentState());
             // particle.setBlockPos(pipe.getPos());
             particle.setPos(pipe.getBlockPos().getX(), pipe.getBlockPos().getY(), pipe.getBlockPos().getZ());
@@ -1002,8 +1003,8 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IBlockRenderProperties> consumer) {
-        consumer.accept(new IBlockRenderProperties() {
+    public void initializeClient(Consumer<IClientBlockExtensions> consumer) {
+        consumer.accept(new IClientBlockExtensions() {
             @Override
 //            public boolean addHitEffects(BlockState state, Level world, HitResultBC target, ParticleManager manager)
             public boolean addHitEffects(BlockState state, Level worldIn, HitResult targetIn, ParticleEngine manager) {

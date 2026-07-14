@@ -276,7 +276,7 @@ public abstract class BCLibProxy {
 
         @Override
         public InputStream getStreamForIdentifier(ResourceLocation identifier) throws IOException {
-            return Minecraft.getInstance().getResourceManager().getResource(identifier).getInputStream();
+            return Minecraft.getInstance().getResourceManager().getResource(identifier).orElseThrow(() -> new IOException("Missing " + identifier)).open();
         }
     }
 }

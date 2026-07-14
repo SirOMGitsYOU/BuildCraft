@@ -48,7 +48,7 @@ public class DelegateFontRenderer extends Font {
                         return null;
                     }
                 }
-        );
+        , false);
         this.delegate = delegate;
 
         // copy from 1.12.2

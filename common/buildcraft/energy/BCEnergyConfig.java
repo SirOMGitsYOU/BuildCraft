@@ -178,8 +178,8 @@ public class BCEnergyConfig {
 
 
         String[] _excessive = { //
-                BCEnergy.MODID + ":oil_desert", //
-                BCEnergy.MODID + ":oil_ocean", //
+                "minecraft:desert", //
+                "minecraft:ocean", //
         };
 
         propExcessiveBiomes = config
@@ -196,10 +196,10 @@ public class BCEnergyConfig {
                         world,
                         "surfaceDepositBiomes", Arrays.stream(_surface).toList());
 
-        String[] _excluded = { "minecraft:hell", "minecraft:sky", };
+        String[] _excluded = { "minecraft:nether_wastes", "minecraft:the_void", };
         propExcludedBiomes = config
                 .defineList("worldgen.oil",
-                        "Biome registry names (e.g. 'minecraft:hell','minecraft:jungle') of biomes that should never generate oil.",
+                        "Biome registry names (e.g. 'minecraft:nether_wastes','minecraft:jungle') of biomes that should never generate oil.",
                         world,
                         "excludedBiomes", Arrays.stream(_excluded).toList());
 
@@ -240,13 +240,13 @@ public class BCEnergyConfig {
                 .define("general",
                         "Enable the RF to MJ engine?",
                         EnumRestartRequirement.NONE,
-                        "enableRfEngine", false);
+                        "enableRfEngine", true);
 
         propEnableMjDynamo = config
                 .define("general",
                         "Enable the MJ to RF dynamo / engine / generator?",
                         EnumRestartRequirement.NONE,
-                        "enableMjDynamo", false);
+                        "enableMjDynamo", true);
     }
 
     // public static void reloadConfig(EnumRestartRequirement restarted)

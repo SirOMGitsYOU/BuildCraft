@@ -66,7 +66,7 @@ public enum BCBuildersEventDist {
 //    @SubscribeEvent
 //    public synchronized void onGetCollisionBoxesForQuarry(GetCollisionBoxesEvent event)
 //    {
-//        Deque<WeakReference<TileQuarry>> quarries = allQuarries.get(event.getWorld());
+//        Deque<WeakReference<TileQuarry>> quarries = allQuarries.get(event.getLevel());
 //        if (quarries == null)
 //        {
 //            // No quarries in the target world

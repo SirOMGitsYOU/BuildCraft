@@ -53,8 +53,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -91,8 +90,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -186,9 +186,9 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             EnumPipePart.VALUES
     );
     // private FluidStack tank;
-    // private int maxFluid = FluidAttributes.BUCKET_VOLUME * 4;
+    // private int maxFluid = FluidType.BUCKET_VOLUME * 4;
 
-    public final Tank tank = new Tank("robotTank", FluidAttributes.BUCKET_VOLUME * 4, this);
+    public final Tank tank = new Tank("robotTank", FluidType.BUCKET_VOLUME * 4, this);
     private ResourceLocation texture;
 
     private WeakHashMap<Entity, Long> unreachableEntities = new WeakHashMap<Entity, Long>();
@@ -509,7 +509,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         energyFX += energySpendPerCycle;
 
         // if (energyFX >= (100 << (2 * Minecraft.getInstance().options.particles.getId())))
-        if (energyFX >= ((10 * MjAPI.MJ) << (2 * Minecraft.getInstance().options.particles.getId()))) {
+        if (energyFX >= ((10 * MjAPI.MJ) << (2 * Minecraft.getInstance().options.particles().get().ordinal()))) {
             energyFX = 0;
             spawnEnergyFX();
         }
@@ -588,7 +588,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     @Override
-    public void recreateFromPacket(ClientboundAddMobPacket packet) {
+    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         init();
     }
@@ -1746,12 +1746,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
-        left.add(new TextComponent("Robot " + board.getNBTHandler().getID() + " (" + MjAPI.formatMj(getBattery().getStored()) + "/").append(LocaleUtil.localizeMjComponent(getBattery().getCapacity())).append(new TextComponent(")")));
-        left.add(new TextComponent(String.format("Position: %.2f, %.2f, %.2f", getX(), getY(), getZ())));
-        left.add(new TextComponent("AI tree:"));
+        left.add(Component.literal("Robot " + board.getNBTHandler().getID() + " (" + MjAPI.formatMj(getBattery().getStored()) + "/").append(LocaleUtil.localizeMjComponent(getBattery().getCapacity())).append(Component.literal(")")));
+        left.add(Component.literal(String.format("Position: %.2f, %.2f, %.2f", getX(), getY(), getZ())));
+        left.add(Component.literal("AI tree:"));
         AIRobot aiRobot = mainAI;
         while (aiRobot != null) {
-            left.add(new TextComponent("- " + RobotManager.getAIRobotName(aiRobot.getClass()) + " (").append(LocaleUtil.localizeMjFlow((aiRobot.getPowerCost()))).append(new TextComponent(")")));
+            left.add(Component.literal("- " + RobotManager.getAIRobotName(aiRobot.getClass()) + " (").append(LocaleUtil.localizeMjFlow((aiRobot.getPowerCost()))).append(Component.literal(")")));
             if (aiRobot instanceof IDebuggable) {
                 ((IDebuggable) aiRobot).getDebugInfo(left, right, side);
             }
@@ -1798,7 +1798,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     private void updateItem(@Nonnull ItemStack stack, int i, boolean held) {
         // if (stack != null && stack.getItem() != null)
         if (!stack.isEmpty()) {
-            ResourceLocation id = stack.getItem().getRegistryName();
+            ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
             // did this item not throw an exception before?
             if (!blacklistedItemsForUpdate.contains(id)) {
                 try {

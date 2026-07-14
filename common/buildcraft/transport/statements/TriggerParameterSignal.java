@@ -21,7 +21,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -129,7 +128,7 @@ public class TriggerParameterSignal implements IStatementParameter {
         }
 //        return String.format(LocaleUtil.localize("gate.trigger.pipe.wire." + (active ? "active" : "inactive")),
 //            ColourUtil.getTextFullTooltip(colour));
-        return new TranslatableComponent("gate.trigger.pipe.wire." + (active ? "active" : "inactive"),
+        return Component.translatable("gate.trigger.pipe.wire." + (active ? "active" : "inactive"),
                 ColourUtil.getTextFullTooltipComponent(colour));
     }
 

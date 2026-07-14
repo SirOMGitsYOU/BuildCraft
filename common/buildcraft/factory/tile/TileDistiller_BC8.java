@@ -39,13 +39,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkDirection;
@@ -77,9 +76,9 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, IT
 
     public static final long MAX_MJ_PER_TICK = 6 * MjAPI.MJ;
 
-    private final Tank tankIn = new Tank("in", 4 * FluidAttributes.BUCKET_VOLUME, this, this::isDistillableFluid);
-    private final Tank tankGasOut = new Tank("gasOut", 4 * FluidAttributes.BUCKET_VOLUME, this);
-    private final Tank tankLiquidOut = new Tank("liquidOut", 4 * FluidAttributes.BUCKET_VOLUME, this);
+    private final Tank tankIn = new Tank("in", 4 * FluidType.BUCKET_VOLUME, this, this::isDistillableFluid);
+    private final Tank tankGasOut = new Tank("gasOut", 4 * FluidType.BUCKET_VOLUME, this);
+    private final Tank tankLiquidOut = new Tank("liquidOut", 4 * FluidType.BUCKET_VOLUME, this);
 
     private final MjBattery mjBattery = new MjBattery(1024 * MjAPI.MJ);
 
@@ -296,13 +295,13 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, IT
 //        left.add("Progress = " + MjAPI.formatMj(distillPower));
 //        left.add("Rate = " + LocaleUtil.localizeMjFlow(powerAvgClient));
 //        left.add("CurrRecipe = " + currentRecipe);
-        left.add(new TextComponent("In = " + tankIn.getDebugString()));
-        left.add(new TextComponent("GasOut = " + tankGasOut.getDebugString()));
-        left.add(new TextComponent("LiquidOut = " + tankLiquidOut.getDebugString()));
-        left.add(new TextComponent("Battery = " + mjBattery.getDebugString()));
-        left.add(new TextComponent("Progress = " + MjAPI.formatMj(distillPower)));
-        left.add(new TextComponent("Rate = ").append(LocaleUtil.localizeMjFlowComponent(powerAvgClient)));
-        left.add(new TextComponent("CurrRecipe = " + currentRecipe));
+        left.add(Component.literal("In = " + tankIn.getDebugString()));
+        left.add(Component.literal("GasOut = " + tankGasOut.getDebugString()));
+        left.add(Component.literal("LiquidOut = " + tankLiquidOut.getDebugString()));
+        left.add(Component.literal("Battery = " + mjBattery.getDebugString()));
+        left.add(Component.literal("Progress = " + MjAPI.formatMj(distillPower)));
+        left.add(Component.literal("Rate = ").append(LocaleUtil.localizeMjFlowComponent(powerAvgClient)));
+        left.add(Component.literal("CurrRecipe = " + currentRecipe));
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -13,17 +13,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class IntegrationRecipeSerializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<IntegrationRecipe> {
+public class IntegrationRecipeSerializer implements RecipeSerializer<IntegrationRecipe> {
     public static final IntegrationRecipeSerializer INSTANCE;
 
     static {
         INSTANCE = new IntegrationRecipeSerializer();
-        INSTANCE.setRegistryName(IntegrationRecipe.TYPE_ID);
     }
 
     private IntegrationRecipeSerializer() {

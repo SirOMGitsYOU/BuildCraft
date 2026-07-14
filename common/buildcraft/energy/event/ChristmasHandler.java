@@ -5,9 +5,8 @@ import buildcraft.energy.BCEnergyFluids;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.registry.TagManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ForgeModelBakery;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.time.Month;
@@ -105,29 +104,29 @@ public class ChristmasHandler {
         BCEnergyFluids.data[fluidIndex][0] = -BCEnergyFluids.data[fluidIndex][0];
     }
 
-    public static void regBucketNoFlipModel(ModelRegistryEvent event) {
+    public static void regBucketNoFlipModel(ModelEvent.RegisterAdditional event) {
         if (isEnabled()) {
             for (RegistryObject<BCFluid.Source> fluid : BCEnergyFluids.allStill) {
-                ResourceLocation bucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
+                ResourceLocation bucketRegRL = ForgeRegistries.ITEMS.getKey(fluid.get().getReg().getBucket());
                 String namespace = bucketRegRL.getNamespace();
                 String normalPath = bucketRegRL.getPath();
                 String christmasPath = normalPath + "_christmas";
                 ResourceLocation christmasModelRL = new ResourceLocation(namespace, "item/" + christmasPath);
-                ForgeModelBakery.addSpecialModel(christmasModelRL);
+                event.register(christmasModelRL);
             }
         }
     }
 
-    public static void replaceBucketNoFlipModel(ModelBakeEvent event) {
+    public static void replaceBucketNoFlipModel(ModelEvent.BakingCompleted event) {
         if (isEnabled()) {
             for (RegistryObject<BCFluid.Source> fluid : BCEnergyFluids.allStill) {
-                ResourceLocation normalBucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
+                ResourceLocation normalBucketRegRL = ForgeRegistries.ITEMS.getKey(fluid.get().getReg().getBucket());
                 String namespace = normalBucketRegRL.getNamespace();
                 String normalPath = normalBucketRegRL.getPath();
                 String christmasPath = normalPath + "_christmas";
                 ResourceLocation normalModelRL = new ResourceLocation(namespace, "item/" + normalPath);
                 ResourceLocation christmasModelRL = new ResourceLocation(namespace, "item/" + christmasPath);
-                event.getModelRegistry().replace(normalModelRL, event.getModelRegistry().get(christmasModelRL));
+                event.getModels().replace(normalModelRL, event.getModels().get(christmasModelRL));
             }
         }
     }

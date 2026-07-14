@@ -2,27 +2,32 @@ package buildcraft.energy;
 
 import buildcraft.api.enums.EnumSpring;
 import buildcraft.core.BCCore;
+import buildcraft.energy.generation.biome.BCBiomeRegistry;
+import buildcraft.energy.generation.structure.OilStructureRegistry;
 import buildcraft.lib.BCLibRegistries;
 import buildcraft.lib.fluid.BCFluid;
+import buildcraft.api.fuels.ICoolant;
+import buildcraft.api.fuels.IFuel;
 import buildcraft.lib.recipe.coolant.CoolantRecipeSerializer;
 import buildcraft.lib.recipe.fuel.FuelRecipeSerializer;
-import buildcraft.lib.registry.RegistryConfig;
-import buildcraft.lib.registry.TagManager;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
+import buildcraft.lib.registry.RegistryConfig;
+import buildcraft.lib.registry.TagManager;
 
 import java.util.function.Consumer;
 
@@ -59,6 +64,8 @@ public class BCEnergy {
         BCEnergyConfig.preInit();
         BCEnergyEntities.preInit();
         BCEnergyWorldGen.preInit();
+        OilStructureRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
+        BCBiomeRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
         // Calen: BCEnergyProxy.getProxy().fmlPreInit() Should before BCEnergyFluids.preInit() and BCEnergyBlocks.preInit() to set christmas special fluid data
         BCEnergyProxy.getProxy().fmlPreInit();
 
@@ -97,15 +104,16 @@ public class BCEnergy {
     }
 
     @SubscribeEvent
-    public static void registerGui(RegistryEvent.Register<MenuType<?>> event) {
-        BCEnergyMenuTypes.registerAll(event);
-    }
+    public static void onRegisterEvent(RegisterEvent event) {
+        ResourceKey<? extends Registry<?>> registry = event.getRegistryKey();
+        if (registry == ForgeRegistries.BLOCKS.getRegistryKey()) {
+            ForgeRegistries.RECIPE_TYPES.register(IFuel.TYPE_ID, IFuel.TYPE);
+            ForgeRegistries.RECIPE_TYPES.register(ICoolant.TYPE_ID, ICoolant.TYPE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(IFuel.TYPE_ID, FuelRecipeSerializer.INSTANCE);
+            ForgeRegistries.RECIPE_SERIALIZERS.register(ICoolant.TYPE_ID, CoolantRecipeSerializer.INSTANCE);
 
-    @SubscribeEvent
-    public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
-        IForgeRegistry<RecipeSerializer<?>> registry = event.getRegistry();
-        registry.register(FuelRecipeSerializer.INSTANCE);
-        registry.register(CoolantRecipeSerializer.INSTANCE);
+            BCEnergyMenuTypes.registerAll();
+        }
     }
 
     // TODO Calen biome???

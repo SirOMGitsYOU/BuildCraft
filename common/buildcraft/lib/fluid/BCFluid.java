@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public abstract class BCFluid extends ForgeFlowingFluid {
     protected BCFluidRegistryContainer fluidRegistryContainer;
-    protected boolean isGas = this.getAttributes().isGaseous();
+    protected boolean isGas = this.getFluidType().isLighterThanAir();
 
     protected BCFluid(ForgeFlowingFluid.Properties properties, BCFluidRegistryContainer reg) {
         super(properties);

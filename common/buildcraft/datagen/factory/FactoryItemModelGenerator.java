@@ -22,25 +22,25 @@ public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
     protected void registerModels() {
         // Items
         // waterGel
-        withExistingParent(BCFactoryItems.waterGel.get().getRegistryName().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/water_gel");
+        withExistingParent(BCFactoryItems.waterGel.getId().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/water_gel");
         // gelledWater
-        withExistingParent(BCFactoryItems.gelledWater.get().getRegistryName().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/gel");
+        withExistingParent(BCFactoryItems.gelledWater.getId().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/gel");
         // plasticSheet
-        withExistingParent(BCFactoryItems.plasticSheet.get().getRegistryName().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/plastic_sheet");
+        withExistingParent(BCFactoryItems.plasticSheet.getId().toString(), GENERATED).texture("layer0", "buildcraftfactory:items/plastic_sheet");
         // heatExchange
-        getBuilder(BCFactoryBlocks.heatExchange.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCFactoryBlocks.heatExchange.getId().toString()).parent(BUILTIN_ENTITY);
 
         // Block Items
         // miningWell
-        withExistingParent(BCFactoryBlocks.miningWell.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/mining_well"));
+        withExistingParent(BCFactoryBlocks.miningWell.getId().toString(), new ResourceLocation("buildcraftfactory:block/mining_well"));
         // floodGate
-        withExistingParent(BCFactoryBlocks.floodGate.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/flood_gate/true_true_true_true_true"));
+        withExistingParent(BCFactoryBlocks.floodGate.getId().toString(), new ResourceLocation("buildcraftfactory:block/flood_gate/true_true_true_true_true"));
         // pump
-        withExistingParent(BCFactoryBlocks.pump.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/pump"));
+        withExistingParent(BCFactoryBlocks.pump.getId().toString(), new ResourceLocation("buildcraftfactory:block/pump"));
         // autoWorkbenchItems
-        withExistingParent(BCFactoryBlocks.autoWorkbenchItems.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/autoworkbench_item"));
+        withExistingParent(BCFactoryBlocks.autoWorkbenchItems.getId().toString(), new ResourceLocation("buildcraftfactory:block/autoworkbench_item"));
         // tank
-        withExistingParent(BCFactoryBlocks.tank.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/tank"))
+        withExistingParent(BCFactoryBlocks.tank.getId().toString(), new ResourceLocation("buildcraftfactory:block/tank"))
                 .transforms()
                 .transform(ItemTransforms.TransformType.GUI)
                 .rotation(30, 225, 0)
@@ -76,7 +76,7 @@ public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
         ;
 
         // distiller
-        withExistingParent(BCFactoryBlocks.distiller.get().getRegistryName().toString(), BLOCK)
+        withExistingParent(BCFactoryBlocks.distiller.getId().toString(), BLOCK)
                 // Side Tank
                 .element()
                 .from(0, 0, 4)
@@ -138,7 +138,7 @@ public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
         ;
 
         // chute
-        withExistingParent(BCFactoryBlocks.chute.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/chute"))
+        withExistingParent(BCFactoryBlocks.chute.getId().toString(), new ResourceLocation("buildcraftfactory:block/chute"))
                 .transforms()
                 .transform(ItemTransforms.TransformType.GUI)
                 .rotation(30, 225, 0)

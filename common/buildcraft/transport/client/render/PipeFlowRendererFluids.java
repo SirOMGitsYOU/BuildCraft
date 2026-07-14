@@ -50,7 +50,7 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
         double[] amounts = flow.getAmountsForRender(partialTicks);
         Vec3[] offsets = flow.getOffsetsForRender(partialTicks);
 
-        int blocklight = forRender.getRawFluid().getAttributes().getLuminosity(forRender);
+        int blocklight = forRender.getRawFluid().getFluidType().getLightLevel(forRender);
 //        IPipeHolder holder = flow.pipe.getHolder();
 //        combinedLight = holder.getPipeWorld().getCombinedLight(holder.getPipePos(), blocklight);
         combinedLight = RenderUtil.combineWithFluidLight(combinedLight, (byte) blocklight);
@@ -63,7 +63,7 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
 //            fluidBuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 //            fluidBuffer.setTranslation(x, y, z);
 
-        boolean gas = forRender.getRawFluid().getAttributes().isGaseous(forRender);
+        boolean gas = forRender.getRawFluid().getFluidType().isLighterThanAir();
         boolean horizontal = false;
         boolean vertical = flow.pipe.isConnected(gas ? Direction.DOWN : Direction.UP);
 

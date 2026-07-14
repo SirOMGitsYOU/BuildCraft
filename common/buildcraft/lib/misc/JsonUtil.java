@@ -9,6 +9,7 @@ package buildcraft.lib.misc;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.lib.expression.GenericExpressionCompiler;
+import buildcraft.lib.misc.ItemUtil;
 import buildcraft.lib.expression.api.IExpressionNode.INodeLong;
 import buildcraft.lib.expression.api.InvalidExpressionException;
 import com.google.common.collect.ImmutableList;
@@ -19,9 +20,8 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.nbt.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -228,10 +228,10 @@ public class JsonUtil {
             } else {
                 args = new String[0];
             }
-            return new TranslatableComponent(localePrefix + str, args);
+            return Component.translatable(localePrefix + str, args);
         } else if (json.has(subPrefix + "_raw")) {
-//            return new TextComponent(JsonUtils.getString(json, subPrefix + "_raw"));
-            return new TextComponent(GsonHelper.getAsString(json, subPrefix + "_raw"));
+//            return Component.literal(JsonUtils.getString(json, subPrefix + "_raw"));
+            return Component.literal(GsonHelper.getAsString(json, subPrefix + "_raw"));
         } else {
             throw new JsonSyntaxException(
                     "Expected to find either '" + subPrefix + "' or '" + subPrefix + "_raw', but got neither for " + json);
@@ -606,7 +606,7 @@ public class JsonUtil {
 
     public static JsonElement serializeFluidStack(FluidStack fluidStack) {
         JsonObject json = new JsonObject();
-        json.addProperty("fluid", fluidStack.getRawFluid().getRegistryName().toString());
+        json.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fluidStack.getRawFluid()).toString());
         json.addProperty("amount", fluidStack.getAmount());
         return json;
     }
@@ -620,7 +620,7 @@ public class JsonUtil {
 
     public static JsonElement serializeItemStack(ItemStack stack) {
         JsonObject json = new JsonObject();
-        json.addProperty("item", stack.getItem().getRegistryName().toString());
+        json.addProperty("item", ItemUtil.getRegistryName(stack.getItem()).toString());
         if (stack.getCount() > 1) {
             json.addProperty("count", stack.getCount());
         }

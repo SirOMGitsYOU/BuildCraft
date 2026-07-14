@@ -1,5 +1,7 @@
 package buildcraft.datagen.core;
 
+
+import net.minecraft.network.chat.Component;
 import buildcraft.core.BCCore;
 import buildcraft.core.BCCoreBlocks;
 import buildcraft.core.BCCoreItems;
@@ -11,7 +13,6 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
@@ -31,8 +32,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // root
         Advancement root = Advancement.Builder.advancement().display(
                         BCCoreItems.gearWood.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.root.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.root.description"),
+                        Component.translatable("advancements.buildcraftcore.root.title"),
+                        Component.translatable("advancements.buildcraftcore.root.description"),
                         new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/adventure.png"),
                         FrameType.TASK,
                         false, false, false)
@@ -45,8 +46,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // gears
         Advancement gears = Advancement.Builder.advancement().display(
                         BCCoreItems.gearDiamond.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.gears.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.gears.description"),
+                        Component.translatable("advancements.buildcraftcore.gears.title"),
+                        Component.translatable("advancements.buildcraftcore.gears.description"),
                         null,
                         FrameType.GOAL,
                         true, true, false)
@@ -72,8 +73,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // wrenched
         Advancement wrenched = Advancement.Builder.advancement().display(
                         BCCoreItems.wrench.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.wrenched.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.wrenched.description"),
+                        Component.translatable("advancements.buildcraftcore.wrenched.title"),
+                        Component.translatable("advancements.buildcraftcore.wrenched.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -89,8 +90,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // free_power
         Advancement free_power = Advancement.Builder.advancement().display(
                         BCCoreBlocks.engineWood.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.freePowar.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.freePowar.description"),
+                        Component.translatable("advancements.buildcraftcore.freePowar.title"),
+                        Component.translatable("advancements.buildcraftcore.freePowar.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -102,8 +103,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // guide
         Advancement guide = Advancement.Builder.advancement().display(
                         BCLibItems.guide.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.guide.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.guide.description"),
+                        Component.translatable("advancements.buildcraftcore.guide.title"),
+                        Component.translatable("advancements.buildcraftcore.guide.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -116,8 +117,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // markers
         Advancement markers = Advancement.Builder.advancement().display(
                         BCCoreBlocks.markerVolume.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.markers.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.markers.description"),
+                        Component.translatable("advancements.buildcraftcore.markers.title"),
+                        Component.translatable("advancements.buildcraftcore.markers.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -130,8 +131,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // list
         Advancement list = Advancement.Builder.advancement().display(
                         BCCoreItems.list.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.list.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.list.description"),
+                        Component.translatable("advancements.buildcraftcore.list.title"),
+                        Component.translatable("advancements.buildcraftcore.list.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -143,8 +144,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // paper
         Advancement paper = Advancement.Builder.advancement().display(
                         Items.PAPER,
-                        new TranslatableComponent("advancements.buildcraftcore.paper.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.paper.description"),
+                        Component.translatable("advancements.buildcraftcore.paper.title"),
+                        Component.translatable("advancements.buildcraftcore.paper.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -158,8 +159,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
                         // TODO Calen goggles texture
 //                        BCCoreItems.GOOGLES.get(),
                         Items.IRON_HELMET,
-                        new TranslatableComponent("advancements.buildcraftcore.goggles.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.goggles.description"),
+                        Component.translatable("advancements.buildcraftcore.goggles.title"),
+                        Component.translatable("advancements.buildcraftcore.goggles.description"),
                         null,
                         FrameType.TASK,
                         true, true, false
@@ -171,8 +172,8 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
         // path_markers
         Advancement path_markers = Advancement.Builder.advancement().display(
                         BCCoreBlocks.markerPath.get(),
-                        new TranslatableComponent("advancements.buildcraftcore.path_markers.title"),
-                        new TranslatableComponent("advancements.buildcraftcore.path_markers.description"),
+                        Component.translatable("advancements.buildcraftcore.path_markers.title"),
+                        Component.translatable("advancements.buildcraftcore.path_markers.description"),
                         null,
                         FrameType.TASK,
                         true, true, false

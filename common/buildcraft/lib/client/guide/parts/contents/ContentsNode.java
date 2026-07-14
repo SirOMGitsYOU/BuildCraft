@@ -8,7 +8,6 @@ import buildcraft.lib.client.guide.parts.GuideText;
 import buildcraft.lib.misc.StringUtilBC;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -49,10 +48,10 @@ public class ContentsNode implements IContentsNode {
     public GuidePart createGuidePart(GuiGuide gui) {
         if (indent == 0) {
 //            return new GuideChapterWithin(gui, TextFormatting.UNDERLINE + title);
-            return new GuideChapterWithin(gui, ChatFormatting.UNDERLINE + titleKey, new TextComponent(ChatFormatting.UNDERLINE.toString()).append(title));
+            return new GuideChapterWithin(gui, ChatFormatting.UNDERLINE + titleKey, Component.literal(ChatFormatting.UNDERLINE.toString()).append(title));
         } else {
 //            return new GuideText(gui, new PageLine(indent + 1, TextFormatting.UNDERLINE + title, false));
-            return new GuideText(gui, new PageLine(indent + 1, ChatFormatting.UNDERLINE + titleKey, new TextComponent(ChatFormatting.UNDERLINE.toString()).append(title), false));
+            return new GuideText(gui, new PageLine(indent + 1, ChatFormatting.UNDERLINE + titleKey, Component.literal(ChatFormatting.UNDERLINE.toString()).append(title), false));
         }
     }
 

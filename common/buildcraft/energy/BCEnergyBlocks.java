@@ -46,26 +46,22 @@ public class BCEnergyBlocks {
 
             engineStoneTile = BCCoreBlocks.HELPER.registerTile("tile.engine.stone", TileEngineStone_BC8::new, BCEnergyBlocks.engineStone);
             engineIronTile = BCCoreBlocks.HELPER.registerTile("tile.engine.iron", TileEngineIron_BC8::new, BCEnergyBlocks.engineIron);
-            if (BCEnergyConfig.enableRfEngine) {
-                engineRf = BCCoreBlocks.registerEngine(EnumEngineType.RF, TileEngineRF::new);
 
-                engineRfTile = BCCoreBlocks.HELPER.registerTile("tile.engine.rf", TileEngineRF::new, BCEnergyBlocks.engineRf);
-            }
+            engineRf = BCCoreBlocks.registerEngine(EnumEngineType.RF, TileEngineRF::new, true);
+            engineRfTile = BCCoreBlocks.HELPER.registerTile("tile.engine.rf", TileEngineRF::new, BCEnergyBlocks.engineRf);
         }
 
-        if (BCEnergyConfig.enableMjDynamo) {
-            mjDynamo = HELPER.addForcedBlock(
-                    "block.mj_dynamo",
-                    BlockPropertiesCreator.createDefaultProperties(Material.METAL)
-                            .strength(5.0F, 10.0F)
-                            .sound(SoundType.METAL)
-                            .noOcclusion(),
-                    BlockDynamoMJ::new
-            );
-            String mjDynamoItemRegId = TagManager.getTag("item.block.mj_dynamo", TagManager.EnumTagType.REGISTRY_NAME).replace(BCEnergy.MODID + ":", "");
-            HELPER.addForcedItem(mjDynamoItemRegId, () -> new ItemBlockBC_Neptune(mjDynamo.get(), ItemPropertiesCreator.common64()));
-            mjDynamoTile = HELPER.registerTile("tile.mj_dynamo", TileDynamoMJ::new, mjDynamo);
-        }
+        mjDynamo = HELPER.addForcedBlock(
+                "block.mj_dynamo",
+                BlockPropertiesCreator.createDefaultProperties(Material.METAL)
+                        .strength(5.0F, 10.0F)
+                        .sound(SoundType.METAL)
+                        .noOcclusion(),
+                BlockDynamoMJ::new
+        );
+        String mjDynamoItemRegId = TagManager.getTag("item.block.mj_dynamo", TagManager.EnumTagType.REGISTRY_NAME).replace(BCEnergy.MODID + ":", "");
+        HELPER.addForcedItem(mjDynamoItemRegId, () -> new ItemBlockBC_Neptune(mjDynamo.get(), ItemPropertiesCreator.common64()));
+        mjDynamoTile = HELPER.registerTile("tile.mj_dynamo", TileDynamoMJ::new, mjDynamo);
 
 //        EnumSpring.OIL.liquidBlock = BCEnergyFluids.crudeOil[0].getBlock().getDefaultState(); // 1.18.2: moved to BCEnergy#postInit
         EnumSpring.OIL.tileConstructor = TileSpringOil::new;

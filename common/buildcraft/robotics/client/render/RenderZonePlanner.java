@@ -185,7 +185,7 @@ public class RenderZonePlanner implements BlockEntityRenderer<TileZonePlanner> {
                 }
                 ChunkPos chunkPos = new ChunkPos(posX >> 4, posZ >> 4);
                 texture.setColor(textureX, textureY, -1);
-//                ZonePlannerMapChunkKey key = new ZonePlannerMapChunkKey(chunkPos, tile.getWorld().provider.getDimension(), tile.getLevel());
+//                ZonePlannerMapChunkKey key = new ZonePlannerMapChunkKey(chunkPos, tile.getLevel().provider.getDimension(), tile.getLevel());
                 ZonePlannerMapChunkKey key = new ZonePlannerMapChunkKey(chunkPos, tile.getLevel().dimension(), tile.getLevelBC());
                 ZonePlannerMapChunk zonePlannerMapChunk =
                         ZonePlannerMapDataClient.INSTANCE.getChunk(tile.getLevel(), key);

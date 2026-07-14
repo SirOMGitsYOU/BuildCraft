@@ -31,7 +31,7 @@ public class RenderDynamoMJ implements BlockEntityRenderer<TileDynamoMJ> {
         MutableQuad[] quads = BCEnergyModels.getMjDynamoQuads(engine, partialTicks);
         profiler.popPush("render");
         MutableQuad copy = new MutableQuad(0, null);
-        // int lightc = engine.getWorld().getCombinedLight(engine.getPos(), 0);
+        // int lightc = engine.getLevel().getCombinedLight(engine.getPos(), 0);
         int light_block = (lightc >> 4) & 15;
         int light_sky = (lightc >> 20) & 15;
         VertexConsumer vb = bufferSource.getBuffer(RenderType.cutout());

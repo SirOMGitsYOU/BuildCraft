@@ -12,7 +12,6 @@ import buildcraft.lib.misc.ColourUtil;
 import net.minecraft.client.gui.Font;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -50,7 +49,7 @@ public class ItemWire extends ItemBC_Neptune {
 
         DyeColor colour = ColourUtil.getStackColourFromTag(stack);
         String prefix = colour == null ? "" : (ColourUtil.getTextFullTooltipSpecial(ColourUtil.getStackColourFromTag(stack)) + " ");
-        return new TextComponent(prefix).append(super.getName(stack));
+        return Component.literal(prefix).append(super.getName(stack));
     }
 
     // TODO Calen getFontRenderer???

@@ -10,8 +10,6 @@ import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.*;
 import buildcraft.lib.misc.ColourUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.ArrayList;
@@ -97,9 +95,9 @@ public abstract class StatementWrapper implements IStatement, Comparable<Stateme
         List<Component> list = delegate.getTooltip();
         if (sourcePart != EnumPipePart.CENTER) {
             list = new ArrayList<>(list);
-            Component translated = new TextComponent(ColourUtil.getTextFullTooltip(sourcePart.face));
-//            list.add(new TextComponent(LocaleUtil.localize("gate.side", translated)));
-            list.add(new TranslatableComponent("gate.side", translated));
+            Component translated = Component.literal(ColourUtil.getTextFullTooltip(sourcePart.face));
+//            list.add(Component.literal(LocaleUtil.localize("gate.side", translated)));
+            list.add(Component.translatable("gate.side", translated));
         }
         return list;
     }

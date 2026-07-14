@@ -3,13 +3,14 @@ package buildcraft.datagen.lib;
 import buildcraft.datagen.base.BCBaseTextureGenerator;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.material.EmptyFluid;
 import net.minecraft.world.level.material.Fluid;
+import buildcraft.lib.misc.FluidUtilBC;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -31,13 +32,13 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
     private List<ResourceLocation> createdFluids = new LinkedList<>();
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    protected void generateTextures(CachedOutput output) throws IOException {
         Path mainOutput = generator.getOutputFolder();
         for (Fluid fluid : ForgeRegistries.FLUIDS.getValues()) {
             if (fluid instanceof EmptyFluid) {
                 continue;
             }
-            ResourceLocation still = fluid.getAttributes().getStillTexture();
+            ResourceLocation still = FluidUtilBC.getStillTexture(fluid);
             if (createdFluids.contains(still)) {
                 continue;
             }
@@ -50,12 +51,12 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
                             :
                             still.getPath() + "_frozen"
             );
-            genFrozen(mainOutput, still, frozen, cache);
+            genFrozen(mainOutput, still, frozen, output);
         }
 
     }
 
-    private void genFrozen(Path mainOutput, ResourceLocation still, ResourceLocation frozen, HashCache cache) throws IOException {
+    private void genFrozen(Path mainOutput, ResourceLocation still, ResourceLocation frozen, CachedOutput output) throws IOException {
         Resource stillMcmetaResource = exFileHelper.getResource(still, PackType.CLIENT_RESOURCES, ".png.mcmeta", "textures");
         Resource stillResource = exFileHelper.getResource(still, PackType.CLIENT_RESOURCES, ".png", "textures");
 
@@ -66,13 +67,10 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
         Path mcmetaOutputPath = mainOutput.resolve(mcmetaPathStr);
 
         // generate png
-        InputStream stillPngInputStream = stillResource.getInputStream();
+        InputStream stillPngInputStream = stillResource.open();
         BufferedImage bi = ImageIO.read(stillPngInputStream);
 
-        AnimationMetadataSection animationmetadatasection = stillResource.getMetadata(AnimationMetadataSection.SERIALIZER);
-        if (animationmetadatasection == null) {
-            animationmetadatasection = AnimationMetadataSection.EMPTY;
-        }
+        AnimationMetadataSection animationmetadatasection = AnimationMetadataSection.EMPTY;
 
         int widthOld = bi.getWidth();
         int heightOld = bi.getHeight();
@@ -116,7 +114,7 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
                 bo.setRGB(x, y, pixel);
             }
         }
-        save(bo, cache, pngOutputPath);
+        save(bo, output, pngOutputPath);
     }
 
     @Override

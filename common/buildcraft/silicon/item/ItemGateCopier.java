@@ -5,7 +5,6 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -43,7 +42,7 @@ public class ItemGateCopier extends ItemBC_Neptune {
         super.appendHoverText(stack, world, tooltip, flag);
         if (getMetadata(stack) != 0) {
 //            tooltip.add(LocaleUtil.localize("buildcraft.item.nonclean.usage"));
-            tooltip.add(new TranslatableComponent("buildcraft.item.nonclean.usage"));
+            tooltip.add(Component.translatable("buildcraft.item.nonclean.usage"));
         }
     }
 

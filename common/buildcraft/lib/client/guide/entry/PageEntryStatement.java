@@ -14,7 +14,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -76,7 +75,7 @@ public class PageEntryStatement extends PageValueType<IStatement> {
     public Component getTitle(IStatement value) {
         List<Component> tooltip = value.getTooltip();
         if (tooltip.isEmpty()) {
-            return new TextComponent(value.getClass().toString());
+            return Component.literal(value.getClass().toString());
         } else {
             return tooltip.get(0);
         }

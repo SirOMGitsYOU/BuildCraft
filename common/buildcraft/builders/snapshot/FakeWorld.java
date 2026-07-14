@@ -30,11 +30,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.entity.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.storage.WritableLevelData;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.ticks.BlackholeTickAccess;
@@ -52,25 +55,7 @@ public class FakeWorld extends IFakeWorld {
     // private static final ResourceKey<Biome> BIOME = Biomes.PLAINS;
     @SuppressWarnings("WeakerAccess")
     public static final BlockPos BLUEPRINT_OFFSET = new BlockPos(0, 127, 0);
-    private static final Holder<DimensionType> DIMENSION_TYPE = Holder.direct(DimensionType.create(
-            OptionalLong.empty(), // fixedTime
-            true, // hasSkylight
-            false, // hasCeiling
-            false, // ultraWarm
-            true, // natural
-            1.0D, // coordinateScale
-            false, // createDragonFight
-            false, // piglinSafe
-            true, // bedWorks
-            false, // respawnAnchorWorks
-            true, // hasRaids
-            -64, // minY
-            384, // height
-            384, // logicalHeight
-            BlockTags.INFINIBURN_OVERWORLD, // infiniburn
-            DimensionType.OVERWORLD_EFFECTS, // effectsLocation
-            0.0F
-    ));
+    private static final Holder<DimensionType> DIMENSION_TYPE = RegistryAccess.BUILTIN.get().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY).getHolderOrThrow(BuiltinDimensionTypes.OVERWORLD);
     private static final WritableLevelData LEVEL_DATA = new ClientLevel.ClientLevelData(Difficulty.PEACEFUL, true, false);
 
     private final FakeChunkProvider chunkProvider;
@@ -195,6 +180,11 @@ public class FakeWorld extends IFakeWorld {
     }
 
     @Override
+    public void gameEvent(GameEvent event, Vec3 pos, GameEvent.Context context) {
+
+    }
+
+    @Override
     public void gameEvent(@Nullable Entity p_151549_, GameEvent p_151550_, BlockPos p_151551_) {
 
     }
@@ -232,7 +222,12 @@ public class FakeWorld extends IFakeWorld {
     }
 
     @Override
-    public void playSound(@Nullable Player p_46551_, Entity p_46552_, SoundEvent p_46553_, SoundSource p_46554_, float p_46555_, float p_46556_) {
+    public void playSeededSound(@Nullable Player player, double x, double y, double z, SoundEvent sound, SoundSource source, float volume, float pitch, long seed) {
+
+    }
+
+    @Override
+    public void playSeededSound(@Nullable Player player, Entity entity, SoundEvent sound, SoundSource source, float volume, float pitch, long seed) {
 
     }
 

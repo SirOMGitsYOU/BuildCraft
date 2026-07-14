@@ -8,6 +8,7 @@ import buildcraft.transport.pipe.PipeRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import buildcraft.lib.misc.ItemUtil;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -32,21 +33,21 @@ public class TransportItemModelGenerator extends BCBaseItemModelGenerator {
         );
 
         // filteredBuffer
-        withExistingParent(BCTransportBlocks.filteredBuffer.get().getRegistryName().toString(), "buildcrafttransport:block/filtered_buffer");
+        withExistingParent(BCTransportBlocks.filteredBuffer.getId().toString(), "buildcrafttransport:block/filtered_buffer");
         // waterproof
-        withExistingParent(BCTransportItems.waterproof.get().getRegistryName().toString(), GENERATED)
+        withExistingParent(BCTransportItems.waterproof.getId().toString(), GENERATED)
                 .texture("layer0", "buildcrafttransport:items/pipewaterproof");
         // plugBlocker
-        getBuilder(BCTransportItems.plugBlocker.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCTransportItems.plugBlocker.getId().toString()).parent(BUILTIN_ENTITY);
         // plugPowerAdaptor
-        getBuilder(BCTransportItems.plugPowerAdaptor.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);
+        getBuilder(BCTransportItems.plugPowerAdaptor.getId().toString()).parent(BUILTIN_ENTITY);
 
         // wires
         with16Colours(BCTransportItems.wire.get());
     }
 
     private void with16Colours(Item item) {
-        ResourceLocation reg = item.getRegistryName();
+        ResourceLocation reg = ItemUtil.getRegistryName(item);
 
         ItemModelBuilder model = withExistingParent(reg.getNamespace() + ":item/" + reg.getPath(), HANDHELD);
         for (DyeColor colour : DyeColor.values()) {

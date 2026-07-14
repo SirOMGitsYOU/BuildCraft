@@ -10,7 +10,6 @@ import buildcraft.lib.registry.CreativeTabManager;
 import buildcraft.lib.registry.TagManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,9 +50,9 @@ public class ItemBlockBC_Neptune extends BlockItem implements IItemBuildCraft {
 //        String tipId = getUnlocalizedName(stack) + ".tip";
         String tipId = getDescriptionId(stack).replace(".name", ".tip");
         if (LocaleUtil.canLocalize(tipId)) {
-            strings.add(new TextComponent(ChatFormatting.GRAY + LocaleUtil.localize(tipId)));
+            strings.add(Component.literal(ChatFormatting.GRAY + LocaleUtil.localize(tipId)));
         } else if (flag.isAdvanced()) {
-            strings.add(new TextComponent(ChatFormatting.GRAY + tipId));
+            strings.add(Component.literal(ChatFormatting.GRAY + tipId));
         }
     }
 }

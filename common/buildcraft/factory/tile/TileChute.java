@@ -31,7 +31,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -177,8 +176,8 @@ public class TileChute extends TileBC_Neptune implements ITickable, IDebuggable,
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
 //        left.add("battery = " + battery.getDebugString());
 //        left.add("progress = " + progress);
-        left.add(new TextComponent("battery = " + battery.getDebugString()));
-        left.add(new TextComponent("progress = " + progress));
+        left.add(Component.literal("battery = " + battery.getDebugString()));
+        left.add(Component.literal("progress = " + progress));
     }
 
     // MenuProvider

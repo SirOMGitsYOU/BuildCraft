@@ -14,17 +14,16 @@ import buildcraft.lib.misc.CapUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 
 import java.util.List;
 
 public class TileAutoWorkbenchFluids extends TileAutoWorkbenchBase implements IDebuggable {
     // private final Tank tank1 = new Tank("tank1", Fluid.BUCKET_VOLUME * 6, this);
-    private final Tank tank1 = new Tank("tank1", FluidAttributes.BUCKET_VOLUME * 6, this);
+    private final Tank tank1 = new Tank("tank1", FluidType.BUCKET_VOLUME * 6, this);
     // private final Tank tank2 = new Tank("tank2", Fluid.BUCKET_VOLUME * 6, this);
-    private final Tank tank2 = new Tank("tank2", FluidAttributes.BUCKET_VOLUME * 6, this);
+    private final Tank tank2 = new Tank("tank2", FluidType.BUCKET_VOLUME * 6, this);
 
     public TileAutoWorkbenchFluids(BlockPos pos, BlockState blockState) {
         super(BCFactoryBlocks.autoWorkbenchFluidsTile.get(), 2, 2, pos, blockState);
@@ -40,8 +39,8 @@ public class TileAutoWorkbenchFluids extends TileAutoWorkbenchBase implements ID
 //        left.add("Tanks:");
 //        left.add("  " + tank1.getContentsString());
 //        left.add("  " + tank2.getContentsString());
-        left.add(new TextComponent("Tanks:"));
-        left.add(new TextComponent("  ").append(tank1.getContentsString()));
-        left.add(new TextComponent("  ").append(tank2.getContentsString()));
+        left.add(Component.literal("Tanks:"));
+        left.add(Component.literal("  ").append(tank1.getContentsString()));
+        left.add(Component.literal("  ").append(tank2.getContentsString()));
     }
 }

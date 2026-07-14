@@ -15,7 +15,6 @@ import buildcraft.core.BCCoreStatements;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry.SpriteHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -35,7 +34,7 @@ public class TriggerPower extends BCStatement implements ITriggerInternal, ITrig
     @Override
     public Component getDescription() {
 //        return LocaleUtil.localize("gate.trigger.machine.energyStored." + (high ? "high" : "low"));
-        return new TranslatableComponent("gate.trigger.machine.energyStored." + (high ? "high" : "low"));
+        return Component.translatable("gate.trigger.machine.energyStored." + (high ? "high" : "low"));
     }
 
     @Override

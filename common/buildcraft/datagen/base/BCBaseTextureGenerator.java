@@ -1,20 +1,21 @@
 package buildcraft.datagen.base;
 
+import com.google.common.hash.Hashing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public abstract class BCBaseTextureGenerator implements DataProvider {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
@@ -27,15 +28,17 @@ public abstract class BCBaseTextureGenerator implements DataProvider {
         this.exFileHelper = exFileHelper;
     }
 
-    protected void save(BufferedImage image, HashCache cache, Path path) throws IOException {
-        String s = image.toString();
-        String s1 = SHA1.hashUnencodedChars(s).toString();
-        if (!Objects.equals(cache.getHash(path), s1) || !Files.exists(path)) {
-            Files.createDirectories(path.getParent());
+    protected abstract void generateTextures(CachedOutput output) throws IOException;
 
-            ImageIO.write(image, "png", path.toFile());
-        }
+    @Override
+    public void run(CachedOutput output) throws IOException {
+        generateTextures(output);
+    }
 
-        cache.putNew(path, s1);
+    protected void save(BufferedImage image, CachedOutput output, Path path) throws IOException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", byteStream);
+        byte[] bytes = byteStream.toByteArray();
+        output.writeIfNeeded(path, bytes, Hashing.sha1().hashBytes(bytes));
     }
 }

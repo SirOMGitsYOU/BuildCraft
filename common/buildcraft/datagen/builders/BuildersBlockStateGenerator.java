@@ -180,7 +180,7 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
         ;
 
         // quarry
-        ResourceLocation quarry = BCBuildersBlocks.quarry.get().getRegistryName();
+        ResourceLocation quarry = BCBuildersBlocks.quarry.getId();
         ResourceLocation normal_top = new ResourceLocation(BCBuilders.MODID, "blocks/quarry/normal/top");
         ResourceLocation normal_bottom = new ResourceLocation(BCBuilders.MODID, "blocks/quarry/normal/bottom");
         ResourceLocation normal_side = new ResourceLocation(BCBuilders.MODID, "blocks/quarry/normal/side");
@@ -292,7 +292,7 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
                 180,
                 270,
                 0,
-                models().withExistingParent(BCBuildersBlocks.library.get().getRegistryName().toString(), CUBE)
+                models().withExistingParent(BCBuildersBlocks.library.getId().toString(), CUBE)
                         .transforms()
                         .transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
                         .rotation(0, 135, 0)
@@ -316,7 +316,7 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
                 180,
                 270,
                 0,
-                models().withExistingParent(BCBuildersBlocks.replacer.get().getRegistryName().toString(), CUBE)
+                models().withExistingParent(BCBuildersBlocks.replacer.getId().toString(), CUBE)
                         .texture("particle", "buildcraftbuilders:blocks/replacer/side")
                         .texture("down", "buildcraftbuilders:blocks/replacer/bottom")
                         .texture("up", "buildcraftbuilders:blocks/replacer/top")

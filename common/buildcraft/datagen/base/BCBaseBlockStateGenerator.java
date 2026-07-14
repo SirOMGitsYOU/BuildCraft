@@ -2,6 +2,7 @@ package buildcraft.datagen.base;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.block.BlockBCBase_Neptune;
+import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -36,7 +37,7 @@ public abstract class BCBaseBlockStateGenerator extends BlockStateProvider {
         models().existingFileHelper.trackGenerated(BUILTIN_ENTITY_LOCATION, PackType.CLIENT_RESOURCES, ".json", "models");
         // Calen: set this in blockstate json to avoid the model loaded by mc
         simpleBlock(b, ConfiguredModel.builder().modelFile(
-                        models().withExistingParent(b.getRegistryName().toString(), BUILTIN_ENTITY_LOCATION)
+                        models().withExistingParent(BlockUtil.getRegistryName(b).toString(), BUILTIN_ENTITY_LOCATION)
                                 .texture("particle", particle)
                 )
                 .build());

@@ -14,7 +14,6 @@ import buildcraft.robotics.BCRoboticsSprites;
 import buildcraft.robotics.RobotUtils;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,7 +26,7 @@ public class TriggerRobotSleep extends BCStatement implements ITriggerInternal {
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("gate.trigger.robot.sleep");
+        return Component.translatable("gate.trigger.robot.sleep");
     }
 
     @Override
