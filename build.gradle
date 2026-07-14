@@ -27,7 +27,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = mod_version
+version = "${mod_version}-CE-${mc_version}"
 // version = mod_version + "-" + new Date().format("yyyy-MM-dd'T'HH-mm-ssZ")
 group = "com.mod-buildcraft"
 archivesBaseName = "buildcraft" // the name that all artifacts will use as a base. artifacts names follow this pattern: [baseName]-[appendix]-[version]-[classifier].[extension]
