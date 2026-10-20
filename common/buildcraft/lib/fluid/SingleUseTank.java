@@ -5,16 +5,17 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 package buildcraft.lib.fluid;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 
 public class SingleUseTank extends Tank {
 
@@ -22,7 +23,7 @@ public class SingleUseTank extends Tank {
 
     private FluidStack acceptedFluid;
 
-    public SingleUseTank(@Nonnull String name, int capacity, BlockEntity tile) {
+    public SingleUseTank(@NotNull String name, int capacity, BlockEntity tile) {
         super(name, capacity, tile);
     }
 
@@ -80,7 +81,7 @@ public class SingleUseTank extends Tank {
     public void readTankFromNBT(CompoundTag nbt) {
         super.readTankFromNBT(nbt);
         if (nbt.contains(NBT_ACCEPTED_FLUID, Tag.TAG_STRING)) {
-            ResourceLocation fluidName = new ResourceLocation(nbt.getString(NBT_ACCEPTED_FLUID));
+            Identifier fluidName = Identifier.parse(nbt.getStringOr(NBT_ACCEPTED_FLUID, ""));
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidName);
             setAcceptedFluid(fluid);
         } else {

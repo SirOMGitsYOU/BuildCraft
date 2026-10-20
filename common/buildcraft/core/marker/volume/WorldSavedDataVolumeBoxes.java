@@ -127,7 +127,7 @@ public class WorldSavedDataVolumeBoxes extends SavedData {
     }
 
     public static WorldSavedDataVolumeBoxes get(Level world) {
-        if (world.isClientSide || !(world instanceof ServerLevel)) {
+        if (world.isClientSide() || !(world instanceof ServerLevel)) {
             throw new IllegalArgumentException("Tried to create a world saved data instance on the client!");
         }
         DimensionDataStorage storage = ((ServerLevel) world).getDataStorage();

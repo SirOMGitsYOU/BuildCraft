@@ -35,10 +35,10 @@ public class TilePowerConsumerTester extends TileBC_Neptune implements IMjReceiv
     public void load(CompoundTag nbt) {
 //        super.readFromNBT(nbt);
         super.load(nbt);
-        lastReceived = nbt.getLong("last");
-        nextTickReceived = nbt.getLong("nt");
-        lastTickReceived = nbt.getLong("lt");
-        totalReceived = nbt.getLong("total");
+        lastReceived = nbt.getLongOr("last", 0L);
+        nextTickReceived = nbt.getLongOr("nt", 0L);
+        lastTickReceived = nbt.getLongOr("lt", 0L);
+        totalReceived = nbt.getLongOr("total", 0L);
     }
 
     @Override

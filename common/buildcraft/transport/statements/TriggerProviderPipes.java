@@ -5,6 +5,7 @@
  */
 
 package buildcraft.transport.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.gates.IGate;
 import buildcraft.api.statements.*;
@@ -18,7 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 
 public enum TriggerProviderPipes implements ITriggerProvider {
@@ -49,7 +50,7 @@ public enum TriggerProviderPipes implements ITriggerProvider {
     }
 
     @Override
-    public void addInternalSidedTriggers(Collection<ITriggerInternalSided> triggers, IStatementContainer container, @Nonnull Direction side) {
+    public void addInternalSidedTriggers(Collection<ITriggerInternalSided> triggers, IStatementContainer container, @NotNull Direction side) {
         if (container instanceof IGate) {
             IGate gate = (IGate) container;
             IPipeHolder holder = gate.getPipeHolder();
@@ -58,7 +59,7 @@ public enum TriggerProviderPipes implements ITriggerProvider {
     }
 
     @Override
-    public void addExternalTriggers(Collection<ITriggerExternal> triggers, @Nonnull Direction side, BlockEntity tile) {
+    public void addExternalTriggers(Collection<ITriggerExternal> triggers, @NotNull Direction side, BlockEntity tile) {
 
     }
 }

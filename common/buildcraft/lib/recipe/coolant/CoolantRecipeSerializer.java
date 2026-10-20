@@ -1,5 +1,7 @@
 package buildcraft.lib.recipe.coolant;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.fuels.EnumCoolantType;
 import buildcraft.api.fuels.ICoolant;
 import buildcraft.api.fuels.IFluidCoolant;
@@ -9,14 +11,14 @@ import buildcraft.lib.recipe.coolant.CoolantRegistry.FluidCoolant;
 import buildcraft.lib.recipe.coolant.CoolantRegistry.SolidCoolant;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 
 public class CoolantRecipeSerializer implements RecipeSerializer<ICoolant> {
     public static final CoolantRecipeSerializer INSTANCE;
@@ -26,7 +28,7 @@ public class CoolantRecipeSerializer implements RecipeSerializer<ICoolant> {
     }
 
     @Override
-    public ICoolant fromJson(ResourceLocation recipeId, JsonObject json) {
+    public ICoolant fromJson(Identifier recipeId, JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
         EnumCoolantType coolantType = EnumCoolantType.byName(GsonHelper.getAsString(json, "coolantType"));
         FluidStack fluid = JsonUtil.deSerializeFluidStack(json.getAsJsonObject("fluid"));
@@ -56,7 +58,7 @@ public class CoolantRecipeSerializer implements RecipeSerializer<ICoolant> {
 
     @Nullable
     @Override
-    public ICoolant fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public ICoolant fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         EnumCoolantType coolantType = buffer.readEnum(EnumCoolantType.class);
         FluidStack fluid = buffer.readFluidStack();
         float floatValue = buffer.readFloat();

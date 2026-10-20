@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.statement;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.statements.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 
 /** Wrapper class around ITriggerInternal to allow for treating all triggers as internal triggers. It also provides the
  * background colour for sides. */
@@ -79,7 +80,7 @@ public abstract class TriggerWrapper extends StatementWrapper implements ITrigge
     public static class TriggerWrapperInternalSided extends TriggerWrapper {
         public final ITriggerInternalSided trigger;
 
-        public TriggerWrapperInternalSided(ITriggerInternalSided trigger, @Nonnull Direction side) {
+        public TriggerWrapperInternalSided(ITriggerInternalSided trigger, @NotNull Direction side) {
             super(trigger, EnumPipePart.fromFacing(side));
             this.trigger = trigger;
         }
@@ -93,7 +94,7 @@ public abstract class TriggerWrapper extends StatementWrapper implements ITrigge
     public static class TriggerWrapperExternal extends TriggerWrapper {
         public final ITriggerExternal trigger;
 
-        public TriggerWrapperExternal(ITriggerExternal trigger, @Nonnull Direction side) {
+        public TriggerWrapperExternal(ITriggerExternal trigger, @NotNull Direction side) {
             super(trigger, EnumPipePart.fromFacing(side));
             this.trigger = trigger;
         }

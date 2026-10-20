@@ -17,7 +17,7 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.net.PacketBufferBC;
 import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.client.model.key.KeyPlugLens;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -69,7 +69,7 @@ public class PluggableLens extends PipePluggable {
         } else {
             colour = DyeColor.byId(nbt.getByte("c"));
         }
-        isFilter = nbt.getBoolean("f");
+        isFilter = nbt.getBooleanOr("f", false);
     }
 
     @Override

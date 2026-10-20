@@ -1,15 +1,17 @@
 package buildcraft.lib.recipe.fuel;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.fuels.IFuel;
 import buildcraft.lib.misc.StackUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Consumer;
 
 public class FuelRecipeBuilder {
@@ -52,8 +54,8 @@ public class FuelRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(BCModules.ENERGY.getModId(), "fuel/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(BCModules.ENERGY.getModId(), "fuel/" + name);
         }
 
         @Override
@@ -69,7 +71,7 @@ public class FuelRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

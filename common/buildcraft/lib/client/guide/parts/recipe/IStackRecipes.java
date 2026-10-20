@@ -5,17 +5,18 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.parts.GuidePartFactory;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 
 /** Defines a stack recipe lookup - implementations should register with {@link RecipeLookupHelper} to be used by the
  * guide for usages and recipes. */
 public interface IStackRecipes {
-    List<GuidePartFactory> getUsages(@Nonnull ItemStack stack);
+    List<GuidePartFactory> getUsages(@NotNull ItemStack stack);
 
-    List<GuidePartFactory> getRecipes(@Nonnull ItemStack stack);
+    List<GuidePartFactory> getRecipes(@NotNull ItemStack stack);
 }

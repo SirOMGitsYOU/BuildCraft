@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CaveVines;
 import net.minecraft.world.level.block.CaveVinesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.FakePlayer;
 
 public enum CropHandlerGlowBerries implements ICropHandler {
     INSTANCE;

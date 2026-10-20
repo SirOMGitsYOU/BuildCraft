@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.boards.RedstoneBoardNBT;
 import buildcraft.api.boards.RedstoneBoardRegistry;
 import buildcraft.lib.item.ItemBC_Neptune;
@@ -13,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class ItemRedstoneBoard extends ItemBC_Neptune {

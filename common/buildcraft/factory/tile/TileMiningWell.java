@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.SafeTimeTracker;
@@ -35,10 +36,10 @@ public class TileMiningWell extends TileMiner {
 //    private final IWorldEventListener worldEventListener = new WorldEventListenerAdapter()
 //    {
 //        @Override
-//        public void notifyBlockUpdate(@Nonnull World world,
-//                                      @Nonnull BlockPos pos,
-//                                      @Nonnull IBlockState oldState,
-//                                      @Nonnull IBlockState newState,
+//        public void notifyBlockUpdate(@NotNull World world,
+//                                      @NotNull BlockPos pos,
+//                                      @NotNull IBlockState oldState,
+//                                      @NotNull IBlockState newState,
 //                                      int flags)
 //        {
 //            if (pos.getX() == TileMiningWell.this.pos.getX() &&
@@ -144,7 +145,7 @@ public class TileMiningWell extends TileMiner {
     public void clearRemoved() {
 //        super.validate();
         super.clearRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 //            level.addEventListener(worldEventListener);
             LocalBlockUpdateNotifier.instance(level).registerSubscriberForUpdateNotifications(this.subscriber);
         }
@@ -155,7 +156,7 @@ public class TileMiningWell extends TileMiner {
     public void setRemoved() {
 //        super.invalidate();
         super.setRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 //            level.removeEventListener(worldEventListener);
             LocalBlockUpdateNotifier.instance(level).removeSubscriberFromUpdateNotifications(this.subscriber);
             if (currentPos != null) {

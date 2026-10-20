@@ -6,6 +6,8 @@
 
 package buildcraft.lib.client.guide.entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.registry.IScriptableRegistry.OptionallyDisabled;
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.GuideManager;
@@ -15,16 +17,16 @@ import buildcraft.lib.gui.ISimpleDrawable;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Objects;
 
 public abstract class PageValueType<T> {
 
-    public abstract OptionallyDisabled<PageEntry<T>> deserialize(ResourceLocation name, JsonObject json, JsonDeserializationContext ctx);
+    public abstract OptionallyDisabled<PageEntry<T>> deserialize(Identifier name, JsonObject json, JsonDeserializationContext ctx);
 
     public abstract Class<T> getEntryClass();
 

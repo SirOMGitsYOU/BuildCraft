@@ -5,6 +5,8 @@
  */
 
 package buildcraft.lib.client.render.tile;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.engine.TileEngineBase_BC8;
@@ -12,7 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -24,9 +26,9 @@ public abstract class RenderEngine_BC8<T extends TileEngineBase_BC8> implements 
     // TODO: Cache the model!
 
     @Override
-//    public void renderTileEntityFast(@Nonnull T engine, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder vb)
+//    public void renderTileEntityFast(@NotNull T engine, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder vb)
     public void render(T engine, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int lightc, int combinedOverlay) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("bc");
         profiler.push("engine");
 

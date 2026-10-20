@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory.filter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.recipes.StackDefinition;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 
 /** Returns true if the stack matches any one one of the filter stacks. */
@@ -27,7 +28,7 @@ public class ArrayStackFilter implements IStackFilter {
     }
 
     @Override
-    public boolean matches(@Nonnull ItemStack stack) {
+    public boolean matches(@NotNull ItemStack stack) {
         if (stacks.size() == 0 || !hasFilter()) {
             return true;
         }

@@ -74,8 +74,8 @@ public class MapChunk {
             BCLog.logger.error("Unsupported MapChunk version: " + version);
             return;
         }
-        x = compound.getInt("x");
-        z = compound.getInt("z");
+        x = compound.getIntOr("x", 0);
+        z = compound.getIntOr("z", 0);
         data = compound.getByteArray("data");
         if (data.length != 256) {
             BCLog.logger.error("Invalid MapChunk data length: " + data.length);

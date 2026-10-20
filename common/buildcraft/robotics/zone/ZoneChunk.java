@@ -84,7 +84,7 @@ public class ZoneChunk {
     }
 
     public void readFromNBT(CompoundTag nbt) {
-        fullSet = nbt.getBoolean("fullSet");
+        fullSet = nbt.getBooleanOr("fullSet", false);
 
         if (nbt.contains("bits")) {
             property = BitSet.valueOf(nbt.getByteArray("bits"));

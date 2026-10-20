@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.statements.*;
 import buildcraft.api.statements.containers.IRedstoneStatementContainer;
@@ -14,7 +15,7 @@ import buildcraft.core.BCCoreStatements;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 
 public enum CoreActionProvider implements IActionProvider {
@@ -28,11 +29,11 @@ public enum CoreActionProvider implements IActionProvider {
     }
 
     @Override
-    public void addInternalSidedActions(Collection<IActionInternalSided> actions, IStatementContainer container, @Nonnull Direction side) {
+    public void addInternalSidedActions(Collection<IActionInternalSided> actions, IStatementContainer container, @NotNull Direction side) {
     }
 
     @Override
-    public void addExternalActions(Collection<IActionExternal> res, @Nonnull Direction side, BlockEntity tile) {
+    public void addExternalActions(Collection<IActionExternal> res, @NotNull Direction side, BlockEntity tile) {
         IControllable controllable = tile.getCapability(TilesAPI.CAP_CONTROLLABLE, side.getOpposite()).orElse(null);
         if (controllable != null) {
             for (ActionMachineControl action : BCCoreStatements.ACTION_MACHINE_CONTROL) {

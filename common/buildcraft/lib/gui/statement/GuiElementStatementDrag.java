@@ -1,5 +1,7 @@
 package buildcraft.lib.gui.statement;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IGuiSlot;
@@ -15,7 +17,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.Nullable;
+
 
 public class GuiElementStatementDrag implements IMenuElement {
 

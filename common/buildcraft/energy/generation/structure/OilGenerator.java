@@ -1,4 +1,5 @@
 package buildcraft.energy.generation.structure;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
@@ -13,7 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -96,9 +97,9 @@ public class OilGenerator {
 
     /** To find out which type to gen
      * {@link GenType#NONE} means skipped and nothing for gen */
-    @Nonnull
+    @NotNull
     public static GenType getPieceTypeByRand(RandomSource rand, Holder<Biome> biome, int cx, int cz, int x, int z, boolean log) {
-        ResourceLocation biomeRegistryName = biome.unwrapKey().map(ResourceKey::location).orElse(null);
+        Identifier biomeRegistryName = biome.unwrapKey().map(ResourceKey::location).orElse(null);
         // Do not generate oil in excluded biomes
         boolean isExcludedBiome = BCEnergyConfig.excludedBiomes.contains(biomeRegistryName);
         if (isExcludedBiome == BCEnergyConfig.excludedBiomesIsBlackList) {

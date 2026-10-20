@@ -3,8 +3,7 @@ package buildcraft.lib.misc;
 
 import buildcraft.api.core.BCLog;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
-import net.minecraft.Util;
-import net.minecraft.util.profiling.*;
+import net.minecraft.util.Util;import net.minecraft.util.profiling.*;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.BufferedWriter;

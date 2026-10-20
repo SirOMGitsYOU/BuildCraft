@@ -1,5 +1,7 @@
 package buildcraft.lib.recipe.assembly;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.recipes.EnumAssemblyRecipeType;
 import buildcraft.api.recipes.IAssemblyRecipe;
 import buildcraft.api.recipes.IngredientStack;
@@ -10,12 +12,12 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +29,7 @@ public class AssemblyRecipeSerializer implements RecipeSerializer<IAssemblyRecip
     }
 
     @Override
-    public IAssemblyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public IAssemblyRecipe fromJson(Identifier recipeId, JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
         EnumAssemblyRecipeType subType = EnumAssemblyRecipeType.valueOf(GsonHelper.getAsString(json, "subType"));
         IAssemblyRecipe recipe = null;
@@ -65,7 +67,7 @@ public class AssemblyRecipeSerializer implements RecipeSerializer<IAssemblyRecip
 
     @Nullable
     @Override
-    public IAssemblyRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public IAssemblyRecipe fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         IAssemblyRecipe recipe = null;
         switch (buffer.readEnum(EnumAssemblyRecipeType.class)) {
             case BASIC:

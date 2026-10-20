@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.function.Function;
@@ -40,7 +40,7 @@ public class GuiScreenBuildCraft<C extends ContainerBC_Neptune<?>> extends Scree
     }
 
     /** Creates a new gui that will load its elements from the given json resource. */
-    public GuiScreenBuildCraft(ResourceLocation jsonGuiDef, Component component) {
+    public GuiScreenBuildCraft(Identifier jsonGuiDef, Component component) {
         super(component);
         BuildCraftJsonGui jsonGui = new BuildCraftJsonGui(this, jsonGuiDef);
         this.mainGui = jsonGui;
@@ -51,7 +51,7 @@ public class GuiScreenBuildCraft<C extends ContainerBC_Neptune<?>> extends Scree
      * Creates a new gui that will load its elements from the given json resource. Like
      * {@link #GuiScreenBuildCraft(IGuiArea, Component)} this will occupy only the given {@link IGuiArea}
      */
-    public GuiScreenBuildCraft(ResourceLocation jsonGuiDef, IGuiArea area, Component component) {
+    public GuiScreenBuildCraft(Identifier jsonGuiDef, IGuiArea area, Component component) {
         super(component);
         BuildCraftJsonGui jsonGui = new BuildCraftJsonGui(this, area, jsonGuiDef);
         this.mainGui = jsonGui;

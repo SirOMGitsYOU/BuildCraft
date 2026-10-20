@@ -5,40 +5,42 @@
  */
 
 package buildcraft.silicon.client.render;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.silicon.tile.TileProgrammingTable_Neptune;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.resources.Identifier;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderProgrammingTable implements BlockEntityRenderer<TileProgrammingTable_Neptune> {
     private final LazyLoadedValue<TextureAtlasSprite> glass_white = new LazyLoadedValue<>(() ->
-            Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation("block/white_stained_glass"))
+            Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.parse("block/white_stained_glass"))
     );
 
     public RenderProgrammingTable(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TileProgrammingTable_Neptune tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TileProgrammingTable_Neptune tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TileProgrammingTable_Neptune tile, float partial, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("table");
-        Minecraft.getInstance().getProfiler().push("programming");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("table");
+        net.minecraft.util.profiling.Profiler.get().push("programming");
 
         poseStack.pushPose();
-//        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(new ResourceLocation("blocks/glass_white"));
+//        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(Identifier.parse("blocks/glass_white"));
         TextureAtlasSprite sprite = glass_white.get();
 //        int combinedLight = tile.getWorld().getCombinedLight(tile.getPos(), 0);
         int light1 = combinedLight >> 16 & 65535;
@@ -60,8 +62,8 @@ public class RenderProgrammingTable implements BlockEntityRenderer<TileProgrammi
 
         poseStack.popPose();
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 }

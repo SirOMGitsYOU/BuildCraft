@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.boards;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.AIRobot;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 
-import javax.annotation.Nonnull;
+
 
 public class BoardRobotMiner extends BoardRobotGenericBreakBlock {
     // private static final int MAX_HARVEST_LEVEL = 3;
@@ -58,7 +59,7 @@ public class BoardRobotMiner extends BoardRobotGenericBreakBlock {
     }
 
     @Override
-    public boolean isExpectedTool(@Nonnull ItemStack stack) {
+    public boolean isExpectedTool(@NotNull ItemStack stack) {
         // return stack != null && stack.getItem().getToolClasses(stack).contains("pickaxe");
         return !stack.isEmpty() && stack.getItem() instanceof PickaxeItem;
     }

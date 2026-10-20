@@ -6,7 +6,7 @@
 
 package buildcraft.lib.client.reload;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class ReloadUtil {
      * @param set The set to look in
      * @param location The identifier to search for.
      * @return An {@link EnumSet} of all of the {@link SourceType}'s that area contained in the set. */
-    public static EnumSet<SourceType> getSourceTypesFor(Set<ReloadSource> set, ResourceLocation location) {
+    public static EnumSet<SourceType> getSourceTypesFor(Set<ReloadSource> set, Identifier location) {
         EnumSet<SourceType> enumSet = EnumSet.noneOf(SourceType.class);
         /* This constant is magic atm - no perf data to back it up (feel free to change this later if this doesn't is a
          * performance issue. */

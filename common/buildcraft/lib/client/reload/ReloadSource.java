@@ -6,29 +6,29 @@
 
 package buildcraft.lib.client.reload;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 
-/** A combination of a {@link ResourceLocation} (Which object changed) and {@link SourceType} (What about it
+/** A combination of a {@link Identifier} (Which object changed) and {@link SourceType} (What about it
  * changed). */
 public class ReloadSource {
-    public final ResourceLocation location;
+    public final Identifier location;
     public final SourceType type;
     private final int hash;
 
-    public ReloadSource(ResourceLocation location, SourceType type) {
+    public ReloadSource(Identifier location, SourceType type) {
         this.location = location;
         this.type = type;
         hash = Objects.hash(location, type);
     }
 
     public ReloadSource(String loc, SourceType type) {
-        this(new ResourceLocation(loc), type);
+        this(Identifier.fromNamespaceAndPath(loc), type);
     }
 
     public ReloadSource(String domain, String path, SourceType type) {
-        this(new ResourceLocation(domain, path), type);
+        this(Identifier.fromNamespaceAndPath(domain, path), type);
     }
 
     @Override

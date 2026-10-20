@@ -34,10 +34,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
 import java.util.*;
@@ -51,7 +50,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
 
     @Override
     public boolean requestPipeExtension(Level world, BlockPos pos, Direction dir, IStripesActivator stripes, ItemStack stack) {
-        if (world.isClientSide || stack.isEmpty() || !(stack.getItem() instanceof IItemPipe)) {
+        if (world.isClientSide() || stack.isEmpty() || !(stack.getItem() instanceof IItemPipe)) {
             return false;
         }
 
@@ -98,7 +97,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
 
             // check other directions
             List<Direction> possible = new ArrayList<>();
-            for (Direction facing : Direction.VALUES) {
+            for (Direction facing : Direction.values()) {
                 if (facing.getAxis() != r.dir.getAxis()) {
                     if (isValidRetractionPath(w, r, facing)) {
                         possible.add(facing);
@@ -110,7 +109,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
                 r.stripes.sendItem(r.stack.copy(), r.dir);
                 return;
             }
-//            retractDir = possible.get(MathHelper.getInt(w.random, 0, possible.size() - 1));
+//            retractDir = possible.get(MathHelper.getIntOr(w.random, 0, possible.size(, 0) - 1));
             retractDir = possible.get(Mth.nextInt(w.random, 0, possible.size() - 1));
         }
         BlockPos p = r.pos.relative(retractDir);
@@ -380,7 +379,7 @@ public enum PipeExtensionManager implements IPipeExtensionManager {
         IPipe pipe = CapUtil.getCapability(tile, PipeApi.CAP_PIPE, null).orElse(null);
         if (pipe != null) {
             boolean connected = false;
-            for (Direction facing : Direction.VALUES) {
+            for (Direction facing : Direction.values()) {
                 if (pipe.getConnectedType(facing) == IPipe.ConnectedType.TILE) {
                     return false;
                 }

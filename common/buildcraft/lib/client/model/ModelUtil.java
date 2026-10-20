@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.phys.AABB;
 import org.joml.Vector3f;
 

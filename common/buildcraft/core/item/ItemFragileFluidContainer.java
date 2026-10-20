@@ -1,5 +1,7 @@
 package buildcraft.core.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.items.IItemFluidShard;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.fluid.BCFluidAttributes;
@@ -26,8 +28,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 public class ItemFragileFluidContainer extends ItemBC_Neptune implements IItemFluidShard {
@@ -139,10 +141,10 @@ public class ItemFragileFluidContainer extends ItemBC_Neptune implements IItemFl
 
     public class FragileFluidHandler implements IFluidHandlerItem, ICapabilityProvider {
 
-        @Nonnull
+        @NotNull
         private ItemStack container;
 
-        public FragileFluidHandler(@Nonnull ItemStack container) {
+        public FragileFluidHandler(@NotNull ItemStack container) {
             this.container = container;
         }
 
@@ -153,7 +155,7 @@ public class ItemFragileFluidContainer extends ItemBC_Neptune implements IItemFl
 
         @Override
 //        public <T> T getCapability(Capability<T> capability, Direction facing)
-        public <T> LazyOptional<T> getCapability(@Nonnull final Capability<T> capability, final @Nullable Direction side) {
+        public <T> LazyOptional<T> getCapability(@NotNull final Capability<T> capability, final @Nullable Direction side) {
             if (capability == ForgeCapabilities.FLUID_HANDLER_ITEM
                     || capability == CapUtil.CAP_FLUIDS) {
                 return LazyOptional.of(() -> this).cast();

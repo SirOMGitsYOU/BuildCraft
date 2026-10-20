@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.ai;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IInvSlot;
 import buildcraft.api.core.IStackFilter;
@@ -20,7 +21,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 
 public class AIRobotLoad extends AIRobot {
 
@@ -59,7 +60,7 @@ public class AIRobotLoad extends AIRobot {
      * itemstack rather than loading it onto the robot.
      *
      * Only loads a single stack at once. */
-    @Nonnull
+    @NotNull
     public static ItemStack takeSingle(DockingStation station, IStackFilter filter, boolean doTake) {
         if (station == null) {
             // return null;

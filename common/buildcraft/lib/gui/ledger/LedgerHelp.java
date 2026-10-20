@@ -20,7 +20,7 @@ import buildcraft.lib.misc.GuiUtil;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.RenderUtil;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class LedgerHelp extends Ledger_Neptune {
         title = LocaleUtil.localize("gui.ledger.help");
         calculateMaxSize();
 
-        ResourceLocation id = new ResourceLocation("buildcraftlib:base");
+        Identifier id = Identifier.parse("buildcraftlib:base");
         setOpenProperty(GuiConfigManager.getOrAddBoolean(id, "ledger.help.is_open", false));
     }
 

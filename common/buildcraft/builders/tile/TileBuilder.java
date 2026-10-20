@@ -5,6 +5,9 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 package buildcraft.builders.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IPathProvider;
@@ -43,7 +46,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -60,10 +63,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,7 +79,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
     public static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("builder");
     public static final int NET_CAN_EXCAVATE = IDS.allocId("CAN_EXCAVATE");
     public static final int NET_SNAPSHOT_TYPE = IDS.allocId("SNAPSHOT_TYPE");
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftbuilders:paving_the_way");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftbuilders:paving_the_way");
 
     public final ItemHandlerSimple invSnapshot =
             itemManager
@@ -130,9 +133,9 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
     }
 
     @Override
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
-        // if (!level.isClientSide)
-        if (!level.isClientSide && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
+        // if (!level.isClientSide())
+        if (!level.isClientSide() && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
             if (handler == invSnapshot) {
                 currentBasePosIndex = 0;
                 snapshot = null;
@@ -312,7 +315,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -392,7 +395,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
         }
         basePoses = NBTUtilBC.readCompoundList(nbt.get("basePoses")).map(NbtUtils::readBlockPos)
                 .collect(Collectors.toList());
-        canExcavate = nbt.getBoolean("canExcavate");
+        canExcavate = nbt.getBooleanOr("canExcavate", false);
         rotation = NBTUtilBC.readEnum(nbt.get("rotation"), Rotation.class);
         // Calen: don't save/load currentBox/currentBasePosIndex/snapshotType/snapshot withNBT, or this will make the builder destroy the placed block and place again
         // Calen FIX: the items prepared to build will not disappear after tileentity reloaded in 1.18.2
@@ -446,7 +449,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
 //        return true;
 //    }
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
@@ -558,7 +561,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
         return 0;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getRequest(int slot) {
         if (snapshotType == EnumSnapshotType.TEMPLATE) {
@@ -574,7 +577,7 @@ public class TileBuilder extends TileBC_Neptune implements ITickable, IDebuggabl
         return StackUtil.EMPTY;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack offerItem(int slot, ItemStack stack) {
         return this.invResources.insert(stack, true, false);

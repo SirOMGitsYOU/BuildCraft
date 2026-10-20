@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.misc;
+import net.minecraft.util.profiling.Profiler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,7 +22,7 @@ public class GlUtil {
     private static ByteBuffer depthBuffer = null;
 
     public static void saveDepthBuffer() {
-        Minecraft.getInstance().getProfiler().push("Save depth buffer");
+        net.minecraft.util.profiling.Profiler.get().push("Save depth buffer");
         depthBuffer = BufferUtils.createByteBuffer(
 //            Minecraft.getInstance().displayWidth
                 Minecraft.getInstance().getWindow().getWidth()
@@ -40,11 +41,11 @@ public class GlUtil {
                 GL11.GL_FLOAT,
                 depthBuffer
         );
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     public static void restoreDepthBuffer() {
-        Minecraft.getInstance().getProfiler().push("Restore depth buffer");
+        net.minecraft.util.profiling.Profiler.get().push("Restore depth buffer");
         GL11.glColorMask(false, false, false, false);
         GL11.glRasterPos2i(0, 0);
         GL14.glWindowPos2i(0, 0);
@@ -59,6 +60,6 @@ public class GlUtil {
         );
         depthBuffer = null;
         GL11.glColorMask(true, true, true, true);
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 }

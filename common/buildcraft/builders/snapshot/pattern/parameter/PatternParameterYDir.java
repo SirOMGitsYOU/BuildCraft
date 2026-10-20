@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot.pattern.parameter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 public enum PatternParameterYDir implements IStatementParameter {
     UP(true),
@@ -34,7 +35,7 @@ public enum PatternParameterYDir implements IStatementParameter {
     }
 
     public static PatternParameterYDir readFromNbt(CompoundTag nbt) {
-        if (nbt.getBoolean("up")) {
+        if (nbt.getBooleanOr("up", false)) {
             return UP;
         }
         return DOWN;
@@ -50,7 +51,7 @@ public enum PatternParameterYDir implements IStatementParameter {
         return "buildcraft:fillerParameterYDir";
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

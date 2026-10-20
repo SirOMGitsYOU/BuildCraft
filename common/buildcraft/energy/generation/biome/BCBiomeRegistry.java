@@ -3,7 +3,7 @@ package buildcraft.energy.generation.biome;
 import buildcraft.energy.BCEnergy;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -17,8 +17,8 @@ public class BCBiomeRegistry {
 //    public static final RegistryObject<Biome> OIL_DESERT = BIOMES.register(BCWorldGenNames.BIOME_OIL_DESERT, () -> BCBiomes.makeOilDesertBiome());
 //    public static final RegistryObject<Biome> OIL_OCEAN = BIOMES.register(BCWorldGenNames.BIOME_OIL_OCEAN, () -> BCBiomes.makeOilOceanBiome());
 
-    public static final ResourceLocation RL_BIOME_OIL_DESERT = new ResourceLocation(BCEnergy.MODID, BIOME_OIL_DESERT);
-    public static final ResourceLocation RL_BIOME_OIL_OCEAN = new ResourceLocation(BCEnergy.MODID, BIOME_OIL_OCEAN);
+    public static final Identifier RL_BIOME_OIL_DESERT = Identifier.fromNamespaceAndPath(BCEnergy.MODID, BIOME_OIL_DESERT);
+    public static final Identifier RL_BIOME_OIL_OCEAN = Identifier.fromNamespaceAndPath(BCEnergy.MODID, BIOME_OIL_OCEAN);
     public static final ResourceKey<Biome> RESOURCE_KEY_BIOME_OIL_DESERT = ResourceKey.create(Registries.BIOME, RL_BIOME_OIL_DESERT);
     public static final ResourceKey<Biome> RESOURCE_KEY_BIOME_OIL_OCEAN = ResourceKey.create(Registries.BIOME, RL_BIOME_OIL_OCEAN);
 

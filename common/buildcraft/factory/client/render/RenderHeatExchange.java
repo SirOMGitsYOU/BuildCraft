@@ -1,4 +1,5 @@
 package buildcraft.factory.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.tile.TileHeatExchange;
@@ -84,7 +85,7 @@ public class RenderHeatExchange implements BlockEntityRenderer<TileHeatExchange>
             return;
         }
 
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("bc");
         profiler.push("heat_exchange");
 

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.silicon.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.BCItems;
 import buildcraft.api.facades.IFacadeItem;
@@ -26,14 +27,14 @@ import buildcraft.silicon.plug.FacadeStateManager;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +44,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipe implements IRecipeView
     public static final FacadeAssemblyRecipes INSTANCE = new FacadeAssemblyRecipes();
 
 //    static {
-//        INSTANCE.setRegistryName(new ResourceLocation("buildcrafttransport:facade_recipes"));
+//        INSTANCE.setRegistryName(Identifier.parse("buildcrafttransport:facade_recipes"));
 //    }
 
     private static final int TIME_GAP = 500;
@@ -51,7 +52,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipe implements IRecipeView
     private static final ChangingObject<Long> MJ_COSTS = new ChangingObject<>(new Long[] { MJ_COST });
 
     public FacadeAssemblyRecipes() {
-        name = new ResourceLocation("buildcrafttransport:facade_recipes");
+        name = Identifier.parse("buildcrafttransport:facade_recipes");
     }
 
     public static ItemStack createFacadeStack(FacadeBlockStateInfo info, boolean isHollow) {
@@ -136,7 +137,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipe implements IRecipeView
     }
 
     @Override
-    public Set<IngredientStack> getInputsFor(@Nonnull ItemStack output) {
+    public Set<IngredientStack> getInputsFor(@NotNull ItemStack output) {
         FacadePhasedState state = ItemPluggableFacade.getStates(output).getCurrentStateForStack();
         ItemStack stateRequirement = state.stateInfo.requiredStack;
         IngredientStack ingredientType = new IngredientStack(Ingredient.of(stateRequirement));
@@ -146,7 +147,7 @@ public class FacadeAssemblyRecipes extends AssemblyRecipe implements IRecipeView
     }
 
     @Override
-    public long getRequiredMicroJoulesFor(@Nonnull ItemStack output) {
+    public long getRequiredMicroJoulesFor(@NotNull ItemStack output) {
         return MJ_COST;
     }
 

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.lib.misc.CapUtil;
@@ -20,7 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -114,7 +115,7 @@ public class ItemHandlerManager implements ICapabilityProvider, INBTSerializable
     }
 
 //    @Override
-//    public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
+//    public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
 //        if (capability == CapUtil.CAP_ITEMS) {
 //            Wrapper wrapper = wrappers.get(EnumPipePart.fromFacing(facing));
 //            return wrapper.combined != null;
@@ -123,7 +124,7 @@ public class ItemHandlerManager implements ICapabilityProvider, INBTSerializable
 //    }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (capability == CapUtil.CAP_ITEMS) {
             Wrapper wrapper = wrappers.get(EnumPipePart.fromFacing(facing));
             if (wrapper.combined != null) {

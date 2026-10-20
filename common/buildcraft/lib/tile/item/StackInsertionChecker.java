@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 @FunctionalInterface
 public interface StackInsertionChecker {
-    boolean canSet(int slot, @Nonnull ItemStack stack);
+    boolean canSet(int slot, @NotNull ItemStack stack);
 }

@@ -1,6 +1,6 @@
 package buildcraft.lib.misc.data;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,7 +10,7 @@ public class ProfilerBC {
 
     @OnlyIn(Dist.CLIENT)
     public static ProfilerBC getClient() {
-        return new ProfilerBC(Minecraft.getInstance().getProfiler());
+        return new ProfilerBC(Profiler.get());
     }
 
     private final ProfilerFiller profiler;

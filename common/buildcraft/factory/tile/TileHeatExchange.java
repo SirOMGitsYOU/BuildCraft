@@ -1,5 +1,7 @@
 package buildcraft.factory.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.blocks.ICustomRotationHandler;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
@@ -49,11 +51,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -88,7 +90,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 
         CompoundTag nbtSection = nbt.getCompound("section");
         if (!nbtSection.isEmpty()) {
-            if (nbtSection.getBoolean("start")) {
+            if (nbtSection.getBooleanOr("start", false)) {
                 section = new ExchangeSectionStart(this, nbtSection);
             } else {
                 section = new ExchangeSectionEnd(this, nbtSection);
@@ -111,7 +113,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
         if (checkNeighbours) {
             checkNeighbours = false;
             Deque<TileHeatExchange> exchangers = findAdjacentExchangers();
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 // Find the start + end sections and link them up
                 if (exchangers.size() > 2) {
                     TileHeatExchange start = exchangers.getFirst();
@@ -234,7 +236,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
                 readPayload(NET_ID_CHANGE_SECTION, buffer, side, ctx);
@@ -298,8 +300,8 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 
     @NotNull
     @Override
-//    public <T> T getCapability(@Nonnull Capability<T> capability, Direction facing)
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+//    public <T> T getCapability(@NotNull Capability<T> capability, Direction facing)
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         LazyOptional<T> ret = LazyOptional.empty();
         if (section != null) {
             ret = section.caps.getCapability(capability, facing);
@@ -533,7 +535,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
         }
 
         // void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-        public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+        public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
             if (side == NetworkDirection.PLAY_TO_CLIENT) {
                 if (id == NET_ID_CHANGE_SECTION) {
                     readPayload(NET_ID_TANK_IN, buffer, side, ctx);
@@ -613,8 +615,8 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 
         ExchangeSectionStart(TileHeatExchange tile, CompoundTag nbt) {
             super(tile, nbt);
-            inputCoolantAmountCharge = nbt.getInt("coolantCharge");
-            inputHeatantAmountCharge = nbt.getInt("heatantCharge");
+            inputCoolantAmountCharge = nbt.getIntOr("coolantCharge", 0);
+            inputHeatantAmountCharge = nbt.getIntOr("heatantCharge", 0);
         }
 
         @Override
@@ -630,7 +632,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
 
         @Override
 //        void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-        public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+        public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
             super.readPayload(id, buffer, side, ctx);
             if (side == NetworkDirection.PLAY_TO_CLIENT) {
                 if (id == NET_ID_CHANGE_SECTION) {
@@ -683,7 +685,7 @@ public class TileHeatExchange extends TileBC_Neptune implements ITickable, IDebu
             super.tick();
 
             updateProgress();
-            if (getTile().level.isClientSide) {
+            if (getTile().level.isClientSide()) {
                 spawnParticles();
                 return;
             }

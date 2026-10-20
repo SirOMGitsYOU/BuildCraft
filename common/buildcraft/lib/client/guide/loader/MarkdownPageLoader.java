@@ -13,7 +13,7 @@ import buildcraft.lib.client.guide.entry.PageEntry;
 import buildcraft.lib.client.guide.parts.GuidePageFactory;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +44,7 @@ public enum MarkdownPageLoader implements IPageLoaderText {
         }
         ItemStack stack = null;
 //        Item item = Item.getByNameOrId(args[0].trim());
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(args[0].trim()));
+        Item item = ForgeRegistries.ITEMS.getValue(Identifier.fromNamespaceAndPath(args[0].trim()));
         if (item != null) {
             stack = new ItemStack(item);
         } else {
@@ -101,7 +101,7 @@ public enum MarkdownPageLoader implements IPageLoaderText {
     }
 
     @Override
-    public GuidePageFactory loadPage(BufferedReader reader, ResourceLocation name, PageEntry<?> entry, ProfilerFiller prof)
+    public GuidePageFactory loadPage(BufferedReader reader, Identifier name, PageEntry<?> entry, ProfilerFiller prof)
             throws IOException {
         prof.push("md");
         StringBuilder replaced = new StringBuilder();

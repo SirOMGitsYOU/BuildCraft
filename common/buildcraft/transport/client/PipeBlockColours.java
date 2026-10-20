@@ -1,5 +1,7 @@
 package buildcraft.transport.client;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.transport.pluggable.PipePluggable;
 import buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.client.color.block.BlockColor;
@@ -9,7 +11,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+
 
 public enum PipeBlockColours implements BlockColor {
     INSTANCE;
@@ -21,7 +23,7 @@ public enum PipeBlockColours implements BlockColor {
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TilePipeHolder) {
                 TilePipeHolder tilePipeHolder = (TilePipeHolder) tile;
-                Direction side = Direction.from3DDataValue(tintIndex % Direction.VALUES.length);
+                Direction side = Direction.from3DDataValue(tintIndex % Direction.values().length);
                 PipePluggable pluggable = tilePipeHolder.getPluggable(side);
                 if (pluggable != null) {
                     return pluggable.getBlockColor(tintIndex / 6);

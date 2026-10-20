@@ -101,7 +101,7 @@ public abstract class BCCoreProxy {
 
         @Override
         public List<VolumeBox> getVolumeBoxes(Level world) {
-            return world.isClientSide ? ClientVolumeBoxes.INSTANCE.volumeBoxes : super.getVolumeBoxes(world);
+            return world.isClientSide() ? ClientVolumeBoxes.INSTANCE.volumeBoxes : super.getVolumeBoxes(world);
         }
     }
 }

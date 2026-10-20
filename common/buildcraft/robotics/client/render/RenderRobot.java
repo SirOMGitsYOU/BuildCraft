@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.client.render;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.robots.IRobotOverlayItem;
 import buildcraft.core.client.BuildCraftLaserManager;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
@@ -20,8 +22,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.SkullModelBase;
 import net.minecraft.client.model.geom.LayerDefinitions;
@@ -32,7 +33,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -41,7 +42,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +53,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nullable;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -61,10 +62,10 @@ import java.util.function.Function;
 /** All of this is getting a mega-rewrite for Neptune */
 // public class RenderRobot extends Render<EntityRobot>
 public class RenderRobot extends EntityRenderer<EntityRobot> {
-    // private static final ResourceLocation overlay_red = new ResourceLocation(DefaultProps.TEXTURE_PATH_ROBOTS + "/overlay_side.png");
-    private static final ResourceLocation overlay_red = new ResourceLocation("buildcraftrobotics:textures/entities" + "/overlay_side.png");
-    // private static final ResourceLocation overlay_cyan = new ResourceLocation(DefaultProps.TEXTURE_PATH_ROBOTS + "/overlay_bottom.png");
-    private static final ResourceLocation overlay_cyan = new ResourceLocation("buildcraftrobotics:textures/entities" + "/overlay_bottom.png");
+    // private static final Identifier overlay_red = Identifier.fromNamespaceAndPath(DefaultProps.TEXTURE_PATH_ROBOTS + "/overlay_side.png");
+    private static final Identifier overlay_red = Identifier.parse("buildcraftrobotics:textures/entities" + "/overlay_side.png");
+    // private static final Identifier overlay_cyan = Identifier.parse(DefaultProps.TEXTURE_PATH_ROBOTS + "/overlay_bottom.png");
+    private static final Identifier overlay_cyan = Identifier.parse("buildcraftrobotics:textures/entities" + "/overlay_bottom.png");
 
     // private final ItemEntity dummyEntityItem = new ItemEntity(null);
     // private final RenderEntityItem customRenderItem;
@@ -79,7 +80,7 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
     private ModelPart helmetBox;
     // Calen 1.18.2
     private final Map<SkullBlock.Type, SkullModelBase> skullModels;
-    private static final Function<ResourceLocation, RenderType> ENTITY_CUTOUT_NO_CULL_NO_DEPTH = Util.memoize((p_173233_) -> {
+    private static final Function<Identifier, RenderType> ENTITY_CUTOUT_NO_CULL_NO_DEPTH = Util.memoize((p_173233_) -> {
         RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder().setShaderState(RenderType.RENDERTYPE_ENTITY_CUTOUT_NO_CULL_SHADER).setTextureState(new RenderStateShard.TextureStateShard(p_173233_, false, false)).setDepthTestState(RenderStateShard.NO_DEPTH_TEST).setTransparencyState(RenderStateShard.NO_TRANSPARENCY).setCullState(RenderStateShard.NO_CULL).setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY).createCompositeState(true);
         return RenderType.create("entity_cutout_no_cull", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, false, rendertype$compositestate);
     });
@@ -305,8 +306,8 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
     }
 
     @Override
-    // protected ResourceLocation getEntityTexture(EntityRobot entity)
-    public ResourceLocation getTextureLocation(EntityRobot entity) {
+    // protected Identifier getEntityTexture(EntityRobot entity)
+    public Identifier getTextureLocation(EntityRobot entity) {
         return entity.getTexture();
     }
 
@@ -380,8 +381,8 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
             //     GL11.glColor3ub((byte) (color >> 16), (byte) ((color >> 8) & 255), (byte) (color & 255));
             // }
 
-            // textureManager.bindTexture(new ResourceLocation(ForgeHooksClient.getArmorTexture(entity, wearable, "", 0, "")));
-            ResourceLocation armorTexture = new ResourceLocation(ForgeHooksClient.getArmorTexture(entity, wearable, "", EquipmentSlot.HEAD, ""));
+            // textureManager.bindTexture(Identifier.fromNamespaceAndPath(ForgeHooksClient.getArmorTexture(entity, wearable, "", 0, "")));
+            Identifier armorTexture = Identifier.fromNamespaceAndPath(ForgeHooksClient.getArmorTexture(entity, wearable, "", EquipmentSlot.HEAD, ""));
             // ModelBiped armorModel = ForgeHooksClient.getArmorModel(entity, wearable, 0, null);
             Model armorModel = ForgeHooksClient.getArmorModel(entity, wearable, EquipmentSlot.HEAD, null);
             poseStack.pushPose();
@@ -409,7 +410,7 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
                 // helmetBox.render(1 / 16F);
 
                 // if (color != 16777215) {
-                //     this.bindTexture(new ResourceLocation(ForgeHooksClient.getArmorTexture(entity, wearable, "", 0, "overlay")));
+                //     this.bindTexture(Identifier.fromNamespaceAndPath(ForgeHooksClient.getArmorTexture(entity, wearable, "", 0, "overlay")));
                 //     helmetBox.render(1 / 16F);
                 //     GL11.glPopAttrib();
                 // }
@@ -447,7 +448,7 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
         if (wearable.hasTag()) {
             CompoundTag nbt = wearable.getTag();
             if (nbt.contains("Name")) {// FIXME: Come back to this!
-                // gameProfile = gameProfileCache.get(nbt.getString("Name"));
+                // gameProfile = gameProfileCache.get(nbt.getStringOr("Name", ""));
             } else if (nbt.contains("SkullOwner", Tag.TAG_COMPOUND)) {
                 gameProfile = NbtUtils.readGameProfile(nbt.getCompound("SkullOwner"));
                 // nbt.putString("Name", gameProfile.getName());
@@ -475,7 +476,7 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
     }
 
     // private void doRenderRobot(float factor, TextureManager texManager, float storagePercent, boolean isAsleep)
-    private void doRenderRobot(float factor, ResourceLocation texture, float storagePercent, boolean isAsleep, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    private void doRenderRobot(float factor, Identifier texture, float storagePercent, boolean isAsleep, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         boolean glasses = isWearingGlasses();
         // if (glasses) {
         //     GlStateManager.color(1 - storagePercent, storagePercent, 0);
@@ -541,19 +542,19 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
     }
 
     // Calen 1.18.2 from HumanoidArmorLayer
-    private void renderModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, boolean foil, Model model, float r, float g, float b, ResourceLocation armorResource) {
+    private void renderModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, boolean foil, Model model, float r, float g, float b, Identifier armorResource) {
         VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(armorResource), false, foil);
         model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
     }
 
-    private void renderModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, boolean foil, ModelPart model, float r, float g, float b, ResourceLocation armorResource) {
+    private void renderModel(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, boolean foil, ModelPart model, float r, float g, float b, Identifier armorResource) {
         VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(armorResource), false, foil);
         model.render(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, 1.0F);
     }
 
-    private static final Map<String, ResourceLocation> ARMOR_LOCATION_CACHE = Maps.newHashMap();
+    private static final Map<String, Identifier> ARMOR_LOCATION_CACHE = Maps.newHashMap();
 
-    public ResourceLocation getArmorResource(Entity entity, ItemStack stack, EquipmentSlot slot, @Nullable String type) {
+    public Identifier getArmorResource(Entity entity, ItemStack stack, EquipmentSlot slot, @Nullable String type) {
         ArmorItem item = (ArmorItem) stack.getItem();
         String texture = item.getMaterial().getName();
         String domain = "minecraft";
@@ -565,13 +566,13 @@ public class RenderRobot extends EntityRenderer<EntityRobot> {
         String s1 = String.format(Locale.ROOT, "%s:textures/models/armor/%s_layer_%d%s.png", domain, texture, 1, type == null ? "" : String.format(Locale.ROOT, "_%s", type));
 
         s1 = ForgeHooksClient.getArmorTexture(entity, stack, s1, slot, type);
-        ResourceLocation resourcelocation = ARMOR_LOCATION_CACHE.get(s1);
+        Identifier Identifier = ARMOR_LOCATION_CACHE.get(s1);
 
-        if (resourcelocation == null) {
-            resourcelocation = new ResourceLocation(s1);
-            ARMOR_LOCATION_CACHE.put(s1, resourcelocation);
+        if (Identifier == null) {
+            Identifier = Identifier.fromNamespaceAndPath(s1);
+            ARMOR_LOCATION_CACHE.put(s1, Identifier);
         }
 
-        return resourcelocation;
+        return Identifier;
     }
 }

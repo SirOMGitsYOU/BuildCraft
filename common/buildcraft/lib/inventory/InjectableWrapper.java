@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
@@ -14,7 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class InjectableWrapper implements IItemTransactor {
     private final IInjectable injectable;
@@ -25,9 +26,9 @@ public class InjectableWrapper implements IItemTransactor {
         this.from = facing;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack insert(@Nonnull ItemStack stack, boolean allOrNone, boolean simulate) {
+    public ItemStack insert(@NotNull ItemStack stack, boolean allOrNone, boolean simulate) {
         if (allOrNone) {
             stack = stack.copy();
             ItemStack leftOver = injectable.injectItem(stack, false, from, null, 0);
@@ -53,7 +54,7 @@ public class InjectableWrapper implements IItemTransactor {
         return ItemTransactorHelper.insertAllBypass(this, stacks, simulate);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack extract(IStackFilter filter, int min, int max, boolean simulate) {
         return StackUtil.EMPTY;

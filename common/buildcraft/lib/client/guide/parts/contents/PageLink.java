@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.parts.contents;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.PageLine;
 import buildcraft.lib.client.guide.parts.GuidePageFactory;
@@ -7,7 +9,7 @@ import buildcraft.lib.client.guide.parts.GuidePart;
 import buildcraft.lib.client.guide.parts.GuideText;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;

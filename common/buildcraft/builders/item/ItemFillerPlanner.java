@@ -6,6 +6,8 @@
 
 package buildcraft.builders.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.builders.BCBuildersMenuTypes;
 import buildcraft.builders.addon.AddonFillerPlanner;
 import buildcraft.core.list.ContainerList;
@@ -17,7 +19,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
-import javax.annotation.Nullable;
+
 
 //public class ItemFillerPlanner extends ItemAddon
 public class ItemFillerPlanner extends ItemAddon implements MenuProvider {

@@ -18,7 +18,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -78,7 +78,7 @@ public class BCLibConfig {
      * than "60mB/t") */
     public static boolean useLongLocalizedName = false;
 
-    /** If true then {@link AtlasSpriteVariants#createForConfig(ResourceLocation)} will retun
+    /** If true then {@link AtlasSpriteVariants#createForConfig(Identifier)} will retun
      * {@link AtlasSpriteSwappable}, allowing for instant reloads when switching between colourblind modes and other
      * changable things. If false it will return a normal {@link TextureAtlasSprite}. Disabling this might help if you
      * get sprite issues with mods like optifine. */

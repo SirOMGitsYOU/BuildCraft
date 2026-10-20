@@ -6,6 +6,8 @@
 
 package buildcraft.silicon.plug;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.gates.IGate;
 import buildcraft.api.gates.IGateProvider;
 import buildcraft.api.net.IMessage;
@@ -37,14 +39,13 @@ import buildcraft.silicon.gate.*;
 import buildcraft.silicon.item.ItemGateCopier;
 import buildcraft.silicon.item.ItemPluggableGate;
 import buildcraft.transport.pipe.PluggableHolder;
-import net.minecraft.Util;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.Util;import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -56,10 +57,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -76,11 +77,11 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
 
     private static final VoxelShape[] BOXES = new VoxelShape[6];
 
-    private static final ResourceLocation ADVANCEMENT_PLACE_GATE
-            = new ResourceLocation("buildcrafttransport:pipe_logic");
+    private static final Identifier ADVANCEMENT_PLACE_GATE
+            = Identifier.parse("buildcrafttransport:pipe_logic");
 
-    private static final ResourceLocation ADVANCEMENT_PLACE_ADV_GATE
-            = new ResourceLocation("buildcrafttransport:extended_logic");
+    private static final Identifier ADVANCEMENT_PLACE_ADV_GATE
+            = Identifier.parse("buildcrafttransport:extended_logic");
 
     public final GateLogic logic;
 
@@ -133,7 +134,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
         VariableInfoObject<Direction> infoSide = MODEL_VAR_INFO.createInfoObject(MODEL_SIDE);
         infoSide.cacheType = CacheType.ALWAYS;
         infoSide.setIsComplete = true;
-        Collections.addAll(infoSide.possibleValues, Direction.VALUES);
+        Collections.addAll(infoSide.possibleValues, Direction.values());
 
         VariableInfoBoolean infoIsOn = MODEL_VAR_INFO.createInfoBoolean(MODEL_IS_ON);
         infoIsOn.cacheType = CacheType.ALWAYS;
@@ -203,7 +204,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
 
     @Override
 //    public void readPayload(PacketBuffer b, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(FriendlyByteBuf b, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf b, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         logic.readPayload(PacketBufferBC.asPacketBufferBc(b), side, ctx);
     }
 
@@ -237,7 +238,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
     @Override
     public void onPlacedBy(Player player) {
         super.onPlacedBy(player);
-        if (!holder.getPipeWorld().isClientSide) {
+        if (!holder.getPipeWorld().isClientSide()) {
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_PLACE_GATE);
             if (logic.variant.numActionArgs >= 1) {
                 AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_PLACE_ADV_GATE);
@@ -247,7 +248,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
 
     @Override
     public boolean onPluggableActivate(Player player, HitResult trace, float hitX, float hitY, float hitZ) {
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             if (interactWithCopier(player, player.getMainHandItem())) {
                 return true;
             }
@@ -311,7 +312,7 @@ public class PluggableGate extends PipePluggable implements IWireEmitter, IBCTil
     @Override
     public void onTick() {
         logic.onTick();
-        if (holder.getPipeWorld().isClientSide) {
+        if (holder.getPipeWorld().isClientSide()) {
             clientModelData.tick();
         }
     }

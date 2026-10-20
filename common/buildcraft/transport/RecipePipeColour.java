@@ -6,11 +6,13 @@
 
 package buildcraft.transport;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.recipe.ChangingItemStack;
 import buildcraft.lib.recipe.IRecipeViewable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -18,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+
 
 //TODO: convert to factory if needed, currently not used
 public class RecipePipeColour implements Recipe<Container>, IRecipeViewable {
@@ -74,7 +76,7 @@ public class RecipePipeColour implements Recipe<Container>, IRecipeViewable {
 
     @Nullable
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         throw new AbstractMethodError("Implement this!");
     }
 

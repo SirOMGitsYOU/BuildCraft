@@ -24,7 +24,7 @@ import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,11 +39,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -51,9 +51,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     public static final IdAllocator IDS = TileBC_Neptune.IDS.makeChild("tank");
     public static final int NET_FLUID_DELTA = IDS.allocId("FLUID_DELTA");
 
-    private static final ResourceLocation ADVANCEMENT_STORE_FLUIDS = new ResourceLocation(
-            "buildcraftfactory:fluid_storage"
-    );
+    private static final Identifier ADVANCEMENT_STORE_FLUIDS = Identifier.parse("buildcraftfactory:fluid_storage");
 
     private static boolean isPlayerInteracting = false;
 
@@ -97,7 +95,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         ITickable.super.update();
         smoothedTank.tick(level);
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             int compLevel = getComparatorLevel();
             if (compLevel != lastComparatorLevel) {
                 lastComparatorLevel = compLevel;
@@ -112,7 +110,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     @Override
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
         super.onPlacedBy(placer, stack);
-        if (!placer.level().isClientSide) {
+        if (!placer.level().isClientSide()) {
             isPlayerInteracting = true;
             balanceTankFluids();
             isPlayerInteracting = false;
@@ -162,11 +160,11 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         isPlayerInteracting = true;
         InteractionResult didChange = FluidUtilBC.onTankActivated(player, getBlockPos(), hand, this);
         isPlayerInteracting = false;
-        if (didChange == InteractionResult.SUCCESS && !player.level().isClientSide && amountBefore < tank.getFluidAmount()) {
+        if (didChange == InteractionResult.SUCCESS && !player.level().isClientSide() && amountBefore < tank.getFluidAmount()) {
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_STORE_FLUIDS);
         }
         if (didChange != InteractionResult.SUCCESS) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 // BCFactoryGuis.TANK.openGUI(player, pos);
                 MessageUtil.serverOpenTileGui(player, this);
             }
@@ -191,7 +189,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -400,13 +398,13 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
         return filled;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FluidStack drain(int maxDrain, FluidAction doDrain) {
         return drain((fluid) -> true, maxDrain, doDrain);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FluidStack drain(FluidStack resource, FluidAction doDrain) {
 //        if (resource == null)
@@ -419,7 +417,7 @@ public class TileTank extends TileBC_Neptune implements IDebuggable, IFluidHandl
 
     // IFluidHandlerAdv
 
-    @Nonnull
+    @NotNull
     @Override
     public FluidStack drain(IFluidFilter filter, int maxDrain, FluidAction doDrain) {
         if (maxDrain <= 0) {

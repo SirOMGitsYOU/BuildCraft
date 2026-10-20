@@ -17,7 +17,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot.pattern.parameter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -18,7 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.Locale;
 
 public enum PatternParameterAxis implements IStatementParameter {
@@ -64,7 +65,7 @@ public enum PatternParameterAxis implements IStatementParameter {
         return BCBuildersSprites.PARAM_AXIS.get(axis);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

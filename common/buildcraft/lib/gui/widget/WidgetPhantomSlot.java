@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.gui.widget;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.net.IMessage;
@@ -21,9 +22,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class WidgetPhantomSlot extends Widget_Neptune<ContainerBC_Neptune> {
     private static final byte CLICK_FLAG_SINGLE = 2;
     private static final byte CLICK_FLAG_CLONE = 4;
 
-    @Nonnull
+    @NotNull
     private ItemStack stack = StackUtil.EMPTY;
 
     public WidgetPhantomSlot(ContainerBC_Neptune container) {
@@ -45,7 +46,7 @@ public class WidgetPhantomSlot extends Widget_Neptune<ContainerBC_Neptune> {
     }
 
     @Override
-    public IMessage handleWidgetDataServer(NetworkEvent.Context ctx, PacketBufferBC buffer) throws IOException {
+    public IMessage handleWidgetDataServer(CustomPayloadEvent.Context ctx, PacketBufferBC buffer) throws IOException {
         byte id = buffer.readByte();
         if (id == NET_CLIENT_TO_SERVER_CLICK) {
             byte flags = buffer.readByte();
@@ -88,7 +89,7 @@ public class WidgetPhantomSlot extends Widget_Neptune<ContainerBC_Neptune> {
     }
 
     @Override
-    public IMessage handleWidgetDataClient(NetworkEvent.Context ctx, PacketBufferBC buffer) throws IOException {
+    public IMessage handleWidgetDataClient(CustomPayloadEvent.Context ctx, PacketBufferBC buffer) throws IOException {
         byte id = buffer.readByte();
         if (id == NET_SERVER_TO_CLIENT_ITEM) {
             stack = StackUtil.asNonNull(buffer.readItem());
@@ -101,18 +102,18 @@ public class WidgetPhantomSlot extends Widget_Neptune<ContainerBC_Neptune> {
         return stack.getMaxStackSize();
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getStack() {
         return stack;
     }
 
-    public final void setStack(@Nonnull ItemStack stack, boolean tellClient) {
+    public final void setStack(@NotNull ItemStack stack, boolean tellClient) {
         this.stack = StackUtil.asNonNull(stack);
         int max = getMaxStackSize(stack);
         if (stack.getCount() > max) {
             this.stack.setCount(max);
         }
-        if (tellClient && !container.player.level().isClientSide) {
+        if (tellClient && !container.player.level().isClientSide()) {
             sendWidgetData(buffer ->
             {
                 buffer.writeByte(NET_SERVER_TO_CLIENT_ITEM);
@@ -159,7 +160,7 @@ public class WidgetPhantomSlot extends Widget_Neptune<ContainerBC_Neptune> {
             return true;
         }
 
-        @Nonnull
+        @NotNull
         public ItemStack getStack() {
             return WidgetPhantomSlot.this.getStack();
         }

@@ -1,5 +1,7 @@
 package buildcraft.lib.script;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.BCLibProxy;
@@ -12,10 +14,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.fml.ModList;
 
-import javax.annotation.Nullable;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,7 +68,7 @@ public class SimpleScript {
             if (json == null) {
                 json = script.loadJson(name);
             }
-            ResourceLocation id = new ResourceLocation(script.domain, name);
+            Identifier id = Identifier.fromNamespaceAndPath(script.domain, name);
             return ImmutableList.of(new ScriptActionAdd(id, json));
         });
         functions.put("remove", script ->
@@ -94,7 +96,7 @@ public class SimpleScript {
             if (json == null) {
                 json = script.loadJson(toAdd);
             }
-            ResourceLocation id = new ResourceLocation(script.domain, toAdd);
+            Identifier id = Identifier.fromNamespaceAndPath(script.domain, toAdd);
             return ImmutableList.of(new ScriptActionReplace(toRemove, id, json, false));
         });
         functions.put("modify", script ->
@@ -113,7 +115,7 @@ public class SimpleScript {
             if (json == null) {
                 json = script.loadJson(toAdd);
             }
-            ResourceLocation id = new ResourceLocation(script.domain, toAdd);
+            Identifier id = Identifier.fromNamespaceAndPath(script.domain, toAdd);
             return ImmutableList.of(new ScriptActionReplace(toRemove, id, json, true));
         });
     }
@@ -1002,18 +1004,18 @@ public class SimpleScript {
     }
 
     public static class ScriptActionRemove extends ScriptAction {
-        public final ResourceLocation name;
+        public final Identifier name;
 
         public ScriptActionRemove(String name) {
-            this.name = new ResourceLocation(name);
+            this.name = Identifier.fromNamespaceAndPath(name);
         }
     }
 
     public static class ScriptActionAdd extends ScriptAction {
-        public final ResourceLocation name;
+        public final Identifier name;
         public final JsonObject json;
 
-        public ScriptActionAdd(ResourceLocation name, JsonObject json) {
+        public ScriptActionAdd(Identifier name, JsonObject json) {
             this.name = name;
             this.json = json;
         }
@@ -1025,12 +1027,12 @@ public class SimpleScript {
     }
 
     public static class ScriptActionReplace extends ScriptAction {
-        public final ResourceLocation toReplace, name;
+        public final Identifier toReplace, name;
         public final boolean inheritTags;
         public final JsonObject json;
 
-        public ScriptActionReplace(String toReplace, ResourceLocation name, JsonObject json, boolean inheritTags) {
-            this.toReplace = new ResourceLocation(toReplace);
+        public ScriptActionReplace(String toReplace, Identifier name, JsonObject json, boolean inheritTags) {
+            this.toReplace = Identifier.fromNamespaceAndPath(toReplace);
             this.name = name;
             this.json = json;
             this.inheritTags = inheritTags;

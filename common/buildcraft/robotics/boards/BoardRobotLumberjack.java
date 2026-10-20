@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.boards;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
@@ -13,7 +14,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
+
 
 public class BoardRobotLumberjack extends BoardRobotGenericBreakBlock {
 
@@ -31,7 +32,7 @@ public class BoardRobotLumberjack extends BoardRobotGenericBreakBlock {
     }
 
     @Override
-    public boolean isExpectedTool(@Nonnull ItemStack stack) {
+    public boolean isExpectedTool(@NotNull ItemStack stack) {
         // return stack != null && stack.getItem().getToolClasses(stack).contains("axe");
         return !stack.isEmpty() && stack.getItem() instanceof AxeItem;
     }

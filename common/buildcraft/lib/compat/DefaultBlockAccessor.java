@@ -1,5 +1,7 @@
 package buildcraft.lib.compat;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.misc.ChunkUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -9,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunk.EntityCreationType;
 
-import javax.annotation.Nullable;
+
 
 public enum DefaultBlockAccessor implements ISoftBlockAccessor {
     DIRECT(true),

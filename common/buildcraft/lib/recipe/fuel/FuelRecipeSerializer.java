@@ -1,15 +1,17 @@
 package buildcraft.lib.recipe.fuel;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.fuels.IFuel;
 import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 
 public class FuelRecipeSerializer implements RecipeSerializer<IFuel> {
     public static final FuelRecipeSerializer INSTANCE;
@@ -19,7 +21,7 @@ public class FuelRecipeSerializer implements RecipeSerializer<IFuel> {
     }
 
     @Override
-    public FuelRegistry.Fuel fromJson(ResourceLocation recipeId, JsonObject json) {
+    public FuelRegistry.Fuel fromJson(Identifier recipeId, JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
         FluidStack fluid = JsonUtil.deSerializeFluidStack(json.getAsJsonObject("fluid"));
         long powerPerCycle = json.get("powerPerCycle").getAsLong();
@@ -46,7 +48,7 @@ public class FuelRecipeSerializer implements RecipeSerializer<IFuel> {
 
     @Nullable
     @Override
-    public IFuel fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public IFuel fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         FluidStack fluid = buffer.readFluidStack();
         long powerPerCycle = buffer.readLong();
         int totalBurningTime = buffer.readInt();

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.schematics.ISchematicEntity;
@@ -13,9 +14,9 @@ import buildcraft.api.schematics.SchematicEntityFactory;
 import buildcraft.api.schematics.SchematicEntityFactoryRegistry;
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
-import javax.annotation.Nonnull;
+
 
 public class SchematicEntityManager {
     @SuppressWarnings("WeakerAccess")
@@ -38,7 +39,7 @@ public class SchematicEntityManager {
                 .get();
     }
 
-    @Nonnull
+    @NotNull
     public static <S extends ISchematicEntity> CompoundTag writeToNBT(S schematicEntity) {
         CompoundTag schematicEntityTag = new CompoundTag();
         schematicEntityTag.putString(
@@ -52,9 +53,9 @@ public class SchematicEntityManager {
         return schematicEntityTag;
     }
 
-    @Nonnull
+    @NotNull
     public static ISchematicEntity readFromNBT(CompoundTag schematicEntityTag) throws InvalidInputDataException {
-        ResourceLocation name = new ResourceLocation(schematicEntityTag.getString("name"));
+        Identifier name = Identifier.fromNamespaceAndPath(schematicEntityTag.getStringOr("name", ""));
         SchematicEntityFactory<?> factory = SchematicEntityFactoryRegistry.getFactoryByName(name);
         if (factory == null) {
             throw new InvalidInputDataException("Unknown schematic type " + name);

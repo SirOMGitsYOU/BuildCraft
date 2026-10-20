@@ -1,4 +1,5 @@
 package buildcraft.robotics.plug;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjReadable;
@@ -29,7 +30,7 @@ import buildcraft.robotics.BCRoboticsStatements;
 import buildcraft.robotics.client.model.key.KeyPlugRobotStation;
 import buildcraft.robotics.entity.EntityRobot;
 import buildcraft.robotics.pipe.DockingStationPipe;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -45,9 +46,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -159,7 +160,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
 
     @Override
     public void onTick() {
-        if (holder.getPipeWorld().isClientSide) {
+        if (holder.getPipeWorld().isClientSide()) {
             clientModelData.tick();
         }
     }
@@ -178,7 +179,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
     @Override
     // public void invalidate()
     public void onRemove() {
-        if (station != null && station.getPipe() != null && !station.getPipe().getPipeWorld().isClientSide) {
+        if (station != null && station.getPipe() != null && !station.getPipe().getPipeWorld().isClientSide()) {
             RobotManager.registryProvider.getRegistry(station.world).removeStation(station);
             isValid = false;
         }
@@ -189,7 +190,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
     public void validate() {
         IPipeHolder pipe = this.holder;
         Direction direction = this.side;
-        if (!isValid && !pipe.getPipeWorld().isClientSide) {
+        if (!isValid && !pipe.getPipeWorld().isClientSide()) {
             station = (DockingStationPipe) RobotManager.registryProvider.getRegistry(pipe.getPipeWorld()).getStation(((BlockEntity) pipe).getBlockPos(), direction);
 
             if (station == null) {
@@ -252,7 +253,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
 
     @Override
 //    public void readPayload(PacketBuffer buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             readData(buffer);
@@ -327,7 +328,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
 
     @Override
     // public boolean canConnectEnergy(Direction from)
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 
@@ -345,7 +346,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
     }
 
     @Override
-    public <T> T getInternalCapability(@Nonnull Capability<T> cap) {
+    public <T> T getInternalCapability(@NotNull Capability<T> cap) {
         if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_READABLE) {
             return (T) this;
         }
@@ -353,7 +354,7 @@ public class PluggableRobotStation extends PipePluggable implements IMjReceiver,
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
         if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_READABLE) {
             return LazyOptional.of(() -> this).cast();
         }

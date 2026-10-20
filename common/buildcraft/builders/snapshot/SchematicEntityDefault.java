@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.schematics.ISchematicEntity;
@@ -17,7 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
@@ -28,7 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -42,8 +43,8 @@ public class SchematicEntityDefault implements ISchematicEntity {
     private Rotation entityRotation = Rotation.NONE;
 
     public static boolean predicate(SchematicEntityContext context) {
-//        ResourceLocation registryName = EntityList.getKey(context.entity);
-        ResourceLocation registryName = EntityUtil.getRegistryName(context.entity.getType());
+//        Identifier registryName = EntityList.getKey(context.entity);
+        Identifier registryName = EntityUtil.getRegistryName(context.entity.getType());
         return registryName != null &&
 //                RulesLoader.READ_DOMAINS.contains(registryName.getResourceDomain()) &&
                 RulesLoader.READ_DOMAINS.contains(registryName.getNamespace()) &&
@@ -79,12 +80,11 @@ public class SchematicEntityDefault implements ISchematicEntity {
         return pos;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ItemStack> computeRequiredItems() {
         Set<JsonRule> rules = RulesLoader.getRules(
-                new ResourceLocation(entityNbt.getString("id")),
-                entityNbt
+                Identifier.fromNamespaceAndPath(entityNbt.getStringOr("id", "")), entityNbt
         );
         if (rules.isEmpty()) {
             throw new IllegalArgumentException("Rules are empty");
@@ -98,12 +98,11 @@ public class SchematicEntityDefault implements ISchematicEntity {
                 .collect(Collectors.toList());
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<FluidStack> computeRequiredFluids() {
         Set<JsonRule> rules = RulesLoader.getRules(
-                new ResourceLocation(entityNbt.getString("id")),
-                entityNbt
+                Identifier.fromNamespaceAndPath(entityNbt.getStringOr("id", "")), entityNbt
         );
         return rules.stream()
                 .map(rule -> rule.requiredExtractors)
@@ -129,8 +128,7 @@ public class SchematicEntityDefault implements ISchematicEntity {
     @Override
     public Entity build(Level world, BlockPos basePos) {
         Set<JsonRule> rules = RulesLoader.getRules(
-                new ResourceLocation(entityNbt.getString("id")),
-                entityNbt
+                Identifier.fromNamespaceAndPath(entityNbt.getStringOr("id", "")), entityNbt
         );
         CompoundTag replaceNbt = rules.stream()
                 .map(rule -> rule.replaceNbt)

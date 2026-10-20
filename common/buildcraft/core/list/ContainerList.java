@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.list;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.lists.ListMatchHandler.Type;
 import buildcraft.core.BCCoreItems;
@@ -19,9 +20,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 
 public class ContainerList extends ContainerBC_Neptune<ItemList_BC8> {
@@ -83,7 +84,7 @@ public class ContainerList extends ContainerBC_Neptune<ItemList_BC8> {
         return !getListItemStack().isEmpty();
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getListItemStack() {
         ItemStack toTry = player.getMainHandItem();
         if (!toTry.isEmpty() && toTry.getItem() instanceof ItemList_BC8) {
@@ -97,7 +98,7 @@ public class ContainerList extends ContainerBC_Neptune<ItemList_BC8> {
         return StackUtil.EMPTY;
     }
 
-    void setStack(final int lineIndex, final int slotIndex, @Nonnull final ItemStack stack) {
+    void setStack(final int lineIndex, final int slotIndex, @NotNull final ItemStack stack) {
         lines[lineIndex].setStack(slotIndex, stack);
         ListHandler.saveLines(getListItemStack(), lines);
     }
@@ -105,7 +106,7 @@ public class ContainerList extends ContainerBC_Neptune<ItemList_BC8> {
     public void switchButton(final int lineIndex, final int button) {
         lines[lineIndex].toggleOption(button);
 
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             sendMessage(ID_BUTTON, (buffer) ->
             {
                 buffer.writeByte(lineIndex);
@@ -127,14 +128,14 @@ public class ContainerList extends ContainerBC_Neptune<ItemList_BC8> {
     public void setLabel(final String text) {
         BCCoreItems.list.get().setName(getListItemStack(), text);
 
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             sendMessage(ID_LABEL, (buffer) -> buffer.writeUtf(text));
         }
     }
 
     @Override
 //    public void readMessage(int id, PacketBufferBC buffer, Side side, MessageContext ctx) throws IOException
-    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readMessage(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_SERVER) {
             if (id == ID_BUTTON) {

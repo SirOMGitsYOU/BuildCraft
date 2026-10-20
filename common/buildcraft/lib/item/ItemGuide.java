@@ -6,6 +6,8 @@
 
 package buildcraft.lib.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.BCLibMenuTypes;
 import buildcraft.lib.container.ContainerGuide;
 import buildcraft.lib.guide.GuideBook;
@@ -17,10 +19,9 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -28,11 +29,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+
 
 public class ItemGuide extends ItemBC_Neptune implements MenuProvider {
     private static final String DEFAULT_BOOK = "buildcraftcore:main";
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftcore:guide");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftcore:guide");
     private static final String TAG_BOOK_NAME = "BookName";
 
     public ItemGuide(String idBC, Item.Properties properties) {
@@ -41,7 +42,7 @@ public class ItemGuide extends ItemBC_Neptune implements MenuProvider {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         AdvancementUtil.unlockAdvancement(player, ADVANCEMENT);
 //        player.openGui(BCLib.INSTANCE, 0, world, hand == EnumHand.MAIN_HAND ? 0 : 1, 0, 0);
         MessageUtil.serverOpenItemGui(player, this);
@@ -75,7 +76,7 @@ public class ItemGuide extends ItemBC_Neptune implements MenuProvider {
             // So that existing guide books continue to work
             return ItemGuide.DEFAULT_BOOK;
         }
-        return nbt.getString(TAG_BOOK_NAME);
+        return nbt.getStringOr(TAG_BOOK_NAME, "");
     }
 
     public static void setBookName(ItemStack stack, String book) {

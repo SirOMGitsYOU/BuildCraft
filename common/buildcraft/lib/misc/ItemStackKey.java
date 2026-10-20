@@ -5,18 +5,19 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class ItemStackKey {
     public static final ItemStackKey EMPTY = new ItemStackKey(StackUtil.EMPTY);
 
-    public final @Nonnull ItemStack baseStack;
+    public final @NotNull ItemStack baseStack;
     private final int hash;
 
-    public ItemStackKey(@Nonnull ItemStack stack) {
+    public ItemStackKey(@NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             baseStack = StackUtil.EMPTY;
             hash = 0;

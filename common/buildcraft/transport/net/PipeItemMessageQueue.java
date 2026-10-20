@@ -1,5 +1,7 @@
 package buildcraft.transport.net;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.net.MessageManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +11,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;

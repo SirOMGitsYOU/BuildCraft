@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.gui.slot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class SlotUntouchable extends SlotBase implements IPhantomSlot {
 
@@ -19,8 +20,8 @@ public class SlotUntouchable extends SlotBase implements IPhantomSlot {
     }
 
     @Override
-//    public boolean isItemValid(@Nonnull ItemStack itemstack)
-    public boolean mayPlace(@Nonnull ItemStack itemstack) {
+//    public boolean isItemValid(@NotNull ItemStack itemstack)
+    public boolean mayPlace(@NotNull ItemStack itemstack) {
         return false;
     }
 

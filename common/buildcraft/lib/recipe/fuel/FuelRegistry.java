@@ -9,7 +9,7 @@ package buildcraft.lib.recipe.fuel;
 import buildcraft.api.fuels.IFuel;
 import buildcraft.api.fuels.IFuelManager;
 import com.google.common.collect.Lists;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
@@ -34,14 +34,14 @@ public enum FuelRegistry implements IFuelManager {
 
     @Override
 //    public IFuel addFuel(FluidStack fluid, long powerPerCycle, int totalBurningTime)
-    public IFuel addUnregisteredFuel(ResourceLocation id, FluidStack fluid, long powerPerCycle, int totalBurningTime) {
+    public IFuel addUnregisteredFuel(Identifier id, FluidStack fluid, long powerPerCycle, int totalBurningTime) {
 //        return addFuel(new Fuel(fluid, powerPerCycle, totalBurningTime));
         return addUnregisteredFuel(new Fuel(id, fluid, powerPerCycle, totalBurningTime));
     }
 
     @Override
 //    public IDirtyFuel addDirtyFuel(FluidStack fuel, long powerPerCycle, int totalBurningTime, FluidStack residue)
-    public IDirtyFuel addUnregisteredDirtyFuel(ResourceLocation id, FluidStack fuel, long powerPerCycle, int totalBurningTime, FluidStack residue) {
+    public IDirtyFuel addUnregisteredDirtyFuel(Identifier id, FluidStack fuel, long powerPerCycle, int totalBurningTime, FluidStack residue) {
 //        return addFuel(new DirtyFuel(fuel, powerPerCycle, totalBurningTime, residue));
         return addUnregisteredFuel(new DirtyFuel(id, fuel, powerPerCycle, totalBurningTime, residue));
     }
@@ -74,14 +74,14 @@ public enum FuelRegistry implements IFuelManager {
     }
 
     public static class Fuel implements IFuel {
-        private final ResourceLocation id;
+        private final Identifier id;
 
         private final FluidStack fluid;
         private final long powerPerCycle;
         private final int totalBurningTime;
 
         // public Fuel(FluidStack fluid, long powerPerCycle, int totalBurningTime)
-        public Fuel(ResourceLocation id, FluidStack fluid, long powerPerCycle, int totalBurningTime) {
+        public Fuel(Identifier id, FluidStack fluid, long powerPerCycle, int totalBurningTime) {
             this.id = id;
             this.fluid = fluid;
             this.powerPerCycle = powerPerCycle;
@@ -104,7 +104,7 @@ public enum FuelRegistry implements IFuelManager {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return id;
         }
 
@@ -118,7 +118,7 @@ public enum FuelRegistry implements IFuelManager {
         private final FluidStack residue;
 
         // public DirtyFuel(FluidStack fluid, long powerPerCycle, int totalBurningTime, FluidStack residue)
-        public DirtyFuel(ResourceLocation id, FluidStack fluid, long powerPerCycle, int totalBurningTime, FluidStack residue) {
+        public DirtyFuel(Identifier id, FluidStack fluid, long powerPerCycle, int totalBurningTime, FluidStack residue) {
 //            super(fluid, powerPerCycle, totalBurningTime);
             super(id, fluid, powerPerCycle, totalBurningTime);
             this.residue = residue;

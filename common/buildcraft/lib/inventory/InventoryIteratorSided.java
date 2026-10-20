@@ -3,13 +3,14 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IInvSlot;
 import net.minecraft.core.Direction;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.Iterator;
 
 class InventoryIteratorSided implements Iterable<IInvSlot> {
@@ -27,7 +28,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
     @Override
     public Iterator<IInvSlot> iterator() {
         return new Iterator<IInvSlot>() {
-            @Nonnull
+            @NotNull
             int[] slots = inv.getSlotsForFace(side);
             int index = 0;
 
@@ -58,7 +59,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
             this.slot = slot;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public ItemStack getStackInSlot() {
             // return inv.getStackInSlot(slot);
@@ -66,7 +67,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
         }
 
         @Override
-        public void setStackInSlot(@Nonnull ItemStack stack) {
+        public void setStackInSlot(@NotNull ItemStack stack) {
             // inv.setInventorySlotContents(slot, stack);
             inv.setItem(slot, stack);
         }
@@ -89,7 +90,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
             return inv.canPlaceItem(slot, stack);
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public ItemStack decreaseStackInSlot(int amount) {
             // return inv.decrStackSize(slot, amount);

@@ -5,13 +5,14 @@
  */
 
 package buildcraft.builders;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.statements.*;
 import buildcraft.api.statements.containers.IFillerStatementContainer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 import java.util.Collections;
 
@@ -23,11 +24,11 @@ public enum BCBuildersActionProvider implements IActionProvider {
     }
 
     @Override
-    public void addInternalSidedActions(Collection<IActionInternalSided> actions, IStatementContainer container, @Nonnull Direction side) {
+    public void addInternalSidedActions(Collection<IActionInternalSided> actions, IStatementContainer container, @NotNull Direction side) {
     }
 
     @Override
-    public void addExternalActions(Collection<IActionExternal> res, @Nonnull Direction side, BlockEntity tile) {
+    public void addExternalActions(Collection<IActionExternal> res, @NotNull Direction side, BlockEntity tile) {
         if (tile instanceof IFillerStatementContainer) {
             Collections.addAll(res, BCBuildersStatements.PATTERNS);
         }

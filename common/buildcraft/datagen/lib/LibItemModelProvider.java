@@ -6,7 +6,7 @@ import buildcraft.lib.BCLibItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class LibItemModelProvider extends BCBaseItemModelGenerator {
     public LibItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {

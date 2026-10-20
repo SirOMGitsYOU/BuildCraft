@@ -5,6 +5,7 @@
  */
 
 package buildcraft.transport.pipe.behaviour;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IStackFilter;
@@ -30,9 +31,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -107,7 +108,7 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood {
     }
 
     @Override
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             for (SlotIndex index : SlotIndex.VALUES) {
@@ -150,7 +151,7 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood {
         return extracted;
     }
 
-    private boolean filterMatches(@Nonnull ItemStack stack) {
+    private boolean filterMatches(@NotNull ItemStack stack) {
         if (currentSlot == null) return false;
         ItemStack current = invFilters.getStackInSlot(currentSlot.ordinal());
         if (StackUtil.isMatchingItemOrList(current, stack)) {
@@ -162,7 +163,7 @@ public class PipeBehaviourEmzuli extends PipeBehaviourWood {
     @Override
     public void onTick() {
         super.onTick();
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             return;
         }
         for (SlotIndex index : SlotIndex.VALUES) {

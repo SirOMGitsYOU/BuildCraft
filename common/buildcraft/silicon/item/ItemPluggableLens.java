@@ -5,6 +5,7 @@
  */
 
 package buildcraft.silicon.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.transport.IItemPluggable;
 import buildcraft.api.transport.pipe.IFlowItems;
@@ -28,7 +29,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
+
 
 public class ItemPluggableLens extends ItemBC_Neptune implements IItemPluggable {
     public ItemPluggableLens(String idBC, Item.Properties properties) {
@@ -41,12 +42,12 @@ public class ItemPluggableLens extends ItemBC_Neptune implements IItemPluggable 
         return new LensData(stack);
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getStack(DyeColor colour, boolean isFilter) {
         return getStack(new LensData(colour, isFilter));
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getStack(LensData variant) {
         ItemStack stack = new ItemStack(this);
         variant.writeToStack(stack);
@@ -54,7 +55,7 @@ public class ItemPluggableLens extends ItemBC_Neptune implements IItemPluggable 
     }
 
     @Override
-    public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player,
+    public PipePluggable onPlace(@NotNull ItemStack stack, IPipeHolder holder, Direction side, Player player,
             InteractionHand hand) {
         IPipe pipe = holder.getPipe();
         if (pipe == null || !(pipe.getFlow() instanceof IFlowItems)) {

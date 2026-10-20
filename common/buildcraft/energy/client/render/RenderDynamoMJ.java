@@ -1,4 +1,5 @@
 package buildcraft.energy.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.energy.BCEnergyModels;
 import buildcraft.energy.tile.TileDynamoMJ;
@@ -7,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -22,7 +23,7 @@ public class RenderDynamoMJ implements BlockEntityRenderer<TileDynamoMJ> {
     public void render(
             TileDynamoMJ engine, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int lightc, int combinedOverlay
     ) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("bc");
         profiler.push("engine");
 

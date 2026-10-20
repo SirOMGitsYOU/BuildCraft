@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.BCFactoryModels;
@@ -21,7 +22,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
@@ -63,7 +64,7 @@ public class RenderDistiller implements BlockEntityRenderer<TileDistiller_BC8> {
             return;
         }
 
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("bc");
         profiler.push("distiller");
 

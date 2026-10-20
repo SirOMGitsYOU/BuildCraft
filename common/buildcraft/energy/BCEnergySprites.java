@@ -6,7 +6,7 @@
 
 package buildcraft.energy;
 
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.EventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -14,7 +14,7 @@ public class BCEnergySprites {
     public static void fmlPreInit() {
         // 1.18.2: following events are IModBusEvent
 //        MinecraftForge.EVENT_BUS.register(BCEnergySprites.class);
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCEnergy.MODID).get()).getEventBus();
+        EventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCEnergy.MODID).get()).getEventBus();
         modEventBus.register(BCEnergySprites.class);
     }
 
@@ -32,14 +32,14 @@ public class BCEnergySprites {
 //            return;
 //        }
 //
-//        ResourceLocation[][] fromSprites = new ResourceLocation[3][2];
+//        Identifier[][] fromSprites = new Identifier[3][2];
 //        for (int h = 0; h < 3; h++) {
-//            fromSprites[h][0] = new ResourceLocation("buildcraftenergy:blocks/fluids/heat_" + h + "_still");
-//            fromSprites[h][1] = new ResourceLocation("buildcraftenergy:blocks/fluids/heat_" + h + "_flow");
+//            fromSprites[h][0] = Identifier.fromNamespaceAndPath("buildcraftenergy:blocks/fluids/heat_" + h + "_still");
+//            fromSprites[h][1] = Identifier.parse("buildcraftenergy:blocks/fluids/heat_" + h + "_flow");
 //        }
 //
 //        for (BCFluid f : BCEnergyFluids.allFluids) {
-//            ResourceLocation[] sprites = fromSprites[f.getHeatValue()];
+//            Identifier[] sprites = fromSprites[f.getHeatValue()];
 //            map.setTextureEntry(new AtlasSpriteFluid(f.getStill().toString(), sprites[0], f));
 //            map.setTextureEntry(new AtlasSpriteFluid(f.getFlowing().toString(), sprites[1], f));
 //        }

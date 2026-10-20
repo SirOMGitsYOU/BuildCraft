@@ -25,7 +25,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
@@ -49,7 +49,7 @@ public abstract class GuiBC8<C extends ContainerBC_Neptune<?>> extends AbstractC
         standardLedgerInit();
     }
 
-    public GuiBC8(C container, ResourceLocation jsonGuiDef, Inventory inventory, Component component) {
+    public GuiBC8(C container, Identifier jsonGuiDef, Inventory inventory, Component component) {
         super(container, inventory, component);
         this.container = container;
         BuildCraftJsonGui jsonGui = new BuildCraftJsonGui(this, BuildCraftGui.createWindowedArea(this), jsonGuiDef);

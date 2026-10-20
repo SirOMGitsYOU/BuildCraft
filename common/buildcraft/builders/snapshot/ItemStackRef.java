@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -38,14 +38,13 @@ public class ItemStackRef {
         ItemStack itemStack = new ItemStack(
                 Objects.requireNonNull(
 //                        Item.getByNameOrId(
-                        ForgeRegistries.ITEMS.getValue(new ResourceLocation(
+                        ForgeRegistries.ITEMS.getValue(Identifier.fromNamespaceAndPath(
                                 item
                                         .get(nbt)
                                         .orElseThrow(NullPointerException::new)
                                         .getAsString()
                         ))
-                ),
-                Optional.ofNullable(amount)
+                ), Optional.ofNullable(amount)
                         .flatMap(ref -> ref.get(nbt))
                         .map(IntTag::getAsInt)
                         .orElse(1)

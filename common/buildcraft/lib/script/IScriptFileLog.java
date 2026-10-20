@@ -1,8 +1,10 @@
 package buildcraft.lib.script;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.google.gson.JsonSyntaxException;
 
-import javax.annotation.Nullable;
+
 import java.util.Collection;
 import java.util.List;
 

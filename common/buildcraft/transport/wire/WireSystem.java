@@ -74,7 +74,7 @@ public final class WireSystem {
         WireNode node = new WireNode(element.blockPos, element.wirePart);
 
         List<WireElement> list = new ArrayList<>();
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             WireNode oNode = node.offset(face);
             // equality check is fine here -- WireNode.offset returns the same blockpos (identity wise) if its the same
             if (oNode.pos == node.pos || canWireConnect(holder, face)) {
@@ -140,7 +140,7 @@ public final class WireSystem {
                             wireSystems.getWireSystemsWithElement(element).stream().filter(wireSystem -> wireSystem != this && wireSystem.color == colorButFinal).forEach(wireSystems::removeWireSystem);
                             elementBuilder.add(element);
                             queue.addAll(getConnectedElementsOfElement(wireSystems.world, element));
-                            Arrays.stream(Direction.VALUES).forEach(side -> queue.add(new WireElement(element.blockPos, side)));
+                            Arrays.stream(Direction.values()).forEach(side -> queue.add(new WireElement(element.blockPos, side)));
                         }
                     } else if (element.type == WireElement.Type.EMITTER_SIDE) {
                         if (holder.getPluggable(element.emitterSide) instanceof IWireEmitter) {
@@ -210,10 +210,10 @@ public final class WireSystem {
     }
 
     public WireSystem(CompoundTag nbt) {
-        ListTag elementsList = nbt.getList("elements", Tag.TAG_COMPOUND);
+        ListTag elementsList = nbt.getListOrEmpty("elements", Tag.TAG_COMPOUND);
         //noinspection UnstableApiUsage
         elements = IntStream.range(0, elementsList.size()).mapToObj(elementsList::getCompound).map(WireElement::new).collect(ImmutableList.toImmutableList());
-        color = DyeColor.byId(nbt.getInt("color"));
+        color = DyeColor.byId(nbt.getIntOr("color", 0));
 
         this.cachedHashCode = this.computeHashCode();
         this.cachedWiresHashCode = this.computeCachedWiresHashCode();
@@ -288,18 +288,18 @@ public final class WireSystem {
         }
 
         public WireElement(CompoundTag nbt) {
-            type = Type.values()[nbt.getInt("type")];
+            type = Type.values()[nbt.getIntOr("type", 0)];
             blockPos = NBTUtilBC.readBlockPos(nbt.get("blockPos"));
             if (blockPos == null) {
                 // Oh dear. We probably can't recover from this properly
                 throw new NullPointerException("Cannot read this Wire Systems from NBT!");
             }
             if (type == Type.WIRE_PART) {
-                wirePart = EnumWirePart.VALUES[nbt.getInt("wirePart")];
+                wirePart = EnumWirePart.VALUES[nbt.getIntOr("wirePart", 0)];
                 this.emitterSide = null;
             } else if (type == Type.EMITTER_SIDE) {
                 this.wirePart = null;
-                emitterSide = Direction.from3DDataValue(nbt.getInt("emitterSide"));
+                emitterSide = Direction.from3DDataValue(nbt.getIntOr("emitterSide", 0));
             } else {
                 this.wirePart = null;
                 this.emitterSide = null;

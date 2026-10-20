@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.transport.IInjectable;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public enum NoSpaceInjectable implements IInjectable {
     INSTANCE;
@@ -21,9 +22,9 @@ public enum NoSpaceInjectable implements IInjectable {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack injectItem(@Nonnull ItemStack stack, boolean doAdd, Direction from, DyeColor color, double speed) {
+    public ItemStack injectItem(@NotNull ItemStack stack, boolean doAdd, Direction from, DyeColor color, double speed) {
         return stack;
     }
 }

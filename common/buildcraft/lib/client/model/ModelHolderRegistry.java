@@ -8,7 +8,7 @@ package buildcraft.lib.client.model;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.ModLoadingStage;
@@ -30,26 +30,26 @@ public class ModelHolderRegistry {
     // public static void onTextureStitchPre(TextureMap map)
     public static void onTextureStitchPre() {
         // Calen: Thread Safety
-//        Set<ResourceLocation> toStitch = new HashSet<>();
-        CopyOnWriteArraySet<ResourceLocation> toStitch = new CopyOnWriteArraySet<>();
+//        Set<Identifier> toStitch = new HashSet<>();
+        CopyOnWriteArraySet<Identifier> toStitch = new CopyOnWriteArraySet<>();
         for (ModelHolder holder : HOLDERS) {
             holder.onTextureStitchPre(toStitch);
         }
 
-//        for (ResourceLocation res : toStitch) {
+//        for (Identifier res : toStitch) {
 ////            map.setTextureEntry(AtlasSpriteVariants.createForConfig(res));
 //            event.addSprite(res);
 //        }
     }
 
     // Calen 1.20.1
-    public static void onDatagenTextureRegister(Consumer<ResourceLocation> consumer, ExistingFileHelper fileHelper) {
-        CopyOnWriteArraySet<ResourceLocation> toStitch = new CopyOnWriteArraySet<>();
+    public static void onDatagenTextureRegister(Consumer<Identifier> consumer, ExistingFileHelper fileHelper) {
+        CopyOnWriteArraySet<Identifier> toStitch = new CopyOnWriteArraySet<>();
         for (ModelHolder holder : HOLDERS) {
             holder.onDatagenTextureRegister(toStitch, fileHelper);
         }
 
-        for (ResourceLocation res : toStitch) {
+        for (Identifier res : toStitch) {
             consumer.accept(res);
         }
     }

@@ -1,16 +1,18 @@
 package buildcraft.lib.recipe.programming;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.recipes.IProgrammingRecipe;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+
 
 public class ProgrammingRecipeSerializer implements RecipeSerializer<IProgrammingRecipe> {
     public static final ProgrammingRecipeSerializer INSTANCE;
@@ -20,7 +22,7 @@ public class ProgrammingRecipeSerializer implements RecipeSerializer<IProgrammin
     }
 
     @Override
-    public IProgrammingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public IProgrammingRecipe fromJson(Identifier recipeId, JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
         IngredientStack input = JsonUtil.deSerializeIngredientStack(json.getAsJsonObject("input"));
         ItemStack output = JsonUtil.deSerializeItemStack(json.getAsJsonObject("output"));
@@ -37,8 +39,8 @@ public class ProgrammingRecipeSerializer implements RecipeSerializer<IProgrammin
 
     @Nullable
     @Override
-    public IProgrammingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-        ResourceLocation id = buffer.readResourceLocation();
+    public IProgrammingRecipe fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
+        Identifier id = buffer.readResourceLocation();
         IngredientStack input = IngredientStack.fromNetwork(buffer);
         ItemStack output = buffer.readItem();
         long energyCost = buffer.readLong();

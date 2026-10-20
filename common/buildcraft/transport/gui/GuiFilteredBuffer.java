@@ -16,12 +16,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public class GuiFilteredBuffer extends GuiBC8<ContainerFilteredBuffer_BC8> {
-    private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcrafttransport:textures/gui/filtered_buffer.png");
+    private static final Identifier TEXTURE_BASE = Identifier.parse("buildcrafttransport:textures/gui/filtered_buffer.png");
     private static final int SIZE_X = 176, SIZE_Y = 169;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
 

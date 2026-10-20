@@ -8,15 +8,15 @@ package buildcraft.energy.client.sprite;
 
 import buildcraft.lib.client.sprite.AtlasSpriteSwappable;
 import buildcraft.lib.fluid.BCFluid;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Deprecated(forRemoval = true)
 public class AtlasSpriteFluid extends AtlasSpriteSwappable {
-    final ResourceLocation fromName;
+    final Identifier fromName;
     final BCFluid fluid;
     final int colourLight, colourDark;
 
-    public AtlasSpriteFluid(String baseName, ResourceLocation fromName, BCFluid fluid) {
+    public AtlasSpriteFluid(String baseName, Identifier fromName, BCFluid fluid) {
 //        super(baseName);
         super(null, null, 0, 0, 0, 0);
         throw new RuntimeException("");
@@ -27,8 +27,8 @@ public class AtlasSpriteFluid extends AtlasSpriteSwappable {
     }
 
 //    @Override
-//    public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
-//        ResourceLocation from = SpriteUtil.transformLocation(fromName);
+//    public boolean load(IResourceManager manager, Identifier location, Function<Identifier, TextureAtlasSprite> textureGetter) {
+//        Identifier from = SpriteUtil.transformLocation(fromName);
 //        TextureAtlasSprite sprite = loadSprite(manager, from.toString(), from, true);
 //        if (sprite == null) {
 //            BCLog.logger.warn("Unable to recolour " + from + " as it couldn't be loaded!");

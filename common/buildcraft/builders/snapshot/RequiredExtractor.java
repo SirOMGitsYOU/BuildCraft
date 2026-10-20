@@ -5,6 +5,9 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.JsonDeserializer;
 import net.minecraft.nbt.CompoundTag;
@@ -12,8 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,23 +24,23 @@ import java.util.Locale;
 
 @SuppressWarnings("WeakerAccess")
 public abstract class RequiredExtractor {
-    @Nonnull
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    @NotNull
+    public List<ItemStack> extractItemsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Collections.emptyList();
     }
 
-    @Nonnull
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    @NotNull
+    public List<FluidStack> extractFluidsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Collections.emptyList();
     }
 
-    @Nonnull
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    @NotNull
+    public List<ItemStack> extractItemsFromEntity(@NotNull CompoundTag entityNbt) {
         return Collections.emptyList();
     }
 
-    @Nonnull
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    @NotNull
+    public List<FluidStack> extractFluidsFromEntity(@NotNull CompoundTag entityNbt) {
         return Collections.emptyList();
     }
 

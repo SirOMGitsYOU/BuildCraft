@@ -1,18 +1,20 @@
 package buildcraft.robotics.boards;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.List;
@@ -20,13 +22,13 @@ import java.util.Map;
 
 public class BCBoardNBT extends RedstoneBoardRobotNBT {
     public static final Map<String, BCBoardNBT> REGISTRY = new HashMap<String, BCBoardNBT>();
-    // private final ResourceLocation texture;
-    private final ResourceLocation robotTexture;
-    private final ResourceLocation robotItemTexture;
+    // private final Identifier texture;
+    private final Identifier robotTexture;
+    private final Identifier robotItemTexture;
     // Calen 1.18.2
-    private final ResourceLocation robotTextureFullLocation;
-    private final ResourceLocation robotId;
-    private final ResourceLocation id;
+    private final Identifier robotTextureFullLocation;
+    private final Identifier robotId;
+    private final Identifier id;
     private final String upperName, boardType;
     private final Constructor<? extends RedstoneBoardRobot> boardInit;
 
@@ -34,7 +36,7 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
     private TextureAtlasSprite icon;
 
     public BCBoardNBT(String id, String name, Class<? extends RedstoneBoardRobot> board, String boardType) {
-        this.id = new ResourceLocation(id);
+        this.id = Identifier.fromNamespaceAndPath(id);
         this.boardType = boardType;
         // this.upperName = name.substring(0, 1).toUpperCase() + name.substring(1);
         String upperName = name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -45,11 +47,11 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
             }
         }
         this.upperName = upperName;
-        // this.texture = new ResourceLocation(DefaultProps.TEXTURE_PATH_ROBOTS + "/robot_" + name + ".png");
-        this.robotTexture = new ResourceLocation("buildcraftrobotics:entities/robot_" + name);
-        this.robotItemTexture = new ResourceLocation("buildcraftrobotics:item/robot/robot_" + name);
-        this.robotTextureFullLocation = new ResourceLocation("buildcraftrobotics:textures/entities/robot_" + name + ".png");
-        this.robotId = new ResourceLocation("buildcraftrobotics:robot_" + name);
+        // this.texture = Identifier.fromNamespaceAndPath(DefaultProps.TEXTURE_PATH_ROBOTS + "/robot_" + name + ".png");
+        this.robotTexture = Identifier.parse("buildcraftrobotics:entities/robot_" + name);
+        this.robotItemTexture = Identifier.parse("buildcraftrobotics:item/robot/robot_" + name);
+        this.robotTextureFullLocation = Identifier.parse("buildcraftrobotics:textures/entities/robot_" + name + ".png");
+        this.robotId = Identifier.parse("buildcraftrobotics:robot_" + name);
 
         Constructor<? extends RedstoneBoardRobot> boardInitLocal;
         try {
@@ -64,7 +66,7 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
     }
 
     @Override
-    public ResourceLocation getID() {
+    public Identifier getID() {
         return id;
     }
 
@@ -87,23 +89,23 @@ public class BCBoardNBT extends RedstoneBoardRobotNBT {
     }
 
     @Override
-    public ResourceLocation getRobotTexture() {
+    public Identifier getRobotTexture() {
         return robotTexture;
     }
 
     // Calen 1.18.2
     @Override
-    public ResourceLocation getRobotItemTexture() {
+    public Identifier getRobotItemTexture() {
         return robotItemTexture;
     }
 
     @Override
-    public ResourceLocation getRobotTextureFullLocation() {
+    public Identifier getRobotTextureFullLocation() {
         return robotTextureFullLocation;
     }
 
     @Override
-    public ResourceLocation getRobotId() {
+    public Identifier getRobotId() {
         return robotId;
     }
 

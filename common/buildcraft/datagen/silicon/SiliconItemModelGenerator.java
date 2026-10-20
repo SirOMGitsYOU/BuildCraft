@@ -7,10 +7,10 @@ import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.client.SiliconItemModelPredicates;
 import buildcraft.silicon.item.ItemPluggableFacade;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class SiliconItemModelGenerator extends BCBaseItemModelGenerator {
     public SiliconItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -49,17 +49,17 @@ public class SiliconItemModelGenerator extends BCBaseItemModelGenerator {
                 .texture("layer0", "buildcraftsilicon:item/redstone_chipset/quartz");
 
         // tables
-        withExistingParent(BCSiliconBlocks.advancedCraftingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/advanced_crafting"));
-        withExistingParent(BCSiliconBlocks.assemblyTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/assembly"));
-        withExistingParent(BCSiliconBlocks.chargingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/charging"));
-        withExistingParent(BCSiliconBlocks.integrationTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/integration"));
-        withExistingParent(BCSiliconBlocks.programmingTable.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/table/programming"));
+        withExistingParent(BCSiliconBlocks.advancedCraftingTable.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/table/advanced_crafting"));
+        withExistingParent(BCSiliconBlocks.assemblyTable.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/table/assembly"));
+        withExistingParent(BCSiliconBlocks.chargingTable.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/table/charging"));
+        withExistingParent(BCSiliconBlocks.integrationTable.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/table/integration"));
+        withExistingParent(BCSiliconBlocks.programmingTable.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/table/programming"));
 
         // laser
-        withExistingParent(BCSiliconBlocks.laser.get().getRegistryName().toString(), new ResourceLocation("buildcraftsilicon:block/laser"));
+        withExistingParent(BCSiliconBlocks.laser.get().getRegistryName().toString(), Identifier.parse("buildcraftsilicon:block/laser"));
 
         // gate_copier
-        ResourceLocation gateCopier = BCSiliconItems.gateCopier.get().getRegistryName();
+        Identifier gateCopier = BCSiliconItems.gateCopier.get().getRegistryName();
         getBuilder(gateCopier.toString())
                 .override()
                 .model(

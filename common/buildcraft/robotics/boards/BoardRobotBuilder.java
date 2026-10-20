@@ -258,7 +258,7 @@ public class BoardRobotBuilder extends RedstoneBoardRobot {
     public void loadSelfFromNBT(CompoundTag nbt) {
         super.loadSelfFromNBT(nbt);
 
-        launchingDelay = nbt.getInt("launchingDelay");
+        launchingDelay = nbt.getIntOr("launchingDelay", 0);
     }
 
     private TileMarkerConstruction findClosestMarker() {

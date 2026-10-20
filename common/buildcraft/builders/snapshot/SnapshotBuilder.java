@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.mj.MjAPI;
 import buildcraft.lib.block.ILocalBlockUpdateSubscriber;
@@ -25,7 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -50,10 +51,10 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     protected final T tile;
     // private final IWorldEventListener worldEventListener = new WorldEventListenerAdapter() {
 //        @Override
-//        public void notifyBlockUpdate(@Nonnull Level world,
-//                                      @Nonnull BlockPos pos,
-//                                      @Nonnull BlockState oldState,
-//                                      @Nonnull BlockState newState,
+//        public void notifyBlockUpdate(@NotNull Level world,
+//                                      @NotNull BlockPos pos,
+//                                      @NotNull BlockState oldState,
+//                                      @NotNull BlockState newState,
 //                                      int flags) {
 //            if (tile.getBuilder() == SnapshotBuilder.this && getBuildingInfo() != null && getBuildingInfo().box.contains(pos)) {
 //                if (check(pos)) {
@@ -94,7 +95,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     public final Queue<PlaceTask> prevClientPlaceTasks = new ArrayDeque<>();
     @SuppressWarnings("WeakerAccess")
     // protected byte[] checkResults;
-    @Nonnull
+    @NotNull
     protected byte[] checkResults = new byte[0];
     private byte[] requiredCache;
     private int[] breakOrder;
@@ -114,14 +115,14 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
     protected abstract Snapshot.BuildingInfo getBuildingInfo();
 
     public void validate() {
-        if (!tile.getWorldBC().isClientSide) {
+        if (!tile.getWorldBC().isClientSide()) {
 //            tile.getWorldBC().addEventListener(worldEventListener);
             LocalBlockUpdateNotifier.instance(tile.getWorldBC()).registerSubscriberForUpdateNotifications(this.subscriber);
         }
     }
 
     public void invalidate() {
-        if (!tile.getWorldBC().isClientSide) {
+        if (!tile.getWorldBC().isClientSide()) {
 //            tile.getWorldBC().removeEventListener(worldEventListener);
             LocalBlockUpdateNotifier.instance(tile.getWorldBC()).removeSubscriberFromUpdateNotifications(this.subscriber);
         }
@@ -240,7 +241,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
 
     /** @return true is building is finished, false otherwise */
     public boolean tick() {
-        if (tile.getWorldBC().isClientSide) {
+        if (tile.getWorldBC().isClientSide()) {
             prevClientBreakTasks.clear();
             prevClientBreakTasks.addAll(clientBreakTasks);
             clientBreakTasks.clear();
@@ -560,7 +561,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         NBTUtilBC.readCompoundList(nbt.get("breakTasks")).map(BreakTask::new).forEach(breakTasks::add);
         placeTasks.clear();
         NBTUtilBC.readCompoundList(nbt.get("placeTasks")).map(PlaceTask::new).forEach(placeTasks::add);
-        currentCheckIndex = nbt.getInt("currentCheckIndex");
+        currentCheckIndex = nbt.getIntOr("currentCheckIndex", 0);
     }
 
     // Calen 1.18.2 for robot builder
@@ -573,7 +574,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         return placeTasks;
     }
 
-    @Nonnull
+    @NotNull
     public byte[] getCheckResults() {
         return checkResults;
     }
@@ -597,7 +598,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
         @SuppressWarnings("WeakerAccess")
         public BreakTask(CompoundTag nbt) {
             pos = NbtUtils.readBlockPos(nbt.getCompound("pos"));
-            power = nbt.getLong("power");
+            power = nbt.getLongOr("power", 0L);
         }
 
         @SuppressWarnings("WeakerAccess")
@@ -658,7 +659,7 @@ public abstract class SnapshotBuilder<T extends ITileForSnapshotBuilder> impleme
                             .map(ItemStack::of)
                             .collect(Collectors.toList())
             );
-            power = nbt.getLong("power");
+            power = nbt.getLongOr("power", 0L);
         }
 
         public long getTarget() {

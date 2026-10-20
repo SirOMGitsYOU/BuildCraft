@@ -2,7 +2,7 @@ package buildcraft.robotics.client.model.key;
 
 import buildcraft.api.transport.pluggable.PluggableModelKey;
 import buildcraft.robotics.plug.PluggableRobotStation;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 
 import java.util.Objects;

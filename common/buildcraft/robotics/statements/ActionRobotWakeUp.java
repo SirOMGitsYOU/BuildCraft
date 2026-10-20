@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.statements;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IActionInternal;
 import buildcraft.api.statements.IStatementContainer;
@@ -12,7 +14,7 @@ import buildcraft.core.statements.BCStatement;
 import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 
 public class ActionRobotWakeUp extends BCStatement implements IActionInternal {
 

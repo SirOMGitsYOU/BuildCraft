@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.list;
+import org.jetbrains.annotations.NotNull;
 
 
 import buildcraft.api.lists.ListMatchHandler;
@@ -30,19 +31,19 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
 
 public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventListener {
-    private static final ResourceLocation TEXTURE_BASE =
-            new ResourceLocation("buildcraftcore:textures/gui/list_new.png");
+    private static final Identifier TEXTURE_BASE =
+            Identifier.parse("buildcraftcore:textures/gui/list_new.png");
     private static final int SIZE_X = 176, SIZE_Y = 191;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_HIGHLIGHT = new GuiIcon(TEXTURE_BASE, 176, 0, 16, 16);
@@ -89,7 +90,7 @@ public class GuiList extends GuiBC8<ContainerList> implements IButtonClickEventL
                         }
                     }
 
-                    @Nonnull
+                    @NotNull
                     @Override
                     public ItemStack getStack() {
                         if (shouldDrawHighlight()) {

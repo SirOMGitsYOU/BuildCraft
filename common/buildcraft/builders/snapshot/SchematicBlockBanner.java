@@ -1,11 +1,12 @@
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.schematics.SchematicBlockContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class SchematicBlockBanner extends SchematicBlockDefault {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ItemStack> computeRequiredItems() {
 //        return Collections.singletonList(ItemBanner.makeBanner(

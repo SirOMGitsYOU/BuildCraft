@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.pipe.flow;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
@@ -43,8 +46,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -64,10 +67,10 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     public PipeFlowItems(IPipe pipe, CompoundTag nbt) {
         super(pipe, nbt);
-        ListTag list = nbt.getList("items", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getListOrEmpty("items", Tag.TAG_COMPOUND);
         // Calen: when world loading, the level of TE is null
 //        long tickNow = pipe.getHolder().getPipeWorld().getTotalWorldTime();
-        long tickNow = nbt.getLong("tickNow");
+        long tickNow = nbt.getLongOr("tickNow", 0L);
 
         for (int i = 0; i < list.size(); i++) {
             TravellingItem item = new TravellingItem(list.getCompound(i), tickNow);
@@ -175,7 +178,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
 
     @Override
     public int tryExtractItems(int count, Direction from, DyeColor colour, IStackFilter filter, boolean simulate) {
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             throw new IllegalStateException("Cannot extract items on the client side!");
         }
         if (from == null) {
@@ -259,7 +262,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     // PipeFlow
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (capability == PipeApi.CAP_INJECTABLE) {
 //            return PipeApi.CAP_INJECTABLE.cast(this);
             return LazyOptional.of(() -> this).cast();
@@ -299,7 +302,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 postDropCache.add(item.stack);
                 continue;
             }
-            if (world.isClientSide) {
+            if (world.isClientSide()) {
                 // TODO: Client item advancing/intelligent stuffs
                 continue;
             }
@@ -330,7 +333,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
                 holder, this, reachCenter.colour, reachCenter.from, reachCenter.getStack()
         );
         sideCheck.disallow(reachCenter.from);
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (item.tried.contains(face) || !pipe.isConnected(face)) {
                 sideCheck.disallow(face);
             }
@@ -528,10 +531,10 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         return pipe.isConnected(from) || (pipe.getHolder().getPluggable(from) instanceof IDockingStationProvider);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack injectItem(@Nonnull ItemStack stack, boolean doAdd, Direction from, DyeColor colour, double speed) {
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+    public ItemStack injectItem(@NotNull ItemStack stack, boolean doAdd, Direction from, DyeColor colour, double speed) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             throw new IllegalStateException("Cannot inject items on the client side!");
         }
         if (!canInjectItems(from)) {
@@ -565,9 +568,9 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     }
 
     @Override
-    public void insertItemsForce(@Nonnull ItemStack stack, Direction from, DyeColor colour, double speed) {
+    public void insertItemsForce(@NotNull ItemStack stack, Direction from, DyeColor colour, double speed) {
         Level world = pipe.getHolder().getPipeWorld();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             throw new IllegalStateException("Cannot inject items on the client side!");
         }
         if (stack.isEmpty()) {
@@ -581,7 +584,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
         TravellingItem item = new TravellingItem(stack);
         if (from == null) {
             // Find a reasonable alternative (as it's not allowed to be null)
-            for (Direction f : Direction.VALUES) {
+            for (Direction f : Direction.values()) {
                 if (!pipe.isConnected(f)) {
                     item.side = f;
                     break;
@@ -607,7 +610,7 @@ public final class PipeFlowItems extends PipeFlow implements IFlowItems {
     }
 
     /** Used internally to split up manual insertions from controlled extractions. */
-    private void insertItemEvents(@Nonnull ItemStack toInsert, DyeColor colour, double speed, Direction from) {
+    private void insertItemEvents(@NotNull ItemStack toInsert, DyeColor colour, double speed, Direction from) {
         IPipeHolder holder = pipe.getHolder();
 
         PipeEventItem.OnInsert onInsert = new PipeEventItem.OnInsert(holder, this, colour, toInsert, from);

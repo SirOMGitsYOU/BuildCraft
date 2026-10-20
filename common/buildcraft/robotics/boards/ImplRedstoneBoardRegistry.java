@@ -9,7 +9,7 @@ import buildcraft.api.boards.RedstoneBoardRegistry;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.robotics.BCRoboticsConfig;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -24,7 +24,7 @@ public class ImplRedstoneBoardRegistry extends RedstoneBoardRegistry {
         public long energyCost;
     }
 
-    private HashMap<ResourceLocation, BoardFactory> boards = new HashMap<ResourceLocation, BoardFactory>();
+    private HashMap<Identifier, BoardFactory> boards = new HashMap<Identifier, BoardFactory>();
     private Map<RedstoneBoardNBT<?>, RegistryObject<? extends Item>> boardNBTItemMap = new HashMap<RedstoneBoardNBT<?>, RegistryObject<? extends Item>>();
     private RedstoneBoardRobotNBT emptyRobotBoardNBT;
 
@@ -53,12 +53,12 @@ public class ImplRedstoneBoardRegistry extends RedstoneBoardRegistry {
 
     @Override
     public RedstoneBoardNBT<?> getRedstoneBoard(CompoundTag nbt) {
-        // return getRedstoneBoard(nbt.getString("id"));
-        return getRedstoneBoard(new ResourceLocation(nbt.getString("id")));
+        // return getRedstoneBoard(nbt.getStringOr("id", ""));
+        return getRedstoneBoard(Identifier.fromNamespaceAndPath(nbt.getStringOr("id", "")));
     }
 
     @Override
-    public RedstoneBoardNBT<?> getRedstoneBoard(ResourceLocation id) {
+    public RedstoneBoardNBT<?> getRedstoneBoard(Identifier id) {
         BoardFactory factory = boards.get(id);
 
         if (factory != null) {

@@ -14,11 +14,11 @@ import buildcraft.lib.gui.json.InventorySlotHolder;
 import buildcraft.lib.gui.json.SpriteDelegate;
 import buildcraft.lib.misc.collect.TypedKeyMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiFiller extends GuiBC8<ContainerFiller> {
-    private static final ResourceLocation LOCATION = new ResourceLocation("buildcraftbuilders:gui/filler.json");
+    private static final Identifier LOCATION = Identifier.parse("buildcraftbuilders:gui/filler.json");
     private static final SpriteDelegate SPRITE_PATTERN = new SpriteDelegate();
     private static final SpriteDelegate SPRITE_CONTROL_MODE = new SpriteDelegate();
 

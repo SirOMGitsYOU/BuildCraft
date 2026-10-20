@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.boards;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.robots.AIRobot;
@@ -14,7 +15,7 @@ import buildcraft.robotics.ai.AIRobotGotoSleep;
 import buildcraft.robotics.ai.AIRobotGotoStationAndUnload;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public abstract class BoardRobotGenericBreakBlock extends BoardRobotGenericSearchBlock {
 
@@ -22,7 +23,7 @@ public abstract class BoardRobotGenericBreakBlock extends BoardRobotGenericSearc
         super(iRobot);
     }
 
-    public abstract boolean isExpectedTool(@Nonnull ItemStack stack);
+    public abstract boolean isExpectedTool(@NotNull ItemStack stack);
 
     @Override
     public final void update() {
@@ -30,7 +31,7 @@ public abstract class BoardRobotGenericBreakBlock extends BoardRobotGenericSearc
         if (!isExpectedTool(StackUtil.EMPTY) && robot.getMainHandItem().isEmpty()) {
             startDelegateAI(new AIRobotFetchAndEquipItemStack(robot, new IStackFilter() {
                 @Override
-                public boolean matches(@Nonnull ItemStack stack) {
+                public boolean matches(@NotNull ItemStack stack) {
                     // return stack != null && (stack.getDamageValue() < stack.getMaxDamage()) && isExpectedTool(stack);
                     return !stack.isEmpty() && (stack.getDamageValue() < stack.getMaxDamage()) && isExpectedTool(stack);
                 }

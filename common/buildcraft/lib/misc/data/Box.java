@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc.data;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IAreaProvider;
 import buildcraft.api.core.IBox;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
@@ -27,7 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,8 +110,8 @@ public class Box implements IBox {
     public void initialize(CompoundTag nbt) {
         reset();
         if (nbt.contains("xMin")) {
-            min = new BlockPos(nbt.getInt("xMin"), nbt.getInt("yMin"), nbt.getInt("zMin"));
-            max = new BlockPos(nbt.getInt("xMax"), nbt.getInt("yMax"), nbt.getInt("zMax"));
+            min = new BlockPos(nbt.getIntOr("xMin", 0), nbt.getIntOr("yMin", 0), nbt.getIntOr("zMin", 0));
+            max = new BlockPos(nbt.getIntOr("xMax", 0), nbt.getIntOr("yMax", 0), nbt.getIntOr("zMax", 0));
         } else {
             min = NBTUtilBC.readBlockPos(nbt.get("min"));
             max = NBTUtilBC.readBlockPos(nbt.get("max"));

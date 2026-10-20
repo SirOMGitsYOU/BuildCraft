@@ -9,7 +9,6 @@ package buildcraft.core.marker.volume;
 import buildcraft.lib.item.ItemBC_Neptune;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,8 +26,8 @@ public abstract class ItemAddon extends ItemBC_Neptune {
     @SuppressWarnings("NullableProblems")
     @Override
 //    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, InteractionHand hand)
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        if (world.isClientSide) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (world.isClientSide()) {
             return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
         }
 

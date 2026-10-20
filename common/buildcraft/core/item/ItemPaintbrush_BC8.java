@@ -3,6 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.item;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.blocks.CustomPaintHelper;
 import buildcraft.core.BCCoreItems;
@@ -27,8 +30,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 public class ItemPaintbrush_BC8 extends ItemBC_Neptune {
@@ -188,13 +191,13 @@ public class ItemPaintbrush_BC8 extends ItemBC_Neptune {
             }
         }
 
-        @Nonnull
+        @NotNull
         public ItemStack save() {
             return save(StackUtil.EMPTY);
         }
 
-        @Nonnull
-        public ItemStack save(@Nonnull ItemStack existing) {
+        @NotNull
+        public ItemStack save(@NotNull ItemStack existing) {
             ItemStack stack = existing;
 //            if (existing.isEmpty() || getColorFromStack(existing) != getMeta())
             if (existing.isEmpty() || ColourUtil.getStackColourFromTag(stack) != getMeta()) {

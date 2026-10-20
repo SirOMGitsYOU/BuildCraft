@@ -43,8 +43,8 @@ public class AxisOrder {
 
     public static AxisOrder readNbt(CompoundTag nbt) {
         return getFor(//
-                EnumAxisOrder.getOrder(nbt.getString("order")),//
-                Inversion.getFor(nbt.getString("inversion"))//
+                EnumAxisOrder.getOrder(nbt.getStringOr("order", "")),//
+                Inversion.getFor(nbt.getStringOr("inversion", ""))//
         );
     }
 

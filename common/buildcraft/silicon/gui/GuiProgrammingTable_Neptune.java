@@ -18,12 +18,12 @@ import buildcraft.silicon.container.ContainerProgrammingTable_Neptune;
 import buildcraft.silicon.tile.TileProgrammingTable_Neptune;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiProgrammingTable_Neptune extends GuiBC8<ContainerProgrammingTable_Neptune> {
 
-    private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/programming_table.png");
+    private static final Identifier TEXTURE_BASE = Identifier.parse("buildcraftsilicon:textures/gui/programming_table.png");
     private static final int SIZE_X = 176, SIZE_Y = 207;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_PROGRESS = new GuiIcon(TEXTURE_BASE, SIZE_X, 18, 4, 70);

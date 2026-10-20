@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -20,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 import java.util.Objects;
 
 // Calen: never used in 1.12.2
@@ -55,7 +56,7 @@ public class StatementParameterRedstoneLevel implements IStatementParameter {
         nbt.putByte("ma", (byte) maxLevel);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

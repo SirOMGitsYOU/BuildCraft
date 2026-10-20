@@ -5,6 +5,7 @@
  */
 
 package buildcraft.silicon.plug;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
@@ -24,9 +25,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.EmptyBlockGetter;
@@ -39,7 +39,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.InterModComms.IMCMessage;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
@@ -84,10 +84,10 @@ public enum FacadeStateManager implements IFacadeRegistry {
         if (FacadeAPI.IMC_FACADE_DISABLE.equals(id)) {
 //            if (!message.isResourceLocationMessage()) {
 //                BCLog.logger.warn("[facade.imc] Received an invalid IMC message from " + message.getSender() + " - "
-//                        + id + " should have a resourcelocation value, not a " + message);
+//                        + id + " should have a Identifier value, not a " + message);
 //                return;
 //            }
-            ResourceLocation loc = messageInner.getResourceLocationValue();
+            Identifier loc = messageInner.getResourceLocationValue();
 //            Block block = Block.REGISTRY.getObject(loc);
             Block block = ForgeRegistries.BLOCKS.getValue(loc);
             if (block == Blocks.AIR || block == null) {
@@ -108,8 +108,8 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 return;
             }
             CompoundTag nbt = messageInner.getNBTValue();
-            String regName = nbt.getString(FacadeAPI.NBT_CUSTOM_BLOCK_REG_KEY);
-//            int meta = nbt.getInt(FacadeAPI.NBT_CUSTOM_BLOCK_META);
+            String regName = nbt.getStringOr(FacadeAPI.NBT_CUSTOM_BLOCK_REG_KEY, "");
+//            int meta = nbt.getIntOr(FacadeAPI.NBT_CUSTOM_BLOCK_META, 0);
             BlockState state = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), nbt.getCompound(FacadeAPI.NBT_CUSTOM_BLOCK_META));
 //            ItemStack stack = new ItemStack(nbt.getCompound(FacadeAPI.NBT_CUSTOM_ITEM_STACK));
             ItemStack stack = ItemStack.of(nbt.getCompound(FacadeAPI.NBT_CUSTOM_ITEM_STACK));
@@ -126,8 +126,8 @@ public enum FacadeStateManager implements IFacadeRegistry {
                         + id + " should have a valid ItemStack stored in " + FacadeAPI.NBT_CUSTOM_ITEM_STACK);
                 return;
             }
-//            Block block = Block.REGISTRY.getObject(new ResourceLocation(regName));
-            Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(regName));
+//            Block block = Block.REGISTRY.getObject(Identifier.fromNamespaceAndPath(regName));
+            Block block = ForgeRegistries.BLOCKS.getValue(Identifier.parse(regName));
             if (block == Blocks.AIR || block == null) {
 //                BCLog.logger.warn("[facade.imc] Received an invalid IMC message from " + message.getSender() + " - "
                 BCLog.logger.warn("[facade.imc] Received an invalid IMC message from " + messageOuter.senderModId() + " - "
@@ -150,7 +150,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
      * for a facade)</li>
      * </ul>
      */
-    private static InteractionResultHolder<String> isValidFacadeBlock(Block block) {
+    private static InteractionResult isValidFacadeBlock(Block block) {
         String disablingMod = disabledBlocks.get(block);
         if (disablingMod != null) {
             return new InteractionResultHolder<>(InteractionResult.FAIL, "it has been disabled by " + disablingMod);
@@ -179,7 +179,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
      * for a facade)</li>
      * </ul>
      */
-    private static InteractionResultHolder<String> isValidFacadeState(BlockState state) {
+    private static InteractionResult isValidFacadeState(BlockState state) {
 //        if (state.getBlock().hasTileEntity(state))
         if (state.hasBlockEntity()) {
             return new InteractionResultHolder<>(InteractionResult.FAIL, "it has a tile entity");
@@ -197,7 +197,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, "");
     }
 
-    @Nonnull
+    @NotNull
     private static ItemStack getRequiredStack(BlockState state) {
         ItemStack stack = customBlocks.get(state);
         if (stack != null) {
@@ -263,7 +263,7 @@ public enum FacadeStateManager implements IFacadeRegistry {
                 return;
             }
 
-            InteractionResultHolder<String> result = isValidFacadeBlock(block);
+            InteractionResult result = isValidFacadeBlock(block);
             // These strings are hardcoded, so we can get away with not needing the .equals check
             if (result.getResult() != InteractionResult.PASS && result.getResult() != InteractionResult.SUCCESS) {
                 if (DEBUG) {

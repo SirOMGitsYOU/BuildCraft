@@ -108,7 +108,7 @@ public class BlockLaserTable extends BlockBCTile_Neptune<TileLaserTableBase> imp
 //            case CHARGING_TABLE:
 //            case PROGRAMMING_TABLE:
 //        }
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (world.getBlockEntity(pos) instanceof IBCTileMenuProvider tile) {
 //                BCSiliconGuis.ADVANCED_CRAFTING_TABLE.openGUI(player, pos, state);
                 MessageUtil.serverOpenTileGui(player, tile, pos);

@@ -6,6 +6,8 @@
 
 package buildcraft.lib.marker;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.tile.TileMarker;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
@@ -14,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+
 import java.util.*;
 
 public abstract class MarkerConnection<C extends MarkerConnection<C>> {

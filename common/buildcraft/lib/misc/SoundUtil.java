@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 
 public class SoundUtil {
     public static void playBlockPlace(Level world, BlockPos pos) {

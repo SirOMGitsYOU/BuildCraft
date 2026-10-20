@@ -5,23 +5,24 @@
  */
 
 package buildcraft.lib.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.misc.ItemUtil;
 import buildcraft.lib.misc.StackUtil;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // 1.18.2: use datagen
 @Deprecated(forRemoval = true)
 public class RecipeBuilderShaped {
-    @Nonnull
+    @NotNull
     private ItemStack result = StackUtil.EMPTY;
     private final List<String> shape = new ArrayList<>();
     private final Char2ObjectOpenHashMap<Object> objects = new Char2ObjectOpenHashMap<>();
@@ -64,7 +65,7 @@ public class RecipeBuilderShaped {
         return this;
     }
 
-    public RecipeBuilderShaped setResult(@Nonnull ItemStack result) {
+    public RecipeBuilderShaped setResult(@NotNull ItemStack result) {
         this.result = result;
         return this;
     }
@@ -127,7 +128,7 @@ public class RecipeBuilderShaped {
 
     public void register() {
         ensureValid();
-        ResourceLocation name = ItemUtil.getRegistryName(result.getItem());
+        Identifier name = ItemUtil.getRegistryName(result.getItem());
 //        ShapedOreRecipe recipe = new ShapedOreRecipe(name, result, createRecipeObjectArray());
 //        ForgeRegistries.RECIPES.register(recipe.setRegistryName(name));
     }

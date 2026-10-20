@@ -31,7 +31,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +44,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 
 public class SchematicBlockPipe implements ISchematicBlock {
@@ -65,7 +65,7 @@ public class SchematicBlockPipe implements ISchematicBlock {
         tileNbt = tileEntity.serializeNBT();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ItemStack> computeRequiredItems() {
         try {
@@ -94,21 +94,21 @@ public class SchematicBlockPipe implements ISchematicBlock {
 
             // plug
             CompoundTag plugs = tileNbt.getCompound("plugs");
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 CompoundTag nbt = plugs.getCompound(face.getName());
                 if (nbt.isEmpty()) {
                     continue;
                 }
                 CompoundTag data = nbt.getCompound("data");
-                String id = nbt.getString("id");
-                ResourceLocation identifier = new ResourceLocation(id);
+                String id = nbt.getStringOr("id", "");
+                Identifier identifier = Identifier.fromNamespaceAndPath(id);
                 PluggableDefinition def = PipeApi.pluggableRegistry.getDefinition(identifier);
                 ItemStack plugItemStack = def.readFromNbt(null, Direction.NORTH, data).getPickStack();
                 builder.add(plugItemStack);
             }
 
             // wire
-            ResourceLocation wireId = new ResourceLocation(TagManager.getTag("item.wire", EnumTagType.REGISTRY_NAME));
+            Identifier wireId = Identifier.fromNamespaceAndPath(TagManager.getTag("item.wire", EnumTagType.REGISTRY_NAME));
             Item wireItem = ForgeRegistries.ITEMS.getValue(wireId);
             CompoundTag wireManagerNbt = tileNbt.getCompound("wireManager");
             int[] wiresArray = wireManagerNbt.getIntArray("parts");
@@ -322,7 +322,7 @@ public class SchematicBlockPipe implements ISchematicBlock {
         if (behNbt.contains("filters")) {
             CompoundTag filtersNbt = behNbt.getCompound("filters");
             if (filtersNbt.contains("items")) {
-                ListTag itemsNbt = filtersNbt.getList("items", Tag.TAG_COMPOUND);
+                ListTag itemsNbt = filtersNbt.getListOrEmpty("items", Tag.TAG_COMPOUND);
                 Map<Direction, List<Tag>> oldFilters = new HashMap<>();
                 for (Direction dir : Direction.BY_2D_DATA) {
                     int startPos = dir.get3DDataValue() * 9;

@@ -1,5 +1,7 @@
 package buildcraft.energy.generation.biome;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.energy.BCEnergy;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -7,7 +9,7 @@ import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.AquaticPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.Music;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +19,7 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
-import javax.annotation.Nullable;
+
 
 // Calen: OverworldBiomes.class https://forums.minecraftforge.net/topic/104296-solved1165-custom-biome-not-generating-in-overworld-dimension/
 //@Mod.EventBusSubscriber(modid = BCEnergy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -52,10 +54,10 @@ public class BCBiomes {
 ////        BiomeManager.addAdditionalOverworldBiomes(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_DESERT);
 ////        BiomeManager.addAdditionalOverworldBiomes(BCBiomeRegistry.RESOURCE_KEY_BIOME_OIL_OCEAN);
 //
-//        ForgeRegistries.BIOMES.register(ResourceLocation.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT), oil_desert);
-//        ForgeRegistries.BIOMES.register(ResourceLocation.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN), oil_ocean);
-        context.register(ResourceKey.create(Registries.BIOME, ResourceLocation.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT)), oil_desert);
-        context.register(ResourceKey.create(Registries.BIOME, ResourceLocation.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN)), oil_ocean);
+//        ForgeRegistries.BIOMES.register(Identifier.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT), oil_desert);
+//        ForgeRegistries.BIOMES.register(Identifier.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN), oil_ocean);
+        context.register(ResourceKey.create(Registries.BIOME, Identifier.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_DESERT)), oil_desert);
+        context.register(ResourceKey.create(Registries.BIOME, Identifier.tryBuild(BCEnergy.MODID, BCBiomeRegistry.BIOME_OIL_OCEAN)), oil_ocean);
     }
 
     // Calen: the same as Desert

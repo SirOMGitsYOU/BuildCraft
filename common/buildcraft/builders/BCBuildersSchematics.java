@@ -1,4 +1,5 @@
 package buildcraft.builders;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.schematics.ISchematicBlock;
 import buildcraft.api.schematics.SchematicBlockContext;
@@ -43,7 +44,7 @@ public class BCBuildersSchematics {
     private static SchematicBlockDefault getBanner() {
         // Calen: moved to SchematicBlockBanner#computeRequiredItems
 //        return new SchematicBlockDefault() {
-//            @Nonnull
+//            @NotNull
 //            @Override
 //            public List<ItemStack> computeRequiredItems() {
 //                return Collections.singletonList(ItemBanner.makeBanner(

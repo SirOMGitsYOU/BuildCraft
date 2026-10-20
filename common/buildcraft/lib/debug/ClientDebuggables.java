@@ -6,6 +6,8 @@
 
 package buildcraft.lib.debug;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.tiles.IDebuggable;
 import buildcraft.lib.item.ItemDebugger;
 import net.minecraft.client.Minecraft;
@@ -19,7 +21,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 

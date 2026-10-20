@@ -15,7 +15,7 @@ import buildcraft.lib.misc.MessageUtil;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
@@ -24,7 +24,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 public abstract class PipeBehaviourDiamond extends PipeBehaviour {
 
     public static final int FILTERS_PER_SIDE = 9;
-    public static final ResourceLocation ADVANCEMENT_NEED_LIST =
+    public static final Identifier ADVANCEMENT_NEED_LIST =
             BCModules.TRANSPORT.createLocation("too_many_pipe_filters");
 
     public final ItemHandlerSimple filters = new ItemHandlerSimple(FILTERS_PER_SIDE * 6, this::onFilterSlotChange);
@@ -46,7 +46,7 @@ public abstract class PipeBehaviourDiamond extends PipeBehaviour {
     }
 
     protected void onFilterSlotChange(IItemHandlerModifiable itemHandler, int slot, ItemStack before, ItemStack after) {
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             return;
         }
         int baseIndex = FILTERS_PER_SIDE * (slot / FILTERS_PER_SIDE);
@@ -70,7 +70,7 @@ public abstract class PipeBehaviourDiamond extends PipeBehaviour {
     @Override
     public boolean onPipeActivate(Player player, HitResult trace, float hitX, float hitY, float hitZ,
             EnumPipePart part) {
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
 //            BCTransportGuis.PIPE_DIAMOND.openGui(player, pipe.getHolder().getPipePos());
             MessageUtil.serverOpenTileGui(player, pipe.getHolder(), pipe.getHolder().getPipePos());
         }

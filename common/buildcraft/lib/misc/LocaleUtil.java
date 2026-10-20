@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.mj.MjAPI;
@@ -19,7 +21,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.fluids.IFluidTank;
 
-import javax.annotation.Nullable;
+
 import java.text.NumberFormat;
 import java.util.*;
 

@@ -1,9 +1,11 @@
 package buildcraft.lib.statement;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.statements.IGuiSlot;
 import buildcraft.lib.gui.ISimpleDrawable;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 /** Provides a set of possible {@link IGuiSlot}'s for showing in GUI's as possible values, to be dragged into waiting

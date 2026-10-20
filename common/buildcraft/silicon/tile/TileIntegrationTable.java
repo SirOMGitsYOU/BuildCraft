@@ -6,6 +6,8 @@
 
 package buildcraft.silicon.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.recipes.IntegrationRecipe;
@@ -24,7 +26,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -32,9 +34,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -106,7 +108,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements IHasWork
     public void update() {
         super.update();
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
 
@@ -142,7 +144,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements IHasWork
     public void load(CompoundTag nbt) {
         super.load(nbt);
         if (nbt.contains("recipe")) {
-            recipe = lookupRecipe(nbt.getString("recipe"));
+            recipe = lookupRecipe(nbt.getStringOr("recipe", ""));
         } else {
             recipe = null;
         }
@@ -162,7 +164,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements IHasWork
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
 
         if (id == NET_GUI_DATA) {
@@ -185,8 +187,8 @@ public class TileIntegrationTable extends TileLaserTableBase implements IHasWork
     }
 
     private IntegrationRecipe lookupRecipe(String name) {
-        // return IntegrationRecipeRegistry.INSTANCE.getRecipe(new ResourceLocation(name));
-        return IntegrationRecipeRegistry.INSTANCE.getRecipe(new ResourceLocation(name), level);
+        // return IntegrationRecipeRegistry.INSTANCE.getRecipe(Identifier.fromNamespaceAndPath(name));
+        return IntegrationRecipeRegistry.INSTANCE.getRecipe(Identifier.parse(name), level);
     }
 
     // MenuProvider

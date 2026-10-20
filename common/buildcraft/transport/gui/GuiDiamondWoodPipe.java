@@ -21,12 +21,12 @@ import buildcraft.transport.pipe.behaviour.PipeBehaviourWoodDiamond;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourWoodDiamond.FilterMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiDiamondWoodPipe extends GuiBC8<ContainerDiamondWoodPipe> implements IButtonClickEventListener {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("buildcrafttransport:textures/gui/pipe_emerald.png");
-    private static final ResourceLocation TEXTURE_BUTTON = new ResourceLocation("buildcrafttransport:textures/gui/pipe_emerald_button.png");
+    private static final Identifier TEXTURE = Identifier.parse("buildcrafttransport:textures/gui/pipe_emerald.png");
+    private static final Identifier TEXTURE_BUTTON = Identifier.parse("buildcrafttransport:textures/gui/pipe_emerald_button.png");
     private static final int WHITE_LIST_BUTTON_ID = FilterMode.WHITE_LIST.ordinal();
     private static final int BLACK_LIST_BUTTON_ID = FilterMode.BLACK_LIST.ordinal();
     private static final int ROUND_ROBIN_BUTTON_ID = FilterMode.ROUND_ROBIN.ordinal();

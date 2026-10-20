@@ -14,7 +14,7 @@ import buildcraft.lib.config.EnumRestartRequirement;
 import buildcraft.silicon.item.ItemPluggableFacade;
 import com.google.common.collect.Lists;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -30,7 +30,7 @@ public class BCSiliconConfig {
     private static EnumFacadeFilterType facadeBlockNamespaceFilterType = EnumFacadeFilterType.BLACK_LIST;
     private static EnumFacadeFilterType facadeBlockIdFilterType = EnumFacadeFilterType.BLACK_LIST;
     private static List<String> facadeBlockNamespaceFilter = List.of();
-    private static List<ResourceLocation> facadeBlockIdFilter = List.of();
+    private static List<Identifier> facadeBlockIdFilter = List.of();
     public static boolean facadesNotInCreativeModTabCanBeCrafted = true;
 
     private static ConfigCategory<Boolean> propRenderLaserBeams;
@@ -87,7 +87,7 @@ public class BCSiliconConfig {
                         "facadeBlockNamespaceFilter", List.of());
         propFacadeBlockIdFilter = config
                 .defineList(display,
-                        "The block id(ResourceLocation) filter for blocks to create facades to display in CreativeModTab. Id filter has higher priority than namespace filter. [Warn: blocks allowed here may be disallowed by in-code rules.] [stone, oak_planks and oak_log are forced enabled.] Example value: minecraft:dirt",
+                        "The block id(Identifier) filter for blocks to create facades to display in CreativeModTab. Id filter has higher priority than namespace filter. [Warn: blocks allowed here may be disallowed by in-code rules.] [stone, oak_planks and oak_log are forced enabled.] Example value: minecraft:dirt",
                         EnumRestartRequirement.WORLD,
                         "facadeBlockIdFilter", List.of());
 
@@ -105,7 +105,7 @@ public class BCSiliconConfig {
 
         facadeBlockIdFilterType = propFacadeBlockIdFilterType.get();
         facadeBlockNamespaceFilterType = propFacadeBlockNamespaceFilterType.get();
-        facadeBlockIdFilter = propFacadeBlockIdFilter.get().stream().map(ResourceLocation::tryParse).collect(Collectors.toList());
+        facadeBlockIdFilter = propFacadeBlockIdFilter.get().stream().map(Identifier::tryParse).collect(Collectors.toList());
         facadeBlockNamespaceFilter = propFacadeBlockNamespaceFilter.get();
         facadesNotInCreativeModTabCanBeCrafted = propFacadesNotInCreativeModTabCanBeCrafted.get();
 
@@ -139,7 +139,7 @@ public class BCSiliconConfig {
         if (FORCED_BLOCKS.contains(block)) {
             return true;
         }
-        ResourceLocation id = block.builtInRegistryHolder().key().location();
+        Identifier id = block.builtInRegistryHolder().key().location();
         // id has higher priority
         switch (facadeBlockIdFilterType) {
             case BLACK_LIST:

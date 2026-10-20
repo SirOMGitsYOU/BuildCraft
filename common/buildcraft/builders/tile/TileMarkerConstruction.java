@@ -36,10 +36,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -52,14 +52,14 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
 
     public static HashSet<TileMarkerConstruction> currentMarkers = new HashSet<TileMarkerConstruction>();
 
-    @Nonnull
+    @NotNull
     public Direction direction = Direction.NORTH;
 
     // public LaserData_BC8 laser;
     public Pair<Vec3, Vec3> laser;
-    @Nonnull
+    @NotNull
     public ItemStack itemBlueprint = StackUtil.EMPTY;
-    @Nonnull
+    @NotNull
     public Box box = new Box();
 
     public BlueprintBuilder bluePrintBuilder;
@@ -83,11 +83,11 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
         super(BCBuildersBlocks.markerConstructionTile.get(), pos, blockState);
         // box.kind = Kind.BLUE_STRIPES;
 
-        // if (level.isClientSide) {
+        // if (level.isClientSide()) {
         //     MessageManager.sendToServer(new PacketCommand(this, NET_UPLOAD_BUILDERS_IN_ACTION, null));
         // }
         runWhenWorldNotNull(() -> {
-                    if (level.isClientSide) {
+                    if (level.isClientSide()) {
                         MessageManager.sendToServer(createMessage(NET_UPLOAD_BUILDERS_IN_ACTION, (buffer -> {})));
                     }
                 },
@@ -118,7 +118,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
 //            buildersInAction.remove(toRemove);
 //        }
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
 
@@ -199,7 +199,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
         super.load(nbt);
 
         direction = Direction.values()[(nbt.getByte("direction"))];
-        canExcavate = nbt.getBoolean("canExcavate");
+        canExcavate = nbt.getBooleanOr("canExcavate", false);
 
         if (nbt.contains("itemBlueprint")) {
             itemBlueprint = ItemStack.of(nbt.getCompound("itemBlueprint"));
@@ -210,7 +210,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
     }
 
     // public void setBlueprint(ItemStack currentItem)
-    public void setBlueprint(@Nonnull ItemStack currentItem) {
+    public void setBlueprint(@NotNull ItemStack currentItem) {
         itemBlueprint = currentItem;
         // sendNetworkUpdate();
         sendNetworkUpdate(NET_LASER_BOX_UPDATE);
@@ -229,7 +229,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
     public void clearRemoved() {
         // super.validate();
         super.clearRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             currentMarkers.add(this);
         }
     }
@@ -239,7 +239,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
     public void setRemoved() {
         // super.invalidate();
         super.setRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             currentMarkers.remove(this);
         }
     }
@@ -271,7 +271,7 @@ public class TileMarkerConstruction extends TileBC_Neptune implements ITickable,
 
     @Override
     // public void receiveCommand(String command, Side side, Object sender, ByteBuf stream)
-    public void readPayload(int command, PacketBufferBC stream, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int command, PacketBufferBC stream, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(command, stream, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT && command == NET_RENDER_DATA) {
             readPayload(NET_LASER_BOX_UPDATE, stream, side, ctx);

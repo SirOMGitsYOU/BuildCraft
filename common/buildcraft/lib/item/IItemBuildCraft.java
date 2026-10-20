@@ -7,7 +7,7 @@ package buildcraft.lib.item;
 import buildcraft.lib.registry.CreativeTabManager;
 import buildcraft.lib.registry.TagManager;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,7 +57,7 @@ public interface IItemBuildCraft {
 //    }
 
     // Calen 1.20.1
-    default ResourceLocation getRegistryName() {
+    default Identifier getRegistryName() {
         return ((Item) this).builtInRegistryHolder().key().location();
     }
 

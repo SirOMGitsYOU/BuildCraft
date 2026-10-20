@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.parts.GuidePart;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
+
 import java.util.Objects;
 
 public class GuideSmelting extends GuidePartItem {
@@ -35,8 +36,8 @@ public class GuideSmelting extends GuidePartItem {
     private final ItemStack furnace;
     private final int hash;
 
-    // public GuideSmelting(GuiGuide gui, @Nonnull ItemStack input, @Nonnull ItemStack output)
-    public GuideSmelting(GuiGuide gui, @Nonnull NonNullList<Ingredient> input, @Nonnull ItemStack output) {
+    // public GuideSmelting(GuiGuide gui, @NotNull ItemStack input, @NotNull ItemStack output)
+    public GuideSmelting(GuiGuide gui, @NotNull NonNullList<Ingredient> input, @NotNull ItemStack output) {
         super(gui);
         this.input = new ChangingItemStack(input);
         this.output = new ChangingItemStack(output);

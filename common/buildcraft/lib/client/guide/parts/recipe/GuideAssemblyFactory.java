@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.parts.GuidePartFactory;
@@ -39,7 +40,7 @@ public class GuideAssemblyFactory implements GuidePartFactory {
         return Arrays.deepHashCode(new Object[] { input, output, mjCost });
     }
 
-    // public static GuideAssemblyFactory create(@Nonnull ItemStack stack) {
+    // public static GuideAssemblyFactory create(@NotNull ItemStack stack) {
     // for (IRecipe recipe : CraftingManager.getInstance().getRecipeList()) {
     // if (OreDictionary.itemMatches(stack, StackUtil.asNonNull(recipe.getRecipeOutput()), false)) {
     // GuideAssemblyFactory val = getFactory(recipe);
@@ -115,8 +116,8 @@ public class GuideAssemblyFactory implements GuidePartFactory {
     // int width = 3;
     // int height = 3;
     // try {
-    // width = SHAPED_ORE_RECIPE___WIDTH.getInt(recipe);
-    // height = SHAPED_ORE_RECIPE___HEIGHT.getInt(recipe);
+    // width = SHAPED_ORE_RECIPE___WIDTH.getIntOr(recipe, 0);
+    // height = SHAPED_ORE_RECIPE___HEIGHT.getIntOr(recipe, 0);
     // } catch (Throwable t) {
     // BCLog.logger.error("Could not access the required shaped ore recipe fields!", t);
     // }
@@ -125,7 +126,7 @@ public class GuideAssemblyFactory implements GuidePartFactory {
     // return new ItemStack[3][3];
     // }
 
-    // @Nonnull
+    // @NotNull
     // private static ItemStack oreConvert(Object object) {
     // if (object == null) {
     // return StackUtil.EMPTY;

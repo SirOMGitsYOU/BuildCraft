@@ -6,6 +6,8 @@
 
 package buildcraft.lib.client.guide.parts;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.PageLine;
 import buildcraft.lib.client.guide.font.IFontRenderer;
@@ -17,7 +19,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 

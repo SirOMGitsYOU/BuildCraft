@@ -227,7 +227,7 @@ public class BlueprintBuilder extends SnapshotBuilder<ITileForBlueprintBuilder> 
 
     @Override
     public boolean tick() {
-        if (tile.getWorldBC().isClientSide) {
+        if (tile.getWorldBC().isClientSide()) {
             return super.tick();
         }
         tile.getWorldBC().getProfiler().push("entitiesWithinBox");

@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.inventory.filter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 
 public class DelegatingItemHandlerFilter implements IStackFilter {
     private final ISingleStackFilter perStackFilter;
@@ -22,7 +23,7 @@ public class DelegatingItemHandlerFilter implements IStackFilter {
     }
 
     @Override
-    public boolean matches(@Nonnull ItemStack stack) {
+    public boolean matches(@NotNull ItemStack stack) {
         for (int slot = 0; slot < handler.getSlots(); slot++) {
             if (perStackFilter.matches(handler.getStackInSlot(slot), stack)) {
                 return true;

@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.parts.contents;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.font.IFontRenderer;
 import buildcraft.lib.client.guide.parts.GuideChapter;
@@ -10,7 +12,7 @@ import buildcraft.lib.client.guide.parts.GuidePart.PagePosition;
 import buildcraft.lib.misc.ArrayUtil;
 import net.minecraft.client.gui.GuiGraphics;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;

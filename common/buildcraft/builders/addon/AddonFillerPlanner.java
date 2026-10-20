@@ -6,6 +6,8 @@
 
 package buildcraft.builders.addon;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IBox;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.api.statements.IStatementParameter;
@@ -28,7 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.stream.IntStream;
 
@@ -93,7 +95,7 @@ public class AddonFillerPlanner extends Addon implements ISingleAddon, IFillerSt
     @Override
     public void readFromNBT(CompoundTag nbt) {
         patternStatement.readFromNbt(nbt.getCompound("patternStatement"));
-        inverted = nbt.getBoolean("inverted");
+        inverted = nbt.getBooleanOr("inverted", false);
     }
 
     @Override

@@ -3,6 +3,7 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/ */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.client.guide.GuiGuide;
@@ -13,7 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,13 +25,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 
 public class GuideCraftingFactory implements GuidePartFactory {
 
     private final NonNullMatrix<Ingredient> input;
-    private final @Nonnull ItemStack output;
+    private final @NotNull ItemStack output;
     private final int hash;
 
     public GuideCraftingFactory(Ingredient[][] input, ItemStack output) {
@@ -50,7 +51,7 @@ public class GuideCraftingFactory implements GuidePartFactory {
         this.hash = hashNbt.hashCode();
     }
 
-    public static GuidePartFactory create(@Nonnull ItemStack stack) {
+    public static GuidePartFactory create(@NotNull ItemStack stack) {
 //        for (IRecipe recipe : ForgeRegistries.RECIPES)
         for (CraftingRecipe recipe : Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)) {
 //            if (OreDictionary.itemMatches(stack, StackUtil.asNonNull(recipe.getRecipeOutput()), false))
@@ -97,7 +98,7 @@ public class GuideCraftingFactory implements GuidePartFactory {
         return new GuideCraftingFactory(matrix, output);
     }
 
-    @Nonnull
+    @NotNull
     private static ItemStack oreConvert(Object object) {
         if (object == null) {
             return StackUtil.EMPTY;
@@ -108,7 +109,7 @@ public class GuideCraftingFactory implements GuidePartFactory {
         if (object instanceof String) {
 //            NonNullList<ItemStack> stacks = OreDictionary.getOres((String) object);
             NonNullList<ItemStack> stacks = NonNullList.create();
-            ForgeRegistries.ITEMS.tags().getTag(TagKey.create(Registries.ITEM, new ResourceLocation((String) object))).stream().forEach(i -> stacks.add(new ItemStack(i)));
+            ForgeRegistries.ITEMS.tags().getTag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath((String) object))).stream().forEach(i -> stacks.add(new ItemStack(i)));
             // It will be sorted out below
             object = stacks;
         }

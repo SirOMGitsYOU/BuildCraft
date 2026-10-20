@@ -18,6 +18,8 @@
 
 package buildcraft.lib.block;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.tiles.ITickable;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
@@ -37,7 +39,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-import javax.annotation.Nullable;
+
 
 public abstract class BlockBCTile_Neptune<T extends BlockEntity> extends BlockBCBase_Neptune implements EntityBlock {
 

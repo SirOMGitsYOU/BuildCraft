@@ -17,7 +17,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import org.lwjgl.opengl.GL11;
 
@@ -61,7 +61,7 @@ public class BuildCraftGui {
     public static final IVariableNodeBoolean isDebuggingShown;
 
     static {
-        ResourceLocation debugDef = new ResourceLocation("buildcraftlib", "base");
+        Identifier debugDef = Identifier.fromNamespaceAndPath("buildcraftlib", "base");
         isDebuggingShown = GuiConfigManager.getOrAddBoolean(debugDef, "debugging_is_shown", false);
         isDebuggingEnabled = GuiConfigManager.getOrAddBoolean(debugDef, "debugging_is_enabled", false);
     }

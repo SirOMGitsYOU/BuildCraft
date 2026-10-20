@@ -5,7 +5,7 @@ import buildcraft.lib.gui.IGuiElement;
 import buildcraft.lib.gui.config.GuiConfigManager;
 import buildcraft.lib.gui.ledger.Ledger_Neptune;
 import buildcraft.lib.gui.pos.IGuiPosition;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ElementTypeLedger extends ElementType {
     public static final String NAME = "buildcraftlib:ledger";
@@ -33,9 +33,9 @@ public class ElementTypeLedger extends ElementType {
         addChildren(gui, ledger.positionLedgerIconStart, info, json, "closed", ledger.getClosedElements()::add);
 
         ledger.calculateMaxSize();
-        ResourceLocation def = gui.jsonGuiDefinition;
-//        def = new ResourceLocation(def.getResourceDomain(), def.getResourcePath().replace(".json", ""));
-        def = new ResourceLocation(def.getNamespace(), def.getPath().replace(".json", ""));
+        Identifier def = gui.jsonGuiDefinition;
+//        def = Identifier.fromNamespaceAndPath(def.getResourceDomain(), def.getResourcePath().replace(".json", ""));
+        def = Identifier.fromNamespaceAndPath(def.getNamespace(), def.getPath().replace(".json", ""));
         ledger.setOpenProperty(GuiConfigManager.getOrAddBoolean(def, json.name + ".is_open", false));
         return ledger;
     }

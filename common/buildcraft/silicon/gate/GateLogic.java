@@ -39,7 +39,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.*;
@@ -120,14 +120,14 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
             // Legacy
             if (nbt.contains(tName, Tag.TAG_STRING)) {
                 CompoundTag nbt2 = new CompoundTag();
-                nbt2.putString("kind", nbt.getString(tName));
+                nbt2.putString("kind", nbt.getStringOr(tName, ""));
                 nbt2.putByte("side", nbt.getByte(tName + ".side"));
                 nbt.put(tName, nbt2);
             }
             // Legacy
             if (nbt.contains(aName, Tag.TAG_STRING)) {
                 CompoundTag nbt2 = new CompoundTag();
-                nbt2.putString("kind", nbt.getString(aName));
+                nbt2.putString("kind", nbt.getStringOr(aName, ""));
                 nbt2.putByte("side", nbt.getByte(aName + ".side"));
                 nbt.put(aName, nbt2);
             }
@@ -264,7 +264,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
     }
 
     // public void readPayload(PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         int id = buffer.readUnsignedByte();
         if (id == NET_ID_CHANGE) {
             boolean isAction = buffer.readBoolean();
@@ -506,7 +506,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
             turnedOn.removeAll(previousBroadcasts);
             // FIXME: add call to "wires.emittingColour(turnedOff)"
 
-            if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide) {
+            if (BCModules.TRANSPORT.isLoaded() && !getPipeHolder().getPipeWorld().isClientSide()) {
                 WorldSavedDataWireSystems.get(getPipeHolder().getPipeWorld()).gatesChanged = true;
             }
         }
@@ -521,7 +521,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
     }
 
     public void onTick() {
-        if (getPipeHolder().getPipeWorld().isClientSide) {
+        if (getPipeHolder().getPipeWorld().isClientSide()) {
             return;
         }
         resolveActions();
@@ -534,7 +534,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
                 set.add(new TriggerWrapperInternal(trigger));
             }
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             for (ITriggerInternalSided trigger : StatementManager.getInternalSidedTriggers(this, face)) {
                 if (isValidTrigger(trigger)) {
                     set.add(new TriggerWrapperInternalSided(trigger, face));
@@ -559,7 +559,7 @@ public class GateLogic implements IGate, IWireEmitter, IRedstoneStatementContain
                 set.add(new ActionWrapperInternal(trigger));
             }
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             for (IActionInternalSided trigger : StatementManager.getInternalSidedActions(this, face)) {
                 if (isValidAction(trigger)) {
                     set.add(new ActionWrapperInternalSided(trigger, face));

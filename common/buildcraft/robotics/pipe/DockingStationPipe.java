@@ -1,4 +1,5 @@
 package buildcraft.robotics.pipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.gates.IGate;
@@ -27,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 
 public class DockingStationPipe extends DockingStation implements IRequestProvider {
@@ -280,7 +281,7 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         return 127;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getRequest(int slot) {
         int facing = (slot & 0x70) >> 4;
@@ -337,7 +338,7 @@ public class DockingStationPipe extends DockingStation implements IRequestProvid
         return slotStmt.parameters[param].getItemStack();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack offerItem(int slot, ItemStack stack) {
         // int consumed = injectablePipe.injectItem(stack, true, side.getOpposite(), null);

@@ -5,6 +5,9 @@
  */
 
 package buildcraft.energy.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IFluidFilter;
@@ -46,10 +49,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 
 public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMenuProvider {
@@ -120,13 +123,13 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
 //    public void readFromNBT(CompoundTag nbt)
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        penaltyCooling = nbt.getInt("penaltyCooling");
-        burnTime = nbt.getDouble("burnTime");
-        residueAmount = Math.max(0, nbt.getDouble("residueAmount"));
+        penaltyCooling = nbt.getIntOr("penaltyCooling", 0);
+        burnTime = nbt.getDoubleOr("burnTime", 0.0);
+        residueAmount = Math.max(0, nbt.getDoubleOr("residueAmount", 0.0));
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_GUI_DATA || id == NET_GUI_TICK) {
@@ -163,7 +166,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
                 return InteractionResult.PASS;
             }
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 //            BCEnergyGuis.ENGINE_IRON.openGUI(player, getPos());
             MessageUtil.serverOpenTileGui(player, this);
         }
@@ -187,7 +190,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected IMjConnector createConnector() {
         return new EngineConnector(false);
@@ -376,7 +379,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
 
     private boolean isResidue(FluidStack fluid) {
         // If this is the client then we don't have a current fuel- just trust the server that its correct
-        if (level != null && level.isClientSide) {
+        if (level != null && level.isClientSide()) {
             return true;
         }
         if (currentFuel instanceof IDirtyFuel) {
@@ -417,7 +420,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
             return properties.length;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public FluidStack getFluidInTank(int tank) {
             return properties[tank].getContents();
@@ -458,7 +461,7 @@ public class TileEngineIron_BC8 extends TileEngineBase_BC8 implements IBCTileMen
 
         // 1.18.2
         @Override
-        public boolean isFluidValid(int tank, @Nonnull FluidStack stack) {
+        public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
             return properties[tank].canFillFluidType(stack);
         }
     }

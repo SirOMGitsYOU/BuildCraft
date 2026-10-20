@@ -1,12 +1,14 @@
 package buildcraft.silicon.recipe;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.silicon.BCSilicon;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Consumer;
 
 public class FacadeSwapRecipeBuilder {
@@ -39,8 +41,8 @@ public class FacadeSwapRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(namespace, "facade_swap/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(namespace, "facade_swap/" + name);
         }
 
         @Override
@@ -56,7 +58,7 @@ public class FacadeSwapRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

@@ -35,7 +35,7 @@ public class ContainerEngineIron_BC8 extends ContainerBCTile<TileEngineIron_BC8>
     public ItemStack quickMoveStack(Player player, int index) {
         // The only slots are player slots -- try to interact with all of the tanks
 
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
 //            Slot slot = inventorySlots.get(index);
             Slot slot = slots.get(index);
 //            ItemStack stack = slot.getStack();

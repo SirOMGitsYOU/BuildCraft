@@ -6,7 +6,9 @@
 
 package buildcraft.lib.misc.collect;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
+
 
 /** An indexed map that stores enum values.
  *

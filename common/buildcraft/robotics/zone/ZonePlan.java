@@ -133,8 +133,8 @@ public class ZonePlan implements IZone {
                     chunk.readFromNBT(zoneChunkTag);
                     chunkMapping.put(
                             new ChunkPos(
-                                    zoneChunkTag.getInt("chunkX"),
-                                    zoneChunkTag.getInt("chunkZ")
+                                    zoneChunkTag.getIntOr("chunkX", 0),
+                                    zoneChunkTag.getIntOr("chunkZ", 0)
                             ),
                             chunk
                     );

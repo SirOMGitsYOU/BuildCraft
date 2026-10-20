@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.factory.tile.TileTank;
 import buildcraft.lib.client.render.fluid.FluidRenderer;
@@ -42,8 +43,8 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
         if (forRender == null) {
             return;
         }
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("tank");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("tank");
 
 //        // gl state setup
 //        RenderHelper.disableStandardItemLighting();
@@ -95,8 +96,8 @@ public class RenderTank implements BlockEntityRenderer<TileTank> {
 //        // gl state finish
 //        RenderHelper.enableStandardItemLighting();
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     private static boolean isFullyConnected(TileTank thisTank, Direction face, float partialTicks) {

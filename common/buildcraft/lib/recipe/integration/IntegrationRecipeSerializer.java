@@ -1,5 +1,7 @@
 package buildcraft.lib.recipe.integration;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.recipes.IntegrationRecipe;
@@ -9,12 +11,12 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class IntegrationRecipeSerializer implements RecipeSerializer<IntegrationRecipe> {
@@ -28,7 +30,7 @@ public class IntegrationRecipeSerializer implements RecipeSerializer<Integration
     }
 
     @Override
-    public IntegrationRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public IntegrationRecipe fromJson(Identifier recipeId, JsonObject json) {
         long requiredMicroJoules = GsonHelper.getAsLong(json, "requiredMicroJoules");
         IngredientStack centerStack = JsonUtil.deSerializeIngredientStack(GsonHelper.getAsJsonObject(json, "centerStack"));
         JsonArray requirementsJson = GsonHelper.getAsJsonArray(json, "requirements");
@@ -52,7 +54,7 @@ public class IntegrationRecipeSerializer implements RecipeSerializer<Integration
 
     @Nullable
     @Override
-    public IntegrationRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public IntegrationRecipe fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         long requiredMicroJoules = buffer.readLong();
         IngredientStack centerStack = IngredientStack.fromNetwork(buffer);
         int requirementsSize = buffer.readInt();

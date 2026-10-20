@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.registry.IScriptableRegistry.OptionallyDisabled;
@@ -24,7 +26,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -32,7 +34,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,7 +74,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
         }
 
         for (Item item : ForgeRegistries.ITEMS) {
-            ResourceLocation regName = ItemUtil.getRegistryName(item);
+            Identifier regName = ItemUtil.getRegistryName(item);
             if (regName == null || (limitDomains && !domains.contains(regName.getNamespace()))) {
                 continue;
             }
@@ -117,7 +119,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
     }
 
     @Override
-    public OptionallyDisabled<PageEntry<ItemStackValueFilter>> deserialize(ResourceLocation name, JsonObject json, JsonDeserializationContext ctx) {
+    public OptionallyDisabled<PageEntry<ItemStackValueFilter>> deserialize(Identifier name, JsonObject json, JsonDeserializationContext ctx) {
         JsonElement jStack = json.get("stack");
         if (jStack == null) {
             throw new JsonSyntaxException("Expected either a string or an object for 'stack', but got nothing for " + json);
@@ -125,7 +127,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
         final ItemStack stack;
         final boolean matchMeta, matchNbt;
         if (jStack.isJsonPrimitive()) {
-//            String str = JsonUtils.getString(jStack, "stack");
+//            String str = JsonUtils.getStringOr(jStack, "stack", "");
             String str = GsonHelper.convertToString(jStack, "stack");
             if (str.startsWith("{") && str.endsWith("}")) {
                 stack = MarkdownPageLoader.loadComplexItemStack(str.substring(1, str.length() - 1));
@@ -136,7 +138,7 @@ public class PageEntryItemStack extends PageValueType<ItemStackValueFilter> {
                 if (str.startsWith("(") && str.endsWith(")")) {
                     str = str.substring(1, str.length() - 1);
                 }
-                ResourceLocation loc = new ResourceLocation(str);
+                Identifier loc = Identifier.fromNamespaceAndPath(str);
                 Item item = ForgeRegistries.ITEMS.getValue(loc);
                 if (item == null) {
                     if (RegistryConfig.hasItemBeenDisabled(loc)) {

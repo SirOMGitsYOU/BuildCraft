@@ -36,7 +36,7 @@ public class TriggerType extends StatementType<TriggerWrapper> {
         if (nbt == null) {
             return null;
         }
-        String kind = nbt.getString("kind");
+        String kind = nbt.getStringOr("kind", "");
         if (kind == null || kind.isEmpty()) {
             return null;
         }

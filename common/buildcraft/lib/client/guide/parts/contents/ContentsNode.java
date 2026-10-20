@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.parts.contents;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.PageLine;
 import buildcraft.lib.client.guide.parts.GuideChapterWithin;
@@ -9,7 +11,7 @@ import buildcraft.lib.misc.StringUtilBC;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.*;
 
 public class ContentsNode implements IContentsNode {

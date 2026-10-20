@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[61,)"
 license="Minecraft Mod Public License"
 issueTrackerURL=""
 [[mods]]
@@ -93,13 +93,13 @@ authors="SpaceToad, BuildCraft Team"
 [[dependencies.buildcraftcore]]
     modId="forge"
     mandatory=true
-    versionRange="[47,)"
+    versionRange="[61,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.buildcraftcore]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20,1.20.2)"
+    versionRange="[1.21.11)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.buildcraftcore]]

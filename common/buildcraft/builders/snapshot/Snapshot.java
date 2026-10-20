@@ -6,6 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.lib.misc.*;
@@ -20,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 
-import javax.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
@@ -250,8 +252,8 @@ public abstract class Snapshot {
         public Header(CompoundTag nbt) {
             key = new Key(nbt.getCompound("key"));
             owner = nbt.getUUID("owner");
-            created = new Date(nbt.getLong("created"));
-            name = nbt.getString("name");
+            created = new Date(nbt.getLongOr("created", 0L));
+            name = nbt.getStringOr("name", "");
         }
 
         @SuppressWarnings("WeakerAccess")

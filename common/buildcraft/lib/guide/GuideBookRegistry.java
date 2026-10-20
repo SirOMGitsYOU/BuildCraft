@@ -1,9 +1,11 @@
 package buildcraft.lib.guide;
 
-import buildcraft.lib.script.ScriptableRegistry;
-import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import buildcraft.lib.script.ScriptableRegistry;
+import net.minecraft.resources.Identifier;
+
+
 
 public class GuideBookRegistry extends ScriptableRegistry<GuideBook> {
 
@@ -16,7 +18,7 @@ public class GuideBookRegistry extends ScriptableRegistry<GuideBook> {
 
     @Nullable
     public GuideBook getBook(String bookName) {
-        ResourceLocation loc = new ResourceLocation(bookName);
+        Identifier loc = Identifier.parse(bookName);
         GuideBook guideBook = getReloadableEntryMap().get(loc);
         if (guideBook != null) {
             return guideBook;

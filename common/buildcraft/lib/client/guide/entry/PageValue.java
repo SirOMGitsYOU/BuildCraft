@@ -1,12 +1,14 @@
 package buildcraft.lib.client.guide.entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuideManager;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Objects;
 

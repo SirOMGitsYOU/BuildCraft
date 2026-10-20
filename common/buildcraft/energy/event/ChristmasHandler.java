@@ -4,7 +4,7 @@ import buildcraft.energy.BCEnergyConfig;
 import buildcraft.energy.BCEnergyFluids;
 import buildcraft.lib.fluid.BCFluid;
 import buildcraft.lib.registry.TagManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -106,11 +106,11 @@ public class ChristmasHandler {
     public static void regBucketNoFlipModel(ModelEvent.RegisterAdditional event) {
         if (isEnabled()) {
             for (RegistryObject<BCFluid.Source> fluid : BCEnergyFluids.allStill) {
-                ResourceLocation bucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
+                Identifier bucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
                 String namespace = bucketRegRL.getNamespace();
                 String normalPath = bucketRegRL.getPath();
                 String christmasPath = normalPath + "_christmas";
-                ResourceLocation christmasModelRL = new ResourceLocation(namespace, "item/" + christmasPath);
+                Identifier christmasModelRL = Identifier.fromNamespaceAndPath(namespace, "item/" + christmasPath);
 //                ForgeModelBakery.addSpecialModel(christmasModelRL);
                 event.register(christmasModelRL);
             }
@@ -120,12 +120,12 @@ public class ChristmasHandler {
     public static void replaceBucketNoFlipModel(ModelEvent.ModifyBakingResult event) {
         if (isEnabled()) {
             for (RegistryObject<BCFluid.Source> fluid : BCEnergyFluids.allStill) {
-                ResourceLocation normalBucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
+                Identifier normalBucketRegRL = fluid.get().getReg().getBucket().getRegistryName();
                 String namespace = normalBucketRegRL.getNamespace();
                 String normalPath = normalBucketRegRL.getPath();
                 String christmasPath = normalPath + "_christmas";
-                ResourceLocation normalModelRL = new ResourceLocation(namespace, "item/" + normalPath);
-                ResourceLocation christmasModelRL = new ResourceLocation(namespace, "item/" + christmasPath);
+                Identifier normalModelRL = Identifier.fromNamespaceAndPath(namespace, "item/" + normalPath);
+                Identifier christmasModelRL = Identifier.fromNamespaceAndPath(namespace, "item/" + christmasPath);
                 event.getModels().replace(normalModelRL, event.getModels().get(christmasModelRL));
             }
         }

@@ -6,6 +6,8 @@
 
 package buildcraft.transport.client.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.model.ModelItemSimple;
 import buildcraft.lib.misc.SpriteUtil;
 import buildcraft.transport.block.BlockPipeHolder;
@@ -16,12 +18,11 @@ import buildcraft.transport.client.model.key.PipeModelKey;
 import buildcraft.transport.tile.TilePipeHolder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)

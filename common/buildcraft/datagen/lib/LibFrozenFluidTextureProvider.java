@@ -6,7 +6,7 @@ import net.minecraft.client.resources.metadata.animation.AnimationMetadataSectio
 import net.minecraft.client.resources.metadata.animation.FrameSize;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.level.material.EmptyFluid;
@@ -31,7 +31,7 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
         super(packOutput, exFileHelper);
     }
 
-    private List<ResourceLocation> createdFluids = new LinkedList<>();
+    private List<Identifier> createdFluids = new LinkedList<>();
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
@@ -43,12 +43,12 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
             if (fluid instanceof EmptyFluid) {
                 continue;
             }
-            ResourceLocation still = FluidUtilBC.getStillTexture(fluid);
+            Identifier still = FluidUtilBC.getStillTexture(fluid);
             if (createdFluids.contains(still)) {
                 continue;
             }
             createdFluids.add(still);
-            ResourceLocation frozen = new ResourceLocation(
+            Identifier frozen = new Identifier(
                     still.getNamespace(),
                     still.getPath().contains("_still")
                             ?
@@ -67,7 +67,7 @@ public class LibFrozenFluidTextureProvider extends BCBaseTextureGenerator {
         return CompletableFuture.allOf(futures.toArray(CompletableFuture<?>[]::new));
     }
 
-    private CompletableFuture<?> genFrozen(Path mainOutput, ResourceLocation still, ResourceLocation frozen, CachedOutput cache) throws IOException {
+    private CompletableFuture<?> genFrozen(Path mainOutput, Identifier still, Identifier frozen, CachedOutput cache) throws IOException {
         Resource stillMcmetaResource = exFileHelper.getResource(still, PackType.CLIENT_RESOURCES, ".png.mcmeta", "textures");
         Resource stillResource = exFileHelper.getResource(still, PackType.CLIENT_RESOURCES, ".png", "textures");
 

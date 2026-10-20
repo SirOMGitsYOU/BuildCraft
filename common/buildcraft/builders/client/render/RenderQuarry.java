@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.builders.BCBuildersBlocks;
@@ -82,7 +83,7 @@ public class RenderQuarry implements BlockEntityRenderer<TileQuarry> {
         if (state.getBlock() != BCBuildersBlocks.quarry.get()) {
             return;
         }
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("bc");
         profiler.push("quarry");
         profiler.push("setup");

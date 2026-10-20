@@ -33,18 +33,16 @@ import buildcraft.transport.pipe.flow.PipeFlowPower;
 import buildcraft.transport.pipe.flow.PipeFlowRedstoneFlux;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.EventBus;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -89,7 +87,7 @@ public class BCTransportModels {
     public static void fmlPreInit() {
         // 1.18.2: following events are IModBusEvent
 //        MinecraftForge.EVENT_BUS.register(BCTransportModels.class);
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCTransport.MODID).get()).getEventBus();
+        EventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCTransport.MODID).get()).getEventBus();
         modEventBus.register(BCTransportModels.class);
     }
 
@@ -130,9 +128,9 @@ public class BCTransportModels {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onModelBake(ModelEvent.ModifyBakingResult event) {
-        event.getModels().replaceAll(((resourceLocation, bakedModel) ->
+        event.getModels().replaceAll(((Identifier, bakedModel) ->
         {
-            if (resourceLocation instanceof ModelResourceLocation m) {
+            if (Identifier instanceof ModelResourceLocation m) {
                 if (m.getNamespace().equals(BCTransport.MODID)) {
                     if (m.getVariant().equals("inventory") && m.getPath().startsWith("pipe_")) {
                         return ModelPipeItem.INSTANCE;

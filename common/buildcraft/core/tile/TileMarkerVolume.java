@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.tiles.ITileAreaProvider;
@@ -30,9 +31,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -76,11 +77,11 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        showSignals = nbt.getBoolean("showSignals");
+        showSignals = nbt.getBooleanOr("showSignals", false);
     }
 
     public void switchSignals() {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             showSignals = !showSignals;
 //            markDirty();
             this.setChanged();
@@ -107,7 +108,7 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_SIGNALS_ON) {
@@ -120,7 +121,7 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
@@ -193,7 +194,7 @@ public class TileMarkerVolume extends TileMarker<VolumeConnection> implements IT
 
     @Override
     public void removeFromWorld() {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         VolumeConnection connection = getCurrentConnection();

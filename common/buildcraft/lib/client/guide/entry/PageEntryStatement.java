@@ -1,5 +1,7 @@
 package buildcraft.lib.client.guide.entry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.registry.IScriptableRegistry.OptionallyDisabled;
 import buildcraft.api.statements.IAction;
 import buildcraft.api.statements.IStatement;
@@ -14,11 +16,11 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.TreeMap;
 
@@ -56,8 +58,8 @@ public class PageEntryStatement extends PageValueType<IStatement> {
     }
 
     @Override
-    public OptionallyDisabled<PageEntry<IStatement>> deserialize(ResourceLocation name, JsonObject json, JsonDeserializationContext ctx) {
-//        String stmntName = JsonUtils.getString(json, "statement");
+    public OptionallyDisabled<PageEntry<IStatement>> deserialize(Identifier name, JsonObject json, JsonDeserializationContext ctx) {
+//        String stmntName = JsonUtils.getStringOr(json, "statement", "");
         String stmntName = GsonHelper.getAsString(json, "statement");
         IStatement stmnt = StatementManager.statements.get(stmntName);
         if (stmnt == null) {

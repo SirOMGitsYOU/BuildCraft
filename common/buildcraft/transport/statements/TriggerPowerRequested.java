@@ -1,5 +1,7 @@
 package buildcraft.transport.statements;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.gates.IGate;
 import buildcraft.api.statements.IStatementContainer;
@@ -12,7 +14,7 @@ import buildcraft.transport.pipe.flow.PipeFlowPower;
 import buildcraft.transport.pipe.flow.PipeFlowRedstoneFlux;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 
 public class TriggerPowerRequested extends BCStatement implements ITriggerInternal {
 

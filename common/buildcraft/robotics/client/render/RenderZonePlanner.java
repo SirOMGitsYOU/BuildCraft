@@ -5,6 +5,7 @@
  */
 
 package buildcraft.robotics.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.client.model.MutableVertex;
@@ -55,8 +56,8 @@ public class RenderZonePlanner implements BlockEntityRenderer<TileZonePlanner> {
     @Override
 //    public final void render(TileZonePlanner tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     public void render(TileZonePlanner tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("zone");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("zone");
 
         double offset = 0.001;
         double minX = 3 / 16D - offset;
@@ -141,8 +142,8 @@ public class RenderZonePlanner implements BlockEntityRenderer<TileZonePlanner> {
 //        }
 //        RenderHelper.enableStandardItemLighting();
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     private static DynamicTextureBC getTexture(TileZonePlanner tile, Direction side) {

@@ -8,7 +8,7 @@ import buildcraft.core.block.BlockDecoration;
 import buildcraft.datagen.base.BCBaseBlockStateGenerator;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelBuilder;
@@ -40,14 +40,14 @@ public class CoreBlockStateGenerator extends BCBaseBlockStateGenerator {
         builtinEntity(BCCoreBlocks.engineCreative.get(), "buildcraftcore:block/engine/creative/back");
 
         // spring
-        simpleBlock(BCCoreBlocks.springWater.get(), new ConfiguredModel(new ModelFile.ExistingModelFile(new ResourceLocation("minecraft:block/bedrock"), this.models().existingFileHelper)));
-        simpleBlock(BCCoreBlocks.springOil.get(), new ConfiguredModel(new ModelFile.ExistingModelFile(new ResourceLocation("minecraft:block/bedrock"), this.models().existingFileHelper)));
+        simpleBlock(BCCoreBlocks.springWater.get(), new ConfiguredModel(new ModelFile.ExistingModelFile(Identifier.parse("minecraft:block/bedrock"), this.models().existingFileHelper)));
+        simpleBlock(BCCoreBlocks.springOil.get(), new ConfiguredModel(new ModelFile.ExistingModelFile(Identifier.parse("minecraft:block/bedrock"), this.models().existingFileHelper)));
 
         // decorated
         BCCoreBlocks.decoratedMap.values().forEach(decorated ->
                 {
                     BlockDecoration block = decorated.get();
-                    ResourceLocation rl = block.getRegistryName();
+                    Identifier rl = block.getRegistryName();
                     EnumDecoratedBlock type = block.DECORATED_TYPE;
                     String texture = switch (type) {
                         case BLUEPRINT -> "buildcraftcore:block/blueprint/blue";

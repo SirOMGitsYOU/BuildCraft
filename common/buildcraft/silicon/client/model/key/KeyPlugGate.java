@@ -8,7 +8,7 @@ package buildcraft.silicon.client.model.key;
 
 import buildcraft.api.transport.pluggable.PluggableModelKey;
 import buildcraft.silicon.gate.GateVariant;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 
 import java.util.Objects;

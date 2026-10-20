@@ -7,7 +7,6 @@
 package buildcraft.lib.client.reload;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.UnbakedModel;
 
 /** Defines that source of the change. Listeners should check to see what actually changed to see if they also need to

@@ -15,7 +15,7 @@ import buildcraft.lib.net.PacketBufferBC;
 import buildcraft.lib.statement.FullStatement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.stream.IntStream;
@@ -40,7 +40,7 @@ public interface IContainerFilling {
     void valuesChanged();
 
     default void init() {
-        if (!getPlayer().level().isClientSide) {
+        if (!getPlayer().level().isClientSide()) {
             MessageUtil.doDelayedServer(this::sendData);
         }
     }
@@ -48,7 +48,7 @@ public interface IContainerFilling {
     default void sendData() {
         sendMessage(ContainerBC_Neptune.NET_DATA, buffer ->
         {
-            (getPlayer().level().isClientSide
+            (getPlayer().level().isClientSide()
                     ? getPatternStatementClient()
                     : getPatternStatement()).writeToBuffer(buffer);
             buffer.writeBoolean(isInverted());
@@ -65,7 +65,7 @@ public interface IContainerFilling {
     }
 
     // default void readMessage(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    default void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    default void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         if (side == NetworkDirection.PLAY_TO_SERVER) {
             if (id == ContainerBC_Neptune.NET_DATA) {
                 if (isLocked()) {

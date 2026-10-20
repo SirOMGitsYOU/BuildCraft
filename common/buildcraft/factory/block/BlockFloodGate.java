@@ -88,7 +88,7 @@ public class BlockFloodGate extends BlockBCTile_Neptune<TileFloodGate> implement
 
         ItemStack heldItem = player.getItemInHand(hand);
         if (heldItem.getItem() instanceof IToolWrench) {
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 if (side != Direction.UP) {
                     BlockEntity tile = world.getBlockEntity(pos);
                     if (tile instanceof TileFloodGate) {

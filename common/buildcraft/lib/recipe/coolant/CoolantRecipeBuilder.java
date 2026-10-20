@@ -1,16 +1,18 @@
 package buildcraft.lib.recipe.coolant;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.fuels.EnumCoolantType;
 import buildcraft.api.fuels.ICoolant;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Consumer;
 
 public class CoolantRecipeBuilder {
@@ -53,8 +55,8 @@ public class CoolantRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(BCModules.ENERGY.getModId(), "coolant/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(BCModules.ENERGY.getModId(), "coolant/" + name);
         }
 
         @Override
@@ -70,7 +72,7 @@ public class CoolantRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

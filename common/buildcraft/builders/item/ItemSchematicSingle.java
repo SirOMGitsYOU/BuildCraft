@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.builders.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
@@ -22,7 +23,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 
 public class ItemSchematicSingle extends ItemBC_Neptune {
@@ -66,9 +66,9 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
 
     @Override
 //    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, InteractionHand hand)
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = StackUtil.asNonNull(player.getItemInHand(hand));
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
 //        if (player.isSneaking())
@@ -94,7 +94,7 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
         InteractionHand hand = ctx.getHand();
         Direction side = ctx.getClickedFace();
         Vec3 vec3Pos = ctx.getClickLocation();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.PASS;
         }
 //        ItemStack stack = player.getHeldItem(hand);
@@ -219,14 +219,14 @@ public class ItemSchematicSingle extends ItemBC_Neptune {
         }
     }
 
-    public static ISchematicBlock getSchematic(@Nonnull ItemStack stack) throws InvalidInputDataException {
+    public static ISchematicBlock getSchematic(@NotNull ItemStack stack) throws InvalidInputDataException {
         if (stack.getItem() instanceof ItemSchematicSingle) {
             return SchematicBlockManager.readFromNBT(NBTUtilBC.getItemData(stack).getCompound(NBT_KEY));
         }
         return null;
     }
 
-    public static ISchematicBlock getSchematicSafe(@Nonnull ItemStack stack) {
+    public static ISchematicBlock getSchematicSafe(@NotNull ItemStack stack) {
         // Calen FIX: when mouse hovers on unused schematic, #getSchematic will cause InvalidInputDataException
         if ((!stack.hasTag()) || !(stack.getTag().contains("name"))) {
             return null;

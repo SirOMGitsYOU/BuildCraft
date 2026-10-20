@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.statements;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.core.render.ISprite;
@@ -17,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 

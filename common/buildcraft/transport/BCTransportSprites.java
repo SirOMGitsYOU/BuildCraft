@@ -14,14 +14,14 @@ import buildcraft.transport.client.model.PipeModelCacheBase;
 import buildcraft.transport.client.render.PipeFlowRendererItems;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli.SlotIndex;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.EventBus;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -82,7 +82,7 @@ public class BCTransportSprites {
         }
 
         ACTION_PIPE_DIRECTION = new EnumMap<>(Direction.class);
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             ACTION_PIPE_DIRECTION.put(face,
                     getHolder("core", "triggers/trigger_dir_" + face.getName().toLowerCase(Locale.ROOT)));
         }
@@ -127,7 +127,7 @@ public class BCTransportSprites {
     public static void fmlPreInit() {
         // 1.18.2: following events are IModBusEvent
 //        MinecraftForge.EVENT_BUS.register(BCTransportSprites.class);
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCTransport.MODID).get()).getEventBus();
+        EventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCTransport.MODID).get()).getEventBus();
         modEventBus.register(BCTransportSprites.class);
     }
 
@@ -138,7 +138,7 @@ public class BCTransportSprites {
     }
 
     // Calen 1.20.1
-    public static void onDatagenTextureRegister(Consumer<ResourceLocation> consumer) {
+    public static void onDatagenTextureRegister(Consumer<Identifier> consumer) {
         PipeModelCacheBase.generator.onDatagenTextureRegister(consumer);
     }
 

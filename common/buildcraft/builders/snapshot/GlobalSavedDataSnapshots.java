@@ -6,6 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.misc.data.SingleCache;
 import buildcraft.lib.nbt.NbtSquisher;
 import com.google.common.cache.CacheBuilder;
@@ -17,7 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nullable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -65,7 +67,7 @@ public class GlobalSavedDataSnapshots {
     }
 
     public static GlobalSavedDataSnapshots get(Level world) {
-        return get(world.isClientSide ? Dist.CLIENT : Dist.DEDICATED_SERVER);
+        return get(world.isClientSide() ? Dist.CLIENT : Dist.DEDICATED_SERVER);
     }
 
     private Pair<Snapshot, File> readSnapshot(Snapshot.Key key) {

@@ -1,4 +1,7 @@
 package buildcraft.lib.client.guide.loader;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.InvalidInputDataException;
@@ -30,14 +33,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
@@ -194,13 +197,13 @@ public enum XmlPageLoader implements IPageLoaderText {
     }
 
     @Override
-    public GuidePageFactory loadPage(BufferedReader reader, ResourceLocation name, PageEntry<?> entry, ProfilerFiller prof) throws IOException {
+    public GuidePageFactory loadPage(BufferedReader reader, Identifier name, PageEntry<?> entry, ProfilerFiller prof) throws IOException {
         try (IProfilerSection p = new ProfilerBC(prof).start("xml")) {
             return loadPage0(reader, name, entry, prof);
         }
     }
 
-    private static GuidePageFactory loadPage0(BufferedReader reader, ResourceLocation name, PageEntry<?> entry, ProfilerFiller prof) throws IOException, InvalidInputDataException {
+    private static GuidePageFactory loadPage0(BufferedReader reader, Identifier name, PageEntry<?> entry, ProfilerFiller prof) throws IOException, InvalidInputDataException {
         // Needs to support:
         // - start/end tags (such as <lore></lore>)
         // - nested tags (such as <lore>Spooky<bold> Skeletons</bold></lore>)
@@ -498,7 +501,7 @@ public enum XmlPageLoader implements IPageLoaderText {
         }
         final PageLink link;
         if (type == null) {
-            ResourceLocation location = new ResourceLocation(to);
+            Identifier location = Identifier.fromNamespaceAndPath(to);
             PageEntry<?> entry = GuidePageRegistry.INSTANCE.getReloadableEntryMap().get(location);
             if (entry == null) {
                 BCLog.logger.warn("[lib.guide.loader.xml] Found a link tag to an unknown page! " + tag);
@@ -625,7 +628,7 @@ public enum XmlPageLoader implements IPageLoaderText {
         return loadAllCrafting(stack, prof, chapterLevel);
     }
 
-    public static List<GuidePartFactory> loadAllCrafting(@Nonnull ItemStack stack, ProfilerFiller prof, int chapterLevel) {
+    public static List<GuidePartFactory> loadAllCrafting(@NotNull ItemStack stack, ProfilerFiller prof, int chapterLevel) {
         prof.push("recipes");
         List<GuidePartFactory> list = new ArrayList<>();
         List<GuidePartFactory> recipeParts = RecipeLookupHelper.getAllRecipes(stack, prof);
@@ -739,7 +742,7 @@ public enum XmlPageLoader implements IPageLoaderText {
         }
         ItemStack stack = null;
 //        Item item = Item.byId(Integer.parseInt(id.trim()));
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(id.trim()));
+        Item item = ForgeRegistries.ITEMS.getValue(Identifier.fromNamespaceAndPath(id.trim()));
         if (item != null) {
             stack = new ItemStack(item);
         } else {

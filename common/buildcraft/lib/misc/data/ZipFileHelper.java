@@ -6,12 +6,14 @@
 
 package buildcraft.lib.misc.data;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.nbt.NbtSquisher;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.io.IOUtils;
 
-import javax.annotation.Nullable;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

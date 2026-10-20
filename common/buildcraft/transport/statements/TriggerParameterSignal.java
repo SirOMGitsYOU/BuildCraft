@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.statements;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.gates.IGate;
@@ -26,8 +29,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -58,7 +61,7 @@ public class TriggerParameterSignal implements IStatementParameter {
     public static TriggerParameterSignal readFromNbt(CompoundTag nbt) {
         if (nbt.contains("color", Tag.TAG_ANY_NUMERIC)) {
             DyeColor colour = DyeColor.byId(nbt.getByte("color"));
-            boolean active = nbt.getBoolean("active");
+            boolean active = nbt.getBooleanOr("active", false);
             return get(active, colour);
         } else {
             return EMPTY;
@@ -101,7 +104,7 @@ public class TriggerParameterSignal implements IStatementParameter {
         this.colour = colour;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

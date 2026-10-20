@@ -6,6 +6,8 @@
 
 package buildcraft.lib.client.guide.parts;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.GuideManager;
 import buildcraft.lib.gui.GuiIcon;
@@ -13,7 +15,7 @@ import buildcraft.lib.gui.pos.GuiRectangle;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 

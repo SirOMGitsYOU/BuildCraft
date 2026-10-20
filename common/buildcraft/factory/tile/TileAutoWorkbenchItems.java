@@ -4,6 +4,8 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.factory.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.tiles.IBCTileMenuProvider;
 import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.BCFactoryMenuTypes;
@@ -14,7 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+
 
 public class TileAutoWorkbenchItems extends TileAutoWorkbenchBase implements IBCTileMenuProvider {
     public TileAutoWorkbenchItems(BlockPos pos, BlockState blockState) {

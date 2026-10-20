@@ -1,23 +1,25 @@
 package buildcraft.robotics.boards;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.boards.RedstoneBoardRobot;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.robots.EntityRobotBase;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class RedstoneBoardRobotEmptyNBT extends RedstoneBoardRobotNBT {
 
     public static RedstoneBoardRobotEmptyNBT instance = new RedstoneBoardRobotEmptyNBT();
 
-    private static final ResourceLocation ROBOT_ID = new ResourceLocation("buildcraftrobotics:robot_base");
+    private static final Identifier ROBOT_ID = Identifier.parse("buildcraftrobotics:robot_base");
 
     @Override
     public RedstoneBoardRobot create(EntityRobotBase robot) {
@@ -25,28 +27,28 @@ public class RedstoneBoardRobotEmptyNBT extends RedstoneBoardRobotNBT {
     }
 
     @Override
-    public ResourceLocation getRobotTexture() {
+    public Identifier getRobotTexture() {
         return EntityRobot.ROBOT_BASE;
     }
 
     @Override
-    public ResourceLocation getRobotItemTexture() {
-        return new ResourceLocation("buildcraftrobotics:item/robot/robot_base");
+    public Identifier getRobotItemTexture() {
+        return Identifier.parse("buildcraftrobotics:item/robot/robot_base");
     }
 
     @Override
-    public ResourceLocation getRobotTextureFullLocation() {
+    public Identifier getRobotTextureFullLocation() {
         return EntityRobot.ROBOT_BASE_PNG;
     }
 
     @Override
-    public ResourceLocation getRobotId() {
+    public Identifier getRobotId() {
         return ROBOT_ID;
     }
 
     @Override
-    public ResourceLocation getID() {
-        return new ResourceLocation("buildcraftrobotics:board_robot_empty");
+    public Identifier getID() {
+        return Identifier.parse("buildcraftrobotics:board_robot_empty");
     }
 
     @SuppressWarnings("rawtypes")

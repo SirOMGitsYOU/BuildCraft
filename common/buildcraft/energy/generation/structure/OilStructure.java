@@ -133,28 +133,28 @@ public class OilStructure extends StructurePiece {
     // Load from NBT
     public static OilStructure deserialize(CompoundTag tag) {
         List<OilGenStructurePart> pieces = new ArrayList<>();
-        ListTag pieceTags = tag.getList("oil_structure_parts", Tag.TAG_COMPOUND);
+        ListTag pieceTags = tag.getListOrEmpty("oil_structure_parts", Tag.TAG_COMPOUND);
         for (Tag t : pieceTags) {
             OilGenStructurePart currentPart;
             if (t instanceof CompoundTag tagOfPiece) {
                 CompoundTag fields = tagOfPiece.getCompound("fields");
                 // replaceType
-                OilGenStructurePart.ReplaceType type = OilGenStructurePart.ReplaceType.valueOf(fields.getString("replaceType"));
+                OilGenStructurePart.ReplaceType type = OilGenStructurePart.ReplaceType.valueOf(fields.getStringOr("replaceType", ""));
                 // box
                 CompoundTag boxTag = fields.getCompound("box");
                 BlockPos box_max = NBTUtilBC.readBlockPos(boxTag.get("box_max"));
                 BlockPos box_min = NBTUtilBC.readBlockPos(boxTag.get("box_min"));
                 Box box = new Box(box_min, box_max);
                 // all fields above
-                switch (tagOfPiece.getString("class")) {
+                switch (tagOfPiece.getStringOr("class", "")) {
                     case "Spring":
                         BlockPos pos = NBTUtilBC.readBlockPos(fields.get("pos"));
                         currentPart = new OilGenStructurePart.Spring(pos);
                         break;
                     case "Spout":
                         BlockPos start = NBTUtilBC.readBlockPos(fields.get("start"));
-                        int radius = fields.getInt("radius");
-                        int height = fields.getInt("height");
+                        int radius = fields.getIntOr("radius", 0);
+                        int height = fields.getIntOr("height", 0);
                         currentPart = new OilGenStructurePart.Spout(start, type, radius, height);
                         break;
                     case "GenByPredicate":
@@ -166,16 +166,16 @@ public class OilStructure extends StructurePiece {
                             // center, radiusSq
                             case 2 + 2:
                                 center = NBTUtilBC.readBlockPos(fields.get("center"));
-                                radiusSq = fields.getDouble("radiusSq");
+                                radiusSq = fields.getDoubleOr("radiusSq", 0.0);
                                 currentPart = new OilGenStructurePart.GenByPredicate(box, type, center, radiusSq);
                                 break;
                             // Axis int BlockPos double
                             // axis, toReplace, center, radiusSq
                             case 4 + 2:
-                                Direction.Axis axis = Direction.Axis.valueOf(fields.getString("axis"));
-                                int toReplace = fields.getInt("toReplace");
+                                Direction.Axis axis = Direction.Axis.valueOf(fields.getStringOr("axis", ""));
+                                int toReplace = fields.getIntOr("toReplace", 0);
                                 center = NBTUtilBC.readBlockPos(fields.get("center"));
-                                radiusSq = fields.getDouble("radiusSq");
+                                radiusSq = fields.getDoubleOr("radiusSq", 0.0);
                                 currentPart = new OilGenStructurePart.GenByPredicate(box, type, axis, toReplace, center, radiusSq);
                                 break;
                             default:
@@ -184,7 +184,7 @@ public class OilStructure extends StructurePiece {
                         break;
                     case "FlatPattern":
                         List<boolean[]> patternListOuterFlatPattern = new ArrayList<>();
-                        ListTag patternListTagOuter = fields.getList("pattern", Tag.TAG_LIST);
+                        ListTag patternListTagOuter = fields.getListOrEmpty("pattern", Tag.TAG_LIST);
                         for (Tag rowTag : patternListTagOuter) {
                             if (rowTag instanceof ListTag rowListTag) {
                                 boolean[] row = NBTUtilBC.readBooleanArray(rowListTag);
@@ -193,12 +193,12 @@ public class OilStructure extends StructurePiece {
                                 throw new RuntimeException("Unexpected FlatPattern Pattern Tag Type!");
                             }
                         }
-                        int depthFlatPattern = fields.getInt("depth");
+                        int depthFlatPattern = fields.getIntOr("depth", 0);
                         currentPart = new OilGenStructurePart.FlatPattern(box, type, (boolean[][]) patternListOuterFlatPattern.stream().toArray(), depthFlatPattern);
                         break;
                     case "PatternTerrainHeight":
                         List<boolean[]> patternListOuterPatternTerrainHeight = new ArrayList<>();
-                        ListTag patternListTagOuterPatternTerrainHeight = fields.getList("pattern", Tag.TAG_LIST);
+                        ListTag patternListTagOuterPatternTerrainHeight = fields.getListOrEmpty("pattern", Tag.TAG_LIST);
                         for (Tag rowTag : patternListTagOuterPatternTerrainHeight) {
                             if (rowTag instanceof ListTag rowListTag) {
                                 boolean[] row = NBTUtilBC.readBooleanArray(rowListTag);
@@ -207,7 +207,7 @@ public class OilStructure extends StructurePiece {
                                 throw new RuntimeException("Unexpected FlatPattern Pattern Tag Type!");
                             }
                         }
-                        int depthPatternTerrainHeight = fields.getInt("depth");
+                        int depthPatternTerrainHeight = fields.getIntOr("depth", 0);
                         currentPart = new OilGenStructurePart.PatternTerrainHeight(
                                 box,
                                 type,

@@ -30,7 +30,7 @@ import buildcraft.silicon.BCSiliconItems;
 import buildcraft.silicon.BCSiliconStatements;
 import buildcraft.silicon.client.model.key.KeyPlugPulsar;
 import buildcraft.transport.BCTransportConfig;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -42,7 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -102,8 +102,8 @@ public class PluggablePulsar extends PipePluggable {
         VariableInfoObject<Direction> infoSide = MODEL_VAR_INFO.createInfoObject(MODEL_SIDE);
         infoSide.cacheType = CacheType.ALWAYS;
         infoSide.setIsComplete = true;
-//        infoSide.possibleValues.addAll(Arrays.asList(Direction.VALUES));
-        infoSide.possibleValues.addAll(Arrays.asList(Direction.VALUES.clone()));
+//        infoSide.possibleValues.addAll(Arrays.asList(Direction.values()));
+        infoSide.possibleValues.addAll(Arrays.asList(Direction.values().clone()));
 
         VariableInfoDouble infoStage = MODEL_VAR_INFO.createInfoDouble(MODEL_STAGE);
         infoStage.cacheType = CacheType.IN_SET;
@@ -119,10 +119,10 @@ public class PluggablePulsar extends PipePluggable {
 
     public PluggablePulsar(PluggableDefinition definition, IPipeHolder holder, Direction side, CompoundTag nbt) {
         super(definition, holder, side);
-        this.manuallyEnabled = nbt.getBoolean("manuallyEnabled");
-        gateEnabledTicks = nbt.getInt("gateEnabledTicks");
-        gateSinglePulses = nbt.getInt("gateSinglePulses");
-        pulseStage = MathUtil.clamp(nbt.getInt("pulseStage"), 0, PULSE_STAGE);
+        this.manuallyEnabled = nbt.getBooleanOr("manuallyEnabled", false);
+        gateEnabledTicks = nbt.getIntOr("gateEnabledTicks", 0);
+        gateSinglePulses = nbt.getIntOr("gateSinglePulses", 0);
+        pulseStage = MathUtil.clamp(nbt.getIntOr("pulseStage", 0), 0, PULSE_STAGE);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class PluggablePulsar extends PipePluggable {
 
     @Override
 //    public void readPayload(PacketBuffer buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             readData(buffer);
@@ -200,7 +200,7 @@ public class PluggablePulsar extends PipePluggable {
 
     @Override
     public void onTick() {
-        if (holder.getPipeWorld().isClientSide) {
+        if (holder.getPipeWorld().isClientSide()) {
             if (isPulsing) {
                 pulseStage++;
                 if (pulseStage == PULSE_STAGE) {
@@ -272,7 +272,7 @@ public class PluggablePulsar extends PipePluggable {
 
     @Override
     public boolean onPluggableActivate(Player player, HitResult trace, float hitX, float hitY, float hitZ) {
-        if (!holder.getPipeWorld().isClientSide) {
+        if (!holder.getPipeWorld().isClientSide()) {
             manuallyEnabled = !manuallyEnabled;
             SoundUtil.playLeverSwitch(holder.getPipeWorld(), holder.getPipePos(), manuallyEnabled);
             scheduleNetworkUpdate();

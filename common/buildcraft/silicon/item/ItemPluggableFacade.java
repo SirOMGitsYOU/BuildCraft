@@ -5,6 +5,9 @@
  */
 
 package buildcraft.silicon.item;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.api.facades.FacadeType;
@@ -40,8 +43,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +55,7 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
 //        setHasSubtypes(true);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack createItemStack(IFacade state) {
         ItemStack item = new ItemStack(this);
@@ -61,16 +64,16 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
         return item;
     }
 
-    public static FacadeInstance getStates(@Nonnull ItemStack item) {
+    public static FacadeInstance getStates(@NotNull ItemStack item) {
         CompoundTag nbt = NBTUtilBC.getItemData(item);
 
-        String strPreview = nbt.getString("preview");
+        String strPreview = nbt.getStringOr("preview", "");
         if ("basic".equalsIgnoreCase(strPreview)) {
             return FacadeInstance.createSingle(FacadeStateManager.previewState, false);
         }
 
         if (!nbt.contains("facade") && nbt.contains("states")) {
-            ListTag states = nbt.getList("states", Tag.TAG_COMPOUND);
+            ListTag states = nbt.getListOrEmpty("states", Tag.TAG_COMPOUND);
             if (states.size() > 0) {
                 // Only migrate if we actually have a facade to migrate.
                 boolean isHollow = states.getCompound(0).getBoolean("isHollow");
@@ -84,7 +87,7 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
         return FacadeInstance.readFromNbt(nbt.getCompound("facade"));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getFacadeForBlock(BlockState state) {
         FacadeBlockStateInfo info = FacadeStateManager.validFacadeStates.get(state);
@@ -96,7 +99,7 @@ public class ItemPluggableFacade extends ItemBC_Neptune implements IItemPluggabl
     }
 
     @Override
-    public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
+    public PipePluggable onPlace(@NotNull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
         FacadeInstance fullState = getStates(stack);
         SoundUtil.playBlockPlace(holder.getPipeWorld(), holder.getPipePos(), fullState.phasedStates[0].stateInfo.state);
         return new PluggableFacade(BCSiliconPlugs.facade, holder, side, fullState);

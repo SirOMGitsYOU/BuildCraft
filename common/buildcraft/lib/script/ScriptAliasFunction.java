@@ -1,6 +1,8 @@
 package buildcraft.lib.script;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
+
 
 public class ScriptAliasFunction {
     public static class AliasBuilder {

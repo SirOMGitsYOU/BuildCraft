@@ -299,7 +299,7 @@ public class BCSiliconRecipes {
 //        }
 //
 //        String name = root.relativize(file).toString().replace("\\", "/");
-//        ResourceLocation key = new ResourceLocation(ctx.getModId(), name);
+//        Identifier key = Identifier.fromNamespaceAndPath(ctx.getModId(), name);
 //        try (BufferedReader reader = Files.newBufferedReader(file)) {
 //            JsonObject json = JsonUtils.fromJson(GSON, reader, JsonObject.class);
 //            if (json == null || json.isJsonNull()) throw new JsonSyntaxException("Json is null (empty file?)");
@@ -312,7 +312,7 @@ public class BCSiliconRecipes {
 //            json.getAsJsonArray("components").forEach(element -> {
 //                JsonObject object = element.getAsJsonObject();
 //                ingredients.add(new IngredientStack(CraftingHelper.getIngredient(object.get("ingredient"), ctx),
-//                    JsonUtils.getInt(object, "amount", 1)));
+//                    JsonUtils.getIntOr(object, "amount", 1, 0)));
 //            });
 //
 //            AssemblyRecipeRegistry.REGISTRY.put(key,

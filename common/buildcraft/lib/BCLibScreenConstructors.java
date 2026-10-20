@@ -1,4 +1,5 @@
 package buildcraft.lib;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.container.ContainerGuide;
@@ -10,13 +11,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class BCLibScreenConstructors {
     public static final MenuScreens.ScreenConstructor<ContainerGuide, GuiGuide> GUIDE = new MenuScreens.ScreenConstructor<>() {
-        @Nonnull
+        @NotNull
         @Override
-        public GuiGuide create(@Nonnull ContainerGuide container, @Nonnull Inventory inv, @Nonnull Component title) {
+        public GuiGuide create(@NotNull ContainerGuide container, @NotNull Inventory inv, @NotNull Component title) {
             Player player = inv.player;
             ItemStack stack;
             if (player.getMainHandItem().getItem() == BCLibItems.guide.get()) {

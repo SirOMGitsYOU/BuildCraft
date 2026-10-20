@@ -6,6 +6,8 @@
 
 package buildcraft.builders.registry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.filler.IFilledTemplate;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.api.filler.IFillerRegistry;
@@ -13,7 +15,7 @@ import buildcraft.builders.snapshot.Snapshot;
 import buildcraft.builders.snapshot.Template;
 import net.minecraft.core.BlockPos;
 
-import javax.annotation.Nullable;
+
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.HashMap;

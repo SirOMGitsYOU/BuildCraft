@@ -5,7 +5,7 @@ import buildcraft.lib.block.BlockBCBase_Neptune;
 import buildcraft.lib.misc.BlockUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -18,10 +18,10 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import java.util.Arrays;
 
 public abstract class BCBaseBlockStateGenerator extends BlockStateProvider {
-    protected static final ResourceLocation CUBE = new ResourceLocation("minecraft", "block/cube");
-    protected static final ResourceLocation CUBE_ALL = new ResourceLocation("minecraft", "block/cube_all");
-    protected static final ResourceLocation BLOCK = new ResourceLocation("minecraft", "block/block");
-    private static final ResourceLocation BUILTIN_ENTITY_LOCATION = new ResourceLocation("minecraft", "builtin/entity");
+    protected static final Identifier CUBE = Identifier.fromNamespaceAndPath("minecraft", "block/cube");
+    protected static final Identifier CUBE_ALL = Identifier.fromNamespaceAndPath("minecraft", "block/cube_all");
+    protected static final Identifier BLOCK = Identifier.fromNamespaceAndPath("minecraft", "block/block");
+    private static final Identifier BUILTIN_ENTITY_LOCATION = Identifier.fromNamespaceAndPath("minecraft", "builtin/entity");
     protected static final ModelFile BUILTIN_ENTITY_MODEL = new ModelFile.UncheckedModelFile(BUILTIN_ENTITY_LOCATION);
 
     public BCBaseBlockStateGenerator(PackOutput output, String modid, ExistingFileHelper exFileHelper) {

@@ -35,7 +35,7 @@ public class BlockElectronicLibrary extends BlockBCTile_Neptune<TileElectronicLi
 //    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, Player player, InteractionHand hand,
 //                                    Direction side, float hitX, float hitY, float hitZ)
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
 //            BCBuildersGuis.LIBRARY.openGUI(player, pos);
             // Calen
             if (world.getBlockEntity(pos) instanceof TileElectronicLibrary tile) {

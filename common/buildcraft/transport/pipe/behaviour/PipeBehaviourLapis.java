@@ -21,7 +21,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public class PipeBehaviourLapis extends PipeBehaviour {
 
     @Override
 //    public void readPayload(PacketBuffer buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             colour = DyeColor.byId(buffer.readUnsignedByte());
@@ -72,7 +72,7 @@ public class PipeBehaviourLapis extends PipeBehaviour {
 
     @Override
     public boolean onPipeActivate(Player player, HitResult trace, float hitX, float hitY, float hitZ, EnumPipePart part) {
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             return EntityUtil.getWrenchHand(player) != null;
         }
         if (EntityUtil.getWrenchHand(player) != null) {

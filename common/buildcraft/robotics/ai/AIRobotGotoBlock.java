@@ -195,11 +195,11 @@ public class AIRobotGotoBlock extends AIRobotGoto {
         super.loadSelfFromNBT(nbt);
 
         finalPos = NBTUtilBC.readBlockPos(nbt.get("finalPos"));
-        maxDistance = nbt.getDouble("maxDistance");
-        skipLastIfNotSoft = nbt.getBoolean("skipLastIfNotSoft");
+        maxDistance = nbt.getDoubleOr("maxDistance", 0.0);
+        skipLastIfNotSoft = nbt.getBooleanOr("skipLastIfNotSoft", false);
 
         if (nbt.contains("path")) {
-            ListTag pathList = nbt.getList("path", Tag.TAG_COMPOUND);
+            ListTag pathList = nbt.getListOrEmpty("path", Tag.TAG_COMPOUND);
 
             path = new LinkedList<BlockPos>();
 

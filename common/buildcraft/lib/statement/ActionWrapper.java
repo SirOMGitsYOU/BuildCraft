@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.statement;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.statements.*;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public abstract class ActionWrapper extends StatementWrapper implements IActionI
     public static class ActionWrapperInternalSided extends ActionWrapper {
         public final IActionInternalSided action;
 
-        public ActionWrapperInternalSided(IActionInternalSided action, @Nonnull Direction side) {
+        public ActionWrapperInternalSided(IActionInternalSided action, @NotNull Direction side) {
             super(action, EnumPipePart.fromFacing(side));
             this.action = action;
         }
@@ -119,7 +120,7 @@ public abstract class ActionWrapper extends StatementWrapper implements IActionI
     public static class ActionWrapperExternal extends ActionWrapper {
         public final IActionExternal action;
 
-        public ActionWrapperExternal(IActionExternal action, @Nonnull Direction side) {
+        public ActionWrapperExternal(IActionExternal action, @NotNull Direction side) {
             super(action, EnumPipePart.fromFacing(side));
             this.action = action;
         }

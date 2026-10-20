@@ -30,10 +30,8 @@ import buildcraft.silicon.plug.PluggableGate;
 import buildcraft.silicon.plug.PluggablePulsar;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
@@ -41,8 +39,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.EventBus;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -105,7 +103,7 @@ public class BCSiliconModels {
     public static void fmlPreInit() {
         // 1.18.2: following events are IModBusEvent
 //        MinecraftForge.EVENT_BUS.register(BCSiliconModels.class);
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCSilicon.MODID).get()).getEventBus();
+        EventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCSilicon.MODID).get()).getEventBus();
         modEventBus.register(BCSiliconModels.class);
     }
 

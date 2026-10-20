@@ -10,7 +10,7 @@ import buildcraft.lib.client.sprite.White;
 import buildcraft.lib.expression.FunctionContext;
 import com.google.gson.JsonObject;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 
 public class VariablePartLed extends VariablePartCuboidBase {
     private static final VariableFaceData FACE_DATA = new VariableFaceData();

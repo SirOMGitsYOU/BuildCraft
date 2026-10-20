@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.*;
@@ -46,13 +46,13 @@ public class WireManager implements IWireManager {
     }
 
     public void invalidate() {
-        if (!holder.getPipeWorld().isClientSide) {
+        if (!holder.getPipeWorld().isClientSide()) {
             removePartsFromSystem(parts.keySet());
         }
     }
 
     public void validate() {
-        if (!holder.getPipeWorld().isClientSide) {
+        if (!holder.getPipeWorld().isClientSide()) {
             initialised = false;
         }
     }
@@ -60,7 +60,7 @@ public class WireManager implements IWireManager {
     public void tick() {
         if (!initialised) {
             initialised = true;
-            if (!holder.getPipeWorld().isClientSide) {
+            if (!holder.getPipeWorld().isClientSide()) {
                 for (EnumWirePart part : parts.keySet()) {
                     getWireSystems().buildAndAddWireSystem(new WireSystem.WireElement(holder.getPipePos(), part));
                 }
@@ -73,7 +73,7 @@ public class WireManager implements IWireManager {
     public boolean addPart(EnumWirePart part, DyeColor colour) {
         if (getColorOfPart(part) == null) {
             parts.put(part, colour);
-            if (!holder.getPipeWorld().isClientSide) {
+            if (!holder.getPipeWorld().isClientSide()) {
                 getWireSystems().buildAndAddWireSystem(new WireSystem.WireElement(holder.getPipePos(), part));
                 holder.getPipeTile().setChanged();
             }
@@ -91,7 +91,7 @@ public class WireManager implements IWireManager {
             return null;
         } else {
             parts.remove(part);
-            if (!holder.getPipeWorld().isClientSide) {
+            if (!holder.getPipeWorld().isClientSide()) {
                 WireSystem.WireElement element = new WireSystem.WireElement(holder.getPipePos(), part);
                 WireSystem.getConnectedElementsOfElement(holder, element)
                         .forEach(getWireSystems()::buildAndAddWireSystem);
@@ -105,7 +105,7 @@ public class WireManager implements IWireManager {
 
     public void removeParts(Collection<EnumWirePart> toRemove) {
         toRemove.forEach(this.parts::remove);
-        if (!holder.getPipeWorld().isClientSide) {
+        if (!holder.getPipeWorld().isClientSide()) {
             removePartsFromSystem(toRemove);
         }
         updateBetweens(false);
@@ -147,7 +147,7 @@ public class WireManager implements IWireManager {
         });
 
         if (!recursive) {
-            for (Direction side : Direction.VALUES) {
+            for (Direction side : Direction.values()) {
                 BlockEntity tile = holder.getPipeWorld().getBlockEntity(holder.getPipePos().relative(side));
                 if (tile instanceof IPipeHolder) {
                     ((IPipeHolder) tile).getWireManager().updateBetweens(true);
@@ -168,7 +168,7 @@ public class WireManager implements IWireManager {
 
     @Override
     public boolean isPowered(EnumWirePart part) {
-        if (holder.getPipeWorld().isClientSide) {
+        if (holder.getPipeWorld().isClientSide()) {
             return poweredClient.contains(part);
         } else {
             WorldSavedDataWireSystems wireSystems = this.getWireSystems();
@@ -231,7 +231,7 @@ public class WireManager implements IWireManager {
 
     @OnlyIn(Dist.CLIENT)
 //    public void readPayload(PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             parts.clear();
             int count = buffer.readInt();

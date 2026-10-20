@@ -6,7 +6,7 @@
 
 package buildcraft.lib.config;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,7 +18,7 @@ public class OverridableConfigOption extends DetailedConfigOption {
     public OverridableConfigOption(String assetLoc, String assetName, String defaultVal) {
         super(assetLoc + "|" + assetName, defaultVal);
         this.assetName = assetName;
-        ResourceLocation loc = new ResourceLocation("buildcraftconfig:", assetLoc.replace(".", "/") + ".properties");
+        Identifier loc = Identifier.fromNamespaceAndPath("buildcraftconfig:", assetLoc.replace(".", "/") + ".properties");
         this.manager = RoamingConfigManager.getOrCreateDefault(loc);
     }
 

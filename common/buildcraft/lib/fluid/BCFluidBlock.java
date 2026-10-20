@@ -11,8 +11,8 @@ import buildcraft.energy.BCEnergyConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.resources.Identifier;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
@@ -97,7 +97,7 @@ public class BCFluidBlock extends LiquidBlock {
 //    }
 
     // Calen 1.20.1
-    public ResourceLocation getRegistryName() {
+    public Identifier getRegistryName() {
         return ForgeRegistries.BLOCKS.getKey(this);
     }
 

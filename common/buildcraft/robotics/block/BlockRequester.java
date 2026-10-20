@@ -42,7 +42,7 @@ public class BlockRequester extends BlockBCTile_Neptune<TileRequester> implement
             return su;
         }
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             // entityplayer.openGui(BCRobotics.instance, GuiIds.REQUESTER, world, pos.getX(), pos.getY(), pos.getZ());
             BlockEntity tile = world.getBlockEntity(pos);
             if (tile instanceof TileRequester) {

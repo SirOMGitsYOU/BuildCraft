@@ -9,12 +9,12 @@ import buildcraft.lib.misc.collect.TypedKeyMap;
 import buildcraft.silicon.container.ContainerGate;
 import buildcraft.silicon.gate.GateLogic;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiGate extends GuiBC8<ContainerGate> {
 
-    public static final ResourceLocation GUI_DEFINITION = new ResourceLocation("buildcraftsilicon:gui/gate.json");
+    public static final Identifier GUI_DEFINITION = Identifier.parse("buildcraftsilicon:gui/gate.json");
 
     public GuiGate(ContainerGate container, Inventory inventory, Component component) {
         super(container, GUI_DEFINITION, inventory, component);

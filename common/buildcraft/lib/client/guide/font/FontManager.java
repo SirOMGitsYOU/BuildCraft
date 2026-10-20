@@ -13,7 +13,7 @@ import java.util.Map;
 public enum FontManager {
     INSTANCE;
 
-    private static final boolean ENABLE_SMOOTH_FONT = Boolean.getBoolean("buildcraft.guide.smooth_font");
+    private static final boolean ENABLE_SMOOTH_FONT = Boolean.getBooleanOr("buildcraft.guide.smooth_font", false);
 
     private final Map<String, IFontRenderer> fonts = new HashMap<>();
 

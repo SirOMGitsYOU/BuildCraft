@@ -211,7 +211,7 @@ public abstract class NetworkedObjectCache<T> {
      * @param object
      * @return */
     private int serverGetId(T object) {
-        return serverObjectToId.getInt(object);
+        return serverObjectToId.getIntOr(object, 0);
     }
 
     /** Retrieves a link to the specified ID. CLIENT SIDE.

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot.pattern.parameter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 public enum PatternParameterCenter implements IStatementParameter {
     NORTH_WEST(-1, -1),
@@ -68,7 +69,7 @@ public enum PatternParameterCenter implements IStatementParameter {
         return BCBuildersSprites.PARAM_CENTER.get(this);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

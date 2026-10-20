@@ -5,7 +5,7 @@ import buildcraft.api.mj.MjAPI;
 import buildcraft.api.recipes.IProgrammingRecipe;
 import buildcraft.api.recipes.IProgrammingRecipeManager;
 import com.google.common.collect.Lists;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
@@ -14,7 +14,7 @@ public enum ProgrammingRecipeManager implements IProgrammingRecipeManager {
     // public static final ProgrammingRecipeManager INSTANCE = new ProgrammingRecipeManager();
     INSTANCE;
     // private final HashMap<String, IProgrammingRecipe> recipes = new HashMap<String, IProgrammingRecipe>();
-    private final HashMap<ResourceLocation, IProgrammingRecipe> recipes = new HashMap<ResourceLocation, IProgrammingRecipe>();
+    private final HashMap<Identifier, IProgrammingRecipe> recipes = new HashMap<Identifier, IProgrammingRecipe>();
 
     @Override
     public void addRecipe(IProgrammingRecipe recipe) {
@@ -31,7 +31,7 @@ public enum ProgrammingRecipeManager implements IProgrammingRecipeManager {
 
     @Override
     // public void removeRecipe(String id)
-    public void removeRecipe(ResourceLocation id) {
+    public void removeRecipe(Identifier id) {
         recipes.remove(id);
     }
 
@@ -56,7 +56,7 @@ public enum ProgrammingRecipeManager implements IProgrammingRecipeManager {
 
     @Override
     // public IProgrammingRecipe getRecipe(String id)
-    public IProgrammingRecipe getRecipe(Level world, ResourceLocation id) {
+    public IProgrammingRecipe getRecipe(Level world, Identifier id) {
         // return recipes.get(id);
         for (IProgrammingRecipe recipe : getRecipes(world)) {
             if (Objects.equals(recipe.getId(), id)) {

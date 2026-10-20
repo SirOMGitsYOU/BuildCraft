@@ -1,16 +1,19 @@
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.IFluidHandlerAdv;
 import buildcraft.api.inventory.IItemTransactor;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 public class CapUtil {
     // @CapabilityInject(IItemTransactor.class)
@@ -18,12 +21,12 @@ public class CapUtil {
     });
     private static Capability<IFluidHandlerAdv> capFluidHandlerAdv = CapabilityManager.get(new CapabilityToken<>() {
     });
-    @Nonnull
+    @NotNull
     public static final Capability<IItemHandler> CAP_ITEMS = getCapNonNull(ForgeCapabilities.ITEM_HANDLER, IItemHandler.class);
 
-    @Nonnull
+    @NotNull
     public static final Capability<IFluidHandler> CAP_FLUIDS = getCapNonNull(ForgeCapabilities.FLUID_HANDLER, IFluidHandler.class);
-    @Nonnull
+    @NotNull
     public static final Capability<IItemTransactor> CAP_ITEM_TRANSACTOR = getCapNonNull(capTransactor, IItemTransactor.class);
     public static final Capability<IFluidHandlerAdv> CAP_FLUID_HANDLER_ADV = getCapNonNull(capFluidHandlerAdv, IFluidHandlerAdv.class);
 
@@ -34,7 +37,7 @@ public class CapUtil {
         evt.register(IFluidHandlerAdv.class);
     }
 
-    @Nonnull
+    @NotNull
     private static <T> Capability<T> getCapNonNull(Capability<T> cap, Class<T> clazz) {
         if (cap == null) {
             throw new NullPointerException("The capability " + clazz + " was null!");

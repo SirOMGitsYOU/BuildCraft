@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.list;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.lists.ListMatchHandler;
 import buildcraft.lib.misc.ItemUtil;
@@ -20,7 +21,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(Type type, @NotNull ItemStack stack, @NotNull ItemStack target, boolean precise) {
         if (type == Type.TYPE) {
 //            IFluidHandlerItem fluidHandlerStack = FluidUtil.getFluidHandler(stack.copy());
             IFluidHandlerItem fluidHandlerStack = FluidUtil.getFluidHandler(stack.copy()).orElse(null);
@@ -83,7 +84,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(Type type, @NotNull ItemStack stack) {
         if (type == Type.TYPE) {
 //            return FluidUtil.getFluidHandler(stack) != null;
             return FluidUtil.getFluidHandler(stack).isPresent();
@@ -95,7 +96,7 @@ public class ListMatchHandlerFluid extends ListMatchHandler {
     }
 
     @Override
-    public NonNullList<ItemStack> getClientExamples(Type type, @Nonnull ItemStack stack) {
+    public NonNullList<ItemStack> getClientExamples(Type type, @NotNull ItemStack stack) {
         buildClientExampleList();
         if (type == Type.MATERIAL) {
 //            FluidStack fStack = FluidUtil.getFluidContained(stack);

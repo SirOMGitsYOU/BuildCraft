@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -22,13 +23,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class StatementParameterItemStackExact implements IStatementParameter {
-    @Nonnull
+    @NotNull
     protected final ItemStack stack;
     public static final StatementParameterItemStackExact EMPTY = new StatementParameterItemStackExact(StackUtil.EMPTY);
 
@@ -40,14 +41,14 @@ public class StatementParameterItemStackExact implements IStatementParameter {
         this.stack = stack;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return stack;
     }
 
     @Override
-    public StatementParameterItemStackExact onClick(IStatementContainer source, IStatement stmt, @Nonnull ItemStack stack, StatementMouseClick mouse) {
+    public StatementParameterItemStackExact onClick(IStatementContainer source, IStatement stmt, @NotNull ItemStack stack, StatementMouseClick mouse) {
         // if (stack != null)
         if (!stack.isEmpty()) {
             if (areItemsEqual(this.stack, stack)) {
@@ -95,7 +96,7 @@ public class StatementParameterItemStackExact implements IStatementParameter {
     }
 
     @Override
-    public IStatementParameter onScroll(IStatementContainer source, IStatement stmt, @Nonnull ItemStack stack, double delta) {
+    public IStatementParameter onScroll(IStatementContainer source, IStatement stmt, @NotNull ItemStack stack, double delta) {
         if (this.stack.isEmpty()) {
             return EMPTY;
         }

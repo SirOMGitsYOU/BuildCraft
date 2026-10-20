@@ -5,9 +5,10 @@
  */
 
 package buildcraft.core.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.item.IItemBuildCraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
@@ -23,7 +24,7 @@ public class ItemGoggles extends ArmorItem implements IItemBuildCraft {
     // private static final Item.Properties HELMET_PROPERTIES = new Item.Properties().;
     private final String idBC;
     // private final String nameSpace;
-    // private final ResourceLocation id;
+    // private final Identifier id;
 
     public ItemGoggles(String idBC, Item.Properties properties) {
         super(ArmorMaterials.CHAIN, Type.HELMET, properties);
@@ -51,25 +52,25 @@ public class ItemGoggles extends ArmorItem implements IItemBuildCraft {
     }
 
 //    @Override
-//    public ArmorProperties getProperties(LivingEntity player, @Nonnull ItemStack armor, DamageSource source, double damage, int slot) {
+//    public ArmorProperties getProperties(LivingEntity player, @NotNull ItemStack armor, DamageSource source, double damage, int slot) {
 //        return HELMET_PROPERTIES;
 //    }
 
     @Override
-//    public int getArmorDisplay(Player player, @Nonnull ItemStack armor, int slot)
+//    public int getArmorDisplay(Player player, @NotNull ItemStack armor, int slot)
     public int getDamage(ItemStack stack) {
         return 0;
     }
 
     @Override
-//    public void damageArmor(LivingEntity entity, @Nonnull ItemStack stack, DamageSource source, int damage, int slot)
+//    public void damageArmor(LivingEntity entity, @NotNull ItemStack stack, DamageSource source, int damage, int slot)
     public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
         // Invulnerable goggles
         return 0;
     }
 
     // Calen 1.20.1
-    public ResourceLocation getRegistryName() {
+    public Identifier getRegistryName() {
         return ForgeRegistries.ITEMS.getKey(this);
     }
 }

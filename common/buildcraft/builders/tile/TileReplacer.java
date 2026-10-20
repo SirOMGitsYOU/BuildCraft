@@ -6,6 +6,8 @@
 
 package buildcraft.builders.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.enums.EnumSnapshotType;
 import buildcraft.api.schematics.ISchematicBlock;
@@ -35,7 +37,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+
 import java.util.Date;
 
 public class TileReplacer extends TileBC_Neptune implements ITickable, IBCTileMenuProvider {
@@ -70,7 +72,7 @@ public class TileReplacer extends TileBC_Neptune implements ITickable, IBCTileMe
     @Override
     public void update() {
         ITickable.super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         if (!invSnapshot.getStackInSlot(0).isEmpty() &&

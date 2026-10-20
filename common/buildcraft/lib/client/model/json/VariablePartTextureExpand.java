@@ -13,10 +13,9 @@ import buildcraft.lib.misc.RenderUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.client.model.ItemLayerModel.Loader;
@@ -61,12 +60,11 @@ public class VariablePartTextureExpand extends JsonVariableModelPart {
 
             VariablePartCuboidBase.VariableFaceData data = faceUv.evaluate(spriteLookup);
             // TODO: Use the UV data! (only take part of the texture)
-//            ItemLayerModel model = new ItemLayerModel(ImmutableList.of(new ResourceLocation(".")));
+//            ItemLayerModel model = new ItemLayerModel(ImmutableList.of(Identifier.parse(".")));
             ItemLayerModel model = Loader.INSTANCE.read(new JsonObject(), null);
 //            BakedModel baked = model.bake(ModelRotation.X0_Y0, DefaultVertexFormats.ITEM, (loc) -> data.sprite);
             BakedModel baked = model.bake(
-                    StandaloneGeometryBakingContext.create(new ResourceLocation("")),
-                    null,
+                    StandaloneGeometryBakingContext.create(Identifier.fromNamespaceAndPath("")), null,
                     (loc) -> data.sprite.get(),
                     BlockModelRotation.X0_Y0,
                     ItemOverrides.EMPTY,

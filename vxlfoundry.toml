@@ -1,0 +1,25 @@
+kind = "mod"
+name = "BuildCraft"
+mod_version = "7.99.25.0"
+loaders = [
+    "fabric",
+    "forge",
+]
+game_versions = ["1.21.11"]
+release_channel = "release"
+multi_loader_jar = false
+environment = "client_and_server"
+
+[changelog]
+kind = "inline"
+text = ""
+
+[gradle]
+task = "build"
+extra_args = []
+skip_build_if_jars_present = false
+output_globs = []
+
+[platforms]
+
+[loader_jar_keys]

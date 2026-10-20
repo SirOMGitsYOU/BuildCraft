@@ -17,13 +17,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
 
 public class GuiAssemblyTable extends GuiBC8<ContainerAssemblyTable> {
-    private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftsilicon:textures/gui/assembly_table.png");
+    private static final Identifier TEXTURE_BASE = Identifier.parse("buildcraftsilicon:textures/gui/assembly_table.png");
     private static final int SIZE_X = 176, SIZE_Y = 220;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_SAVED = new GuiIcon(TEXTURE_BASE, SIZE_X, 0, 16, 16);

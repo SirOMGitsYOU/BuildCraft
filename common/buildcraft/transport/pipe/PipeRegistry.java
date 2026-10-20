@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.pipe;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.InvalidInputDataException;
 import buildcraft.api.transport.pipe.IItemPipe;
@@ -14,12 +17,12 @@ import buildcraft.lib.registry.RegistrationHelper;
 import buildcraft.transport.BCTransport;
 import buildcraft.transport.item.ItemPipeHolder;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -29,7 +32,7 @@ public enum PipeRegistry implements IPipeRegistry {
 
     public static final RegistrationHelper helper = new RegistrationHelper(BCTransport.MODID);
 
-    private final Map<ResourceLocation, PipeDefinition> definitions = new HashMap<>();
+    private final Map<Identifier, PipeDefinition> definitions = new HashMap<>();
     // private final Map<PipeDefinition, IItemPipe> pipeItems = new IdentityHashMap<>();
     private final Map<PipeDefinition, Map<DyeColor, RegistryObject<? extends IItemPipe>>> pipeItems = new IdentityHashMap<>();
 
@@ -93,13 +96,13 @@ public enum PipeRegistry implements IPipeRegistry {
 
     @Override
     @Nullable
-    public PipeDefinition getDefinition(ResourceLocation identifier) {
+    public PipeDefinition getDefinition(Identifier identifier) {
         return definitions.get(identifier);
     }
 
-    @Nonnull
+    @NotNull
     public PipeDefinition loadDefinition(String identifier) throws InvalidInputDataException {
-        PipeDefinition def = getDefinition(new ResourceLocation(identifier));
+        PipeDefinition def = getDefinition(Identifier.parse(identifier));
         if (def == null) {
             throw new InvalidInputDataException("Unknown pipe definition " + identifier);
         }

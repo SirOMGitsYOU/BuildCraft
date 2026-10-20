@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.statements.*;
 import buildcraft.api.statements.containers.IRedstoneStatementContainer;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 
 public enum CoreTriggerProvider implements ITriggerProvider {
@@ -37,11 +38,11 @@ public enum CoreTriggerProvider implements ITriggerProvider {
     }
 
     @Override
-    public void addInternalSidedTriggers(Collection<ITriggerInternalSided> res, IStatementContainer container, @Nonnull Direction side) {
+    public void addInternalSidedTriggers(Collection<ITriggerInternalSided> res, IStatementContainer container, @NotNull Direction side) {
     }
 
     @Override
-    public void addExternalTriggers(Collection<ITriggerExternal> res, @Nonnull Direction side, BlockEntity tile) {
+    public void addExternalTriggers(Collection<ITriggerExternal> res, @NotNull Direction side, BlockEntity tile) {
 
         if (TriggerPower.isTriggeringTile(tile, side.getOpposite())) {
             res.add(BCCoreStatements.TRIGGER_POWER_HIGH);

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.BCBlocks;
 import buildcraft.api.recipes.IAssemblyRecipe;
@@ -18,7 +19,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,7 @@ public enum GuideAssemblyRecipes implements IStackRecipes {
     INSTANCE;
 
     @Override
-    public List<GuidePartFactory> getUsages(@Nonnull ItemStack stack) {
+    public List<GuidePartFactory> getUsages(@NotNull ItemStack stack) {
         List<GuidePartFactory> usages = new ArrayList<>();
         if (Minecraft.getInstance().level == null) {
             return usages;
@@ -47,7 +48,7 @@ public enum GuideAssemblyRecipes implements IStackRecipes {
     }
 
     @Override
-    public List<GuidePartFactory> getRecipes(@Nonnull ItemStack stack) {
+    public List<GuidePartFactory> getRecipes(@NotNull ItemStack stack) {
         List<GuidePartFactory> recipes = new ArrayList<>();
         if (Minecraft.getInstance().level == null) {
             return recipes;

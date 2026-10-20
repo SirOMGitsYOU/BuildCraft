@@ -1,4 +1,7 @@
 package buildcraft.silicon.item;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.lib.item.ItemBC_Neptune;
 import buildcraft.lib.misc.NBTUtilBC;
@@ -7,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 public class ItemGateCopier extends ItemBC_Neptune {
@@ -47,10 +49,10 @@ public class ItemGateCopier extends ItemBC_Neptune {
     }
 
     @Override
-//    public InteractionResultHolder<ItemStack> onItemRightClick(Level world, Player player, InteractionHand hand)
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+//    public InteractionResult onItemRightClick(Level world, Player player, InteractionHand hand)
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
         if (player.isShiftKeyDown()) {
@@ -59,7 +61,7 @@ public class ItemGateCopier extends ItemBC_Neptune {
         return new InteractionResultHolder<>(InteractionResult.PASS, stack);
     }
 
-    private InteractionResultHolder<ItemStack> clearData(@Nonnull ItemStack stack) {
+    private InteractionResult clearData(@NotNull ItemStack stack) {
         if (getMetadata(stack) == 0) {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }

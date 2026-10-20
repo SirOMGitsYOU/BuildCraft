@@ -39,7 +39,7 @@ public class BCCoreRecipes {
 //                    cleanPaintbrush, //
 //                    ColourUtil.getDyeName(colour),//
 //                };
-//                ResourceLocation group = BCModules.CORE.createLocation("paintbrush_colouring");
+//                Identifier group = BCModules.CORE.createLocation("paintbrush_colouring");
 //                ShapelessOreRecipe recipe = new ShapelessOreRecipe(group, out, inputs);
 //                recipe.setRegistryName(BCModules.CORE.createLocation("paintbrush_" + colour.getName()));
 //                event.getRegistry().register(recipe);

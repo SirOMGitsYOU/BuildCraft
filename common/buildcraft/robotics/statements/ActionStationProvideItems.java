@@ -3,6 +3,9 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.statements;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.robots.DockingStation;
@@ -13,8 +16,8 @@ import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 public class ActionStationProvideItems extends BCStatement implements IActionInternal {
 
@@ -53,7 +56,7 @@ public class ActionStationProvideItems extends BCStatement implements IActionInt
 
     }
 
-    public static boolean canExtractItem(DockingStation station, @Nonnull ItemStack stack) {
+    public static boolean canExtractItem(DockingStation station, @NotNull ItemStack stack) {
         boolean hasFilter = false;
 
         for (StatementSlot s : station.getActiveActions()) {

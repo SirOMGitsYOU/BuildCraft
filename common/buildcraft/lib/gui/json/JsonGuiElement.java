@@ -1,5 +1,7 @@
 package buildcraft.lib.gui.json;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.expression.FunctionContext;
 import buildcraft.lib.gui.json.JsonGuiIterator.ResolvedIterator;
 import buildcraft.lib.json.JsonVariableObject;
@@ -10,7 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.util.GsonHelper;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,7 +59,7 @@ public class JsonGuiElement extends JsonVariableObject {
             this.context = new FunctionContext(context);
             this.types = typeLookup;
 
-//            String str = JsonUtils.getString(json, "type", null);
+//            String str = JsonUtils.getStringOr(json, "type", null, "");
             String str = GsonHelper.getAsString(json, "type", null);
             if (str != null) {
                 JsonGuiElement parent = typeLookup.get(str);

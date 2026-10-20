@@ -1,5 +1,7 @@
 package buildcraft.lib.recipe.refinery;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.recipes.IRefineryRecipeManager.IHeatExchangerRecipe;
 import buildcraft.lib.misc.JsonUtil;
@@ -7,12 +9,12 @@ import buildcraft.lib.recipe.refinery.RefineryRecipeRegistry.CoolableRecipe;
 import buildcraft.lib.recipe.refinery.RefineryRecipeRegistry.HeatableRecipe;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 
 public class HeatExchangeRecipeSerializer implements RecipeSerializer<IHeatExchangerRecipe> {
     public static final HeatExchangeRecipeSerializer HEATABLE;
@@ -30,7 +32,7 @@ public class HeatExchangeRecipeSerializer implements RecipeSerializer<IHeatExcha
     }
 
     @Override
-    public IHeatExchangerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public IHeatExchangerRecipe fromJson(Identifier recipeId, JsonObject json) {
         String typeStr = GsonHelper.getAsString(json, "type").replace("heat_exchange/", "");
         FluidStack in = JsonUtil.deSerializeFluidStack(json.getAsJsonObject("in"));
         FluidStack out = JsonUtil.deSerializeFluidStack(json.getAsJsonObject("out"));
@@ -52,7 +54,7 @@ public class HeatExchangeRecipeSerializer implements RecipeSerializer<IHeatExcha
 
     @Nullable
     @Override
-    public IHeatExchangerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public IHeatExchangerRecipe fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         FluidStack in = buffer.readFluidStack();
         FluidStack out = buffer.readFluidStack();
         int heatFrom = buffer.readInt();

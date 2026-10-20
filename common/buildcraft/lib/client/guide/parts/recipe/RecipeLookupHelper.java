@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.parts.GuidePartFactory;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class RecipeLookupHelper {
         handlerTypes.put("assembling", GuideAssemblyRecipes.INSTANCE);
     }
 
-    public static List<GuidePartFactory> getAllUsages(@Nonnull ItemStack stack, ProfilerFiller prof) {
+    public static List<GuidePartFactory> getAllUsages(@NotNull ItemStack stack, ProfilerFiller prof) {
         List<GuidePartFactory> list = new ArrayList<>();
         for (IStackRecipes handler : handlerTypes.values()) {
             prof.push(handler.getClass().getName().replace('.', '/'));
@@ -38,7 +39,7 @@ public class RecipeLookupHelper {
         return list;
     }
 
-    public static List<GuidePartFactory> getAllRecipes(@Nonnull ItemStack stack, ProfilerFiller prof) {
+    public static List<GuidePartFactory> getAllRecipes(@NotNull ItemStack stack, ProfilerFiller prof) {
         List<GuidePartFactory> list = new ArrayList<>();
         for (IStackRecipes handler : handlerTypes.values()) {
             prof.push(handler.getClass().getName().replace('.', '/'));

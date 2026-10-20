@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.inventory.filter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 
-import javax.annotation.Nonnull;
+
 
 /** This interface is used with several of the functions in IItemTransfer to provide a convenient means of dealing with
  * entire classes of items without having to specify each item individually. */
@@ -18,18 +19,18 @@ public enum StackFilter implements IStackFilter {
 
     ALL {
         @Override
-        public boolean matches(@Nonnull ItemStack stack) {
+        public boolean matches(@NotNull ItemStack stack) {
             return true;
         }
     },
     FUEL {
         @Override
-        public boolean matches(@Nonnull ItemStack stack) {
+        public boolean matches(@NotNull ItemStack stack) {
 //            return FurnaceBlockEntity.getItemBurnTime(stack) > 0;
             return FurnaceBlockEntity.isFuel(stack);
         }
     };
 
     @Override
-    public abstract boolean matches(@Nonnull ItemStack stack);
+    public abstract boolean matches(@NotNull ItemStack stack);
 }

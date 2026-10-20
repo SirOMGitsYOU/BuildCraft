@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.parts.GuidePartItem;
@@ -17,7 +18,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 
 public class GuideCrafting extends GuidePartItem {
@@ -40,7 +41,7 @@ public class GuideCrafting extends GuidePartItem {
     private final ChangingItemStack output;
     private final int hash;
 
-    GuideCrafting(GuiGuide gui, NonNullMatrix<Ingredient> input, @Nonnull ItemStack output) {
+    GuideCrafting(GuiGuide gui, NonNullMatrix<Ingredient> input, @NotNull ItemStack output) {
         super(gui);
         this.input = new ChangingItemStack[input.getWidth()][input.getHeight()];
         for (int x = 0; x < input.getWidth(); x++) {

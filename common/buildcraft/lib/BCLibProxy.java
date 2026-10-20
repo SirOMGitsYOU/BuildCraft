@@ -21,7 +21,7 @@ import buildcraft.lib.net.cache.MessageObjectCacheResponse;
 import buildcraft.lib.script.ReloadableRegistryManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.FilePackResources;
 import net.minecraft.server.packs.PackResources;
@@ -36,7 +36,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +88,7 @@ public abstract class BCLibProxy {
         return null;
     }
 
-    public Player getPlayerForContext(NetworkEvent.Context ctx) {
+    public Player getPlayerForContext(CustomPayloadEvent.Context ctx) {
         return ctx.getSender();
     }
 
@@ -103,7 +103,7 @@ public abstract class BCLibProxy {
         return tile;
     }
 
-    public InputStream getStreamForIdentifier(ResourceLocation identifier) throws IOException {
+    public InputStream getStreamForIdentifier(Identifier identifier) throws IOException {
         return null;
     }
 
@@ -194,7 +194,7 @@ public abstract class BCLibProxy {
         }
 
         @Override
-        public Player getPlayerForContext(NetworkEvent.Context ctx) {
+        public Player getPlayerForContext(CustomPayloadEvent.Context ctx) {
             if (ctx.getDirection() == NetworkDirection.PLAY_TO_SERVER) {
                 return super.getPlayerForContext(ctx);
             }
@@ -215,7 +215,7 @@ public abstract class BCLibProxy {
         public <T extends BlockEntity> T getServerTile(T tile) {
             if (tile != null && tile.hasLevel()) {
                 Level world = tile.getLevel();
-                if (world.isClientSide && Minecraft.getInstance().hasSingleplayerServer()) {
+                if (world.isClientSide() && Minecraft.getInstance().hasSingleplayerServer()) {
 //                    ServerLevel server = DimensionManager.getWorld(world.provider.getDimension());
                     ServerLevel server = world.getServer().getLevel(world.dimension());
                     if (server == null) return tile;
@@ -275,7 +275,7 @@ public abstract class BCLibProxy {
 //        }
 
         @Override
-        public InputStream getStreamForIdentifier(ResourceLocation identifier) throws IOException {
+        public InputStream getStreamForIdentifier(Identifier identifier) throws IOException {
             return Minecraft.getInstance().getResourceManager().getResource(identifier).get().open();
         }
     }

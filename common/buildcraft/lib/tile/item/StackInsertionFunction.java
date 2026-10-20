@@ -5,11 +5,12 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 /** Defines a way of inserting items into an inventory - this can be overridden to have different rules with stack
  * merging. */
@@ -18,8 +19,8 @@ public interface StackInsertionFunction {
     /** @param addingTo The existing stack. Modifications are lost.
      * @param toInsert The stacks to insert. Modifications are lost.
      * @return The result of attempting to insert it. */
-    @Nonnull
-    InsertionResult modifyForInsertion(int slot, @Nonnull ItemStack addingTo, @Nonnull ItemStack toInsert);
+    @NotNull
+    InsertionResult modifyForInsertion(int slot, @NotNull ItemStack addingTo, @NotNull ItemStack toInsert);
 
     /** Gets a stack insertion function that will insert items up to a given stack size. The stack size of the items
      * themselves IS taken into account, so this has an effective upper limit of 64. */
@@ -68,10 +69,10 @@ public interface StackInsertionFunction {
     class InsertionResult {
         public static final InsertionResult EMPTY_STACKS = new InsertionResult(StackUtil.EMPTY, StackUtil.EMPTY);
 
-        @Nonnull
+        @NotNull
         public final ItemStack toSet, toReturn;
 
-        public InsertionResult(@Nonnull ItemStack toSet, @Nonnull ItemStack toReturn) {
+        public InsertionResult(@NotNull ItemStack toSet, @NotNull ItemStack toReturn) {
             this.toSet = toSet;
             this.toReturn = toReturn;
         }

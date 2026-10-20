@@ -14,7 +14,7 @@ import buildcraft.lib.net.MessageManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 public enum BCCoreEventDist {
     INSTANCE;
@@ -22,7 +22,7 @@ public enum BCCoreEventDist {
     @SubscribeEvent
     public void onWorldTick(TickEvent.LevelTickEvent event) {
 //        if (event.world != null && !event.world.isRemote && event.world.getMinecraftServer() != null)
-        if (event.level != null && !event.level.isClientSide && event.level.getServer() != null) {
+        if (event.level != null && !event.level.isClientSide() && event.level.getServer() != null) {
             WorldSavedDataVolumeBoxes.get(event.level).tick();
         }
     }

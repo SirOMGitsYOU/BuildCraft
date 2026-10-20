@@ -5,10 +5,11 @@
  */
 
 package buildcraft.lib.misc.data;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.NonNullList;
 
-import javax.annotation.Nonnull;
+
 import java.util.AbstractList;
 
 /** Defines a non-null 2 dimensional matrix, where the width and height are known at creation time. Note that this
@@ -17,7 +18,7 @@ public class NonNullMatrix<T> extends AbstractList<T> {
     private final NonNullList<T> internalList;
     private final int width, height;
 
-    public NonNullMatrix(int width, int height, @Nonnull T fill) {
+    public NonNullMatrix(int width, int height, @NotNull T fill) {
         this.width = width;
         this.height = height;
         internalList = NonNullList.withSize(width * height, fill);
@@ -35,13 +36,13 @@ public class NonNullMatrix<T> extends AbstractList<T> {
     }
 
     public interface IEntryFiller<T> {
-        @Nonnull
+        @NotNull
         T getEntry(int x, int y);
     }
 
     /** Creates a {@link NonNullMatrix} from the given 2-dim array, replacing all null values with the given nonnull
      * replacement. */
-    public NonNullMatrix(T[][] from, @Nonnull T nullReplacer) {
+    public NonNullMatrix(T[][] from, @NotNull T nullReplacer) {
         this.width = from.length;
         this.height = width == 0 ? 0 : from[0].length;
         internalList = NonNullList.withSize(width * height, nullReplacer);
@@ -61,18 +62,18 @@ public class NonNullMatrix<T> extends AbstractList<T> {
         return x * height + y;
     }
 
-    @Nonnull
+    @NotNull
     public T get(int x, int y) {
         return get(flatIndexOf(x, y));
     }
 
-    @Nonnull
-    public T set(int x, int y, @Nonnull T element) {
+    @NotNull
+    public T set(int x, int y, @NotNull T element) {
         return set0(flatIndexOf(x, y), element);
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public T get(int index) {
         return internalList.get(index);
     }
@@ -91,7 +92,7 @@ public class NonNullMatrix<T> extends AbstractList<T> {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public T set(int index, T element) {
         if (element == null) {
             throw new NullPointerException("Element was null!");
@@ -99,8 +100,8 @@ public class NonNullMatrix<T> extends AbstractList<T> {
         return set0(index, element);
     }
 
-    @Nonnull
-    private T set0(int flatIndex, @Nonnull T element) {
+    @NotNull
+    private T set0(int flatIndex, @NotNull T element) {
         return internalList.set(flatIndex, element);
     }
 }

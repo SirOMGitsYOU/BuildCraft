@@ -37,7 +37,7 @@ public class JsonTexture {
 
     public JsonTexture(JsonObject obj) {
         try {
-//            location = JsonUtils.getString(obj, "location");
+//            location = JsonUtils.getStringOr(obj, "location", "");
             location = GsonHelper.getAsString(obj, "location");
 //            JsonArray uvs = JsonUtils.getJsonArray(obj, "uv");
             JsonArray uvs = GsonHelper.getAsJsonArray(obj, "uv");

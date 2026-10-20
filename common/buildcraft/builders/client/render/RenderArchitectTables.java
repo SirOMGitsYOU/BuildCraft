@@ -150,15 +150,13 @@ public enum RenderArchitectTables implements DetachedRenderer.IDetachedRenderer 
 ////            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 //            RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 //            Minecraft.getMinecraft().renderEngine.bindTexture(
-//                    new ResourceLocation(
-//                            "buildcraftbuilders",
-//                            "textures/blocks/scan.png"
+//                    Identifier.fromNamespaceAndPath(
+//                            "buildcraftbuilders", //                            "textures/blocks/scan.png"
 //                    )
 //            );
 //            RenderSystem.setShaderTexture(
-//                    0, new ResourceLocation(
-//                            "buildcraftbuilders",
-//                            "textures/blocks/scan.png"
+//                    0, Identifier.fromNamespaceAndPath(
+//                            "buildcraftbuilders", //                            "textures/blocks/scan.png"
 //                    ));
             TextureAtlasSprite scan = BCBuildersSprites.ARCHITECT_SCAN.getSprite();
             float u0 = scan.getU0(), u1 = scan.getU1(), v0 = scan.getV0(), v1 = scan.getV1();
@@ -169,7 +167,7 @@ public enum RenderArchitectTables implements DetachedRenderer.IDetachedRenderer 
                 }
                 poseStack.pushPose();
 //                poseStack.translate(pos.getX(), pos.getY(), pos.getZ());
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     ModelUtil.createFace(
                                     face,
                                     new Vector3f(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F),

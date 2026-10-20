@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.statements;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IZone;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.items.IMapLocation;
@@ -16,7 +18,7 @@ import buildcraft.robotics.BCRoboticsSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nullable;
+
 
 public class ActionRobotWorkInArea extends BCStatement implements IActionInternal {
 

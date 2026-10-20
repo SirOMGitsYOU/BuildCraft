@@ -5,11 +5,12 @@
  */
 
 package buildcraft.lib.inventory.filter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class InvertedStackFilter implements IStackFilter {
 
@@ -20,7 +21,7 @@ public class InvertedStackFilter implements IStackFilter {
     }
 
     @Override
-    public boolean matches(@Nonnull ItemStack stack) {
+    public boolean matches(@NotNull ItemStack stack) {
         return !stack.isEmpty() && !filter.matches(stack);
     }
 }

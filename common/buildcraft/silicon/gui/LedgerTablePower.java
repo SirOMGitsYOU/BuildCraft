@@ -15,7 +15,7 @@ import buildcraft.lib.gui.ledger.Ledger_Neptune;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.silicon.tile.TileLaserTableBase;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LedgerTablePower extends Ledger_Neptune {
     private static final int OVERLAY_COLOUR = 0xFF_D4_6C_1F;// 0xFF_FF_55_11;// TEMP!
@@ -37,7 +37,7 @@ public class LedgerTablePower extends Ledger_Neptune {
         appendText(() -> LocaleUtil.localizeMjFlow(tile.avgPowerClient), TEXT_COLOUR);
         calculateMaxSize();
 
-        setOpenProperty(GuiConfigManager.getOrAddBoolean(new ResourceLocation("buildcraftsilicon:all_tables"), "ledger.power.is_open", false));
+        setOpenProperty(GuiConfigManager.getOrAddBoolean(Identifier.parse("buildcraftsilicon:all_tables"), "ledger.power.is_open", false));
     }
 
     @Override

@@ -19,7 +19,7 @@ import buildcraft.silicon.plug.FacadeStateManager;
 import buildcraft.transport.BCTransport;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 public enum FacadeSwapRecipe implements CraftingRecipe, IRecipeViewable.IViewableGrid {
     INSTANCE;
 
-    public static final ResourceLocation TYPE_ID = new ResourceLocation(BCSilicon.MODID, "facade_swap");
+    public static final Identifier TYPE_ID = Identifier.fromNamespaceAndPath(BCSilicon.MODID, "facade_swap");
 
     private static final int TIME_GAP = 500;
 
@@ -140,15 +140,15 @@ public enum FacadeSwapRecipe implements CraftingRecipe, IRecipeViewable.IViewabl
     }
 
 //    @Override
-//    public IRecipe setRegistryName(ResourceLocation name) {
+//    public IRecipe setRegistryName(Identifier name) {
 //        return this;
 //    }
 
     @NotNull
     @Override
-//    public ResourceLocation getRegistryName()
-    public ResourceLocation getId() {
-        return new ResourceLocation(BCTransport.MODID, "facade_swap");
+//    public Identifier getRegistryName()
+    public Identifier getId() {
+        return Identifier.fromNamespaceAndPath(BCTransport.MODID, "facade_swap");
     }
 
     @NotNull

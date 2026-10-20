@@ -5,13 +5,16 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +22,9 @@ import java.util.Optional;
 public class RequiredExtractorItem extends RequiredExtractor {
     private NbtPath path = null;
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Optional.ofNullable(path.get(tileNbt))
                 .map(CompoundTag.class::cast)
 //                .map(ItemStack::new)
@@ -30,9 +33,9 @@ public class RequiredExtractorItem extends RequiredExtractor {
                 .orElseGet(Collections::emptyList);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@NotNull CompoundTag entityNbt) {
         return Optional.ofNullable(path.get(entityNbt))
                 .map(CompoundTag.class::cast)
 //            .map(ItemStack::new)

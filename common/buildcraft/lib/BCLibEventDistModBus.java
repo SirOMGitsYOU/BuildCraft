@@ -14,14 +14,14 @@ import buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import buildcraft.lib.misc.data.ModelVariableData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 import java.util.function.Consumer;
 
@@ -61,7 +61,7 @@ public enum BCLibEventDistModBus {
 //    }
 
     // Calen 1.20.1
-    public static void onDatagenTextureRegister(Consumer<ResourceLocation> consumer, ExistingFileHelper fileHelper) {
+    public static void onDatagenTextureRegister(Consumer<Identifier> consumer, ExistingFileHelper fileHelper) {
         SpriteHolderRegistry.onDatagenTextureRegister(consumer, fileHelper);
         ModelHolderRegistry.onDatagenTextureRegister(consumer, fileHelper);
     }

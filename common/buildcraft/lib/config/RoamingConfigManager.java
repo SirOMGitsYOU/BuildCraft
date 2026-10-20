@@ -7,7 +7,7 @@
 package buildcraft.lib.config;
 
 import buildcraft.lib.BCLibProxy;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,18 +17,18 @@ import java.util.Map;
 
 @Deprecated(forRemoval = true)
 public class RoamingConfigManager extends StreamConfigManager {
-    private static final Map<ResourceLocation, RoamingConfigManager> instances = new HashMap<>();
-    private final ResourceLocation identifier;
+    private static final Map<Identifier, RoamingConfigManager> instances = new HashMap<>();
+    private final Identifier identifier;
     private Boolean cacheExists = null;
 
-    public static RoamingConfigManager getOrCreateDefault(ResourceLocation identifier) {
+    public static RoamingConfigManager getOrCreateDefault(Identifier identifier) {
         if (!instances.containsKey(identifier)) {
             instances.put(identifier, new RoamingConfigManager(identifier));
         }
         return instances.get(identifier);
     }
 
-    public RoamingConfigManager(ResourceLocation identifier) {
+    public RoamingConfigManager(Identifier identifier) {
         this.identifier = identifier;
     }
 

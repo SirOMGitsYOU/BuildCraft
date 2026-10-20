@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor.IItemExtractable;
@@ -12,7 +13,7 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class TransactorEntityItem implements IItemExtractable {
 
@@ -23,7 +24,7 @@ public class TransactorEntityItem implements IItemExtractable {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack extract(IStackFilter filter, int min, int max, boolean simulate) {
         if (!entity.isAlive()) {
             return StackUtil.EMPTY;

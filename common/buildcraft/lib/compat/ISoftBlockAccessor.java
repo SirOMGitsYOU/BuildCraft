@@ -1,11 +1,13 @@
 package buildcraft.lib.compat;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+
 
 public interface ISoftBlockAccessor {
     /** @param force If true then the chunk containing the tile will be loaded from disk, false if this should only get

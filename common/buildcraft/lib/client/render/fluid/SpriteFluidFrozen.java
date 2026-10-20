@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
 import net.minecraft.client.resources.metadata.animation.FrameSize;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraftforge.client.textures.ForgeTextureMetadata;
 import net.minecraftforge.client.textures.ITextureAtlasSpriteLoader;
@@ -22,17 +22,17 @@ import java.util.Arrays;
 
 public class SpriteFluidFrozen extends TextureAtlasSprite {
     /** The source sprite of this fluid. */
-//    public final ResourceLocation srcLocation;
-    public final ResourceLocation srcRegistryName;
+//    public final Identifier srcLocation;
+    public final Identifier srcRegistryName;
 //    private int[][] data = null;
 
-    public SpriteFluidFrozen(ResourceLocation atlasLocation, SpriteContents spriteContents, int atlasWidth, int atlasHeight, int x, int y, ResourceLocation srcRegistryName) {
+    public SpriteFluidFrozen(Identifier atlasLocation, SpriteContents spriteContents, int atlasWidth, int atlasHeight, int x, int y, Identifier srcRegistryName) {
         super(atlasLocation, spriteContents, atlasWidth, atlasHeight, x, y);
         this.srcRegistryName = srcRegistryName;
     }
 
 //    @Override
-//    public boolean hasCustomLoader(IResourceManager manager, ResourceLocation location) {
+//    public boolean hasCustomLoader(IResourceManager manager, Identifier location) {
 //        return true;
 //    }
 
@@ -60,7 +60,7 @@ public class SpriteFluidFrozen extends TextureAtlasSprite {
         return super.getV(v / 2 + 4);
     }
 
-    public static SpriteContents createSpriteContents(TextureAtlasSprite src, ResourceLocation srcRegistryName, ResourceLocation frozenLocation) {
+    public static SpriteContents createSpriteContents(TextureAtlasSprite src, Identifier srcRegistryName, Identifier frozenLocation) {
 //        if (src.getFrameCount() > 0)
         int frameCount = src.contents().getFrameCount();
         if (frameCount > 0) {
@@ -116,20 +116,20 @@ public class SpriteFluidFrozen extends TextureAtlasSprite {
     }
 
     private static class FrozenSpriteLoader implements ITextureAtlasSpriteLoader {
-        private final ResourceLocation srcRegistryName;
+        private final Identifier srcRegistryName;
 
-        private FrozenSpriteLoader(ResourceLocation srcRegistryName) {
+        private FrozenSpriteLoader(Identifier srcRegistryName) {
             this.srcRegistryName = srcRegistryName;
         }
 
         @Override
-        public SpriteContents loadContents(ResourceLocation name, Resource resource, FrameSize frameSize, NativeImage image, AnimationMetadataSection animationMeta, ForgeTextureMetadata forgeMeta) {
+        public SpriteContents loadContents(Identifier name, Resource resource, FrameSize frameSize, NativeImage image, AnimationMetadataSection animationMeta, ForgeTextureMetadata forgeMeta) {
             BCLog.logger.warn("[lib.fluid] Should not call this method of FrozenSpriteLoader!");
             return null;
         }
 
         @Override
-        public @NotNull TextureAtlasSprite makeSprite(ResourceLocation atlasName, SpriteContents contents, int atlasWidth, int atlasHeight, int spriteX, int spriteY, int mipmapLevel) {
+        public @NotNull TextureAtlasSprite makeSprite(Identifier atlasName, SpriteContents contents, int atlasWidth, int atlasHeight, int spriteX, int spriteY, int mipmapLevel) {
             return new SpriteFluidFrozen(atlasName, contents, atlasWidth, atlasHeight, spriteX, spriteY, this.srcRegistryName);
         }
     }

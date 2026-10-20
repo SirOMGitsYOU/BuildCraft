@@ -1,6 +1,8 @@
 package buildcraft.lib.misc.collect;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
+
 import java.util.*;
 
 /** A {@link TypedMap} that is identical to {@link TypedMapDirect}, except that children of the specified class are also

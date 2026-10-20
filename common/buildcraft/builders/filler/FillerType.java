@@ -21,7 +21,7 @@ public class FillerType extends StatementType<IFillerPattern> {
 
     @Override
     public IFillerPattern readFromNbt(CompoundTag nbt) {
-        String kind = nbt.getString("kind");
+        String kind = nbt.getStringOr("kind", "");
         IFillerPattern pattern = FillerManager.registry.getPattern(kind);
         if (pattern == null) {
             return defaultStatement;

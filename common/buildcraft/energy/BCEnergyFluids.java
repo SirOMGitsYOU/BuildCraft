@@ -6,7 +6,7 @@ import buildcraft.lib.fluid.BCFluidAttributes;
 import buildcraft.lib.fluid.BCFluidBlock;
 import buildcraft.lib.fluid.BCFluidRegistryContainer;
 import buildcraft.lib.item.ItemBucketBC;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.EventBus;
 import net.minecraftforge.fluids.DispenseFluidContainer;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.ModList;
@@ -36,7 +36,7 @@ public class BCEnergyFluids {
     private static final DeferredRegister<Item> bucketRegister = DeferredRegister.create(ForgeRegistries.ITEMS, BCEnergy.MODID);
 
     static {
-        IEventBus bus = ((FMLModContainer) ModList.get().getModContainerById(BCEnergy.MODID).get()).getEventBus();
+        EventBus bus = ((FMLModContainer) ModList.get().getModContainerById(BCEnergy.MODID).get()).getEventBus();
         blockRegister.register(bus);
         fluidRegister.register(bus);
         bucketRegister.register(bus);
@@ -169,8 +169,7 @@ public class BCEnergyFluids {
 
         // Attributes
         BCFluidAttributes.Builder attributeBuilder = BCFluidAttributes.builder(
-                        new ResourceLocation(fluidTexture + STILL_SUFFIX),
-                        new ResourceLocation(fluidTexture + FLOW_SUFFIX)
+                        Identifier.fromNamespaceAndPath(fluidTexture + STILL_SUFFIX), Identifier.parse(fluidTexture + FLOW_SUFFIX)
                 )
                 // def.setHeat(heat)
                 .setHeat(heat)

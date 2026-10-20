@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
@@ -14,14 +15,14 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 
 /** Designates an {@link IItemTransactor} that is backed by a simple, static, array based inventory. */
 public abstract class AbstractInvItemTransactor implements IItemTransactor {
     /** Returns {@link ItemStack#EMPTY} if it was empty, or the input stack if it was not. */
-    @Nonnull
-    public static ItemStack asValid(@Nonnull ItemStack stack) {
+    @NotNull
+    public static ItemStack asValid(@NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             return StackUtil.EMPTY;
         } else {
@@ -29,10 +30,10 @@ public abstract class AbstractInvItemTransactor implements IItemTransactor {
         }
     }
 
-    @Nonnull
-    protected abstract ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate);
+    @NotNull
+    protected abstract ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate);
 
-    @Nonnull
+    @NotNull
     protected abstract ItemStack extract(int slot, IStackFilter filter, int min, int max, boolean simulate);
 
     protected abstract int getSlots();
@@ -40,8 +41,8 @@ public abstract class AbstractInvItemTransactor implements IItemTransactor {
     protected abstract boolean isEmpty(int slot);
 
     @Override
-    @Nonnull
-    public ItemStack insert(@Nonnull ItemStack stack, boolean allAtOnce, boolean simulate) {
+    @NotNull
+    public ItemStack insert(@NotNull ItemStack stack, boolean allAtOnce, boolean simulate) {
         if (allAtOnce) {
             return insertAllAtOnce(stack, simulate);
         } else {
@@ -49,8 +50,8 @@ public abstract class AbstractInvItemTransactor implements IItemTransactor {
         }
     }
 
-    @Nonnull
-    private ItemStack insertAnyAmount(@Nonnull ItemStack stack, boolean simulate) {
+    @NotNull
+    private ItemStack insertAnyAmount(@NotNull ItemStack stack, boolean simulate) {
         int slotCount = getSlots();
         IntArrayList emptySlots = new IntArrayList(slotCount);
         for (int slot = 0; slot < getSlots(); slot++) {
@@ -68,8 +69,8 @@ public abstract class AbstractInvItemTransactor implements IItemTransactor {
         return stack;
     }
 
-    @Nonnull
-    private ItemStack insertAllAtOnce(@Nonnull ItemStack stack, boolean simulate) {
+    @NotNull
+    private ItemStack insertAllAtOnce(@NotNull ItemStack stack, boolean simulate) {
         ItemStack before = asValid(stack);
         IntArrayList insertedSlots = new IntArrayList(getSlots());
         IntArrayList emptySlots = new IntArrayList(getSlots());
@@ -109,7 +110,7 @@ public abstract class AbstractInvItemTransactor implements IItemTransactor {
         return stacks;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack extract(IStackFilter filter, int min, int max, boolean simulate) {
         if (min < 1) min = 1;

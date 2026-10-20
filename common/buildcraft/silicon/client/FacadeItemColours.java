@@ -6,7 +6,7 @@ import buildcraft.silicon.plug.FacadeInstance;
 import buildcraft.silicon.plug.FacadePhasedState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public enum FacadeItemColours implements ItemColor {
@@ -18,7 +18,7 @@ public enum FacadeItemColours implements ItemColor {
         FacadeInstance states = ItemPluggableFacade.getStates(stack);
         FacadePhasedState state = states.getCurrentStateForStack();
         int colour = -1;
-        ResourceLocation id = BlockUtil.getRegistryName(state.stateInfo.state.getBlock());
+        Identifier id = BlockUtil.getRegistryName(state.stateInfo.state.getBlock());
         if (id != null && "wildnature".equals(id.getNamespace())) {
             // Fixes https://github.com/BuildCraft/BuildCraft/issues/4435
             // (Basically wildnature doesn't handle the null world+position correctly)

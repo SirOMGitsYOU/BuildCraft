@@ -15,6 +15,7 @@ import buildcraft.core.client.render.RenderMarkerVolume;
 import buildcraft.core.tile.TileEngineCreative;
 import buildcraft.core.tile.TileEngineRedstone_BC8;
 import buildcraft.lib.client.model.ModelHolderVariable;
+import buildcraft.lib.client.model.ModelBakeHelper;
 import buildcraft.lib.client.model.ModelItemSimple;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.lib.engine.TileEngineBase_BC8;
@@ -27,16 +28,17 @@ import buildcraft.lib.misc.RegistryUtil;
 import buildcraft.lib.misc.data.ModelVariableData;
 import com.google.common.collect.Lists;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.EventBus;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -74,10 +76,9 @@ public class BCCoreModels {
     }
 
     public static void fmlPreInit() {
-        // 1.18.2: following events are IModBusEvent
-//        MinecraftForge.EVENT_BUS.register(BCCoreModels.class);
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCCore.MODID).get()).getEventBus();
-        modEventBus.register(BCCoreModels.class);
+        ModelEvent.ModifyBakingResult.BUS.register(BCCoreModels::onModelBake);
+        TextureStitchEvent.Post.BUS.register(BCCoreModels::onTextureStitchEvent$Post);
+        EntityRenderersEvent.RegisterRenderers.BUS.register(BCCoreModels::onTesrReg);
     }
 
 //    @SubscribeEvent
@@ -95,8 +96,7 @@ public class BCCoreModels {
 //        ClientRegistry.bindTileEntitySpecialRenderer(TileEngineCreative.class, RenderEngineCreative.INSTANCE);
 //    }
 
-    @SubscribeEvent
-    public static void onTesrReg(RegisterRenderers event) {
+    public static void onTesrReg(EntityRenderersEvent.RegisterRenderers event) {
         RegistryUtil.regTesrIfTilePresent(BCCoreBlocks.markerVolumeTile, RenderMarkerVolume::new);
         RegistryUtil.regTesrIfTilePresent(BCCoreBlocks.engineWoodTile, RenderEngineWood::new);
         RegistryUtil.regTesrIfTilePresent(BCCoreBlocks.engineCreativeTile, RenderEngineCreative::new);
@@ -106,14 +106,12 @@ public class BCCoreModels {
     private static final List<Runnable> spriteTasks = Lists.newLinkedList();
 
     // Calen 1.20.1
-    @SubscribeEvent
     public static void onTextureStitchEvent$Post(TextureStitchEvent.Post event) {
         if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
             spriteTasks.forEach(Runnable::run);
         }
     }
 
-    @SubscribeEvent
     public static void onModelBake(ModelEvent.ModifyBakingResult event) {
         ENGINE_PROGRESS.value = 0.2;
         ENGINE_STAGE.value = EnumPowerStage.BLUE;
@@ -122,8 +120,7 @@ public class BCCoreModels {
         varData.setNodes(ENGINE_REDSTONE.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModels().put(
-                new ModelResourceLocation(EnumEngineType.WOOD.getItemModelLocation(), "inventory"),
+        ModelBakeHelper.putItemModel(event, EnumEngineType.WOOD.getItemModelLocation(),
                 new ModelItemSimple(
                         new LazyLoadedValue<>(
                                 () -> Arrays.stream(ENGINE_REDSTONE.getCutoutQuads())
@@ -139,8 +136,7 @@ public class BCCoreModels {
         varData.setNodes(ENGINE_CREATIVE.createTickableNodes());
         varData.tick();
         varData.refresh();
-        event.getModels().put(
-                new ModelResourceLocation(EnumEngineType.CREATIVE.getItemModelLocation(), "inventory"),
+        ModelBakeHelper.putItemModel(event, EnumEngineType.CREATIVE.getItemModelLocation(),
                 new ModelItemSimple(
                         new LazyLoadedValue<>(
                                 () -> Arrays.stream(ENGINE_CREATIVE.getCutoutQuads())

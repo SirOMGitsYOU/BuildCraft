@@ -17,7 +17,7 @@ import buildcraft.lib.statement.FullStatement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 
@@ -76,18 +76,18 @@ public class ContainerFiller extends ContainerBCTile<TileFiller> implements ICon
     public void valuesChanged() {
         if (tile.addon != null) {
             tile.addon.updateBuildingInfo();
-            if (!player.level().isClientSide) {
+            if (!player.level().isClientSide()) {
                 WorldSavedDataVolumeBoxes.get(getPlayer().level()).setDirty();
             }
         }
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             tile.onStatementChange();
         }
     }
 
     @Override
 //    public void readMessage(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readMessage(id, buffer, side, ctx);
         IContainerFilling.super.readMessage(id, buffer, side, ctx);
     }

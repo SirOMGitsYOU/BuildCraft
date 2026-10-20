@@ -30,8 +30,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeChunkManager;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.bus.EventBus;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -65,7 +65,7 @@ public class BCLib {
     public static final String GIT_COMMIT_MSG = "${git_commit_msg}";
     public static final String GIT_COMMIT_AUTHOR = "${git_commit_author}";
 
-    public static final boolean DEV = VERSION.startsWith("$") || Boolean.getBoolean("buildcraft.dev");
+    public static final boolean DEV = VERSION.startsWith("$") || Boolean.getBooleanOr("buildcraft.dev", false);
 
     // @Instance(MODID)
     public static BCLib INSTANCE;
@@ -99,7 +99,7 @@ public class BCLib {
 
     @SubscribeEvent
     public static void preInit(FMLConstructModEvent evt) {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        EventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Cap
         modEventBus.addListener(CapUtil::registerCapability);
         modEventBus.addListener(MjAPI::registerCapability);

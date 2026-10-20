@@ -6,6 +6,8 @@
 
 package buildcraft.transport.block;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.blocks.ICustomPaintHandler;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.EnumPipePart;
@@ -37,13 +39,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.TerrainParticle;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -78,7 +80,7 @@ import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -98,9 +100,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
     private static final VoxelShape BOX_EAST = Shapes.box(0.75, 0.25, 0.25, 1, 0.75, 0.75);
     private static final VoxelShape[] BOX_FACES = { BOX_DOWN, BOX_UP, BOX_NORTH, BOX_SOUTH, BOX_WEST, BOX_EAST };
 
-    private static final ResourceLocation ADVANCEMENT_LOGIC_TRANSPORTATION = new ResourceLocation(
-            "buildcrafttransport:logic_transportation"
-    );
+    private static final Identifier ADVANCEMENT_LOGIC_TRANSPORTATION = Identifier.parse("buildcrafttransport:logic_transportation");
 
     public BlockPipeHolder(String idBC, BlockBehaviour.Properties props) {
         super(idBC, props);
@@ -180,7 +180,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             collidingBoxes.add(BOX_CENTER);
 
             added = true;
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 float conSize = pipe.getConnectedDist(face);
                 if (conSize > 0) {
                     VoxelShape aabb = BOX_FACES[face.ordinal()];
@@ -197,7 +197,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
                 }
             }
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             PipePluggable pluggable = tile.getPluggable(face);
             if (pluggable != null) {
                 VoxelShape bb = pluggable.getBoundingBox();
@@ -259,7 +259,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
         if (pipe != null) {
             computed = true;
             best = computeTrace(best, pos, start, end, BOX_CENTER, 0);
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 float conSize = pipe.getConnectedDist(face);
                 if (conSize > 0) {
                     VoxelShape aabb = BOX_FACES[face.ordinal()];
@@ -275,7 +275,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
                 }
             }
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             PipePluggable pluggable = tile.getPluggable(face);
             if (pluggable != null) {
                 VoxelShape bb = pluggable.getBoundingBox();
@@ -346,10 +346,10 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             return trace.sideHit;
         }
         if (trace.subHit <= 6) {
-            return Direction.VALUES[trace.subHit - 1];
+            return Direction.values()[trace.subHit - 1];
         }
         if (trace.subHit <= 6 + 6) {
-            return Direction.VALUES[trace.subHit - 1 - 6];
+            return Direction.values()[trace.subHit - 1 - 6];
         }
         return null;
     }
@@ -415,7 +415,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             aabb = BOX_FACES[part - 1];
             Pipe pipe = tile.getPipe();
             if (pipe != null) {
-                Direction face = Direction.VALUES[part - 1];
+                Direction face = Direction.values()[part - 1];
                 float conSize = pipe.getConnectedDist(face);
                 if (conSize > 0 && conSize != 0.25f) {
                     Vec3 center = VecUtil.offset(new Vec3(0.5, 0.5, 0.5), face, 0.25 + (conSize / 2));
@@ -427,7 +427,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
                 }
             }
         } else if (part < 1 + 6 + 6) {
-            Direction side = Direction.VALUES[part - 1 - 6];
+            Direction side = Direction.values()[part - 1 - 6];
             PipePluggable pluggable = tile.getPluggable(side);
             if (pluggable != null) {
                 aabb = pluggable.getBoundingBox();
@@ -481,7 +481,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             }
         } else if (target.subHit <= 12) {
             int pluggableHit = target.subHit - 7;
-            Direction face = Direction.VALUES[pluggableHit];
+            Direction face = Direction.values()[pluggableHit];
             PipePluggable plug = tile.getPluggable(face);
             if (plug != null) {
                 return plug.getPickStack();
@@ -586,7 +586,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
                     WireNode from = new WireNode(attachTile.getPipePos(), wirePart);
 
                     boolean isNowConnected = false;
-                    for (Direction dir : Direction.VALUES) {
+                    for (Direction dir : Direction.values()) {
                         WireNode to = from.offset(dir);
                         if (to.pos == attachTile.getPipePos()) {
                             if (attachTile.getWireManager().getColorOfPart(to.part) == colour) {
@@ -637,7 +637,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
     @Override
 //    public boolean removedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest)
     public boolean onDestroyedByPlayer(BlockState state, Level worldIn, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (worldIn.isClientSide) {
+        if (worldIn.isClientSide()) {
 //            return false;
             // Calen: to call #addDestroyEffects in Client Thread to spawn particles
             // in 1.18.2, without #playerWillDestroy, the particle will not spawn, different to 1.12.2
@@ -698,7 +698,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
         } else {
 //            toDrop.addAll(getDrops(world, pos, state, 0));
             toDrop.addAll(getDrops(state, world, pos));
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 removePluggable(face, tile, NonNullList.create());
             }
         }
@@ -719,7 +719,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             BCLog.logger.warn("[transport.pipe.holder] Tried to remove BlockEntity of block [" + state + "] at [" + pos + "] but fount no BlockEntity!");
             return toDrop;
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             PipePluggable pluggable = tile.getPluggable(face);
             if (pluggable != null) {
 //                pluggable.addDrops(toDrop, fortune);
@@ -745,7 +745,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
         Entity exploder = explosion.getExploder();
         if (exploder != null) {
             Vec3 subtract = exploder.position().subtract(Vec3.atLowerCornerOf(pos).add(VecUtil.VEC_HALF)).normalize();
-            Direction side = Arrays.stream(Direction.VALUES)
+            Direction side = Arrays.stream(Direction.values())
                     .min(Comparator.comparing(facing -> Vec3.atLowerCornerOf(facing.getNormal()).distanceTo(subtract)))
                     .orElseThrow(IllegalArgumentException::new);
             TilePipeHolder tile = getPipe(world, pos, true);
@@ -841,7 +841,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
     }
 
     public static TilePipeHolder getPipe(Level world, BlockPos pos, boolean requireServer) {
-        if (requireServer && world.isClientSide) {
+        if (requireServer && world.isClientSide()) {
             return null;
         }
         BlockEntity tile = world.getBlockEntity(pos);
@@ -881,7 +881,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
     @Override
     @OnlyIn(Dist.CLIENT)
     public boolean addRunningEffects(BlockState state, Level world, BlockPos pos, Entity entity) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             return super.addRunningEffects(state, world, pos, entity);
         }
 
@@ -974,7 +974,7 @@ public class BlockPipeHolder extends BlockBCTile_Neptune<TilePipeHolder> impleme
             TextureAtlasSprite[] sprites = PipeModelCacheBase.generator.getItemSprites(def);
             sprite = sprites.length == 0 ? SpriteUtil.missingSprite().get() : sprites[0];
         } else if (6 + 1 <= p && p < 6 + 6 + 1) {
-            PipePluggable plug = pipeHolder.getPluggable(Direction.VALUES[p - 6 - 1]);
+            PipePluggable plug = pipeHolder.getPluggable(Direction.values()[p - 6 - 1]);
             if (plug == null) {
                 return null;
             }

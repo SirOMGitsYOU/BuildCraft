@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.misc.ItemStackKey;
 import buildcraft.lib.misc.ItemUtil;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public final class ChangingItemStack extends ChangingObject<ItemStackKey> {
         super(makeListArray(stacks));
     }
 
-    public ChangingItemStack(@Nonnull Ingredient ingredient) {
+    public ChangingItemStack(@NotNull Ingredient ingredient) {
         super(makeRecipeArray(ingredient));
     }
 

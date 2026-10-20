@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IFakeWorld;
 import buildcraft.api.core.InvalidInputDataException;
@@ -21,7 +22,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -36,7 +37,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Pair;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -70,7 +71,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         if (context.blockState.isAir()) {
             return false;
         }
-        ResourceLocation registryName = context.block.builtInRegistryHolder().key().location();
+        Identifier registryName = context.block.builtInRegistryHolder().key().location();
         // noinspection ConstantConditions
         return registryName != null &&
 //                RulesLoader.READ_DOMAINS.contains(registryName.getResourceDomain()) &&
@@ -177,7 +178,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
                     .flatMap(Collection::stream)
                     .forEach(updateBlockOffsets::add);
         } else {
-            Stream.of(Direction.VALUES)
+            Stream.of(Direction.values())
 //                    .map(Direction::getDirectionVec)
                     .map(Direction::getNormal)
                     .map(BlockPos::new)
@@ -218,13 +219,13 @@ public class SchematicBlockDefault implements ISchematicBlock {
         setCanBeReplacedWithBlocks /**/(context, rules);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Set<BlockPos> getRequiredBlockOffsets() {
         return requiredBlockOffsets;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<ItemStack> computeRequiredItems() {
         Set<JsonRule> rules = RulesLoader.getRules(blockState, tileNbt);
@@ -264,7 +265,7 @@ public class SchematicBlockDefault implements ISchematicBlock {
         return ret;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<FluidStack> computeRequiredFluids() {
         Set<JsonRule> rules = RulesLoader.getRules(blockState, tileNbt);
@@ -522,21 +523,21 @@ public class SchematicBlockDefault implements ISchematicBlock {
         }
         // Calen: containing items & fluids
         if (nbt.contains("items")) {
-            items = nbt.getList("items", Tag.TAG_COMPOUND);
+            items = nbt.getListOrEmpty("items", Tag.TAG_COMPOUND);
         }
         if (nbt.contains("fluids")) {
-            fluids = nbt.getList("fluids", Tag.TAG_COMPOUND);
+            fluids = nbt.getListOrEmpty("fluids", Tag.TAG_COMPOUND);
         }
 
         // Calen: 1.12.2 tileRotation -> 1.18.2 SkullBlock BlockState ROTATION_16
 //        tileRotation = NBTUtilBC.readEnum(nbt.get("tileRotation"), Rotation.class);
-//        placeBlock = Block.REGISTRY.getObject(new ResourceLocation(nbt.getString("placeBlock")));
-        placeBlock = BlockUtil.getBlockFromRegistryName(nbt.getString("placeBlock"));
+//        placeBlock = Block.REGISTRY.getObject(Identifier.parse(nbt.getStringOr("placeBlock", "")));
+        placeBlock = BlockUtil.getBlockFromRegistryName(nbt.getStringOr("placeBlock", ""));
         NBTUtilBC.readCompoundList(nbt.get("updateBlockOffsets"))
                 .map(NbtUtils::readBlockPos)
                 .forEach(updateBlockOffsets::add);
         NBTUtilBC.readStringList(nbt.get("canBeReplacedWithBlocks"))
-                .map(ResourceLocation::new)
+                .map(Identifier::new)
 //                .map(Block.REGISTRY::getObject)
                 .map(BlockUtil::getBlockFromRegistryName)
                 .forEach(canBeReplacedWithBlocks::add);

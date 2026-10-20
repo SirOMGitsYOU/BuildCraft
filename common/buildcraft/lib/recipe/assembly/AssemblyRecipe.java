@@ -1,12 +1,12 @@
 package buildcraft.lib.recipe.assembly;
 
 import buildcraft.api.recipes.IAssemblyRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 //public abstract class AssemblyRecipe implements Comparable<AssemblyRecipe>, IForgeRegistryEntry<AssemblyRecipe>
 public abstract class AssemblyRecipe implements IAssemblyRecipe {
-    protected ResourceLocation name;
+    protected Identifier name;
 
     @Override
     public boolean equals(Object o) {
@@ -30,7 +30,7 @@ public abstract class AssemblyRecipe implements IAssemblyRecipe {
     // Recipe
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return name;
     }
 

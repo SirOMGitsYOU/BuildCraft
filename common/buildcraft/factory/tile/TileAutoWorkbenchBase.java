@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.IMjConnector;
@@ -26,7 +27,7 @@ import buildcraft.lib.tile.item.ItemHandlerManager.EnumAccess;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -34,9 +35,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -51,7 +52,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune implements IT
 
     private static final long POWER_LOST = POWER_GEN_PASSIVE * 10;
 
-    private static final ResourceLocation ADVANCEMENT_AUTOCRAFT = new ResourceLocation("buildcraftfactory:lazy_crafting");
+    private static final Identifier ADVANCEMENT_AUTOCRAFT = Identifier.parse("buildcraftfactory:lazy_crafting");
 
     // TODO: Store output in the next slot!
     // (Can be used to differentiate between different recipes)
@@ -83,7 +84,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune implements IT
     }
 
     @Override
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
         super.onSlotChange(handler, slot, before, after);
 //        if (!ItemStack.areItemStacksEqual(before, after))
         if (!StackUtil.isSameItemSameDamageSameTagSameCount(before, after) && !ItemStack.matches(before, after)) {
@@ -94,7 +95,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune implements IT
     @Override
     public void update() {
         ITickable.super.update();
-        if (getLevel().isClientSide) {
+        if (getLevel().isClientSide()) {
             return;
         }
         boolean didChange = crafting.tick();
@@ -134,7 +135,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune implements IT
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_GUI_TICK) {
@@ -235,7 +236,7 @@ public abstract class TileAutoWorkbenchBase extends TileBC_Neptune implements IT
     // IMjRedstoneReceiver
 
     @Override
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 

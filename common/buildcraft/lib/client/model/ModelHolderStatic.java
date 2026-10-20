@@ -16,7 +16,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.io.IOException;
@@ -74,7 +74,7 @@ public class ModelHolderStatic extends ModelHolder {
     }
 
     @Override
-    protected void onTextureStitchPre(Set<ResourceLocation> toRegisterSprites) {
+    protected void onTextureStitchPre(Set<Identifier> toRegisterSprites) {
         rawModel = null;
         quads = null;
         failReason = null;
@@ -109,7 +109,7 @@ public class ModelHolderStatic extends ModelHolder {
                         break;
                     }
                 } else {
-                    toRegisterSprites.add(new ResourceLocation(lookup));
+                    toRegisterSprites.add(Identifier.fromNamespaceAndPath(lookup));
                 }
                 if (ModelHolderRegistry.DEBUG) {
                     BCLog.logger.info("[lib.model.holder]  - " + lookup);
@@ -120,7 +120,7 @@ public class ModelHolderStatic extends ModelHolder {
 
     // Calen 1.20.1
     @Override
-    protected void onDatagenTextureRegister(Set<ResourceLocation> toRegisterSprites, ExistingFileHelper fileHelper) {
+    protected void onDatagenTextureRegister(Set<Identifier> toRegisterSprites, ExistingFileHelper fileHelper) {
         rawModel = null;
         quads = null;
         failReason = null;
@@ -155,7 +155,7 @@ public class ModelHolderStatic extends ModelHolder {
                         break;
                     }
                 } else {
-                    toRegisterSprites.add(new ResourceLocation(lookup));
+                    toRegisterSprites.add(Identifier.fromNamespaceAndPath(lookup));
                 }
                 if (ModelHolderRegistry.DEBUG) {
                     BCLog.logger.info("[lib.model.holder]  - " + lookup);
@@ -205,7 +205,7 @@ public class ModelHolderStatic extends ModelHolder {
                     }
                 } else {
 //                    sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(lookup);
-                    sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation(lookup));
+                    sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.fromNamespaceAndPath(lookup));
                 }
                 list.add(quad.toQuad(sprite));
             }

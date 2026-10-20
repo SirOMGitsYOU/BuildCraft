@@ -1,10 +1,12 @@
 package buildcraft.lib.statement;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.statements.IGuiSlot;
 import buildcraft.lib.net.PacketBufferBC;
 import net.minecraft.nbt.CompoundTag;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 
 public abstract class StatementType<S extends IGuiSlot> {

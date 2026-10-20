@@ -10,10 +10,10 @@ import buildcraft.lib.misc.BlockUtil;
 import buildcraft.lib.misc.ItemUtil;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.MissingMappingsEvent.Mapping;
@@ -98,7 +98,7 @@ public enum MigrationManager {
                     + all.size() + " missing.");
         }
         for (Mapping<T> mapping : all) {
-            ResourceLocation loc = mapping.getKey();
+            Identifier loc = mapping.getKey();
             String domain = loc.getNamespace();
             String path = loc.getPath().toLowerCase(Locale.ROOT);
             if (DEBUG) {
@@ -110,7 +110,7 @@ public enum MigrationManager {
             if (to != null) {
                 mapping.remap(to);
                 if (DEBUG) {
-                    ResourceLocation registryName = null;
+                    Identifier registryName = null;
                     if (to instanceof Item toItem) {
                         registryName = ItemUtil.getRegistryName(toItem);
                     } else if (to instanceof Block toBlock) {

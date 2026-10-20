@@ -17,7 +17,7 @@ import buildcraft.lib.statement.StatementContext.StatementGroup;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,7 +26,7 @@ import java.util.List;
 public class GuiElementStatement<S extends IStatement> extends GuiElementSimple
         implements IInteractionElement, IReference<S> {
 
-    public static final ResourceLocation TEXTURE_SELECTOR;
+    public static final Identifier TEXTURE_SELECTOR;
 
     public static final GuiIcon SLOT_COLOUR;
     public static final GuiIcon ICON_SLOT_BLOCKED;
@@ -36,7 +36,7 @@ public class GuiElementStatement<S extends IStatement> extends GuiElementSimple
     public static final SpriteNineSliced SELECTION_HOVER;
 
     static {
-        TEXTURE_SELECTOR = new ResourceLocation("buildcraftlib:textures/gui/misc_slots.png");
+        TEXTURE_SELECTOR = Identifier.parse("buildcraftlib:textures/gui/misc_slots.png");
         SLOT_COLOUR = new GuiIcon(TEXTURE_SELECTOR, 0, 0, 18, 18);
         ICON_SLOT_BLOCKED = SLOT_COLOUR.offset(18, 0);
         ICON_SLOT_NOT_SET = ICON_SLOT_BLOCKED.offset(18, 0);

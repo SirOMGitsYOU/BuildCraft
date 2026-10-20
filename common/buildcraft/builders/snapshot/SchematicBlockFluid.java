@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IFakeWorld;
 import buildcraft.api.core.InvalidInputDataException;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -45,7 +46,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
         isFlowing = BlockUtil.getFluid(context.world, context.pos) == null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Set<BlockPos> getRequiredBlockOffsets() {
 //        return Stream.concat(Arrays.stream(Direction.HORIZONTALS), Stream.of(Direction.DOWN))
@@ -56,7 +57,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
                 .collect(Collectors.toSet());
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<FluidStack> computeRequiredFluids() {
         return Optional.ofNullable(BlockUtil.getFluidWithoutFlowing(blockState))
@@ -88,7 +89,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
         }
         if (world.setBlock(blockPos, blockState, Block.UPDATE_ALL_IMMEDIATE)) {
             Stream.concat(
-                            Stream.of(Direction.VALUES)
+                            Stream.of(Direction.values())
 //                                    .map(Direction::getDirectionVec)
                                     .map(Direction::getNormal)
                                     .map(BlockPos::new),
@@ -127,7 +128,7 @@ public class SchematicBlockFluid implements ISchematicBlock {
     @Override
     public void deserializeNBT(CompoundTag nbt) throws InvalidInputDataException {
         blockState = NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), nbt.getCompound("blockState"));
-        isFlowing = nbt.getBoolean("isFlowing");
+        isFlowing = nbt.getBooleanOr("isFlowing", false);
     }
 
     @Override

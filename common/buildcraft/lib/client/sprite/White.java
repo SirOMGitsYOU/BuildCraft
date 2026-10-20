@@ -3,10 +3,10 @@ package buildcraft.lib.client.sprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class White {
-    public static final ResourceLocation LOCATION = new ResourceLocation("white");
+    public static final Identifier LOCATION = Identifier.parse("white");
     private static TextureAtlasSprite instance = null;
     @SuppressWarnings("deprecation")
     public static final TextureAtlasSprite instance()

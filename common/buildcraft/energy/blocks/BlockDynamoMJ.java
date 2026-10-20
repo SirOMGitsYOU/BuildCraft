@@ -1,5 +1,7 @@
 package buildcraft.energy.blocks;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.blocks.ICustomRotationHandler;
 import buildcraft.energy.tile.TileDynamoMJ;
 import buildcraft.lib.block.BlockBCTile_Neptune;
@@ -18,7 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
+
 
 public class BlockDynamoMJ extends BlockBCTile_Neptune<TileDynamoMJ> implements ICustomRotationHandler, IBlockWithTickableTE<TileDynamoMJ> {
 
@@ -135,7 +137,7 @@ public class BlockDynamoMJ extends BlockBCTile_Neptune<TileDynamoMJ> implements 
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean p_60514_) {
         // super.neighborChanged(state, world, pos, block, fromPos);
         super.neighborChanged(state, world, pos, block, fromPos, p_60514_);
-        if (world.isClientSide) return;
+        if (world.isClientSide()) return;
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileDynamoMJ) {
             TileDynamoMJ engine = (TileDynamoMJ) tile;

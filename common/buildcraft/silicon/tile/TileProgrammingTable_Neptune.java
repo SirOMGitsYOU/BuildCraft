@@ -5,6 +5,9 @@
  */
 
 package buildcraft.silicon.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.net.IMessage;
@@ -28,7 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -37,10 +40,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,10 +56,10 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
     public static final int HEIGHT = 4;
 
     // public String currentRecipeId = "";
-    @Nonnull
-    public final List<ResourceLocation> availableRecipeIds = Lists.newArrayList();
+    @NotNull
+    public final List<Identifier> availableRecipeIds = Lists.newArrayList();
     // public IProgrammingRecipe currentRecipe;
-    @Nonnull
+    @NotNull
     // public List<ItemStack> options = List.of();
     public List<IProgrammingRecipe> optionRecipes = List.of();
     public int optionId;
@@ -88,7 +91,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
     public void update() {
         super.update();
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
 
@@ -159,7 +162,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
 //    }
 
     @Override
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
         super.onSlotChange(handler, slot, before, after);
 
         // if (slot == 0)
@@ -196,7 +199,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
 //    }
 
     @Override
-    public void readPayload(int id, PacketBufferBC stream, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC stream, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, stream, side, ctx);
 
         if (id == NET_GUI_DATA) {
@@ -252,9 +255,9 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
         super.load(nbt);
 
         if (nbt.contains("recipeId") && nbt.contains("optionId")) {
-            // currentRecipeId = nbt.getString("recipeId");
-            ListTag recipeIdTag = nbt.getList("recipeId", Tag.TAG_STRING);
-            availableRecipeIds.addAll(NBTUtilBC.readStringList(recipeIdTag).map(ResourceLocation::new).collect(Collectors.toList()));
+            // currentRecipeId = nbt.getStringOr("recipeId", "");
+            ListTag recipeIdTag = nbt.getListOrEmpty("recipeId", Tag.TAG_STRING);
+            availableRecipeIds.addAll(NBTUtilBC.readStringList(recipeIdTag).map(Identifier::new).collect(Collectors.toList()));
             optionId = nbt.getByte("optionId");
         } else {
             // currentRecipeId = null;
@@ -273,7 +276,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
         // if (currentRecipeId != null)
         if (!availableRecipeIds.isEmpty()) {
             // nbt.putString("recipeId", currentRecipeId);
-            ListTag recipeIdTag = NBTUtilBC.writeStringList(availableRecipeIds.stream().map(ResourceLocation::toString));
+            ListTag recipeIdTag = NBTUtilBC.writeStringList(availableRecipeIds.stream().map(Identifier::toString));
             nbt.put("recipeId", recipeIdTag);
             nbt.putByte("optionId", (byte) optionId);
         }
@@ -292,7 +295,7 @@ public class TileProgrammingTable_Neptune extends TileLaserTableBase implements 
 
     public void findRecipe() {
         // String oldId = currentRecipeId;
-        List<ResourceLocation> oldIds = List.copyOf(availableRecipeIds);
+        List<Identifier> oldIds = List.copyOf(availableRecipeIds);
         // currentRecipeId = null;
         availableRecipeIds.clear();
 

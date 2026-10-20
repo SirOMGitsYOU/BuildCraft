@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.misc.data;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IBox;
 import buildcraft.lib.misc.NBTUtilBC;
@@ -15,11 +16,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 
-import javax.annotation.Nonnull;
+
 import java.util.Iterator;
 
 public class BoxIterator implements Iterator<BlockPos> {
-    @Nonnull
+    @NotNull
     private final BlockPos min, max;
     private final boolean invert, repeat;// TODO: remove repeat if its not used in the future
     private AxisOrder order;
@@ -49,7 +50,7 @@ public class BoxIterator implements Iterator<BlockPos> {
     public static BoxIterator readFromNbt(CompoundTag nbt) {
         BlockPos min = NBTUtilBC.readBlockPos(nbt.get("min"));
         BlockPos max = NBTUtilBC.readBlockPos(nbt.get("max"));
-        boolean invert = nbt.getBoolean("invert");
+        boolean invert = nbt.getBooleanOr("invert", false);
         boolean repeat = false;
         AxisOrder order = AxisOrder.readNbt(nbt.getCompound("order"));
         BlockPos current = NBTUtilBC.readBlockPos(nbt.get("current"));
@@ -88,12 +89,12 @@ public class BoxIterator implements Iterator<BlockPos> {
         return current;
     }
 
-    @Nonnull
+    @NotNull
     public BlockPos getMin() {
         return min;
     }
 
-    @Nonnull
+    @NotNull
     public BlockPos getMax() {
         return max;
     }

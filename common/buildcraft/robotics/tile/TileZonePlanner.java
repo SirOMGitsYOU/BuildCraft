@@ -6,6 +6,8 @@
 
 package buildcraft.robotics.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.net.IMessage;
 import buildcraft.api.tiles.IBCTileMenuProvider;
 import buildcraft.api.tiles.IDebuggable;
@@ -39,9 +41,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -134,7 +136,7 @@ public class TileZonePlanner extends TileBC_Neptune implements ITickable, IDebug
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -202,7 +204,7 @@ public class TileZonePlanner extends TileBC_Neptune implements ITickable, IDebug
         ITickable.super.update();
         deltaManager.tick();
 //        if (getWorld().isRemote)
-        if (getLevel().isClientSide) {
+        if (getLevel().isClientSide()) {
             return;
         }
 

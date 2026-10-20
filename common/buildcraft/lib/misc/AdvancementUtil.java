@@ -2,7 +2,7 @@ package buildcraft.lib.misc;
 
 import buildcraft.api.core.BCLog;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.ServerAdvancementManager;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,9 +15,9 @@ import java.util.Set;
 import java.util.UUID;
 
 public class AdvancementUtil {
-    private static final Set<ResourceLocation> UNKNOWN_ADVANCEMENTS = new HashSet<>();
+    private static final Set<Identifier> UNKNOWN_ADVANCEMENTS = new HashSet<>();
 
-    public static void unlockAdvancement(Player player, ResourceLocation advancementName) {
+    public static void unlockAdvancement(Player player, Identifier advancementName) {
         if (player instanceof ServerPlayer) {
             ServerPlayer playerMP = (ServerPlayer) player;
 //            AdvancementManager advancementManager = playerMP.getLevel().getAdvancementManager();
@@ -40,7 +40,7 @@ public class AdvancementUtil {
         }
     }
 
-    public static boolean unlockAdvancement(UUID player, ResourceLocation advancementName) {
+    public static boolean unlockAdvancement(UUID player, Identifier advancementName) {
         Entity entity = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(player);
         if (entity != null && entity instanceof ServerPlayer) {
             unlockAdvancement((Player) entity, advancementName);

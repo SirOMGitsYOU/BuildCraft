@@ -27,7 +27,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -331,7 +331,7 @@ public class GuiUtil {
         guiGraphics.fill(xMin, yMin, xMax, yMax, colour);
     }
 
-    public static void drawTexturedModalRect(GuiGraphics guiGraphics, ResourceLocation texture, double posX, double posY, double textureX, double textureY, double width, double height) {
+    public static void drawTexturedModalRect(GuiGraphics guiGraphics, Identifier texture, double posX, double posY, double textureX, double textureY, double width, double height) {
 //        int x = MathHelper.floor(posX);
         int x = Mth.floor(posX);
 //        int y = MathHelper.floor(posY);

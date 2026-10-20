@@ -16,7 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 
 import java.io.IOException;
@@ -51,9 +51,9 @@ public class GuideImageFactory implements GuidePartFactory {
         int height = this.heightRaw;
 
 //        TextureMap textureMap = Minecraft.getMinecraft().getTextureMapBlocks();
-        Function<ResourceLocation, TextureAtlasSprite> textureMap = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
+        Function<Identifier, TextureAtlasSprite> textureMap = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
 //        TextureAtlasSprite stitched = textureMap.getAtlasSprite(location);
-        TextureAtlasSprite stitched = textureMap.apply(new ResourceLocation(location));
+        TextureAtlasSprite stitched = textureMap.apply(Identifier.fromNamespaceAndPath(location));
 //        if (stitched != textureMap.getSprite(MissingTextureAtlasSprite.getLocation()))
         if (stitched != textureMap.apply(MissingTextureAtlasSprite.getLocation())) {
             this.sprite = new SpriteAtlas(stitched);
@@ -62,7 +62,7 @@ public class GuideImageFactory implements GuidePartFactory {
         } else {
             ISprite s;
             int sw, sh;
-            ResourceLocation resLoc = new ResourceLocation(location);
+            Identifier resLoc = Identifier.parse(location);
 //            try (Resource resource = Minecraft.getInstance().getResourceManager().getResource(resLoc))
             try {
                 Resource resource = Minecraft.getInstance().getResourceManager().getResource(resLoc).get();
@@ -98,6 +98,6 @@ public class GuideImageFactory implements GuidePartFactory {
             load();
         }
         return new GuideImage(gui, sprite, srcWidth, srcHeight, width, height);
-//        return new GuideImage(gui, new SpriteAtlas(new TextureAtlas(new ResourceLocation("")).getSprite(MissingTextureAtlasSprite.getLocation())), 0, 0, 0, 0);
+//        return new GuideImage(gui, new SpriteAtlas(new TextureAtlas(Identifier.fromNamespaceAndPath("")).getSprite(MissingTextureAtlasSprite.getLocation())), 0, 0, 0, 0);
     }
 }

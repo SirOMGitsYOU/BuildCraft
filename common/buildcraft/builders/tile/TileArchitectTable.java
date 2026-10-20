@@ -5,6 +5,9 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 package buildcraft.builders.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IAreaProvider;
@@ -46,7 +49,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -62,10 +65,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.*;
 
@@ -75,7 +78,7 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
     public static final int NET_BOX = IDS.allocId("BOX");
     @SuppressWarnings("WeakerAccess")
     public static final int NET_SCAN = IDS.allocId("SCAN");
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftbuilders:architect");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftbuilders:architect");
 
     public final ItemHandlerSimple invSnapshotIn = itemManager.addInvHandler(
             "in",
@@ -120,7 +123,7 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
 //    public void onPlacedBy(EntityLivingBase placer, ItemStack stack)
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
         super.onPlacedBy(placer, stack);
-        if (placer.level().isClientSide) {
+        if (placer.level().isClientSide()) {
             return;
         }
         WorldSavedDataVolumeBoxes volumeBoxes = WorldSavedDataVolumeBoxes.get(level);
@@ -166,7 +169,7 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
         ITickable.super.update();
         deltaManager.tick();
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (box.isInitialized()) {
                 ClientArchitectTables.BOXES.put(box.getBoundingBox(), ClientArchitectTables.START_BOX_VALUE);
             }
@@ -351,7 +354,7 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -392,14 +395,14 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
 //        super.readFromNBT(nbt);
         super.load(nbt);
         box.initialize(nbt.getCompound("box"));
-        markerBox = nbt.getBoolean("markerBox");
+        markerBox = nbt.getBooleanOr("markerBox", false);
         if (nbt.contains("iter")) {
             boxIterator = BoxIterator.readFromNbt(nbt.getCompound("iter"));
         }
-        scanning = nbt.getBoolean("scanning");
+        scanning = nbt.getBooleanOr("scanning", false);
         snapshotType = NBTUtilBC.readEnum(nbt.get("snapshotType"), EnumSnapshotType.class);
-        isValid = nbt.getBoolean("isValid");
-        name = nbt.getString("name");
+        isValid = nbt.getBooleanOr("isValid", false);
+        name = nbt.getStringOr("name", "");
     }
 
     @Override
@@ -419,7 +422,7 @@ public class TileArchitectTable extends TileBC_Neptune implements ITickable, IDe
 
     // Rendering
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {

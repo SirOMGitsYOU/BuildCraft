@@ -73,7 +73,7 @@ public abstract class MarkerCache<S extends MarkerSubCache<?>> {
     }
 
     private void onWorldUnloadImpl(Level world) {
-        Map<String, S> cache = world.isClientSide ? cacheClient : cacheServer;
+        Map<String, S> cache = world.isClientSide() ? cacheClient : cacheServer;
         String key = world.dimension().location().getPath();
         cache.remove(key);
     }
@@ -81,7 +81,7 @@ public abstract class MarkerCache<S extends MarkerSubCache<?>> {
     protected abstract S createSubCache(Level world);
 
     public S getSubCache(Level world) {
-        Map<String, S> cache = world.isClientSide ? cacheClient : cacheServer;
+        Map<String, S> cache = world.isClientSide() ? cacheClient : cacheServer;
         String key = world.dimension().location().getPath();
         return cache.computeIfAbsent(key, k -> createSubCache(world));
     }

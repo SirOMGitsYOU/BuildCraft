@@ -12,7 +12,7 @@ import buildcraft.lib.client.reload.ReloadSource;
 import buildcraft.lib.misc.SpriteUtil;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Set;
@@ -22,16 +22,16 @@ import java.util.function.IntSupplier;
 @Deprecated(forRemoval = true)
 public class AtlasSpriteVariants extends AtlasSpriteSwappable implements IReloadable {
     public static final IVariantType VARIANT_COLOUR_BLIND =
-//            loc -> ImmutableList.of(loc, new ResourceLocation(loc.getResourceDomain(), loc.getResourcePath() + "_cb"));
-            loc -> ImmutableList.of(loc, new ResourceLocation(loc.getNamespace(), loc.getPath() + "_cb"));
+//            loc -> ImmutableList.of(loc, Identifier.fromNamespaceAndPath(loc.getResourceDomain(), loc.getResourcePath() + "_cb"));
+            loc -> ImmutableList.of(loc, Identifier.fromNamespaceAndPath(loc.getNamespace(), loc.getPath() + "_cb"));
     public static final IntSupplier INDEX_COLOUR_BLIND = () -> BCLibConfig.colourBlindMode ? 1 : 0;
 
-    private final List<ResourceLocation> variantNames;
+    private final List<Identifier> variantNames;
     private final IntSupplier currentIndexFunction;
     private final TextureAtlasSprite[] variants;
     private int currentIndex = -1;
 
-    public AtlasSpriteVariants(List<ResourceLocation> variantNames, IntSupplier currentIndexFunction) {
+    public AtlasSpriteVariants(List<Identifier> variantNames, IntSupplier currentIndexFunction) {
 //        super(variantNames.get(0).toString());
         super(null, null, 0, 0, 0, 0);
         if (variantNames.isEmpty()) {
@@ -42,19 +42,19 @@ public class AtlasSpriteVariants extends AtlasSpriteSwappable implements IReload
         this.currentIndexFunction = currentIndexFunction;
     }
 
-    public AtlasSpriteVariants(ResourceLocation baseName, IVariantType variants, IntSupplier currentIndex) {
+    public AtlasSpriteVariants(Identifier baseName, IVariantType variants, IntSupplier currentIndex) {
         this(variants.getAllPossibleVariants(baseName), currentIndex);
     }
 
-    private static List<ResourceLocation> processNames(List<ResourceLocation> names) {
-        ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
-        for (ResourceLocation loc : names) {
+    private static List<Identifier> processNames(List<Identifier> names) {
+        ImmutableList.Builder<Identifier> builder = ImmutableList.builder();
+        for (Identifier loc : names) {
             builder.add(SpriteUtil.transformLocation(loc));
         }
         return builder.build();
     }
 
-//    public static TextureAtlasSprite createForConfig(ResourceLocation baseName) {
+//    public static TextureAtlasSprite createForConfig(Identifier baseName) {
 //        if (baseName.getNamespace().startsWith("minecraft")) {
 //            // Vanilla sprites never have colourblind variants, so don't bother
 //            // This is mostly just a fix for optifine compat as this shouldn't be a problem normally.
@@ -71,16 +71,16 @@ public class AtlasSpriteVariants extends AtlasSpriteSwappable implements IReload
 //            return sprite;
 //        } else {
 //            int index = INDEX_COLOUR_BLIND.getAsInt();
-//            ResourceLocation location = VARIANT_COLOUR_BLIND.getAllPossibleVariants(baseName).get(index);
+//            Identifier location = VARIANT_COLOUR_BLIND.getAllPossibleVariants(baseName).get(index);
 //            return makeAtlasSprite(location);
 //        }
 //    }
 
 //    @Override
-//    public boolean load(ResourceManager manager, ResourceLocation location,
-//                        Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
+//    public boolean load(ResourceManager manager, Identifier location,
+//                        Function<Identifier, TextureAtlasSprite> textureGetter) {
 //        for (int i = 0; i < variantNames.size(); i++) {
-//            ResourceLocation loc = variantNames.get(i);
+//            Identifier loc = variantNames.get(i);
 //            variants[i] = loadSprite(manager, getName().toString(), loc, i == 0);
 //        }
 //        currentIndex = -1;
@@ -92,7 +92,7 @@ public class AtlasSpriteVariants extends AtlasSpriteSwappable implements IReload
     public boolean reload(Set<ReloadSource> changed) {
 //        if (!changed.isEmpty()) {
 //            for (int i = 0; i < variantNames.size(); i++) {
-//                ResourceLocation loc = variantNames.get(i);
+//                Identifier loc = variantNames.get(i);
 //                if (ReloadUtil.getSourceTypesFor(changed, loc).contains(SourceType.FILE)) {
 //                    TextureAtlasSprite s = loadSprite(getIconName(), loc, i == 0);
 //                    if (s != null) {
@@ -122,6 +122,6 @@ public class AtlasSpriteVariants extends AtlasSpriteSwappable implements IReload
     }
 
     public interface IVariantType {
-        List<ResourceLocation> getAllPossibleVariants(ResourceLocation location);
+        List<Identifier> getAllPossibleVariants(Identifier location);
     }
 }

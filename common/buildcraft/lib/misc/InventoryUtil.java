@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IInvSlot;
 import buildcraft.api.core.IStackFilter;
@@ -27,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,15 +59,15 @@ public class InventoryUtil {
         }
     }
 
-    public static void drop(Level world, BlockPos pos, @Nonnull ItemStack stack) {
+    public static void drop(Level world, BlockPos pos, @NotNull ItemStack stack) {
         world.addFreshEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack));
     }
 
-    public static void drop(Level world, Vec3 vec, @Nonnull ItemStack stack) {
+    public static void drop(Level world, Vec3 vec, @NotNull ItemStack stack) {
         drop(world, vec.x, vec.y, vec.z, stack);
     }
 
-    public static void drop(Level world, double x, double y, double z, @Nonnull ItemStack stack) {
+    public static void drop(Level world, double x, double y, double z, @NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             return;
         }
@@ -77,13 +78,13 @@ public class InventoryUtil {
     // Sending items around
 
     /** @return The leftover stack */
-    @Nonnull
-    public static ItemStack addToRandomInventory(Level world, BlockPos pos, @Nonnull ItemStack stack) {
+    @NotNull
+    public static ItemStack addToRandomInventory(Level world, BlockPos pos, @NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             return StackUtil.EMPTY;
         }
         List<Direction> toTry = new ArrayList<>(6);
-        Collections.addAll(toTry, Direction.VALUES);
+        Collections.addAll(toTry, Direction.values());
         Collections.shuffle(toTry);
         for (Direction face : toTry) {
             BlockEntity tile = world.getBlockEntity(pos.relative(face));
@@ -99,13 +100,13 @@ public class InventoryUtil {
     /** Look around the tile given in parameter in all 6 position, tries to add the items to a random injectable tile
      * around. Will make sure that the location from which the items are coming from (identified by the from parameter)
      * isn't used again so that entities doesn't go backwards. Returns true if successful, false otherwise. */
-    @Nonnull
-    public static ItemStack addToRandomInjectable(Level world, BlockPos pos, Direction ignore, @Nonnull ItemStack stack) {
+    @NotNull
+    public static ItemStack addToRandomInjectable(Level world, BlockPos pos, Direction ignore, @NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             return StackUtil.EMPTY;
         }
         List<Direction> toTry = new ArrayList<>(6);
-        Collections.addAll(toTry, Direction.VALUES);
+        Collections.addAll(toTry, Direction.values());
         Collections.shuffle(toTry);
         for (Direction face : toTry) {
             if (face == ignore) continue;
@@ -121,7 +122,7 @@ public class InventoryUtil {
 
     /** Attempts to add the given stack to the best acceptor, in this order: {@link IItemHandler} instances,
      * {@link IInjectable} instances, and finally dropping it down on the ground. */
-    public static void addToBestAcceptor(Level world, BlockPos pos, Direction ignore, @Nonnull ItemStack stack) {
+    public static void addToBestAcceptor(Level world, BlockPos pos, Direction ignore, @NotNull ItemStack stack) {
         stack = addToRandomInjectable(world, pos, ignore, stack);
         stack = addToRandomInventory(world, pos, stack);
         drop(world, pos, stack);

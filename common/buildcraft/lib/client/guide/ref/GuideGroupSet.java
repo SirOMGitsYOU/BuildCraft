@@ -2,7 +2,7 @@ package buildcraft.lib.client.guide.ref;
 
 import buildcraft.lib.client.guide.entry.PageValue;
 import buildcraft.lib.misc.LocaleUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ public final class GuideGroupSet {
         }
     }
 
-    public final ResourceLocation group;
+    public final Identifier group;
 
     /** Everything that points to this group, and so will include this group in pages. */
     public final List<PageValue<?>> sources;
@@ -29,7 +29,7 @@ public final class GuideGroupSet {
     /** Everything that is in the group, and will be displayed under this group. */
     public final List<PageValue<?>> entries;
 
-    public GuideGroupSet(ResourceLocation group) {
+    public GuideGroupSet(Identifier group) {
         this.group = group;
         this.sources = new ArrayList<>();
         this.entries = new ArrayList<>();

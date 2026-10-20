@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
@@ -12,14 +13,14 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public enum NoSpaceTransactor implements IItemTransactor {
     INSTANCE;
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack insert(@Nonnull ItemStack stack, boolean allOrNone, boolean simulate) {
+    public ItemStack insert(@NotNull ItemStack stack, boolean allOrNone, boolean simulate) {
         return stack;
     }
 
@@ -28,7 +29,7 @@ public enum NoSpaceTransactor implements IItemTransactor {
         return stacks;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack extract(IStackFilter filter, int min, int max, boolean simulate) {
         return StackUtil.EMPTY;

@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
+
 
 public class WrappedItemHandlerInsert extends DelegateItemHandler {
 
@@ -19,7 +20,7 @@ public class WrappedItemHandlerInsert extends DelegateItemHandler {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         return StackUtil.EMPTY;
     }

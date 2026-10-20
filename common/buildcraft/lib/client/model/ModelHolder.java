@@ -6,7 +6,7 @@
 
 package buildcraft.lib.client.model;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Set;
@@ -14,24 +14,24 @@ import java.util.Set;
 /** Defines an object that will hold a model, and is automatically refreshed from the filesystem when the client reloads
  * all of its resources. */
 public abstract class ModelHolder {
-    public final ResourceLocation modelLocation;
+    public final Identifier modelLocation;
     protected String failReason = "";
 
-    public ModelHolder(ResourceLocation modelLocation) {
+    public ModelHolder(Identifier modelLocation) {
         this.modelLocation = modelLocation;
         ModelHolderRegistry.HOLDERS.add(this);
     }
 
     public ModelHolder(String modelLocation) {
-        this(new ResourceLocation(modelLocation));
+        this(Identifier.fromNamespaceAndPath(modelLocation));
     }
 
     protected abstract void onModelBake();
 
-    protected abstract void onTextureStitchPre(Set<ResourceLocation> toRegisterSprites);
+    protected abstract void onTextureStitchPre(Set<Identifier> toRegisterSprites);
 
     // Calen 1.20.1
-    protected abstract void onDatagenTextureRegister(Set<ResourceLocation> toRegisterSprites, ExistingFileHelper fileHelper);
+    protected abstract void onDatagenTextureRegister(Set<Identifier> toRegisterSprites, ExistingFileHelper fileHelper);
 
     public abstract boolean hasBakedQuads();
 }

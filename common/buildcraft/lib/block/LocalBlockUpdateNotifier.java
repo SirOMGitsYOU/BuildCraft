@@ -1,4 +1,5 @@
 package buildcraft.lib.block;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.BCLib;
 import net.minecraft.core.BlockPos;
@@ -6,7 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.event.VanillaGameEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
@@ -26,8 +27,8 @@ public class LocalBlockUpdateNotifier {
     private LocalBlockUpdateNotifier(LevelAccessor world) {
 //        IWorldEventListener worldEventListener = new WorldEventListenerAdapter() {
 //            @Override
-//            public void notifyBlockUpdate(@Nonnull World world, @Nonnull BlockPos eventPos, @Nonnull IBlockState oldState,
-//                                          @Nonnull IBlockState newState, int flags) {
+//            public void notifyBlockUpdate(@NotNull World world, @NotNull BlockPos eventPos, @NotNull IBlockState oldState,
+//                                          @NotNull IBlockState newState, int flags) {
 //                notifySubscribersInRange(world, eventPos, oldState, newState, flags);
 //            }
 //        };

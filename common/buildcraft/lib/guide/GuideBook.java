@@ -5,29 +5,29 @@ import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 
 public final class GuideBook {
 
     public static final ISimpleEntryDeserializer<GuideBook> DESERIALISER = GuideBook::deserialize;
 
-    public final ResourceLocation name;
-    public final ResourceLocation itemIcon;
+    public final Identifier name;
+    public final Identifier itemIcon;
     public final MutableComponent title;
     public final boolean appendAllEntries;
     // TODO: Mod/resource pack display options!
     public final GuideContentsData data = new GuideContentsData(this);
 
-    private static GuideBook deserialize(ResourceLocation name, JsonObject json, JsonDeserializationContext ctx) {
-        ResourceLocation itemIcon = new ResourceLocation("buildcraftcore:guide_main");
+    private static GuideBook deserialize(Identifier name, JsonObject json, JsonDeserializationContext ctx) {
+        Identifier itemIcon = Identifier.parse("buildcraftcore:guide_main");
         MutableComponent title = JsonUtil.getTextComponent(json, "title", "");
-//        boolean addAll = JsonUtils.getBoolean(json, "all_entries", true);
+//        boolean addAll = JsonUtils.getBooleanOr(json, "all_entries", true, false);
         boolean addAll = GsonHelper.getAsBoolean(json, "all_entries", true);
         return new GuideBook(name, itemIcon, title, addAll);
     }
 
-    public GuideBook(ResourceLocation name, ResourceLocation itemIcon, MutableComponent title, boolean appendAllEntries) {
+    public GuideBook(Identifier name, Identifier itemIcon, MutableComponent title, boolean appendAllEntries) {
         this.name = name;
         this.itemIcon = itemIcon;
         this.title = title;

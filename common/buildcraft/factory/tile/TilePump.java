@@ -6,6 +6,8 @@
 
 package buildcraft.factory.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
@@ -28,7 +30,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.ActiveProfiler;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -41,9 +43,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -77,11 +79,11 @@ public class TilePump extends TileMiner {
         }
     }
 
-    private static final ResourceLocation ADVANCEMENT_DRAIN_ANY
-            = new ResourceLocation("buildcraftfactory:draining_the_world");
+    private static final Identifier ADVANCEMENT_DRAIN_ANY
+            = Identifier.parse("buildcraftfactory:draining_the_world");
 
-    private static final ResourceLocation ADVANCEMENT_DRAIN_OIL
-            = new ResourceLocation("buildcraftfactory:oil_platform");
+    private static final Identifier ADVANCEMENT_DRAIN_OIL
+            = Identifier.parse("buildcraftfactory:oil_platform");
 
     private final Tank tank = new Tank("tank", 16 * FluidType.BUCKET_VOLUME, this);
     private boolean queueBuilt = false;
@@ -306,14 +308,14 @@ public class TilePump extends TileMiner {
 
     @Override
     public void update() {
-        if (!queueBuilt && !level.isClientSide) {
+        if (!queueBuilt && !level.isClientSide()) {
             buildQueue();
             queueBuilt = true;
         }
 
         super.update();
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             FluidUtilBC.pushFluidAround(level, worldPosition, tank);
         }
     }
@@ -457,7 +459,7 @@ public class TilePump extends TileMiner {
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {

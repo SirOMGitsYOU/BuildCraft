@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.lib.client.guide.parts.GuidePartFactory;
 import buildcraft.lib.misc.ItemStackKey;
@@ -22,8 +25,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.*;
 
 public enum GuideCraftingRecipes implements IStackRecipes {
@@ -35,7 +38,7 @@ public enum GuideCraftingRecipes implements IStackRecipes {
     private Map<Item, Set<Recipe<?>>> inputIndexMap, outputIndexMap;
 
     @Override
-    public List<GuidePartFactory> getUsages(@Nonnull ItemStack target) {
+    public List<GuidePartFactory> getUsages(@NotNull ItemStack target) {
 //        final Iterable<Recipe> recipes;
         final Iterable<? extends Recipe<?>> recipes;
         if (USE_INDEX) {
@@ -108,7 +111,7 @@ public enum GuideCraftingRecipes implements IStackRecipes {
         list.add(recipe);
     }
 
-    private static boolean checkRecipeUses(Recipe<?> recipe, @Nonnull ItemStack target) {
+    private static boolean checkRecipeUses(Recipe<?> recipe, @NotNull ItemStack target) {
         NonNullList<Ingredient> ingrediants = recipe.getIngredients();
         if (ingrediants.isEmpty()) {
             if (recipe instanceof IRecipeViewable) {
@@ -123,7 +126,7 @@ public enum GuideCraftingRecipes implements IStackRecipes {
         return false;
     }
 
-    private static boolean matches(@Nonnull ItemStack target, @Nullable Object in) {
+    private static boolean matches(@NotNull ItemStack target, @Nullable Object in) {
         if (in instanceof ItemStack) {
             return StackUtil.doesEitherStackMatch((ItemStack) in, target);
         } else if (in instanceof List) {
@@ -139,7 +142,7 @@ public enum GuideCraftingRecipes implements IStackRecipes {
     }
 
     @Override
-    public List<GuidePartFactory> getRecipes(@Nonnull ItemStack target) {
+    public List<GuidePartFactory> getRecipes(@NotNull ItemStack target) {
 //        final Iterable<Recipe> recipes;
         final Iterable<? extends Recipe<?>> recipes;
         if (USE_INDEX) {

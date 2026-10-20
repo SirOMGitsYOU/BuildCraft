@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.item;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.transport.IItemPluggable;
@@ -21,8 +24,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 public class ItemPluggableSimple extends ItemBC_Neptune implements IItemPluggable {
 
@@ -58,7 +61,7 @@ public class ItemPluggableSimple extends ItemBC_Neptune implements IItemPluggabl
         this(id, properties, definition, definition.creator, canPlace);
     }
 
-    public ItemPluggableSimple(String id, Item.Properties properties, PluggableDefinition definition, @Nonnull IPluggableCreator creator) {
+    public ItemPluggableSimple(String id, Item.Properties properties, PluggableDefinition definition, @NotNull IPluggableCreator creator) {
         this(id, properties, definition, creator, null);
     }
 
@@ -67,7 +70,7 @@ public class ItemPluggableSimple extends ItemBC_Neptune implements IItemPluggabl
     }
 
     @Override
-    public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
+    public PipePluggable onPlace(@NotNull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
         if (!canPlace.canPlace(stack, holder, side)) {
             return null;
         }

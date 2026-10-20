@@ -5,6 +5,7 @@
  */
 
 package buildcraft.transport.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.transport.pipe.IPipeFlowRenderer;
@@ -41,7 +42,7 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
             return;
         }
 
-        ProfilerFiller prof = Minecraft.getInstance().getProfiler();
+        ProfilerFiller prof = net.minecraft.util.profiling.Profiler.get();
         prof.push("calc");
 
         boolean[] sides = new boolean[6];
@@ -68,7 +69,7 @@ public enum PipeFlowRendererFluids implements IPipeFlowRenderer<PipeFlowFluids> 
         boolean vertical = flow.pipe.isConnected(gas ? Direction.DOWN : Direction.UP);
 
         prof.popPush("build");
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             double size = ((Pipe) flow.pipe).getConnectedDist(face);
 //            double amount = amounts[face.getIndex()];
             double amount = amounts[face.get3DDataValue()];

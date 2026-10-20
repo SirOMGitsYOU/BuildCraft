@@ -5,11 +5,12 @@
  */
 
 package buildcraft.lib.gui.slot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 // public class SlotValidated extends Slot
 public class SlotValidated extends SlotBase {
@@ -21,7 +22,7 @@ public class SlotValidated extends SlotBase {
 
     @Override
     // public boolean isItemValid(ItemStack itemStack)
-    public boolean mayPlace(@Nonnull ItemStack itemStack) {
+    public boolean mayPlace(@NotNull ItemStack itemStack) {
         // return inventory.isItemValidForSlot(this.getSlotIndex(), itemStack);
         return itemHandler.canSet(handlerIndex, itemStack);
     }

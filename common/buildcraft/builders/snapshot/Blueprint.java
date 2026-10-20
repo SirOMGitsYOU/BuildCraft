@@ -81,7 +81,7 @@ public class Blueprint extends Snapshot {
         }
         data = new int[Snapshot.getDataSize(size)];
         ListTag serializedDataList = nbt.contains("data", Tag.TAG_LIST)
-                ? nbt.getList("data", Tag.TAG_INT)
+                ? nbt.getListOrEmpty("data", Tag.TAG_INT)
                 : null;
         int[] serializedDataIntArray = nbt.contains("data", Tag.TAG_INT_ARRAY)
                 ? nbt.getIntArray("data")
@@ -104,7 +104,7 @@ public class Blueprint extends Snapshot {
                 for (int x = 0; x < size.getX(); x++) {
                     data[posToIndex(x, y, z)] = serializedDataList == null
                             ? serializedDataIntArray[posToIndex(x, y, z)]
-                            : serializedDataList.getInt(posToIndex(x, y, z));
+                            : serializedDataList.getIntOr(posToIndex(x, y, z, 0));
                 }
             }
         }

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor;
@@ -28,10 +29,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 
 public class ItemTransactorHelper {
-    @Nonnull
+    @NotNull
     public static IItemTransactor getTransactor(ICapabilityProvider provider, Direction face) {
         if (provider == null) {
             return NoSpaceTransactor.INSTANCE;
@@ -60,7 +61,7 @@ public class ItemTransactorHelper {
         return new ItemHandlerWrapper(handler);
     }
 
-    @Nonnull
+    @NotNull
     public static IItemTransactor getTransactor(Inventory inventory) {
         if (inventory == null) {
             return NoSpaceTransactor.INSTANCE;
@@ -68,7 +69,7 @@ public class ItemTransactorHelper {
         return new InventoryWrapper(inventory);
     }
 
-    @Nonnull
+    @NotNull
     public static IItemTransactor getTransactorForEntity(Entity entity, Direction face) {
         IItemTransactor transactor = getTransactor(entity, face);
         if (transactor != NoSpaceTransactor.INSTANCE) {
@@ -82,7 +83,7 @@ public class ItemTransactorHelper {
         }
     }
 
-    @Nonnull
+    @NotNull
     public static IInjectable getInjectable(ICapabilityProvider provider, Direction face) {
         if (provider == null) {
             return NoSpaceInjectable.INSTANCE;

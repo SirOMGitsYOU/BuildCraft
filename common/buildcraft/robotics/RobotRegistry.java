@@ -18,7 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.event.level.ChunkEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 import java.security.InvalidParameterException;
 import java.util.*;
@@ -355,19 +355,19 @@ public class RobotRegistry extends SavedData implements IRobotRegistry {
 
     @Override
     public synchronized void readFromNBT(CompoundTag nbt) {
-        nextRobotID = nbt.getLong("nextRobotID");
+        nextRobotID = nbt.getLongOr("nextRobotID", 0L);
 
-        ListTag resourceList = nbt.getList("resourceList", Tag.TAG_COMPOUND);
+        ListTag resourceList = nbt.getListOrEmpty("resourceList", Tag.TAG_COMPOUND);
 
         for (int i = 0; i < resourceList.size(); ++i) {
             CompoundTag cpt = resourceList.getCompound(i);
             ResourceId resourceId = ResourceId.load(cpt.getCompound("resourceId"));
-            long robotId = cpt.getLong("robotId");
+            long robotId = cpt.getLongOr("robotId", 0L);
 
             take(resourceId, robotId);
         }
 
-        ListTag stationList = nbt.getList("stationList", Tag.TAG_COMPOUND);
+        ListTag stationList = nbt.getListOrEmpty("stationList", Tag.TAG_COMPOUND);
 
         for (int i = 0; i < stationList.size(); ++i) {
             CompoundTag cpt = stationList.getCompound(i);
@@ -377,9 +377,9 @@ public class RobotRegistry extends SavedData implements IRobotRegistry {
             if (!cpt.contains("stationType")) {
                 cls = DockingStationPipe.class;
             } else {
-                cls = RobotManager.getDockingStationByName(cpt.getString("stationType"));
+                cls = RobotManager.getDockingStationByName(cpt.getStringOr("stationType", ""));
                 if (cls == null) {
-                    BCLog.logger.error("Could not load docking station of type " + nbt.getString("stationType"));
+                    BCLog.logger.error("Could not load docking station of type " + nbt.getStringOr("stationType", ""));
                     continue;
                 }
             }

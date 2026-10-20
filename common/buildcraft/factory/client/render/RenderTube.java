@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.client.render;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.factory.tile.TileMiner;
 import buildcraft.lib.client.render.laser.LaserData_BC8;
@@ -28,7 +29,7 @@ public class RenderTube implements BlockEntityRenderer<TileMiner> {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TileMiner tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TileMiner tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TileMiner tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         if (tile.isComplete()) {
             return;

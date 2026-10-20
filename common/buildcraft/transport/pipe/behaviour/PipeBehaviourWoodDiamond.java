@@ -22,7 +22,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.HitResult;
@@ -32,7 +31,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 
@@ -83,7 +82,7 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood {
     }
 
     @Override
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             filterMode = FilterMode.get(buffer.readUnsignedByte());
@@ -113,7 +112,7 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood {
                 return false;
             }
         }
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
 //            BCTransportGuis.PIPE_DIAMOND_WOOD.openGui(player, pipe.getHolder().getPipePos());
             MessageUtil.serverOpenTileGui(player, pipe.getHolder(), pipe.getHolder().getPipePos());
         }
@@ -178,8 +177,8 @@ public class PipeBehaviourWoodDiamond extends PipeBehaviourWood {
                     return flow.tryExtractFluid(millibuckets, dir, null, action);
                 }
                 // Firstly try the advanced version - if that fails we will need to try the basic version
-//                InteractionResultHolder<FluidStack> result = flow.tryExtractFluidAdv(millibuckets, dir, new ArrayFluidFilter(filters.stacks), simulate);
-                InteractionResultHolder<FluidStack> result = flow.tryExtractFluidAdv(millibuckets, dir, new ArrayFluidFilter(filters.stacks), action);
+//                InteractionResult result = flow.tryExtractFluidAdv(millibuckets, dir, new ArrayFluidFilter(filters.stacks), simulate);
+                InteractionResult result = flow.tryExtractFluidAdv(millibuckets, dir, new ArrayFluidFilter(filters.stacks), action);
                 FluidStack extracted = result.getObject();
                 if (result.getResult() != InteractionResult.PASS) {
                     return extracted;

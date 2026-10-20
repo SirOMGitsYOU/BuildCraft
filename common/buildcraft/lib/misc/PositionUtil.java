@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.misc.data.FaceDistance;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -17,7 +19,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Set;

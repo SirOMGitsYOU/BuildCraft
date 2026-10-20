@@ -1,14 +1,16 @@
 package buildcraft.lib.recipe.refinery;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Consumer;
 
 public class DistillationRecipeBuilder {
@@ -45,8 +47,8 @@ public class DistillationRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(BCModules.ENERGY.getModId(), "distillation/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(BCModules.ENERGY.getModId(), "distillation/" + name);
         }
 
         @Override
@@ -62,7 +64,7 @@ public class DistillationRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

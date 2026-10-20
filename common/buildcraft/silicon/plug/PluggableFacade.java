@@ -5,6 +5,9 @@
  */
 
 package buildcraft.silicon.plug;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.facades.FacadeType;
@@ -22,7 +25,7 @@ import buildcraft.transport.client.model.key.KeyPlugBlocker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -39,7 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 public class PluggableFacade extends PipePluggable implements IFacade {
 
@@ -80,7 +83,7 @@ public class PluggableFacade extends PipePluggable implements IFacade {
     public PluggableFacade(PluggableDefinition def, IPipeHolder holder, Direction side, CompoundTag nbt) {
         super(def, holder, side);
         if (nbt.contains("states") && !nbt.contains("facade")) {
-            ListTag tagStates = nbt.getList("states", Tag.TAG_COMPOUND);
+            ListTag tagStates = nbt.getListOrEmpty("states", Tag.TAG_COMPOUND);
             if (tagStates.size() > 0) {
                 boolean isHollow = tagStates.getCompound(0).getBoolean("isHollow");
                 CompoundTag tagFacade = new CompoundTag();
@@ -90,7 +93,7 @@ public class PluggableFacade extends PipePluggable implements IFacade {
             }
         }
         this.states = FacadeInstance.readFromNbt(nbt.getCompound("facade"));
-        activeState = MathUtil.clamp(nbt.getInt("activeState"), 0, states.phasedStates.length - 1);
+        activeState = MathUtil.clamp(nbt.getIntOr("activeState", 0), 0, states.phasedStates.length - 1);
         isSideSolid = states.areAllStatesSolid(side);
         // Calen: seems not still useful in 1.18.2
 //        blockFaceShape = states.getBlockFaceShape(side);
@@ -148,7 +151,7 @@ public class PluggableFacade extends PipePluggable implements IFacade {
 
     @Override
 //    public float getExplosionResistance(@Nullable Entity exploder, Explosion explosion)
-    public float getExplosionResistance(@Nonnull Entity exploder, Explosion explosion) {
+    public float getExplosionResistance(@NotNull Entity exploder, Explosion explosion) {
 //        return states.phasedStates[activeState].stateInfo.state.getBlock().getExplosionResistance(exploder);
         BlockState state = states.phasedStates[activeState].stateInfo.state;
         Level level = exploder.level();

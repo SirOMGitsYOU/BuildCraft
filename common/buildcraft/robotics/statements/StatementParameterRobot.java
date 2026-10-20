@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+
 
 public class StatementParameterRobot extends StatementParameterItemStack {
     // Calen 1.18.2
@@ -36,7 +36,7 @@ public class StatementParameterRobot extends StatementParameterItemStack {
 
     @Override
     // public void onClick(IStatementContainer source, IStatement stmt, ItemStack stack, StatementMouseClick mouse)
-    public StatementParameterRobot onClick(IStatementContainer source, IStatement stmt, @Nonnull ItemStack stack, StatementMouseClick mouse) {
+    public StatementParameterRobot onClick(IStatementContainer source, IStatement stmt, @NotNull ItemStack stack, StatementMouseClick mouse) {
         // if (stack == null && (this.stack == null || this.stack.getItem() instanceof ItemRobot))
         if (stack.isEmpty() && (this.stack.isEmpty() || this.stack.getItem() instanceof ItemRobot)) {
             RedstoneBoardRobotNBT nextBoard = RobotUtils.getNextBoard(this.stack, mouse.getButton() > 0);

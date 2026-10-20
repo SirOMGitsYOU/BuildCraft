@@ -1,15 +1,16 @@
 package buildcraft.lib.recipe.integration;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.recipes.IngredientStack;
 import buildcraft.api.recipes.IntegrationRecipe;
 import buildcraft.lib.misc.StackUtil;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nonnull;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class IntegrationRecipeBasic extends IntegrationRecipe {
     // protected final long requiredMicroJoules;
     protected final IngredientStack target;
     protected final ImmutableList<IngredientStack> toIntegrate;
-    protected final @Nonnull ItemStack output;
+    protected final @NotNull ItemStack output;
 
-    public IntegrationRecipeBasic(ResourceLocation name, long requiredMicroJoules, IngredientStack target, List<IngredientStack> toIntegrate, @Nonnull ItemStack output) {
+    public IntegrationRecipeBasic(Identifier name, long requiredMicroJoules, IngredientStack target, List<IngredientStack> toIntegrate, @NotNull ItemStack output) {
         super(name, requiredMicroJoules, 1);
         // this.requiredMicroJoules = requiredMicroJoules;
         this.target = target;
@@ -27,11 +28,11 @@ public class IntegrationRecipeBasic extends IntegrationRecipe {
         this.output = output;
     }
 
-    // public IntegrationRecipeBasic(String name, long requiredMicroJoules, IngredientStack target, List<IngredientStack> toIntegrate, @Nonnull ItemStack output) {
+    // public IntegrationRecipeBasic(String name, long requiredMicroJoules, IngredientStack target, List<IngredientStack> toIntegrate, @NotNull ItemStack output) {
     //     this(BuildCraftAPI.nameToResourceLocation(name), requiredMicroJoules, target, toIntegrate, output);
     // }
 
-    protected boolean matches(@Nonnull ItemStack target, NonNullList<ItemStack> toIntegrate) {
+    protected boolean matches(@NotNull ItemStack target, NonNullList<ItemStack> toIntegrate) {
         if (!StackUtil.contains(this.target, target)) {
             return false;
         }
@@ -54,12 +55,12 @@ public class IntegrationRecipeBasic extends IntegrationRecipe {
     }
 
     @Override
-    public ItemStack getOutput(@Nonnull ItemStack target, NonNullList<ItemStack> toIntegrate) {
+    public ItemStack getOutput(@NotNull ItemStack target, NonNullList<ItemStack> toIntegrate) {
         return matches(target, toIntegrate) ? output : ItemStack.EMPTY;
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack getExampleOutput() {
         return output;
     }
@@ -81,7 +82,7 @@ public class IntegrationRecipeBasic extends IntegrationRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         return name;
     }
 

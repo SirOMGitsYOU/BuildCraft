@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.IMjConnector;
@@ -24,9 +25,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 
 public class TileEngineCreative extends TileEngineBase_BC8 {
@@ -48,7 +49,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -70,7 +71,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected IMjConnector createConnector() {
         return new EngineConnector(false);
@@ -123,7 +124,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
     public InteractionResult onActivated(Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getItemInHand(hand);
         if (!stack.isEmpty() && stack.getItem() instanceof IToolWrench) {
-            if (!level.isClientSide) {
+            if (!level.isClientSide()) {
                 currentOutputIndex++;
                 currentOutputIndex %= outputs.length;
 //                player.sendStatusMessage(
@@ -150,7 +151,7 @@ public class TileEngineCreative extends TileEngineBase_BC8 {
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        currentOutputIndex = nbt.getInt("currentOutputIndex");
+        currentOutputIndex = nbt.getIntOr("currentOutputIndex", 0);
         currentOutputIndex = MathUtil.clamp(currentOutputIndex, 0, outputs.length);
     }
 }

@@ -1,13 +1,15 @@
 package buildcraft.lib.client.resource;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceMetadata;
 
-import javax.annotation.Nullable;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +32,7 @@ public class MetadataLoader {
 
     /** @param samePack If true, then only the data in the same resource pack will be returned. */
     @Nullable
-    public static DataMetadataSection getData(ResourceLocation location, boolean samePack) {
+    public static DataMetadataSection getData(Identifier location, boolean samePack) {
         ResourceManager resManager = Minecraft.getInstance().getResourceManager();
         register();
         try {

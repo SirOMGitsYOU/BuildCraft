@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.block;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.block.BlockBCBase_Neptune;
 import buildcraft.lib.misc.SoundUtil;
@@ -26,7 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 
 public class BlockWaterGel extends BlockBCBase_Neptune {
@@ -99,7 +100,7 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
 
     @Override
 //    protected BlockStateContainer createBlockState()
-    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(PROP_STAGE);
     }
@@ -127,7 +128,7 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
             Set<BlockPos> seenSet = new HashSet<>();
             List<BlockPos> changeable = new ArrayList<>();
             List<Direction> faces = new ArrayList<>();
-            Collections.addAll(faces, Direction.VALUES);
+            Collections.addAll(faces, Direction.values());
             Collections.shuffle(faces);
             seenSet.add(pos);
             for (Direction face : faces) {
@@ -179,7 +180,7 @@ public class BlockWaterGel extends BlockBCBase_Neptune {
     }
 
     private static boolean notTouchingWater(Level world, BlockPos pos) {
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (isWater(world, pos.relative(face))) {
                 return false;
             }

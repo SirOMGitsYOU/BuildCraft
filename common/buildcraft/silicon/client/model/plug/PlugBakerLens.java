@@ -10,7 +10,7 @@ import buildcraft.api.transport.pluggable.IPluggableStaticBaker;
 import buildcraft.lib.client.model.MutableQuad;
 import buildcraft.silicon.BCSiliconModels;
 import buildcraft.silicon.client.model.key.KeyPlugLens;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;

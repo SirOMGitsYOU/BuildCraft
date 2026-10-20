@@ -1,5 +1,7 @@
 package buildcraft.lib.gui.statement;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IGuiSlot;
@@ -17,7 +19,7 @@ import buildcraft.lib.statement.StatementWrapper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class GuiElementStatementSource<S extends IGuiSlot> implements IInteractionElement {

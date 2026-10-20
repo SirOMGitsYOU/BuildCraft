@@ -1,5 +1,7 @@
 package buildcraft.lib.cap;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.EnumPipePart;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -7,8 +9,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -61,14 +63,14 @@ public class CapabilityHelper implements ICapabilityProvider {
 
     // 1.18.2: use getCapability().isPresent()
 //    @Override
-//    public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
+//    public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
 //        return getCapability(capability, facing) != null;
 //    }
 
     @SuppressWarnings("unchecked")
     @NotNull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         Map<Capability<?>, Supplier<?>> capMap = getCapMap(facing);
         Supplier<?> supplier = capMap.get(capability);
         if (supplier != null) {

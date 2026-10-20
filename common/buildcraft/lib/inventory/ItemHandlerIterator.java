@@ -1,10 +1,11 @@
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IInvSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 import java.util.Iterator;
 
 public class ItemHandlerIterator implements Iterable<IInvSlot> {
@@ -46,7 +47,7 @@ public class ItemHandlerIterator implements Iterable<IInvSlot> {
             this.slot = slot;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public ItemStack getStackInSlot() {
             // return inv.getStackInSlot(slot);
@@ -54,7 +55,7 @@ public class ItemHandlerIterator implements Iterable<IInvSlot> {
         }
 
         @Override
-        public void setStackInSlot(@Nonnull ItemStack stack) {
+        public void setStackInSlot(@NotNull ItemStack stack) {
             // inv.setInventorySlotContents(slot, stack);
             inv.extractItem(slot, inv.getStackInSlot(slot).getCount(), false);
             inv.insertItem(slot, stack, false);
@@ -77,7 +78,7 @@ public class ItemHandlerIterator implements Iterable<IInvSlot> {
             return inv.isItemValid(slot, stack);
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public ItemStack decreaseStackInSlot(int amount) {
             // return inv.decrStackSize(slot, amount);

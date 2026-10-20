@@ -19,7 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -102,7 +102,7 @@ public class SiliconAssemblyRecipeGenerator extends RecipeProvider {
         for (DyeColor colour : ColourUtil.COLOURS) {
             String name = String.format("lens_regular_%s", colour.getName());
 //            IngredientStack stainedGlass = IngredientStack.of("blockGlass" + ColourUtil.getName(colour));
-            IngredientStack stainedGlass = IngredientStack.of(TagKey.create(Registries.ITEM, new ResourceLocation("forge:glass/" + colour.getName())));
+            IngredientStack stainedGlass = IngredientStack.of(TagKey.create(Registries.ITEM, new Identifier("forge:glass/" + colour.getName())));
             ImmutableSet<IngredientStack> input1 = ImmutableSet.of(stainedGlass);
             ItemStack output1 = BCSiliconItems.plugLens.get().getStack(colour, false);
 //            AssemblyRecipeRegistry.register(new AssemblyRecipeBasic(name, 500 * MjAPI.MJ, input, output));

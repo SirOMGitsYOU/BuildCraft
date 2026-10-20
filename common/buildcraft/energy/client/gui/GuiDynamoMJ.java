@@ -23,7 +23,7 @@ import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.RenderUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.RegistryObject;
@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GuiDynamoMJ extends GuiBC8<ContainerDynamoMJ> {
-    private static final ResourceLocation TEXTURE_BASE
-            = new ResourceLocation("buildcraftenergy:textures/gui/mj_dynamo_gui.png");
+    private static final Identifier TEXTURE_BASE
+            = Identifier.parse("buildcraftenergy:textures/gui/mj_dynamo_gui.png");
     private static final int SIZE_X = 176, SIZE_Y = 177;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_RF = new GuiIcon(TEXTURE_BASE, SIZE_X, 0, 16, 60);

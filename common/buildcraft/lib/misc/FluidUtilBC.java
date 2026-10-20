@@ -6,12 +6,14 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
 import buildcraft.lib.fluid.Tank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +31,7 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class FluidUtilBC {
             return;
         }
         FluidStack working = potential.copy();
-        for (Direction side : Direction.VALUES) {
+        for (Direction side : Direction.values()) {
             if (potential.getAmount() <= 0) {
                 break;
             }
@@ -192,7 +194,7 @@ public class FluidUtilBC {
         if (flItem == null) {
             return InteractionResult.PASS;
         }
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         boolean changed = true;
@@ -225,22 +227,22 @@ public class FluidUtilBC {
 
     // Calen
     public static Fluid getItemFromRegistryName(String name) {
-        return getItemFromRegistryName(new ResourceLocation(name));
+        return getItemFromRegistryName(Identifier.parse(name));
     }
 
-    public static Fluid getItemFromRegistryName(ResourceLocation name) {
+    public static Fluid getItemFromRegistryName(Identifier name) {
         return ForgeRegistries.FLUIDS.getValue(name);
     }
 
-    public static ResourceLocation getRegistryName(Fluid fluid) {
+    public static Identifier getRegistryName(Fluid fluid) {
         return fluid.builtInRegistryHolder().key().location();
     }
 
-    public static ResourceLocation getStillTexture(Fluid fluid) {
+    public static Identifier getStillTexture(Fluid fluid) {
         return ((IClientFluidTypeExtensions) fluid.getFluidType().getRenderPropertiesInternal()).getStillTexture();
     }
 
-    public static ResourceLocation getFlowingTexture(Fluid fluid) {
+    public static Identifier getFlowingTexture(Fluid fluid) {
         return ((IClientFluidTypeExtensions) fluid.getFluidType().getRenderPropertiesInternal()).getFlowingTexture();
     }
 

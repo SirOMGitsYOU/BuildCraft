@@ -1,9 +1,11 @@
 package buildcraft.lib.expression;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+
 
 import buildcraft.lib.expression.Tokenizer.Token;
 import buildcraft.lib.expression.api.InvalidExpressionException;

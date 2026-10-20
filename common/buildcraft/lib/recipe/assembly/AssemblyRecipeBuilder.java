@@ -1,4 +1,7 @@
 package buildcraft.lib.recipe.assembly;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.recipes.EnumAssemblyRecipeType;
@@ -6,12 +9,12 @@ import buildcraft.api.recipes.IAssemblyRecipe;
 import buildcraft.api.recipes.IngredientStack;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -21,7 +24,7 @@ public class AssemblyRecipeBuilder {
     public final Set<IngredientStack> requiredStacks;
     public final ItemStack output;
 
-    private AssemblyRecipeBuilder(long requiredMicroJoules, Set<IngredientStack> requiredStacks, @Nonnull ItemStack output) {
+    private AssemblyRecipeBuilder(long requiredMicroJoules, Set<IngredientStack> requiredStacks, @NotNull ItemStack output) {
         this.type = EnumAssemblyRecipeType.BASIC;
         this.requiredMicroJoules = requiredMicroJoules;
         this.requiredStacks = requiredStacks;
@@ -35,7 +38,7 @@ public class AssemblyRecipeBuilder {
         output = null;
     }
 
-    public static AssemblyRecipeBuilder basic(long requiredMicroJoules, Set<IngredientStack> requiredStacks, @Nonnull ItemStack output) {
+    public static AssemblyRecipeBuilder basic(long requiredMicroJoules, Set<IngredientStack> requiredStacks, @NotNull ItemStack output) {
         return new AssemblyRecipeBuilder(requiredMicroJoules, requiredStacks, output);
     }
 
@@ -66,8 +69,8 @@ public class AssemblyRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(namespace, "assembly/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(namespace, "assembly/" + name);
         }
 
         @Override
@@ -83,7 +86,7 @@ public class AssemblyRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

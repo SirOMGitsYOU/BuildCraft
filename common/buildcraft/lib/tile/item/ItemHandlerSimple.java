@@ -5,6 +5,8 @@
  */
 package buildcraft.lib.tile.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IStackFilter;
 import buildcraft.lib.inventory.AbstractInvItemTransactor;
 import buildcraft.lib.misc.StackUtil;
@@ -21,8 +23,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 public class ItemHandlerSimple extends AbstractInvItemTransactor implements IItemHandlerModifiable, IItemHandlerAdv, INBTSerializable<CompoundTag> {
     // Function-called stuff (helpers etc)
@@ -89,7 +91,7 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        ListTag list = nbt.getList("items", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getListOrEmpty("items", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size() && i < getSlots(); i++) {
             setStackInternal(i, ItemStack.of(list.getCompound(i)));
         }
@@ -114,15 +116,15 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack getStackInSlot(int slot) {
         if (badSlotIndex(slot)) return StackUtil.EMPTY;
         return asValid(stacks.get(slot));
     }
 
     @Override
-    @Nonnull
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    @NotNull
+    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         if (badSlotIndex(slot)) {
             return stack;
         }
@@ -159,13 +161,13 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
     }
 
     @Override
-    @Nonnull
-    protected ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    @NotNull
+    protected ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
         return insertItem(slot, stack, simulate);
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (badSlotIndex(slot)) return StackUtil.EMPTY;
         // You can ALWAYS extract. if you couldn't then you could never take out items from anywhere
@@ -197,7 +199,7 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
     }
 
     @Override
-    @Nonnull
+    @NotNull
     protected ItemStack extract(int slot, IStackFilter filter, int min, int max, boolean simulate) {
         if (badSlotIndex(slot)) return StackUtil.EMPTY;
         if (min <= 0) min = 1;
@@ -223,7 +225,7 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
     }
 
     @Override
-    public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+    public void setStackInSlot(int slot, @NotNull ItemStack stack) {
         if (badSlotIndex(slot)) {
             // Its safe to throw here
             throw new IndexOutOfBoundsException("Slot index out of range: " + slot);
@@ -236,7 +238,7 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
     }
 
     @Override
-    public final boolean canSet(int slot, @Nonnull ItemStack stack) {
+    public final boolean canSet(int slot, @NotNull ItemStack stack) {
         ItemStack copied = asValid(stack);
         if (copied.isEmpty()) {
             return true;
@@ -244,7 +246,7 @@ public class ItemHandlerSimple extends AbstractInvItemTransactor implements IIte
         return checker.canSet(slot, copied);
     }
 
-    private void setStackInternal(int slot, @Nonnull ItemStack stack) {
+    private void setStackInternal(int slot, @NotNull ItemStack stack) {
         stacks.set(slot, asValid(stack));
         // Transactor calc
         if (stack.isEmpty() && firstUsed == slot) {

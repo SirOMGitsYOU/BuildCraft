@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.list;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.lists.ListMatchHandler;
 import buildcraft.lib.misc.ItemUtil;
@@ -17,7 +18,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 
 public class ListMatchHandlerOreDictionary extends ListMatchHandler {
     private static int getUppercaseCount(String s) {
@@ -31,7 +32,7 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(Type type, @NotNull ItemStack stack, @NotNull ItemStack target, boolean precise) {
 //        int[] oreIds = OreDictionary.getOreIDs(stack);
         TagKey<Item>[] oreIds = stack.getTags().toList().toArray(new TagKey[0]);
 
@@ -89,7 +90,7 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(Type type, @NotNull ItemStack stack) {
 //        return OreDictionary.getOreIDs(stack).length > 0;
         return !stack.getTags().toList().isEmpty();
     }
@@ -112,7 +113,7 @@ public class ListMatchHandlerOreDictionary extends ListMatchHandler {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public NonNullList<ItemStack> getClientExamples(Type type, @Nonnull ItemStack stack) {
+    public NonNullList<ItemStack> getClientExamples(Type type, @NotNull ItemStack stack) {
 //        int[] oreIds = OreDictionary.getOreIDs(stack);
         TagKey<Item>[] oreIds = stack.getTags().toArray(TagKey[]::new);
         NonNullList<ItemStack> stacks = NonNullList.create();

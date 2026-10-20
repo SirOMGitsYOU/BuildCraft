@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.lib.block;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.blocks.ICustomRotationHandler;
 import buildcraft.api.properties.BuildCraftProperties;
@@ -24,7 +25,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nonnull;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -65,7 +66,7 @@ public abstract class BlockMarkerBase extends BlockBCTile_Neptune<TileMarker> im
 
     @Override
 //    protected BlockStateContainer createBlockState()
-    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BuildCraftProperties.BLOCK_FACING_6);
 //        builder.add(BuildCraftProperties.ACTIVE); // Calen: only changes, never used

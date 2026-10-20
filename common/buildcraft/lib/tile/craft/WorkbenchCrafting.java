@@ -6,6 +6,8 @@
 
 package buildcraft.lib.tile.craft;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.inventory.filter.ArrayStackFilter;
 import buildcraft.lib.misc.CraftingUtil;
 import buildcraft.lib.misc.InventoryUtil;
@@ -25,7 +27,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nullable;
+
 
 public class WorkbenchCrafting extends TransientCraftingContainer {
     enum EnumRecipeType {
@@ -79,7 +81,7 @@ public class WorkbenchCrafting extends TransientCraftingContainer {
 
     /** @return True if anything changed, false otherwise */
     public boolean tick() {
-        if (tile.getLevel().isClientSide) {
+        if (tile.getLevel().isClientSide()) {
             throw new IllegalStateException("Never call this on the client side!");
         }
         if (isBlueprintDirty) {

@@ -30,7 +30,7 @@ public class FluidSmoother implements IDebuggable {
             if (world == null) {
                 return;
             }
-            data = world.isClientSide ? new _Client() : new _Server();
+            data = world.isClientSide() ? new _Client() : new _Server();
         }
         data.tick(world);
     }
@@ -58,7 +58,7 @@ public class FluidSmoother implements IDebuggable {
     }
 
     public void resetSmoothing(Level world) {
-        if (data == null && world.isClientSide) {
+        if (data == null && world.isClientSide()) {
             data = new _Client();
         }
         if (data instanceof _Client) {

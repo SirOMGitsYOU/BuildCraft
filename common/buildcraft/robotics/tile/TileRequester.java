@@ -3,6 +3,9 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.net.IMessage;
@@ -30,10 +33,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 
 public class TileRequester extends TileBC_Neptune implements IRequestProvider, IBCTileMenuProvider {
@@ -52,7 +55,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
     }
 
     public void setRequest(final int index, final ItemStack stack) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             IMessage message = createMessage(NET_SET_REQUEST, (data) ->
             {
                 data.writeByte(index);
@@ -65,7 +68,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
     }
 
     @Override
-    public void readPayload(int command, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int command, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(command, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_SERVER && NET_SET_REQUEST == command) {
             setRequest(buffer.readUnsignedByte(), buffer.readItem());
@@ -177,7 +180,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
 
         inv.deserializeNBT(nbt.getCompound("inv"));
         // requests.deserializeNBT(nbt.getCompound("req"));
-        ListTag reqNBT = nbt.getList("req", Tag.TAG_COMPOUND);
+        ListTag reqNBT = nbt.getListOrEmpty("req", Tag.TAG_COMPOUND);
         for (int i = 0; i < reqNBT.size(); i++) {
             requests.set(i, ItemStack.of(reqNBT.getCompound(i)));
         }
@@ -201,7 +204,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
         return NB_ITEMS;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getRequest(int i) {
         // if (requests.getStackInSlot(i) == null)
@@ -231,7 +234,7 @@ public class TileRequester extends TileBC_Neptune implements IRequestProvider, I
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack offerItem(int i, ItemStack stack) {
         ItemStack existingStack = inv.getStackInSlot(i);

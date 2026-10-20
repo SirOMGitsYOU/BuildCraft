@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
-    private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftrobotics:textures/gui/zone_planner.png");
+    private static final Identifier TEXTURE_BASE = Identifier.parse("buildcraftrobotics:textures/gui/zone_planner.png");
     private static final int SIZE_X = 256, SIZE_Y = 228;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_PROGRESS_INPUT = new GuiIcon(TEXTURE_BASE, 9, 228, 28, 9);
@@ -246,8 +246,8 @@ public class GuiZonePlanner extends GuiBC8<ContainerZonePlanner> {
 //        FloatBuffer modelViewBuffer = BufferUtils.createFloatBuffer(16);
 //        IntBuffer viewportBuffer = BufferUtils.createIntBuffer(16);
 
-//        GlStateManager.getFloat(GL11.GL_PROJECTION_MATRIX, projectionBuffer);
-//        GlStateManager.getFloat(GL11.GL_MODELVIEW_MATRIX, modelViewBuffer);
+//        GlStateManager.getFloatOr(GL11.GL_PROJECTION_MATRIX, projectionBuffer, 0.0f);
+//        GlStateManager.getFloatOr(GL11.GL_MODELVIEW_MATRIX, modelViewBuffer, 0.0f);
 //        GlStateManager.glGetInteger(GL11.GL_VIEWPORT, viewportBuffer);
         int[] viewport = { GlStateManager.Viewport.x(), GlStateManager.Viewport.y(), GlStateManager.Viewport.width(), GlStateManager.Viewport.height() };
 

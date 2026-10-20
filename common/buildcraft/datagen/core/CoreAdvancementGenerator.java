@@ -13,7 +13,7 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -34,7 +34,7 @@ public class CoreAdvancementGenerator extends BCBaseAdvancementGenerator {
                         BCCoreItems.gearWood.get(),
                         Component.translatable("advancements.buildcraftcore.root.title"),
                         Component.translatable("advancements.buildcraftcore.root.description"),
-                        new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/adventure.png"),
+                        Identifier.parse("minecraft:textures/gui/advancements/backgrounds/adventure.png"),
                         FrameType.TASK,
                         false, false, false)
                 .requirements(RequirementsStrategy.OR)

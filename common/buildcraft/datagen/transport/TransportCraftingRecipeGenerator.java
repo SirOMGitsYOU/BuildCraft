@@ -12,7 +12,7 @@ import buildcraft.transport.BCTransportItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -159,7 +159,7 @@ public class TransportCraftingRecipeGenerator extends RecipeProvider {
             ShapedRecipeBuilder.shaped(RecipeCategory.MISC, coloured, 8)
                     .pattern("lgr")
                     .define('l', left)
-                    .define('g', TagKey.create(Registries.ITEM, new ResourceLocation("forge:glass/" + colour.getName())))
+                    .define('g', TagKey.create(Registries.ITEM, new Identifier("forge:glass/" + colour.getName())))
                     .define('r', right)
                     .unlockedBy("has_item", has(Tags.Items.GLASS))
                     .group(MOD_ID)

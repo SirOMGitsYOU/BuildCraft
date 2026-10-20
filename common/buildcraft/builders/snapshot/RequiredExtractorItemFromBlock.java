@@ -5,20 +5,23 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Collections;
 import java.util.List;
 
 public class RequiredExtractorItemFromBlock extends RequiredExtractor {
-    @Nonnull
+    @NotNull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Collections.singletonList(
                 new ItemStack(
 //                        Item.getItemFromBlock(blockState.getBlock()),

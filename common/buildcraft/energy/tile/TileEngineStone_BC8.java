@@ -3,6 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.energy.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.enums.EnumPowerStage;
@@ -37,8 +40,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMenuProvider {
@@ -74,9 +77,9 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMe
 //    public void readFromNBT(NBTTagCompound nbt)
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        burnTime = nbt.getInt("burnTime");
-        totalBurnTime = nbt.getInt("totalBurnTime");
-        esum = nbt.getLong("esum");
+        burnTime = nbt.getIntOr("burnTime", 0);
+        totalBurnTime = nbt.getIntOr("totalBurnTime", 0);
+        esum = nbt.getLongOr("esum", 0L);
     }
 
     @Override
@@ -89,7 +92,7 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMe
     }
 
     @Override
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
         // if (handler == invFuel)
         if (handler == invFuel && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
             if (isForceInserting && after.isEmpty()) {
@@ -102,14 +105,14 @@ public class TileEngineStone_BC8 extends TileEngineBase_BC8 implements IBCTileMe
 
     @Override
     public InteractionResult onActivated(Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
 //            BCEnergyGuis.ENGINE_STONE.openGUI(player, getPos());
             MessageUtil.serverOpenTileGui(player, this);
         }
         return InteractionResult.SUCCESS;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected IMjConnector createConnector() {
         return new EngineConnector(false);

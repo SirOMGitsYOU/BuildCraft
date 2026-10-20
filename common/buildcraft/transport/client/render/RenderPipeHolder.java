@@ -5,6 +5,7 @@
  */
 
 package buildcraft.transport.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.api.transport.pipe.IPipeBehaviourRenderer;
 import buildcraft.api.transport.pipe.IPipeFlowRenderer;
@@ -34,27 +35,27 @@ public class RenderPipeHolder implements BlockEntityRenderer<TilePipeHolder> {
     @Override
 //    public void renderTileEntityFast(TilePipeHolder pipe, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer)
     public void render(TilePipeHolder pipe, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("pipe");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("pipe");
 
-        Minecraft.getInstance().getProfiler().push("wire");
+        net.minecraft.util.profiling.Profiler.get().push("wire");
         PipeWireRenderer.renderWires(pipe, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
-        Minecraft.getInstance().getProfiler().popPush("pluggable");
+        net.minecraft.util.profiling.Profiler.get().popPush("pluggable");
         renderPluggables(pipe, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
-        Minecraft.getInstance().getProfiler().popPush("contents");
+        net.minecraft.util.profiling.Profiler.get().popPush("contents");
         renderContents(pipe, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     // private static void renderPluggables(TilePipeHolder pipe, double x, double y, double z, float partialTicks, BufferBuilder bb)
     public void renderPluggables(TilePipeHolder pipe, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         VertexConsumer buffer = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             PipePluggable plug = pipe.getPluggable(face);
             if (plug == null) {
                 continue;
@@ -66,9 +67,9 @@ public class RenderPipeHolder implements BlockEntityRenderer<TilePipeHolder> {
     private static <P extends PipePluggable> void renderPlug(P plug, float partialTicks, PoseStack poseStack, VertexConsumer buffer, int combinedLight, int combinedOverlay) {
         IPlugDynamicRenderer<P> renderer = PipeRegistryClient.getPlugRenderer(plug);
         if (renderer != null) {
-            Minecraft.getInstance().getProfiler().push(plug.getClass().getName());
+            net.minecraft.util.profiling.Profiler.get().push(plug.getClass().getName());
             renderer.render(plug, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
-            Minecraft.getInstance().getProfiler().pop();
+            net.minecraft.util.profiling.Profiler.get().pop();
         }
     }
 
@@ -88,9 +89,9 @@ public class RenderPipeHolder implements BlockEntityRenderer<TilePipeHolder> {
     private static <F extends PipeFlow> void renderFlow(F flow, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         IPipeFlowRenderer<F> renderer = PipeRegistryClient.getFlowRenderer(flow);
         if (renderer != null) {
-            Minecraft.getInstance().getProfiler().push(flow.getClass().getName());
+            net.minecraft.util.profiling.Profiler.get().push(flow.getClass().getName());
             renderer.render(flow, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
-            Minecraft.getInstance().getProfiler().pop();
+            net.minecraft.util.profiling.Profiler.get().pop();
         }
     }
 
@@ -99,10 +100,10 @@ public class RenderPipeHolder implements BlockEntityRenderer<TilePipeHolder> {
         VertexConsumer buffer = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
         IPipeBehaviourRenderer<B> renderer = PipeRegistryClient.getBehaviourRenderer(behaviour);
         if (renderer != null) {
-            Minecraft.getInstance().getProfiler().push(behaviour.getClass().getName());
+            net.minecraft.util.profiling.Profiler.get().push(behaviour.getClass().getName());
 //            renderer.render(behaviour, x, y, z, partialTicks, bb);
             renderer.render(behaviour, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
-            Minecraft.getInstance().getProfiler().pop();
+            net.minecraft.util.profiling.Profiler.get().pop();
         }
     }
 }

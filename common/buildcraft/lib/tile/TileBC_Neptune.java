@@ -5,6 +5,9 @@
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 package buildcraft.lib.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
@@ -62,10 +65,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.Set;
 
@@ -301,7 +304,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
-        if (!placer.level().isClientSide) {
+        if (!placer.level().isClientSide()) {
             if (placer instanceof Player) {
                 Player player = (Player) placer;
                 owner = player.getGameProfile();
@@ -354,12 +357,12 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
 //    @Override
-//    public final boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
+//    public final boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
 //        return getCapability(capability, facing) != null;
 //    }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         LazyOptional<T> obj = caps.getCapability(capability, facing);
         if (!obj.isPresent()) {
             obj = super.getCapability(capability, facing);
@@ -368,7 +371,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     // Item caps
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
         // if (level.isLoaded(worldPosition))
         if (level.isLoaded(worldPosition) && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
 //            if (getCurrentState().hasComparatorInputOverride())
@@ -445,7 +448,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public final void redrawBlock() {
         if (hasLevel()) {
             // Client
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 BlockState state = level.getBlockState(worldPosition);
 //                world.notifyBlockUpdate(pos, state, state, 0);
                 level.sendBlockUpdated(worldPosition, state, state, 0);
@@ -468,7 +471,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public final void sendNetworkUpdate(int id) {
         if (hasLevel()) {
             MessageUpdateTile message = createNetworkUpdate(id);
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 MessageManager.sendToServer(message);
             } else {
                 MessageUtil.sendToAllWatching(level, worldPosition, message);
@@ -477,7 +480,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     public final void sendNetworkGuiTick(ServerPlayer player) {
-        if (hasLevel() && !level.isClientSide) {
+        if (hasLevel() && !level.isClientSide()) {
             MessageUpdateTile message = createNetworkUpdate(NET_GUI_TICK);
             if (message.getPayloadSize() <= Short.BYTES) {
                 return;
@@ -503,7 +506,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
 
     public final MessageUpdateTile createNetworkUpdate(final int id) {
         if (hasLevel()) {
-            final Dist side = level.isClientSide ? Dist.CLIENT : Dist.DEDICATED_SERVER;
+            final Dist side = level.isClientSide() ? Dist.CLIENT : Dist.DEDICATED_SERVER;
             return createMessage(id, (buffer) -> writePayload(id, buffer, side));
         } else {
             BCLog.logger.warn("Did not have a world at " + worldPosition + "!");
@@ -514,7 +517,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public final void createAndSendMessage(int id, IPayloadWriter writer) {
         if (hasLevel()) {
             IMessage message = createMessage(id, writer);
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 MessageManager.sendToServer(message);
             } else {
                 MessageUtil.sendToAllWatching(level, worldPosition, message);
@@ -525,7 +528,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public final void createAndSendGuiMessage(int id, IPayloadWriter writer) {
         if (hasLevel()) {
             IMessage message = createMessage(id, writer);
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 MessageManager.sendToServer(message);
             } else {
                 MessageUtil.sendToPlayers(usingPlayers, message);
@@ -570,7 +573,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     public CompoundTag getUpdateTag() {
         ByteBuf buf = Unpooled.buffer();
         buf.writeShort(NET_RENDER_DATA);
-        writePayload(NET_RENDER_DATA, new PacketBufferBC(buf), level.isClientSide ? Dist.CLIENT : Dist.DEDICATED_SERVER);
+        writePayload(NET_RENDER_DATA, new PacketBufferBC(buf), level.isClientSide() ? Dist.CLIENT : Dist.DEDICATED_SERVER);
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);
 
@@ -601,9 +604,9 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
         try {
             int id = buf.readUnsignedShort();
             PacketBufferBC buffer = new PacketBufferBC(buf);
-            readPayload(id, buffer, level.isClientSide ? NetworkDirection.PLAY_TO_CLIENT : NetworkDirection.PLAY_TO_SERVER, null);
+            readPayload(id, buffer, level.isClientSide() ? NetworkDirection.PLAY_TO_CLIENT : NetworkDirection.PLAY_TO_SERVER, null);
             // Make sure that we actually read the entire message rather than just discarding it
-            MessageUtil.ensureEmpty(buffer, level.isClientSide, getClass() + ", id = " + getIdAllocator().getNameFor(id));
+            MessageUtil.ensureEmpty(buffer, level.isClientSide(), getClass() + ", id = " + getIdAllocator().getNameFor(id));
             spawnReceiveParticles(id);
         } catch (IOException e) {
             throw new RuntimeException("Received an update tag that failed to read correctly!", e);
@@ -627,12 +630,12 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     @Override
-    public final IMessage receivePayload(NetworkEvent.Context ctx, PacketBufferBC buffer) throws IOException {
+    public final IMessage receivePayload(CustomPayloadEvent.Context ctx, PacketBufferBC buffer) throws IOException {
         int id = buffer.readUnsignedShort();
         readPayload(id, buffer, ctx.getDirection(), ctx);
 
         // Make sure that we actually read the entire message rather than just discarding it
-        MessageUtil.ensureEmpty(buffer, level.isClientSide, getClass() + ", id = " + getIdAllocator().getNameFor(id));
+        MessageUtil.ensureEmpty(buffer, level.isClientSide(), getClass() + ", id = " + getIdAllocator().getNameFor(id));
 
         if (ctx.getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
             spawnReceiveParticles(id);
@@ -667,7 +670,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
 
     /** @param ctx The context. Will be null if this is a generic update payload
      * @throws IOException if something went wrong */
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         // read render data with gui data
         if (id == NET_GUI_DATA) {
             readPayload(NET_RENDER_DATA, buffer, side, ctx);
@@ -705,7 +708,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        migrateOldNBT(nbt.getInt("data-version"), nbt);
+        migrateOldNBT(nbt.getIntOr("data-version", 0), nbt);
         deltaManager.readFromNBT(nbt.getCompound("deltas"));
         if (nbt.contains("owner")) {
             owner = NbtUtils.readGameProfile(nbt.getCompound("owner"));
@@ -765,7 +768,7 @@ public abstract class TileBC_Neptune extends BlockEntity implements IPayloadRece
     }
 
     public void enableDebugging() {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         BCAdvDebugging.setCurrentDebugTarget(this);

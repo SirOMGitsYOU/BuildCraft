@@ -6,6 +6,8 @@
  */
 package buildcraft.lib.fluid;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IFluidFilter;
 import buildcraft.api.core.IFluidHandlerAdv;
 import buildcraft.lib.gui.ContainerBC_Neptune;
@@ -36,8 +38,8 @@ import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -78,10 +80,10 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         }
     };
 
-    @Nonnull
+    @NotNull
     private final String name;
 
-    @Nonnull
+    @NotNull
     private Predicate<FluidStack> filter;
 
     NetworkedFluidStackCache.Link clientFluid = null;
@@ -93,7 +95,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
 
     /** Creates a tank with the given name and capacity (in milli buckets) with no filter set (so any fluid can go into
      * the tank) */
-    public Tank(@Nonnull String name, int capacity, BlockEntity tile) {
+    public Tank(@NotNull String name, int capacity, BlockEntity tile) {
         this(name, capacity, tile, null);
     }
 
@@ -103,7 +105,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
     public BlockEntity tile; // Calen added
     public Entity entity; // Calen added
 
-    public Tank(@Nonnull String name, int capacity, BlockEntity tile, @Nullable Predicate<FluidStack> filter) {
+    public Tank(@NotNull String name, int capacity, BlockEntity tile, @Nullable Predicate<FluidStack> filter) {
         super(capacity);
         this.name = name;
         this.tile = tile;
@@ -113,7 +115,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
     }
 
     // Calen 1.18.2 for robot
-    public Tank(@Nonnull String name, int capacity, Entity entity) {
+    public Tank(@NotNull String name, int capacity, Entity entity) {
         super(capacity);
         this.name = name;
         this.entity = entity;
@@ -129,7 +131,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         this.filter = filter;
     }
 
-    @Nonnull
+    @NotNull
     public String getTankName() {
         return name;
     }
@@ -231,7 +233,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         return super.fill(resource, doFill);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FluidStack drain(IFluidFilter drainFilter, int maxDrain, FluidAction doDrain) {
         if (drainFilter == null) {
@@ -374,7 +376,7 @@ public class Tank extends FluidTank implements IFluidHandlerAdv {
         Player player = container.player;
         // first try to fill this tank from the item
 
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             return stack;
         }
 

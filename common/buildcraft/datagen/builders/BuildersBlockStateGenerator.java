@@ -11,7 +11,7 @@ import buildcraft.datagen.core.CoreBlockStateGenerator;
 import buildcraft.lib.block.BlockBCBase_Neptune;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -180,18 +180,18 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
         ;
 
         // quarry
-        ResourceLocation quarry = BCBuildersBlocks.quarry.get().getRegistryName();
-        ResourceLocation normal_top = new ResourceLocation(BCBuilders.MODID, "block/quarry/normal/top");
-        ResourceLocation normal_bottom = new ResourceLocation(BCBuilders.MODID, "block/quarry/normal/bottom");
-        ResourceLocation normal_side = new ResourceLocation(BCBuilders.MODID, "block/quarry/normal/side");
-        ResourceLocation normal_front = new ResourceLocation(BCBuilders.MODID, "block/quarry/normal/front");
-        ResourceLocation normal_back = new ResourceLocation(BCBuilders.MODID, "block/quarry/normal/back");
+        Identifier quarry = BCBuildersBlocks.quarry.get().getRegistryName();
+        Identifier normal_top = new Identifier(BCBuilders.MODID, "block/quarry/normal/top");
+        Identifier normal_bottom = new Identifier(BCBuilders.MODID, "block/quarry/normal/bottom");
+        Identifier normal_side = new Identifier(BCBuilders.MODID, "block/quarry/normal/side");
+        Identifier normal_front = new Identifier(BCBuilders.MODID, "block/quarry/normal/front");
+        Identifier normal_back = new Identifier(BCBuilders.MODID, "block/quarry/normal/back");
 
-        ResourceLocation connected_top = new ResourceLocation(BCBuilders.MODID, "block/quarry/connected/top");
-        ResourceLocation connected_bottom = new ResourceLocation(BCBuilders.MODID, "block/quarry/connected/bottom");
-        ResourceLocation connected_side = new ResourceLocation(BCBuilders.MODID, "block/quarry/connected/side");
-        ResourceLocation connected_front = new ResourceLocation(BCBuilders.MODID, "block/quarry/connected/front");
-        ResourceLocation connected_back = new ResourceLocation(BCBuilders.MODID, "block/quarry/connected/back");
+        Identifier connected_top = new Identifier(BCBuilders.MODID, "block/quarry/connected/top");
+        Identifier connected_bottom = new Identifier(BCBuilders.MODID, "block/quarry/connected/bottom");
+        Identifier connected_side = new Identifier(BCBuilders.MODID, "block/quarry/connected/side");
+        Identifier connected_front = new Identifier(BCBuilders.MODID, "block/quarry/connected/front");
+        Identifier connected_back = new Identifier(BCBuilders.MODID, "block/quarry/connected/back");
         getVariantBuilder(BCBuildersBlocks.quarry.get()).forAllStates(s ->
         {
             int rotY = switch (s.getValue(BlockBCBase_Neptune.PROP_FACING)) {
@@ -226,8 +226,8 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
         });
 
         // architect
-        ResourceLocation architect_on = new ResourceLocation("buildcraftbuilders:architect_on");
-        ResourceLocation architect_off = new ResourceLocation("buildcraftbuilders:architect_off");
+        Identifier architect_on = Identifier.parse("buildcraftbuilders:architect_on");
+        Identifier architect_off = Identifier.parse("buildcraftbuilders:architect_off");
         getVariantBuilder(BCBuildersBlocks.architect.get()).forAllStates(s ->
         {
             Direction direction = s.getValue(BlockBCBase_Neptune.PROP_FACING);
@@ -241,7 +241,7 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
             boolean valid = s.getValue(BlockArchitectTable.PROP_VALID);
             if (valid) {
                 return ConfiguredModel.builder().modelFile(
-                                models().withExistingParent(architect_on.toString(), new ResourceLocation("minecraft", "block/orientable"))
+                                models().withExistingParent(architect_on.toString(), Identifier.fromNamespaceAndPath("minecraft", "block/orientable"))
                                         .texture("particle", "buildcraftbuilders:block/architect/back")
                                         .texture("down", "buildcraftbuilders:block/architect/bottom")
                                         .texture("up", "buildcraftbuilders:block/architect/top")
@@ -254,7 +254,7 @@ public class BuildersBlockStateGenerator extends BCBaseBlockStateGenerator {
                         .build();
             } else {
                 return ConfiguredModel.builder().modelFile(
-                                models().withExistingParent(architect_off.toString(), new ResourceLocation("minecraft", "block/orientable"))
+                                models().withExistingParent(architect_off.toString(), Identifier.fromNamespaceAndPath("minecraft", "block/orientable"))
                                         .texture("particle", "buildcraftbuilders:block/architect/back")
                                         .texture("down", "buildcraftbuilders:block/architect/bottom")
                                         .texture("up", "buildcraftbuilders:block/architect/top")

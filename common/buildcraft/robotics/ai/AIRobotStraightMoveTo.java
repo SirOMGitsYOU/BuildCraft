@@ -71,9 +71,9 @@ public class AIRobotStraightMoveTo extends AIRobotGoto {
         super.loadSelfFromNBT(nbt);
 
         if (nbt.contains("x")) {
-            float x = nbt.getFloat("x");
-            float y = nbt.getFloat("y");
-            float z = nbt.getFloat("z");
+            float x = nbt.getFloatOr("x", 0.0f);
+            float y = nbt.getFloatOr("y", 0.0f);
+            float z = nbt.getFloatOr("z", 0.0f);
             pos = new Vec3(x, y, z);
         }
     }

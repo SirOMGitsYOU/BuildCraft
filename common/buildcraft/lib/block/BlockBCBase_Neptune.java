@@ -3,12 +3,15 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.lib.block;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.registry.TagManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,8 +24,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.common.Tags;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +86,7 @@ public class BlockBCBase_Neptune extends Block {
 
     @Override
 //    protected BlockStateContainer createBlockState()
-    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         List<Property<?>> properties = new ArrayList<>();
         addProperties(properties);
@@ -159,7 +162,7 @@ public class BlockBCBase_Neptune extends Block {
     // Calen: this is called when the block not been placed, to choose a state for place
     @Override
 //    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
-    public BlockState getStateForPlacement(@Nonnull BlockPlaceContext context) {
+    public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         LivingEntity placer = context.getPlayer();
 //        BlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
@@ -234,7 +237,7 @@ public class BlockBCBase_Neptune extends Block {
     }
 
     // Calen 1.20.1
-    public ResourceLocation getRegistryName() {
+    public Identifier getRegistryName() {
         return this.builtInRegistryHolder().key().location();
     }
 }

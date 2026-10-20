@@ -6,6 +6,8 @@
 
 package buildcraft.factory.block;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.api.transport.pipe.ICustomPipeConnection;
 import buildcraft.factory.BCFactoryBlocks;
@@ -35,7 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class BlockTank extends BlockBCTile_Neptune<TileTank> implements ICustomPipeConnection, ITankBlockConnector, SimpleWaterloggedBlock, IBlockWithTickableTE<TileTank> {

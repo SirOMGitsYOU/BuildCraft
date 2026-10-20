@@ -5,6 +5,8 @@
  */
 
 package buildcraft.builders.client.render;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.builders.tile.TileBuilder;
 import buildcraft.core.client.BuildCraftLaserManager;
@@ -17,7 +19,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -36,22 +38,22 @@ public class RenderBuilder implements BlockEntityRenderer<TileBuilder> {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TileBuilder tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TileBuilder tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TileBuilder tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("builder");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("builder");
 
 //        buffer.setTranslation(x - tile.getPos().getX(), y - tile.getPos().getY(), z - tile.getPos().getZ());
         poseStack.pushPose();
         poseStack.translate(-tile.getBlockPos().getX(), -tile.getBlockPos().getY(), -tile.getBlockPos().getZ());
 
-        Minecraft.getInstance().getProfiler().push("box");
+        net.minecraft.util.profiling.Profiler.get().push("box");
         Box box = tile.getBox();
 //        VertexConsumer buffer = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.solid());
         LaserBoxRenderer.renderLaserBoxDynamic(box, BuildCraftLaserManager.STRIPES_WRITE, poseStack.last(), buffer, true);
 
-        Minecraft.getInstance().getProfiler().popPush("path");
+        net.minecraft.util.profiling.Profiler.get().popPush("path");
 
 //        buffer = bufferSource.getBuffer(Sheets.translucentCullBlockSheet());
         buffer = bufferSource.getBuffer(RenderType.solid());
@@ -73,7 +75,7 @@ public class RenderBuilder implements BlockEntityRenderer<TileBuilder> {
             }
         }
 
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 
 //        buffer.setTranslation(0, 0, 0);
         poseStack.popPose();
@@ -84,8 +86,8 @@ public class RenderBuilder implements BlockEntityRenderer<TileBuilder> {
             RenderSnapshotBuilder.render(tile.getBuilder(), tile.getLevel(), tile.getBlockPos(), partialTicks, poseStack, buffer);
         }
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     private static Vec3 offset(Vec3 from, Vec3 to) {

@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 @FunctionalInterface
 public interface StackMatchingPredicate {
-    boolean isMatching(@Nonnull ItemStack base, @Nonnull ItemStack comparison);
+    boolean isMatching(@NotNull ItemStack base, @NotNull ItemStack comparison);
 }

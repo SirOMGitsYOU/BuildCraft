@@ -56,8 +56,8 @@ public class BlockMarkerConstruction extends BlockMarkerBase implements IBlockWi
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileMarkerConstruction) {
             TileMarkerConstruction marker = (TileMarkerConstruction) world.getBlockEntity(pos);
-            // if (marker != null && marker.itemBlueprint != null && !world.isClientSide)
-            if (marker != null && !marker.itemBlueprint.isEmpty() && !world.isClientSide) {
+            // if (marker != null && marker.itemBlueprint != null && !world.isClientSide())
+            if (marker != null && !marker.itemBlueprint.isEmpty() && !world.isClientSide()) {
                 BlockUtil.dropItem((ServerLevel) world, pos, 6000, marker.itemBlueprint);
                 // marker.itemBlueprint = null;
                 if (!onBreak) {

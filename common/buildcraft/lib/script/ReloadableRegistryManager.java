@@ -8,7 +8,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.EventBus;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 
@@ -73,7 +73,7 @@ public enum ReloadableRegistryManager implements IReloadableRegistryManager {
         if (isInReload()) {
             throw new IllegalStateException("Cannot reload while we are reloading!");
         }
-        IEventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCLib.MODID).get()).getEventBus();
+        EventBus modEventBus = ((FMLModContainer) ModList.get().getModContainerById(BCLib.MODID).get()).getEventBus();
         try {
             isReloading = true;
             // MinecraftForge.EVENT_BUS.post(new EventBuildCraftReload.BeforeClear(this, set));

@@ -21,7 +21,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -228,7 +228,7 @@ public class MessageUtil {
 
     public static BlockState readBlockState(FriendlyByteBuf buf) {
 //        return NbtUtils.readBlockState(buf.readNbt());
-        ResourceLocation id = buf.readResourceLocation();
+        Identifier id = buf.readResourceLocation();
         Block block = ForgeRegistries.BLOCKS.getValue(id);
 //        int meta = buf.readUnsignedByte();
 //        IBlockState state = block.getStateFromMeta(meta);
@@ -299,7 +299,7 @@ public class MessageUtil {
         return set;
     }
 
-    public static void sendReturnMessage(NetworkEvent.Context context, IMessage reply) {
+    public static void sendReturnMessage(CustomPayloadEvent.Context context, IMessage reply) {
         Player player = context.getSender();
 //        Player player = BCLibProxy.getProxy().getPlayerForContext(context);
         if (player instanceof ServerPlayer playerMP) {
@@ -382,9 +382,9 @@ public class MessageUtil {
         msg.fromBytes(data);
         try {
             // Calen: create a fake Context for tile to read NetworkDirection
-            Constructor<NetworkEvent.Context> c = NetworkEvent.Context.class.getDeclaredConstructor(Connection.class, NetworkDirection.class, int.class);
+            Constructor<CustomPayloadEvent.Context> c = CustomPayloadEvent.Context.class.getDeclaredConstructor(Connection.class, NetworkDirection.class, int.class);
             c.setAccessible(true);
-            NetworkEvent.Context ctx = c.newInstance(null, NetworkDirection.PLAY_TO_CLIENT, -1);
+            CustomPayloadEvent.Context ctx = c.newInstance(null, NetworkDirection.PLAY_TO_CLIENT, -1);
             // Process the msg and create a new gate object
             tile.receivePayload(ctx, msg.payload);
             for (Runnable r : additional) {

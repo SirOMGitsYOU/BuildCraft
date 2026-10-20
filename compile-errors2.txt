@@ -1,0 +1,149 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/C:/Users/Peter/AppData/Local/Temp/cursor-sandbox-cache/e8de4eb10fb92ac03455490a46aaf8fc/gradle/wrapper/dists/gradle-9.3.1-bin/23ovyewtku6u96viwx3xl3oks/gradle-9.3.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Java: 24.0.2, JVM: 24.0.2+12-54 (Oracle Corporation), Arch: amd64
+Minecraft Maven is up-to-date, took 0:01.038
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\builders\tile\TileMarkerConstruction.java:201: error: ';' expected
+        direction = Direction.values()()[(nbt.getByte("direction"))];
+                                      ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\builders\tile\TileMarkerConstruction.java:201: error: ';' expected
+        direction = Direction.values()()[(nbt.getByte("direction"))];
+                                                                  ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotGoAndLinkToDock.java:79: error: ';' expected
+            Direction side = Direction.values()()[nbt.getByte("stationSide")];
+                                               ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotGoAndLinkToDock.java:79: error: ';' expected
+            Direction side = Direction.values()()[nbt.getByte("stationSide")];
+                                                                            ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotGotoStation.java:91: error: ';' expected
+        stationSide = Direction.values()()[nbt.getByte("stationSide")];
+                                        ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotGotoStation.java:91: error: ';' expected
+        stationSide = Direction.values()()[nbt.getByte("stationSide")];
+                                                                     ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotStripesHandler.java:72: error: ')' or ',' expected
+                    if (Arrays.stream(Direction.values()()).anyMatch(direction -> handler.handle(robot.level(), useToBlock.relative(direction.getOpposite()), direction, stack, player, this))) {
+                                                        ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotStripesHandler.java:72: error: -> expected
+                    if (Arrays.stream(Direction.values()()).anyMatch(direction -> handler.handle(robot.level(), useToBlock.relative(direction.getOpposite()), direction, stack, player, this))) {
+                                                          ^
+
+> Task :compileJava
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\ai\AIRobotStripesHandler.java:72: error: ';' expected
+                    if (Arrays.stream(Direction.values()()).anyMatch(direction -> handler.handle(robot.level(), useToBlock.relative(direction.getOpposite()), direction, stack, player, this))) {
+                                                                                                                                                                                              ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\entity\EntityRobot.java:748: error: ';' expected
+            linkedDockingStationSide = Direction.values()()[linkedStationNBT.getByte("side")];
+                                                         ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\entity\EntityRobot.java:748: error: ';' expected
+            linkedDockingStationSide = Direction.values()()[linkedStationNBT.getByte("side")];
+                                                                                            ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\entity\EntityRobot.java:754: error: ';' expected
+            currentDockingStationSide = Direction.values()()[currentStationNBT.getByte("side")];
+                                                          ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\entity\EntityRobot.java:754: error: ';' expected
+            currentDockingStationSide = Direction.values()()[currentStationNBT.getByte("side")];
+                                                                                              ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\pipe\DockingStationPipe.java:228: error: ')' expected
+        for (Direction dir : Direction.values()()) {
+                                               ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\pipe\DockingStationPipe.java:228: error: -> expected
+        for (Direction dir : Direction.values()()) {
+                                                 ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\plug\PluggableRobotStation.java:112: error: ')' or ',' expected
+        infoSide.possibleValues.addAll(Arrays.asList(Direction.values()()));
+                                                                       ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\RobotUtils.java:36: error: ')' expected
+            for (Direction d : Direction.values()()) {
+                                                 ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\RobotUtils.java:36: error: -> expected
+            for (Direction d : Direction.values()()) {
+                                                   ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\StackRequest.java:99: error: ';' expected
+            Direction stationSide = Direction.values()()[nbt.getByte("stationSide")];
+                                                      ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\StackRequest.java:99: error: ';' expected
+            Direction stationSide = Direction.values()()[nbt.getByte("stationSide")];
+                                                                                   ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\StationIndex.java:53: error: ';' expected
+        side = Direction.values()()[nbt.getByte("side")];
+                                 ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\robotics\StationIndex.java:53: error: ';' expected
+        side = Direction.values()()[nbt.getByte("side")];
+                                                       ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:41: error: ')' expected
+        for (Direction side : Direction.values()()) {
+                                                ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:41: error: -> expected
+        for (Direction side : Direction.values()()) {
+                                                  ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:51: error: ')' expected
+            for (Direction side : Direction.values()()) {
+                                                    ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:51: error: -> expected
+            for (Direction side : Direction.values()()) {
+                                                      ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:110: error: ')' expected
+        for (Direction face : Direction.values()()) {
+                                                ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:110: error: -> expected
+        for (Direction face : Direction.values()()) {
+                                                  ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:140: error: ')' expected
+        for (Direction face : Direction.values()()) {
+                                                ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\transport\client\render\PipeFlowRendererRf.java:140: error: -> expected
+        for (Direction face : Direction.values()()) {
+                                                  ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\BCBlocks.java:67: error: reached end of file while parsing
+}
+ ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\BCItems.java:73: error: reached end of file while parsing
+}
+ ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\transport\pluggable\ActionIterator.java:29: error: ';' expected
+        private Direction curDir = Direction.values()()[0];
+                                                     ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\transport\pluggable\ActionIterator.java:52: error: ';' expected
+                    curDir = Direction.values()()[curDir.ordinal() + 1];
+                                               ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\transport\pluggable\ActionIterator.java:52: error: not a statement
+                    curDir = Direction.values()()[curDir.ordinal() + 1];
+                                                                   ^
+C:\Users\Peter\Documents\GitHub\BuildCraft\BuildCraftAPI\api\buildcraft\api\transport\pluggable\ActionIterator.java:52: error: ';' expected
+                    curDir = Direction.values()()[curDir.ordinal() + 1];
+                                                                      ^
+36 errors
+
+> Task :compileJava FAILED
+
+
+[Incubating] Problems report is available at: file:///C:/Users/Peter/Documents/GitHub/BuildCraft/build/reports/problems/problems-report.html
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  C:\Users\Peter\Documents\GitHub\BuildCraft\common\buildcraft\builders\tile\TileMarkerConstruction.java:201: error: ';' expected
+          direction = Direction.values()()[(nbt.getByte("direction"))];
+                                        ^
+  36 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 15s
+1 actionable task: 1 executed

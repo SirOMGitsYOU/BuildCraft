@@ -12,7 +12,7 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +49,7 @@ public class CreativeTabManager {
     public static CreativeModeTab getTab(String name) {
         if (name.startsWith("vanilla.")) {
             String after = name.substring("vanilla.".length());
-            CreativeModeTab tab = BuiltInRegistries.CREATIVE_MODE_TAB.get(ResourceLocation.tryParse(after));
+            CreativeModeTab tab = BuiltInRegistries.CREATIVE_MODE_TAB.get(Identifier.tryParse(after));
             if (tab != null) {
                 return tab;
             }
@@ -161,13 +161,13 @@ public class CreativeTabManager {
 //            return item;
 //        }
 
-        public ResourceLocation getId() {
-            return ResourceLocation.tryBuild(BCModules.BUILDCRAFT, this.name);
+        public Identifier getId() {
+            return Identifier.tryBuild(BCModules.BUILDCRAFT, this.name);
         }
 
         @Override
-        public ResourceLocation getBackgroundLocation() {
-            return new ResourceLocation("textures/gui/container/creative_inventory/tab_" + "items.png");
+        public Identifier getBackgroundLocation() {
+            return Identifier.parse("textures/gui/container/creative_inventory/tab_" + "items.png");
         }
     }
 }

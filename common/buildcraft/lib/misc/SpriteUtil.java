@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.client.sprite.SpriteRaw;
@@ -18,18 +20,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.resources.Identifier;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 
-import javax.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteUtil {
 
-    // private static final ResourceLocation LOCATION_SKIN_LOADING = new ResourceLocation("skin:loading");
-    private static final ResourceLocation LOCATION_SKIN_LOADING = new ResourceLocation("textures/entity/player/wide/steve.png");
+    // private static final Identifier LOCATION_SKIN_LOADING = Identifier.parse("skin:loading");
+    private static final Identifier LOCATION_SKIN_LOADING = Identifier.parse("textures/entity/player/wide/steve.png");
     private static final Map<GameProfile, GameProfile> CACHED = new HashMap<>();
 
     public static void bindBlockTextureMap() {
@@ -38,32 +40,32 @@ public class SpriteUtil {
     }
 
     public static void bindTexture(String identifier) {
-        bindTexture(new ResourceLocation(identifier));
+        bindTexture(Identifier.fromNamespaceAndPath(identifier));
     }
 
     public static void bindTexture(int identifier) {
         RenderSystem.setShaderTexture(0, identifier);
     }
 
-    public static void bindTexture(ResourceLocation identifier) {
+    public static void bindTexture(Identifier identifier) {
 //        Minecraft.getInstance().textureManager.bindForSetup(identifier);
         RenderSystem.setShaderTexture(0, identifier);
     }
 
-    /** Transforms the given {@link ResourceLocation}, adding ".png" to the end and prepending that
-     * {@link ResourceLocation#getPath()} with "textures/", just like what {@link TextureAtlas} does. */
-    public static ResourceLocation transformLocation(ResourceLocation location) {
-        return new ResourceLocation(location.getNamespace(), "textures/" + location.getPath() + ".png");
+    /** Transforms the given {@link Identifier}, adding ".png" to the end and prepending that
+     * {@link Identifier#getPath()} with "textures/", just like what {@link TextureAtlas} does. */
+    public static Identifier transformLocation(Identifier location) {
+        return Identifier.fromNamespaceAndPath(location.getNamespace(), "textures/" + location.getPath() + ".png");
     }
 
     @Nullable
-    public static ResourceLocation getSkinSpriteLocation(GameProfile profile) {
-        ResourceLocation loc = getSkinSpriteLocation0(profile);
+    public static Identifier getSkinSpriteLocation(GameProfile profile) {
+        Identifier loc = getSkinSpriteLocation0(profile);
         return loc == LOCATION_SKIN_LOADING ? null : loc;
     }
 
     @Nullable
-    private static ResourceLocation getSkinSpriteLocation0(GameProfile profile) {
+    private static Identifier getSkinSpriteLocation0(GameProfile profile) {
         if (profile == null) {
             return null;
         }
@@ -108,7 +110,7 @@ public class SpriteUtil {
         if (profile == null) {
             return BCLibSprites.HELP;
         }
-        ResourceLocation loc = getSkinSpriteLocation0(profile);
+        Identifier loc = getSkinSpriteLocation0(profile);
         if (loc == null) {
             return BCLibSprites.LOCK;
         }
@@ -120,7 +122,7 @@ public class SpriteUtil {
         if (profile == null) {
             return null;
         }
-        ResourceLocation loc = getSkinSpriteLocation0(profile);
+        Identifier loc = getSkinSpriteLocation0(profile);
         if (loc == null) {
             return null;
         }

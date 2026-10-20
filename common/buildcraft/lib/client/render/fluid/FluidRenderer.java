@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.render.fluid;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.BCLib;
@@ -16,14 +17,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.SpriteLoader;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.material.EmptyFluid;
@@ -66,7 +67,7 @@ public class FluidRenderer {
     private static double xTexDiff, yTexDiff, zTexDiff;
 
     // Calen 1.20.1
-    public static final ResourceLocation TEXTURE_ATLAS_FROZEN_LOCATION = new ResourceLocation(BCLib.MODID, "textures/atlas/frozen.png");
+    public static final Identifier TEXTURE_ATLAS_FROZEN_LOCATION = Identifier.fromNamespaceAndPath(BCLib.MODID, "textures/atlas/frozen.png");
     public static final TextureAtlas FROZEN_ATLAS = new TextureAtlas(TEXTURE_ATLAS_FROZEN_LOCATION);
     public static final RenderType FROZEN_FLUID_RENDER_TYPE_TRANSLUCENT = RenderType.create(
             "buildcraft_frozen_fluid_translucent",
@@ -113,10 +114,10 @@ public class FluidRenderer {
 //        for (FluidSpriteType type : FluidSpriteType.values()) {
 //            fluidSprites.get(type).clear();
 //        }
-//        Map<ResourceLocation, SpriteFluidFrozen> spritesStitched = new HashMap<>();
+//        Map<Identifier, SpriteFluidFrozen> spritesStitched = new HashMap<>();
 //        for (Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
-//            ResourceLocation still = fluid.getStill();
-//            ResourceLocation flowing = fluid.getFlowing();
+//            Identifier still = fluid.getStill();
+//            Identifier flowing = fluid.getFlowing();
 //            if (still == null || flowing == null) {
 //                throw new IllegalStateException("Encountered a fluid with a null still sprite! (" + fluid.getName()
 //                        + " - " + FluidRegistry.getDefaultFluidName(fluid) + ")");
@@ -150,12 +151,12 @@ public class FluidRenderer {
                 if (fluid.getClass() == EmptyFluid.class) {
                     continue;
                 }
-                ResourceLocation still = FluidUtilBC.getStillTexture(fluid);
-                ResourceLocation flowing = FluidUtilBC.getFlowingTexture(fluid);
-                ResourceLocation registryName = FluidUtilBC.getRegistryName(fluid);
+                Identifier still = FluidUtilBC.getStillTexture(fluid);
+                Identifier flowing = FluidUtilBC.getFlowingTexture(fluid);
+                Identifier registryName = FluidUtilBC.getRegistryName(fluid);
                 if (still == null || flowing == null) {
                     // Calen: for uncompleted fluid, continue
-                    BCLog.logger.warn("[lib.fluid.renderder] Found fluid [" + registryName + "] has no still or flow textuer ResourceLocation, unable to get sprite.");
+                    BCLog.logger.warn("[lib.fluid.renderder] Found fluid [" + registryName + "] has no still or flow textuer Identifier, unable to get sprite.");
                     continue;
                 }
                 TextureAtlasSprite stillSprite = map.getSprite(still);
@@ -172,8 +173,8 @@ public class FluidRenderer {
         }
     }
 
-    private static SpriteContents createFrozenSprite(ResourceLocation registryName, TextureAtlasSprite stillSprite) {
-        ResourceLocation frozenLocation = new ResourceLocation(BCLib.MODID, "fluid_" + registryName.toString().replace(':', '_') + "_convert_frozen");
+    private static SpriteContents createFrozenSprite(Identifier registryName, TextureAtlasSprite stillSprite) {
+        Identifier frozenLocation = Identifier.fromNamespaceAndPath(BCLib.MODID, "fluid_" + registryName.toString().replace(':', '_') + "_convert_frozen");
         return SpriteFluidFrozen.createSpriteContents(stillSprite, registryName, frozenLocation);
     }
 
@@ -246,7 +247,7 @@ public class FluidRenderer {
         if (fluid == null || fluid.getRawFluid() == null || fluid.getRawFluid() instanceof EmptyFluid || amount <= 0) {
             return;
         }
-        ProfilerFiller prof = Minecraft.getInstance().getProfiler();
+        ProfilerFiller prof = net.minecraft.util.profiling.Profiler.get();
         prof.push("fluid");
         if (sideRender == null) {
             sideRender = DEFAULT_FACES;

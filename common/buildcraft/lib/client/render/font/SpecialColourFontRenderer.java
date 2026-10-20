@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 
 public class SpecialColourFontRenderer extends Font {
@@ -16,8 +16,8 @@ public class SpecialColourFontRenderer extends Font {
 
     private SpecialColourFontRenderer() {
         // TODO Calen textureManager?
-        super((resourceLocation -> new FontSet(Minecraft.getInstance().textureManager, new ResourceLocation("textures/font/ascii.png"))), false);
-//        super(Minecraft.getInstance().gameSettings, new ResourceLocation("textures/font/ascii.png"),
+        super((Identifier -> new FontSet(Minecraft.getInstance().textureManager, Identifier.parse("textures/font/ascii.png"))), false);
+//        super(Minecraft.getInstance().gameSettings, Identifier.parse("textures/font/ascii.png"),
 //            Minecraft.getInstance().renderEngine, false);
     }
 

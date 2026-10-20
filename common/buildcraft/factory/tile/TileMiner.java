@@ -5,6 +5,7 @@
  */
 
 package buildcraft.factory.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.IMjReceiver;
@@ -34,9 +35,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
     @Override
     public void update() {
         ITickable.super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             lastLength = currentLength;
             if (Math.abs(wantedLength - currentLength) <= 0.01) {
                 currentLength = wantedLength;
@@ -148,7 +149,7 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
     }
 
     public boolean isComplete() {
-        return level.isClientSide ? isComplete : currentPos == null;
+        return level.isClientSide() ? isComplete : currentPos == null;
     }
 
     @Override
@@ -156,7 +157,7 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
         super.migrateOldNBT(version, nbt);
         if (version == BCVersion.BEFORE_RECORDS.dataVersion || version == BCVersion.v7_2_0_pre_12.dataVersion) {
             CompoundTag oldBattery = nbt.getCompound("battery");
-            int energy = oldBattery.getInt("energy");
+            int energy = oldBattery.getIntOr("energy", 0);
             battery.extractPower(0, Integer.MAX_VALUE);
             battery.addPower(energy * 100, false);
         }
@@ -180,8 +181,8 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
         if (nbt.contains("currentPos")) {
             currentPos = NbtUtils.readBlockPos(nbt.getCompound("currentPos"));
         }
-        wantedLength = nbt.getInt("wantedLength");
-        progress = nbt.getInt("progress");
+        wantedLength = nbt.getIntOr("wantedLength", 0);
+        progress = nbt.getIntOr("progress", 0);
         battery.deserializeNBT(nbt.getCompound("battery"));
     }
 
@@ -204,7 +205,7 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -238,7 +239,7 @@ public abstract class TileMiner extends TileBC_Neptune implements ITickable, IDe
         left.add(Component.literal("progress = ").append(LocaleUtil.localizeMjComponent(progress)));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {

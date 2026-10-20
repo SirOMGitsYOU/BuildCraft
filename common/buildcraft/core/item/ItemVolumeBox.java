@@ -27,7 +27,7 @@ public class ItemVolumeBox extends ItemBC_Neptune {
         Level world = ctx.getLevel();
         BlockPos pos = ctx.getClickedPos();
         Direction facing = ctx.getClickedFace();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
 //            return EnumActionResult.PASS;
             return InteractionResult.PASS;
         }

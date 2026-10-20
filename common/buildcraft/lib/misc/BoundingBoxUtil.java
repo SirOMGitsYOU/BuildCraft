@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.IBox;
 import buildcraft.lib.misc.data.Box;
 import net.minecraft.core.BlockPos;
@@ -17,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
+
 import java.util.Collection;
 
 /** Various methods operating on (and creating) {@link AABB} */

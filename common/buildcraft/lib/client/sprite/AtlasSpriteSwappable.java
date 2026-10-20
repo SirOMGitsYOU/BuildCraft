@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.client.sprite;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.lib.BCLibConfig;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** Provides the basic implementation for */
 @Deprecated(forRemoval = true)
@@ -20,7 +21,7 @@ public abstract class AtlasSpriteSwappable extends TextureAtlasSprite {
     private boolean needsSwapping = true;
 
     // public AtlasSpriteSwappable(String baseName)
-    public AtlasSpriteSwappable(ResourceLocation atlasLocation, SpriteContents contents, int atlasWidth, int atlasHeight, int spriteX, int spriteY) {
+    public AtlasSpriteSwappable(Identifier atlasLocation, SpriteContents contents, int atlasWidth, int atlasHeight, int spriteX, int spriteY) {
 //        super(baseName);
         super(atlasLocation, contents, atlasWidth, atlasHeight, spriteX, spriteY);
         if (!BCLibConfig.useSwappableSprites) {
@@ -41,7 +42,7 @@ public abstract class AtlasSpriteSwappable extends TextureAtlasSprite {
 //            copyFrom(Minecraft.getInstance().getTextureMapBlocks().getMissingSprite());
 //            return;
 //        }
-//        ProfilerFiller p = Minecraft.getInstance().getProfiler();
+//        ProfilerFiller p = net.minecraft.util.profiling.Profiler.get();
 //        // MAPPING: func_194340_a: Profiler.startSection
 //        p.push(getClass()::getSimpleName);
 //        if (needsSwapping) {
@@ -81,10 +82,10 @@ public abstract class AtlasSpriteSwappable extends TextureAtlasSprite {
 //    }
 
 //    /** Actually loads the given location. Note that subclasses should override this, and possibly call
-//     * {@link #loadSprite(IResourceManager, String, ResourceLocation, boolean)} to load all of the possible variants. */
+//     * {@link #loadSprite(IResourceManager, String, Identifier, boolean)} to load all of the possible variants. */
 //    @Override
-//    public boolean load(ResourceManager manager, ResourceLocation location,
-//                        Function<ResourceLocation, TextureAtlasSprite> textureGetter) {
+//    public boolean load(ResourceManager manager, Identifier location,
+//                        Function<Identifier, TextureAtlasSprite> textureGetter) {
 //        TextureAtlasSprite sprite = loadSprite(manager, super.getIconName(), location, true);
 //        if (sprite != null) {
 //            swapWith(sprite);
@@ -92,14 +93,14 @@ public abstract class AtlasSpriteSwappable extends TextureAtlasSprite {
 //        return false;
 //    }
 
-//    public static TextureAtlasSprite loadSprite(String name, ResourceLocation location, boolean careIfMissing) {
+//    public static TextureAtlasSprite loadSprite(String name, Identifier location, boolean careIfMissing) {
 //        return loadSprite(Minecraft.getInstance().getResourceManager(), name, location, careIfMissing);
 //    }
 
-//    public static TextureAtlasSprite loadSprite(ResourceManager manager, String name, ResourceLocation location,
+//    public static TextureAtlasSprite loadSprite(ResourceManager manager, String name, Identifier location,
 //                                                boolean careIfMissing) {
 //        // Load the initial variant
-//        TextureAtlasSprite sprite = makeAtlasSprite(new ResourceLocation(name));
+//        TextureAtlasSprite sprite = makeAtlasSprite(Identifier.fromNamespaceAndPath(name));
 //        try {
 //            // Copied almost directly from TextureMap.
 //            PngSizeInfo pngsizeinfo = PngSizeInfo.makeFromResource(manager.getResource(location));
@@ -116,12 +117,12 @@ public abstract class AtlasSpriteSwappable extends TextureAtlasSprite {
 //            }
 //            return null;
 //        }
-//        TextureAtlasSprite.Info info = new TextureAtlasSprite.Info(new ResourceLocation(name), 1, 1, AnimationMetadataSection.EMPTY);
-//        TextureAtlasSprite sprite = new TextureAtlasSprite(new TextureAtlas(new ResourceLocation(name)), )
+//        TextureAtlasSprite.Info info = new TextureAtlasSprite.Info(Identifier.fromNamespaceAndPath(name), 1, 1, AnimationMetadataSection.EMPTY);
+//        TextureAtlasSprite sprite = new TextureAtlasSprite(new TextureAtlas(Identifier.fromNamespaceAndPath(name)),  )
 //    }
 
 //    @Override
-//    public boolean hasCustomLoader(ResourceManager manager, ResourceLocation location) {
+//    public boolean hasCustomLoader(ResourceManager manager, Identifier location) {
 //        return true;
 //    }
 

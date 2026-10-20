@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.world;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.level.gameevent.GameEventListener;
 
@@ -12,16 +13,16 @@ import net.minecraft.world.level.gameevent.GameEventListener;
 //public class WorldEventListenerAdapter implements IWorldEventListener
 public abstract class WorldEventListenerAdapter implements GameEventListener {
 //    @Override
-//    public void notifyBlockUpdate(@Nonnull Level world,
-//                                  @Nonnull BlockPos pos,
-//                                  @Nonnull BlockState oldState,
-//                                  @Nonnull BlockState newState,
+//    public void notifyBlockUpdate(@NotNull Level world,
+//                                  @NotNull BlockPos pos,
+//                                  @NotNull BlockState oldState,
+//                                  @NotNull BlockState newState,
 //                                  int flags)
 //    {
 //    }
 //
 //    @Override
-//    public void notifyLightSet(@Nonnull BlockPos pos)
+//    public void notifyLightSet(@NotNull BlockPos pos)
 //    {
 //    }
 //
@@ -32,8 +33,8 @@ public abstract class WorldEventListenerAdapter implements GameEventListener {
 //
 //    @Override
 //    public void playSoundToAllNearExcept(@Nullable Player player,
-//                                         @Nonnull SoundEvent sound,
-//                                         @Nonnull SoundSource category,
+//                                         @NotNull SoundEvent sound,
+//                                         @NotNull SoundSource category,
 //                                         double x,
 //                                         double y,
 //                                         double z,
@@ -43,7 +44,7 @@ public abstract class WorldEventListenerAdapter implements GameEventListener {
 //    }
 //
 //    @Override
-//    public void playRecord(@Nonnull SoundEvent sound, @Nonnull BlockPos pos)
+//    public void playRecord(@NotNull SoundEvent sound, @NotNull BlockPos pos)
 //    {
 //    }
 //
@@ -56,7 +57,7 @@ public abstract class WorldEventListenerAdapter implements GameEventListener {
 //                              double xSpeed,
 //                              double ySpeed,
 //                              double zSpeed,
-//                              @Nonnull int... parameters)
+//                              @NotNull int... parameters)
 //    {
 //    }
 //
@@ -70,32 +71,32 @@ public abstract class WorldEventListenerAdapter implements GameEventListener {
 //                              double xSpeed,
 //                              double ySpeed,
 //                              double zSpeed,
-//                              @Nonnull int... parameters)
+//                              @NotNull int... parameters)
 //    {
 //    }
 //
 //    @Override
-//    public void onEntityAdded(@Nonnull Entity entity)
+//    public void onEntityAdded(@NotNull Entity entity)
 //    {
 //    }
 //
 //    @Override
-//    public void onEntityRemoved(@Nonnull Entity entity)
+//    public void onEntityRemoved(@NotNull Entity entity)
 //    {
 //    }
 //
 //    @Override
-//    public void broadcastSound(int soundID, @Nonnull BlockPos pos, int data)
+//    public void broadcastSound(int soundID, @NotNull BlockPos pos, int data)
 //    {
 //    }
 //
 //    @Override
-//    public void playEvent(@Nullable Player player, int type, @Nonnull BlockPos blockPos, int data)
+//    public void playEvent(@Nullable Player player, int type, @NotNull BlockPos blockPos, int data)
 //    {
 //    }
 //
 //    @Override
-//    public void sendBlockBreakProgress(int breakerId, @Nonnull BlockPos pos, int progress)
+//    public void sendBlockBreakProgress(int breakerId, @NotNull BlockPos pos, int progress)
 //    {
 //    }
 }

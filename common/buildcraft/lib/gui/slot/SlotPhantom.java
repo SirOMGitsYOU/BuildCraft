@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.gui.slot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class SlotPhantom extends SlotBase implements IPhantomSlot {
     private final boolean canAdjustCount;
@@ -35,7 +36,7 @@ public class SlotPhantom extends SlotBase implements IPhantomSlot {
     }
 
     @Override
-    public boolean mayPlace(@Nonnull ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return false;
     }
 

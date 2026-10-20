@@ -5,11 +5,12 @@
  */
 
 package buildcraft.lib.gui.slot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class SlotOutput extends SlotBase {
 
@@ -18,8 +19,8 @@ public class SlotOutput extends SlotBase {
     }
 
     @Override
-//    public boolean isItemValid(@Nonnull ItemStack itemstack)
-    public boolean mayPlace(@Nonnull ItemStack itemstack) {
+//    public boolean isItemValid(@NotNull ItemStack itemstack)
+    public boolean mayPlace(@NotNull ItemStack itemstack) {
         return false;
     }
 }

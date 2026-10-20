@@ -6,6 +6,8 @@
 
 package buildcraft.transport.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.transport.pipe.IItemPipe;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.api.transport.pipe.PipeDefinition;
@@ -23,7 +25,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +35,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class ItemPipeHolder extends BlockItem implements IItemBuildCraft, IItemPipe {
@@ -71,7 +73,7 @@ public class ItemPipeHolder extends BlockItem implements IItemBuildCraft, IItemP
     /** Creates a new {@link ItemPipeHolder} with a tag that will be taken from {@link TagManager}. */
 //    public static ItemPipeHolder createAndTag(PipeDefinition definition)
     public static RegistryObject<ItemPipeHolder> createAndTag(PipeDefinition definition, DyeColor colour) {
-        ResourceLocation reg = definition.identifier;
+        Identifier reg = definition.identifier;
 //        String tagId = "item.pipe." + reg.getResourceDomain() + "." + reg.getResourcePath();
         String suffix = colour == null ? "_colorless" : "_" + colour.getName();
         String tagId = "item.pipe." + reg.getNamespace() + "." + reg.getPath();

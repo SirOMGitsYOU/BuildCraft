@@ -5,6 +5,9 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.render.ISprite;
@@ -23,8 +26,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Objects;
 
 // Calen: never used in 1.12.2
@@ -43,12 +46,12 @@ public class StatementParameterDirection implements IStatementParameter {
 //    @OnlyIn(Dist.CLIENT)
 //    public void registerIcons(TextureAtlas map) {
 //        sprites = new TextureAtlasSprite[] {
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_down")),
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_up")),
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_north")),
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_south")),
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_west")),
-//            map.registerSprite(new ResourceLocation("buildcraftcore:triggers/trigger_dir_east"))
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_down")),
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_up")),
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_north")),
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_south")),
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_west")),
+//            map.registerSprite(Identifier.parse("buildcraftcore:triggers/trigger_dir_east"))
 //        };
 //    }
 
@@ -65,7 +68,7 @@ public class StatementParameterDirection implements IStatementParameter {
         return direction;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;
@@ -97,7 +100,7 @@ public class StatementParameterDirection implements IStatementParameter {
     //    @Override
     public void readFromNBT(CompoundTag nbt) {
         if (nbt.contains("direction")) {
-            direction = Direction.VALUES[nbt.getByte("direction")];
+            direction = Direction.values()[nbt.getByte("direction")];
         } else {
             direction = null;
         }

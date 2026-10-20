@@ -5,6 +5,7 @@
  */
 
 package buildcraft.transport.pipe.flow;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
@@ -16,20 +17,20 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
+
 import java.util.EnumSet;
 import java.util.function.Supplier;
 
 public class TravellingItem {
     // Client fields - public for rendering
-    @Nonnull
+    @NotNull
     public final Supplier<ItemStack> clientItemLink;
     public int stackSize;
     public DyeColor colour;
 
     // Server fields
     /** The server itemstack */
-    @Nonnull
+    @NotNull
     ItemStack stack;
     int id = 0;
     boolean toCenter;
@@ -64,7 +65,7 @@ public class TravellingItem {
      */
     // @formatter:on
 
-    public TravellingItem(@Nonnull ItemStack stack) {
+    public TravellingItem(@NotNull ItemStack stack) {
         this.stack = stack;
         clientItemLink = () -> ItemStack.EMPTY;
     }
@@ -81,15 +82,15 @@ public class TravellingItem {
         stack = ItemStack.of(nbt.getCompound("stack"));
         int c = nbt.getByte("colour");
         this.colour = c == 0 ? null : DyeColor.byId(c - 1);
-        this.toCenter = nbt.getBoolean("toCenter");
-        this.speed = nbt.getDouble("speed");
+        this.toCenter = nbt.getBooleanOr("toCenter", false);
+        this.speed = nbt.getDoubleOr("speed", 0.0);
         if (speed < 0.001) {
             // Just to make sure that we don't have an invalid speed
             speed = 0.001;
         }
-        tickStarted = nbt.getInt("tickStarted") + tickNow;
-        tickFinished = nbt.getInt("tickFinished") + tickNow;
-        timeToDest = nbt.getInt("timeToDest");
+        tickStarted = nbt.getIntOr("tickStarted", 0) + tickNow;
+        tickFinished = nbt.getIntOr("tickFinished", 0) + tickNow;
+        timeToDest = nbt.getIntOr("timeToDest", 0);
 
         side = NBTUtilBC.readEnum(nbt.get("side"), Direction.class);
         if (side == null || timeToDest == 0) {
@@ -97,7 +98,7 @@ public class TravellingItem {
             toCenter = true;
         }
         tried = NBTUtilBC.readEnumSet(nbt.get("tried"), Direction.class);
-        isPhantom = nbt.getBoolean("isPhantom");
+        isPhantom = nbt.getBooleanOr("isPhantom", false);
     }
 
     public CompoundTag writeToNbt(long tickNow) {

@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.client.render.font.SpecialColourFontRenderer;
@@ -17,8 +20,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
@@ -265,7 +268,7 @@ public class ColourUtil {
         }
     }
 
-    public static MutableComponent getTextFullTooltipComponent(@Nonnull DyeColor colour, MutableComponent after) {
+    public static MutableComponent getTextFullTooltipComponent(@NotNull DyeColor colour, MutableComponent after) {
         if (BCLibConfig.useColouredLabels) {
             ChatFormatting formatColour = convertColourToTextFormat(colour);
             return Component.literal(formatColour.toString() + getTextFormatForBlack(formatColour) + " ").append(Component.translatable(LocaleUtil.getColorTranslateKey(colour)))
@@ -469,7 +472,7 @@ public class ColourUtil {
         CompoundTag tag = stack.getTag();
         if (tag != null) {
             if (tag.contains("colour")) {
-                DyeColor colour = DyeColor.byName(tag.getString("colour"), null);
+                DyeColor colour = DyeColor.byName(tag.getStringOr("colour", ""), null);
                 if (colour != null) {
                     return colour;
                 } else {
@@ -480,7 +483,7 @@ public class ColourUtil {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     public static int getStackColourIdFromTag(ItemStack stack) {
         DyeColor colour = getStackColourFromTag(stack);
         return colour == null ? -1 : colour.getId();

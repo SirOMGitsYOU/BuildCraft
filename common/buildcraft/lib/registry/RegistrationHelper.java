@@ -1,11 +1,16 @@
 package buildcraft.lib.registry;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.block.BlockBCBase_Neptune;
 import buildcraft.lib.item.IItemBuildCraft;
 import buildcraft.lib.item.ItemBlockBC_Neptune;
 import buildcraft.lib.item.ItemPropertiesCreator;
 import buildcraft.lib.registry.TagManager.EnumTagType;
-import net.minecraft.Util;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.datafix.fixes.References;
@@ -18,16 +23,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLModContainer;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -41,7 +47,7 @@ public final class RegistrationHelper {
 //    private static final Map<String, Block> oredictBlocks = new HashMap<>();
 //    private static final Map<String, Item> oredictItems = new HashMap<>();
 
-    private final IEventBus MOD_EVENT_BUS;
+    private final BusGroup MOD_EVENT_BUS;
 
     private final List<RegistryObject<? extends Block>> blocks = new ArrayList<>();
     private final List<RegistryObject<? extends Item>> items = new ArrayList<>();
@@ -61,7 +67,7 @@ public final class RegistrationHelper {
         TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
         ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, namespace);
         PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, namespace);
-        MOD_EVENT_BUS = ((FMLModContainer) ModList.get().getModContainerById(namespace).get()).getEventBus(); // Calen: don't use FMLJavaModLoadingContext.get().getModEventBus()
+        MOD_EVENT_BUS = ((FMLModContainer) ModList.get().getModContainerById(namespace).get()).getModBusGroup();
         BLOCKS.register(MOD_EVENT_BUS);
         ITEMS.register(MOD_EVENT_BUS);
         TILE_ENTITIES.register(MOD_EVENT_BUS);
@@ -294,18 +300,19 @@ public final class RegistrationHelper {
 //        );
         return TILE_ENTITIES.register(
                 regName,
-                () -> BlockEntityType.Builder.of(
+                () -> new BlockEntityType<>(
                         blockEntityConstructor,
-                        block.get()
-                ).build(Util.fetchChoiceType(References.BLOCK_ENTITY, regName)));
+                        Set.of(block.get())
+                ));
     }
 
     // Calen 1.18.2
     public <E extends LivingEntity> RegistryObject<EntityType<E>> addEntity(String idBC, Supplier<EntityType.Builder<E>> entityTypeBuilder, String registryName, Supplier<AttributeSupplier.Builder> attributes) {
         // String regName = TagManager.getTag(idBC, EnumTagType.REGISTRY_NAME).replace(this.namespace + ":", "");
-        RegistryObject<EntityType<E>> ret = ENTITIES.register(registryName, () -> entityTypeBuilder.get().build(registryName));
+        RegistryObject<EntityType<E>> ret = ENTITIES.register(registryName, () -> entityTypeBuilder.get().build(
+                ResourceKey.create(Registries.ENTITY_TYPE, Identifier.parse(this.namespace + ":" + registryName))));
         EntityAttributesRegisterer r = (event) -> event.put(ret.get(), attributes.get().build());
-        MOD_EVENT_BUS.addListener(r::registerEntityAttributes);
+        EntityAttributeCreationEvent.getBus(MOD_EVENT_BUS).register(r::registerEntityAttributes);
         return ret;
     }
 

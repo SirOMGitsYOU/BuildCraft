@@ -6,6 +6,8 @@
 
 package buildcraft.builders.snapshot;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -14,7 +16,7 @@ import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 
-import javax.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;

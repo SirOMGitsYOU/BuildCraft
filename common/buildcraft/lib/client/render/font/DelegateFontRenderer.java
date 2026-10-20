@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -21,12 +21,12 @@ public class DelegateFontRenderer extends Font {
         // TODO Calen creat Font Intance? where is fontset???  When soved, GuidePageContents#<init>:new ConfigurableFontRenderer(Minecraft.getInstance().font).disableShadow();
 //        super(
 //                Minecraft.getInstance().options,
-//                new ResourceLocation("textures/font/ascii.png"),
+//                Identifier.parse("textures/font/ascii.png"),
 //                Minecraft.getInstance().textureManager,
 //                delegate.getUnicodeFlag()
 //        );
         // 参考 FontManager#public Font createFont()
-        // FontManager 匿名内部类 protected void apply(Map<ResourceLocation, List<GlyphProvider>> p_95036_, ResourceManager p_95037_, ProfilerFiller p_95038_)
+        // FontManager 匿名内部类 protected void apply(Map<Identifier, List<GlyphProvider>> p_95036_, ResourceManager p_95037_, ProfilerFiller p_95038_)
         super((p_95014_) ->
                 {
                     try {
@@ -36,12 +36,12 @@ public class DelegateFontRenderer extends Font {
                         Field f_textureManager = FontManager.class.getDeclaredField("textureManager");
                         f_textureManager.setAccessible(true);
                         TextureManager mcFontManagerTextureManager = (TextureManager) f_textureManager.get(mcFontManager);
-                        FontSet fontset = new FontSet(mcFontManagerTextureManager, new ResourceLocation("textures/font/ascii.png"));
+                        FontSet fontset = new FontSet(mcFontManagerTextureManager, Identifier.parse("textures/font/ascii.png"));
                         Field f_fontSets = FontManager.class.getDeclaredField("fontSets");
                         f_fontSets.setAccessible(true);
-                        Map<ResourceLocation, FontSet> mcFontManager_fontSets = (Map) f_fontSets.get(mcFontManager);
+                        Map<Identifier, FontSet> mcFontManager_fontSets = (Map) f_fontSets.get(mcFontManager);
                         mcFontManager_fontSets.put(p_95014_, fontset);
-//                new FontSet(Minecraft.getInstance().textureManager,new ResourceLocation("textures/font/ascii.png"))
+//                new FontSet(Minecraft.getInstance().textureManager,Identifier.parse("textures/font/ascii.png"))
                         return fontset;
                     } catch (Exception e) {
                         e.printStackTrace();

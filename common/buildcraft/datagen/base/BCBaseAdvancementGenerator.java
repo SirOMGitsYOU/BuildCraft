@@ -6,7 +6,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -39,7 +39,7 @@ public abstract class BCBaseAdvancementGenerator implements DataProvider {
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
         Path path = this.output.getOutputFolder();
-        Set<ResourceLocation> set = Sets.newHashSet();
+        Set<Identifier> set = Sets.newHashSet();
         List<CompletableFuture<?>> list = new ArrayList<CompletableFuture<?>>();
         Consumer<Advancement> consumer = (advancement) ->
         {

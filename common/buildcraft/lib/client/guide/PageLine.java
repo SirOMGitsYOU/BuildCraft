@@ -6,10 +6,12 @@
 
 package buildcraft.lib.client.guide;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.gui.ISimpleDrawable;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 import java.util.function.Supplier;
 

@@ -6,6 +6,8 @@
 
 package buildcraft.silicon.tile;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.IMjContainerItem;
 import buildcraft.api.tiles.IBCTileMenuProvider;
@@ -23,7 +25,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
+
 
 public class TileChargingTable extends TileLaserTableBase implements IHasWork, IBCTileMenuProvider {
     public final ItemHandlerSimple inv = itemManager.addInvHandler(
@@ -58,7 +60,7 @@ public class TileChargingTable extends TileLaserTableBase implements IHasWork, I
     public void update() {
         super.update();
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
 

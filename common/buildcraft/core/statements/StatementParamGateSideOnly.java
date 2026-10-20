@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 public enum StatementParamGateSideOnly implements IStatementParameter {
     ANY(false),
@@ -35,7 +36,7 @@ public enum StatementParamGateSideOnly implements IStatementParameter {
     }
 
     public static StatementParamGateSideOnly readFromNbt(CompoundTag nbt) {
-        if (nbt.getBoolean("isOn")) {
+        if (nbt.getBooleanOr("isOn", false)) {
             return SPECIFIC;
         }
         return ANY;
@@ -46,7 +47,7 @@ public enum StatementParamGateSideOnly implements IStatementParameter {
         compound.putBoolean("isOn", isSpecific);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

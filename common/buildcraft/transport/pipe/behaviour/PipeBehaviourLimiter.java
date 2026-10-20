@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
 
     public PipeBehaviourLimiter(IPipe pipe, CompoundTag nbt) {
         super(pipe, nbt);
-        limitShift = MathUtil.clamp(nbt.getInt("limitShift"), 0, MAX_SHIFT);
+        limitShift = MathUtil.clamp(nbt.getIntOr("limitShift", 0), 0, MAX_SHIFT);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
     }
 
     @Override
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         limitShift = buffer.readUnsignedByte();
     }
@@ -91,7 +91,7 @@ public class PipeBehaviourLimiter extends PipeBehaviour {
             return false;
         }
 
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             EntityUtil.activateWrench(player, trace);
             limitShift++;
             if (limitShift > MAX_SHIFT) {

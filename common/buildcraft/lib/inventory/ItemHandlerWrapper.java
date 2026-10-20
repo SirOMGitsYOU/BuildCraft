@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
+
 
 public final class ItemHandlerWrapper extends AbstractInvItemTransactor {
     private final IItemHandler wrapped;
@@ -20,13 +21,13 @@ public final class ItemHandlerWrapper extends AbstractInvItemTransactor {
         this.wrapped = handler;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    protected ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    protected ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
         return wrapped.insertItem(slot, stack, simulate);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected ItemStack extract(int slot, IStackFilter filter, int min, int max, boolean simulate) {
         if (min <= 0) min = 1;

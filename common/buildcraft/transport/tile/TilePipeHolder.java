@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.core.EnumPipePart;
@@ -36,7 +39,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -52,10 +55,10 @@ import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.*;
 
@@ -76,9 +79,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     public static final int NET_UPDATE_WIRES = getReceiverId(PipeMessageReceiver.WIRES);
     public static final int NET_CREATE_LANDING_PARTICLE;
 
-    private static final ResourceLocation ADVANCEMENT_PLACE_PIPE = new ResourceLocation(
-            "buildcrafttransport:pipe_dream"
-    );
+    private static final Identifier ADVANCEMENT_PLACE_PIPE = Identifier.parse("buildcrafttransport:pipe_dream");
 
     @Override
     public IdAllocator getIdAllocator() {
@@ -117,7 +118,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     public TilePipeHolder(BlockPos pos, BlockState blockState) {
         super(BCTransportBlocks.pipeHolderTile.get(), pos, blockState);
 
-        for (Direction side : Direction.VALUES) {
+        for (Direction side : Direction.values()) {
             pluggables.put(side, new PluggableHolder(this, side));
         }
         caps.addCapabilityInstance(PipeApi.CAP_PIPE_HOLDER, this, EnumPipePart.VALUES);
@@ -134,7 +135,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             nbt.put("pipe", pipe.writeToNbt());
         }
         CompoundTag plugs = new CompoundTag();
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             CompoundTag plugTag = pluggables.get(face).writeToNbt();
             if (!plugTag.isEmpty()) {
                 plugs.put(face.getName(), plugTag);
@@ -165,7 +166,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
             }
         }
         CompoundTag plugs = nbt.getCompound("plugs");
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             pluggables.get(face).readFromNbt(plugs.getCompound(face.getName()));
         }
         wireManager.readFromNbt(nbt.getCompound("wireManager"));
@@ -200,7 +201,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         }
         scheduleRenderUpdate();
 
-        if (!level.isClientSide && hasOwner()) {
+        if (!level.isClientSide() && hasOwner()) {
             AdvancementUtil.unlockAdvancement(getOwner().getId(), ADVANCEMENT_PLACE_PIPE);
         }
     }
@@ -254,7 +255,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     @Override
     public void onNeighbourBlockChanged(Block block, BlockPos neighbour) {
         super.onNeighbourBlockChanged(block, neighbour);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         if (pipe != null) {
@@ -272,7 +273,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         if (pipe != null) {
             pipe.onTick();
         }
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             pluggables.get(face).onTick();
         }
         if (pipe != null) {
@@ -312,7 +313,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 //            level.notifyNeighborsOfStateChange(worldPosition, block, true);
             level.updateNeighborsAt(worldPosition, block);
             for (int i = 0; i < 6; i++) {
-                Direction face = Direction.VALUES[i];
+                Direction face = Direction.values()[i];
                 if (oldRedstoneValues[i] != redstoneValues[i]) {
 //                    level.notifyNeighborsOfStateChange(worldPosition.relative(face), block, true);
                     level.updateNeighborsAt(worldPosition.relative(face), block);
@@ -339,7 +340,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                     buffer.writeBoolean(true);
                     pipe.writeCreationPayload(buffer);
                 }
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     pluggables.get(face).writeCreationPayload(buffer);
                 }
                 wireManager.writePayload(buffer, side);
@@ -371,7 +372,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -387,7 +388,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
                     eventBus.unregisterHandler(pipe.flow);
                     pipe = null;
                 }
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     pluggables.get(face).readCreationPayload(buffer);
                 }
                 wireManager.readPayload(buffer, side, ctx);
@@ -478,7 +479,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         if (pipe != null) {
             pipe.markForUpdate();
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (old != with) {
                 wireManager.getWireSystems().rebuildWireSystemsAround(this);
             }
@@ -499,7 +500,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     }
 
     @Override
-    public <T> T getCapabilityFromPipe(Direction side, @Nonnull Capability<T> capability) {
+    public <T> T getCapabilityFromPipe(Direction side, @NotNull Capability<T> capability) {
         PipePluggable plug = getPluggable(side);
         if (plug != null) {
             T t = plug.getInternalCapability(capability);
@@ -568,7 +569,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
     @Override
     public boolean setRedstoneOutput(Direction side, int value) {
         if (side == null) {
-            for (Direction facing : Direction.VALUES) {
+            for (Direction facing : Direction.values()) {
                 redstoneValues[facing.ordinal()] = value;
             }
         } else {
@@ -583,9 +584,9 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 
     // Caps
 
-    @Nonnull
+    @NotNull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (facing != null) {
             PipePluggable plug = getPluggable(facing);
             if (plug != null) {
@@ -625,8 +626,8 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
         wireManager.parts
 //                .forEach((part, color) -> left.add(" - " + part + " = " + color + " = " + wireManager.isPowered(part)));
                 .forEach((part, color) -> left.add(Component.literal(" - " + part + " = " + color + " = " + wireManager.isPowered(part))));
-//        left.add("All wire systems in world count = " + (level.isClientSide ? 0 : wireManager.getWireSystems().wireSystems.size()));
-        left.add(Component.literal("All wire systems in world count = " + (level.isClientSide ? 0 : wireManager.getWireSystems().wireSystems.size())));
+//        left.add("All wire systems in world count = " + (level.isClientSide() ? 0 : wireManager.getWireSystems().wireSystems.size()));
+        left.add(Component.literal("All wire systems in world count = " + (level.isClientSide() ? 0 : wireManager.getWireSystems().wireSystems.size())));
         if (unknownData != null) {
 //            left.add(unknownData.toString());
             left.add(Component.literal(unknownData.toString()));
@@ -638,7 +639,7 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 //        return true;
 //    }
 
-    @Nonnull
+    @NotNull
     @Override
     public ModelData getModelData() {
         return ModelData.builder().with(BlockPipeHolder.PROP_TILE, this).build();
@@ -646,10 +647,10 @@ public class TilePipeHolder extends TileBC_Neptune implements IPipeHolder, IDebu
 
     // MenuProvider
 
-    @Nonnull
+    @NotNull
     @Override
     public Component getDisplayName() {
-        ResourceLocation reg = this.getPipe().getDefinition().identifier;
+        Identifier reg = this.getPipe().getDefinition().identifier;
         String tagId = "item.pipe." + reg.getNamespace() + "." + reg.getPath();
         return Component.translatable("item." + TagManager.getTag(tagId, TagManager.EnumTagType.UNLOCALIZED_NAME) + ".name");
     }

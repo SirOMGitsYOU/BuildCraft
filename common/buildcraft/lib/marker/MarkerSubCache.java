@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.marker;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BCDebugging;
 import buildcraft.api.core.BCLog;
@@ -20,8 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +41,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
     private final Map<BlockPos, Optional<TileMarker<C>>> tileCache = new ConcurrentHashMap<>();
 
     public MarkerSubCache(Level world, int cacheId) {
-        this.isServer = !world.isClientSide;
+        this.isServer = !world.isClientSide();
 //        this.dimensionId = world.dimension().location().getPath();
         this.dimensionId = world.dimension();
         this.cacheId = cacheId;
@@ -148,7 +151,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
         }
     }
 
-    public void addConnection(@Nonnull C connection) {
+    public void addConnection(@NotNull C connection) {
         Set<BlockPos> lastSeen = new HashSet<>(connection.getMarkerPositions());
         initConnection(connection, lastSeen);
         if (DEBUG_FULL) {
@@ -156,7 +159,7 @@ public abstract class MarkerSubCache<C extends MarkerConnection<C>> {
         }
     }
 
-    public void refreshConnection(@Nonnull C connection) {
+    public void refreshConnection(@NotNull C connection) {
         Set<BlockPos> lastSeen = connectionToPos.get(connection);
         if (DEBUG_FULL) {
             BCLog.logger.info("[lib.marker.full] Refreshing a connection");

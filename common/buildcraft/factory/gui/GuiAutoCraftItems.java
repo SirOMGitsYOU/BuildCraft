@@ -19,7 +19,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -36,12 +36,12 @@ import java.util.List;
 public class GuiAutoCraftItems extends GuiBC8<ContainerAutoCraftItems> implements RecipeShownListener
 //public class GuiAutoCraftItems extends GuiWithRecipeBookBC8<ContainerAutoCraftItems> implements RecipeShownListener
 {
-    private static final ResourceLocation TEXTURE_BASE =
-            new ResourceLocation("buildcraftfactory:textures/gui/autobench_item.png");
-    private static final ResourceLocation TEXTURE_MISC =
-            new ResourceLocation("buildcraftlib:textures/gui/misc_slots.png");
-    private static final ResourceLocation VANILLA_CRAFTING_TABLE =
-            new ResourceLocation("textures/gui/container/crafting_table.png");
+    private static final Identifier TEXTURE_BASE =
+            Identifier.parse("buildcraftfactory:textures/gui/autobench_item.png");
+    private static final Identifier TEXTURE_MISC =
+            Identifier.parse("buildcraftlib:textures/gui/misc_slots.png");
+    private static final Identifier VANILLA_CRAFTING_TABLE =
+            Identifier.parse("textures/gui/container/crafting_table.png");
     private static final int SIZE_X = 176, SIZE_Y = 197;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_FILTER_OVERLAY_SAME = new GuiIcon(TEXTURE_MISC, 54, 0, 18, 18);

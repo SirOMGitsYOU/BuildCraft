@@ -23,7 +23,7 @@ import buildcraft.transport.container.ContainerEmzuliPipe_BC8;
 import buildcraft.transport.pipe.behaviour.PipeBehaviourEmzuli.SlotIndex;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DyeColor;
 
@@ -32,8 +32,8 @@ import java.util.function.Supplier;
 
 //public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8>
 public class GuiEmzuliPipe_BC8 extends GuiBC8<ContainerEmzuliPipe_BC8> {
-    private static final ResourceLocation TEXTURE =
-            new ResourceLocation("buildcrafttransport:textures/gui/pipe_emzuli.png");
+    private static final Identifier TEXTURE =
+            Identifier.parse("buildcrafttransport:textures/gui/pipe_emzuli.png");
     private static final int SIZE_X = 176, SIZE_Y = 166;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_NO_PAINT = new GuiIcon(TEXTURE, SIZE_X, 40, 16, 16);

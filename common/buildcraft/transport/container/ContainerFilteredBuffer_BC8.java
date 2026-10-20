@@ -11,7 +11,7 @@ import buildcraft.transport.BCTransportSprites;
 import buildcraft.transport.tile.TileFilteredBuffer;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 
@@ -25,7 +25,7 @@ public class ContainerFilteredBuffer_BC8 extends ContainerBCTile<TileFilteredBuf
             addSlot(new SlotPhantom(tile.invFilter, i, 8 + i * 18, 27) {
                 @Override
 //                public TextureAtlasSprite getBackgroundSprite()
-                public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
+                public Pair<Identifier, Identifier> getNoItemIcon() {
 //                    return BCTransportSprites.EMPTY_FILTERED_BUFFER_SLOT.getSprite();
                     return Pair.of(TextureAtlas.LOCATION_BLOCKS, BCTransportSprites.EMPTY_FILTERED_BUFFER_SLOT.getSprite().contents().name());
                 }

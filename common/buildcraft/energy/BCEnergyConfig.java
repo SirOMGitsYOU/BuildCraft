@@ -6,7 +6,7 @@ import buildcraft.lib.config.BCConfig;
 import buildcraft.lib.config.ConfigCategory;
 import buildcraft.lib.config.Configuration;
 import buildcraft.lib.config.EnumRestartRequirement;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.data.loading.DatagenModLoader;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.Level;
@@ -45,9 +45,9 @@ public class BCEnergyConfig {
     public static final Set<String> excludedDimensions = new HashSet<>();
     /** If false then {@link #excludedDimensions} should be treated as a whitelist rather than a blacklist. */
     public static boolean excludedDimensionsIsBlackList;
-    public static final Set<ResourceLocation> excessiveBiomes = new HashSet<>();
-    public static final Set<ResourceLocation> surfaceDepositBiomes = new HashSet<>();
-    public static final Set<ResourceLocation> excludedBiomes = new HashSet<>();
+    public static final Set<Identifier> excessiveBiomes = new HashSet<>();
+    public static final Set<Identifier> surfaceDepositBiomes = new HashSet<>();
+    public static final Set<Identifier> excludedBiomes = new HashSet<>();
     /** If false then {@link #excludedBiomes} should be treated as a whitelist rather than a blacklist. */
     public static boolean excludedBiomesIsBlackList;
     public static SpecialEventType christmasEventStatus = SpecialEventType.DAY_ONLY;
@@ -291,17 +291,17 @@ public class BCEnergyConfig {
         saveConfigs();
     }
 
-    private static void addBiomeNames(ConfigCategory<List<String>> prop, Set<ResourceLocation> set) {
+    private static void addBiomeNames(ConfigCategory<List<String>> prop, Set<Identifier> set) {
         set.clear();
         for (String s : prop.get()) {
-            set.add(new ResourceLocation(s));
+            set.add(Identifier.fromNamespaceAndPath(s));
         }
     }
 
     /** Called in post-init, after all biomes should have been registered. In 1.12 this should be called after the
      * registry event for biomes has been fired. */
     public static void validateBiomeNames() {
-        Set<ResourceLocation> invalids = new HashSet<>();
+        Set<Identifier> invalids = new HashSet<>();
         addInvalidBiomeNames(excessiveBiomes, invalids);
         addInvalidBiomeNames(excludedBiomes, invalids);
         addInvalidBiomeNames(surfaceDepositBiomes, invalids);
@@ -310,13 +310,13 @@ public class BCEnergyConfig {
             return;
         }
 
-        List<ResourceLocation> invalidList = new ArrayList<>();
+        List<Identifier> invalidList = new ArrayList<>();
         invalidList.addAll(invalids);
-        Collections.sort(invalidList, Comparator.comparing(ResourceLocation::toString));
+        Collections.sort(invalidList, Comparator.comparing(Identifier::toString));
 
-        List<ResourceLocation> allValid = new ArrayList<>();
+        List<Identifier> allValid = new ArrayList<>();
         allValid.addAll(ForgeRegistries.BIOMES.getKeys());
-        Collections.sort(allValid, Comparator.comparing(ResourceLocation::toString));
+        Collections.sort(allValid, Comparator.comparing(Identifier::toString));
 
         BCLog.logger.warn("****************************************************");
         BCLog.logger.warn("*");
@@ -332,14 +332,14 @@ public class BCEnergyConfig {
         BCLog.logger.warn("****************************************************");
     }
 
-    private static void printList(Level level, List<ResourceLocation> list) {
-        for (ResourceLocation location : list) {
+    private static void printList(Level level, List<Identifier> list) {
+        for (Identifier location : list) {
             BCLog.logger.log(level, "*    - " + location);
         }
     }
 
-    private static void addInvalidBiomeNames(Set<ResourceLocation> toTest, Set<ResourceLocation> invalidDest) {
-        for (ResourceLocation test : toTest) {
+    private static void addInvalidBiomeNames(Set<Identifier> toTest, Set<Identifier> invalidDest) {
+        for (Identifier test : toTest) {
             if (!ForgeRegistries.BIOMES.containsKey(test)) {
                 invalidDest.add(test);
             }

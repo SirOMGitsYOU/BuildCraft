@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.addon;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.core.marker.volume.IFastAddonRenderer;
 import buildcraft.lib.client.sprite.White;
@@ -33,9 +34,9 @@ public class AddonRendererFillerPlanner implements IFastAddonRenderer<AddonFille
         if (addon.buildingInfo == null) {
             return;
         }
-        Minecraft.getInstance().getProfiler().push("filler_planner");
+        net.minecraft.util.profiling.Profiler.get().push("filler_planner");
 
-        Minecraft.getInstance().getProfiler().push("iter");
+        net.minecraft.util.profiling.Profiler.get().push("iter");
         List<BlockPos> list = StreamSupport.stream(
 //                        BlockPos.getAllInBoxMutable(addon.buildingInfo.box.min(), addon.buildingInfo.box.max()).spliterator(),
                         BlockPos.betweenClosed(addon.buildingInfo.box.min(), addon.buildingInfo.box.max()).spliterator(),
@@ -53,14 +54,14 @@ public class AddonRendererFillerPlanner implements IFastAddonRenderer<AddonFille
 //                .map(BlockPos.MutableBlockPos::toImmutable)
 //                .map(BlockPos.MutableBlockPos::immutable) // Calen: betweenClosed ret mutable BlockPos
                 .collect(Collectors.toCollection(ArrayList::new));
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 
-        Minecraft.getInstance().getProfiler().push("sort");
+        net.minecraft.util.profiling.Profiler.get().push("sort");
 //        list.sort(Comparator.<BlockPos>comparingDouble(p -> player.getPositionVector().squareDistanceTo(new Vec3(p))).reversed());
         list.sort(Comparator.<BlockPos>comparingDouble(p -> player.position().distanceToSqr(Vec3.atLowerCornerOf(p))).reversed());
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 
-        Minecraft.getInstance().getProfiler().push("render");
+        net.minecraft.util.profiling.Profiler.get().push("render");
         Matrix4f posePose = pose.pose();
         Matrix3f normal = pose.normal();
         for (BlockPos p : list) {
@@ -98,8 +99,8 @@ public class AddonRendererFillerPlanner implements IFastAddonRenderer<AddonFille
             vb.vertex(posePose, (float) bb.maxX, (float) bb.maxY, (float) bb.maxZ).color(153, 153, 153, 127).uv(s.getU1(), s.getV1()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(240, 0).normal(normal, 1, 1, 1).endVertex();
             vb.vertex(posePose, (float) bb.maxX, (float) bb.minY, (float) bb.maxZ).color(153, 153, 153, 127).uv(s.getU1(), s.getV0()).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(240, 0).normal(normal, 1, 1, 1).endVertex();
         }
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 }

@@ -13,7 +13,7 @@ import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNbtReade
 import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNetLoader;
 import buildcraft.transport.plug.PluggableBlocker;
 import buildcraft.transport.plug.PluggablePowerAdaptor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BCTransportPlugs {
 
@@ -39,7 +39,7 @@ public class BCTransportPlugs {
         return def;
     }
 
-    private static ResourceLocation idFor(String name) {
-        return new ResourceLocation("buildcrafttransport", name);
+    private static Identifier idFor(String name) {
+        return Identifier.fromNamespaceAndPath("buildcrafttransport", name);
     }
 }

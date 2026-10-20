@@ -17,7 +17,7 @@ import buildcraft.lib.misc.CapUtil;
 import buildcraft.lib.tile.TileBC_Neptune;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BlockQuarry extends BlockBCTile_Neptune<TileQuarry> implements IBlockWithFacing, IBlockWithTickableTE<TileQuarry> {
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftbuilders:shaping_the_world");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftbuilders:shaping_the_world");
 
     public BlockQuarry(String idBC, BlockBehaviour.Properties properties) {
         super(idBC, properties);
@@ -85,7 +85,7 @@ public class BlockQuarry extends BlockBCTile_Neptune<TileQuarry> implements IBlo
 
     @Override
     public BlockState getActualState(BlockState state, LevelAccessor world, BlockPos pos, BlockEntity tile) {
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             state =
                     state.setValue(BuildCraftProperties.CONNECTED_MAP.get(face), isConnected(world, pos, state, face));
         }

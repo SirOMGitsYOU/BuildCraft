@@ -12,7 +12,7 @@ import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.misc.SpriteUtil;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -40,10 +40,10 @@ public class SpriteHolderRegistry {
     public static final boolean DEBUG = BCDebugging.shouldDebugLog("lib.sprite.holder");
 
     // Calen: Thread Safety
-//    private static final Map<ResourceLocation, SpriteHolder> HOLDER_MAP = new HashMap<>();
-    private static final Map<ResourceLocation, SpriteHolder> HOLDER_MAP = new ConcurrentHashMap<>();
+//    private static final Map<Identifier, SpriteHolder> HOLDER_MAP = new HashMap<>();
+    private static final Map<Identifier, SpriteHolder> HOLDER_MAP = new ConcurrentHashMap<>();
 
-    public static SpriteHolder getHolder(ResourceLocation location) {
+    public static SpriteHolder getHolder(Identifier location) {
         if (!HOLDER_MAP.containsKey(location)) {
             HOLDER_MAP.put(location, new SpriteHolder(location));
             if (DEBUG) {
@@ -56,14 +56,14 @@ public class SpriteHolderRegistry {
     }
 
     public static SpriteHolder getHolder(String location) {
-        return getHolder(new ResourceLocation(location));
+        return getHolder(Identifier.fromNamespaceAndPath(location));
     }
 
     // public static void onTextureStitchPre(TextureAtlas map)
 //    public static void onTextureStitchPre(TextureStitchEvent.Pre event)
     public static void onTextureStitchPre() {
         // Calen: for the ForgeModelBakery.White.instance() texture missing in 1.18.2
-//        event.addSprite(new ResourceLocation("minecraft", "white"));
+//        event.addSprite(Identifier.fromNamespaceAndPath("minecraft", "white"));
 
         for (SpriteHolder holder : HOLDER_MAP.values()) {
 //            holder.onTextureStitchPre(map);
@@ -72,9 +72,9 @@ public class SpriteHolderRegistry {
     }
 
     // Calen 1.20.1
-    public static void onDatagenTextureRegister(Consumer<ResourceLocation> consumer, ExistingFileHelper fileHelper) {
+    public static void onDatagenTextureRegister(Consumer<Identifier> consumer, ExistingFileHelper fileHelper) {
         // Calen: for the ForgeModelBakery.White.instance() texture missing in 1.18.2
-        consumer.accept(new ResourceLocation("minecraft", "white"));
+        consumer.accept(Identifier.fromNamespaceAndPath("minecraft", "white"));
 
         for (SpriteHolder holder : HOLDER_MAP.values()) {
 //            holder.onTextureStitchPre(map);
@@ -125,14 +125,14 @@ public class SpriteHolderRegistry {
 //        if (DEBUG && Loader.instance().isInState(LoaderState.AVAILABLE))
         if (DEBUG && ModLoadingContext.get().getActiveContainer().getCurrentState() == ModLoadingStage.COMPLETE) {
             BCLog.logger.info("[lib.sprite.holder] List of registered sprites:");
-            List<ResourceLocation> locations = new ArrayList<>();
+            List<Identifier> locations = new ArrayList<>();
             locations.addAll(HOLDER_MAP.keySet());
-            locations.sort(Comparator.comparing(ResourceLocation::toString));
+            locations.sort(Comparator.comparing(Identifier::toString));
 
 //            TextureAtlasSprite missing = Minecraft.getInstance().getTextureMapBlocks().getMissingSprite();
             TextureAtlasSprite missing = SpriteUtil.missingSprite().get();
 
-            for (ResourceLocation r : locations) {
+            for (Identifier r : locations) {
                 SpriteHolder sprite = HOLDER_MAP.get(r);
                 TextureAtlasSprite stitched = sprite.sprite;
                 String status = "  ";
@@ -153,13 +153,13 @@ public class SpriteHolderRegistry {
      * class is initialised before init. */
     @OnlyIn(Dist.CLIENT)
     public static class SpriteHolder implements ISprite {
-        public final ResourceLocation spriteLocation;
+        public final Identifier spriteLocation;
         private TextureAtlasSprite sprite;
         // Calen: never used in 1.12.2
 //        private DataMetadataSection extraData = null;
         private boolean hasCalled = false;
 
-        private SpriteHolder(ResourceLocation spriteLocation) {
+        private SpriteHolder(Identifier spriteLocation) {
             this.spriteLocation = spriteLocation;
         }
 
@@ -180,7 +180,7 @@ public class SpriteHolderRegistry {
         }
 
         // Calen 1.20.1
-        public void onDatagenTextureRegister(Consumer<ResourceLocation> consumer) {
+        public void onDatagenTextureRegister(Consumer<Identifier> consumer) {
             consumer.accept(spriteLocation);
         }
 
@@ -231,7 +231,7 @@ public class SpriteHolderRegistry {
         // Calen: never used in 1.12.2
 //        public DataMetadataSection getExtraData(boolean samePack) {
 //            if (extraData == null) {
-//                ResourceLocation actualLocation = SpriteUtil.transformLocation(spriteLocation);
+//                Identifier actualLocation = SpriteUtil.transformLocation(spriteLocation);
 //                extraData = MetadataLoader.getData(actualLocation, samePack);
 //            }
 //            if (extraData == null) {

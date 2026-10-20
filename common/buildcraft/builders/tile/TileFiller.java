@@ -5,6 +5,9 @@
  */
 
 package buildcraft.builders.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.core.IAreaProvider;
@@ -59,10 +62,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -122,7 +125,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
 //    public void onPlacedBy(EntityLivingBase placer, ItemStack stack)
     public void onPlacedBy(LivingEntity placer, ItemStack stack) {
         super.onPlacedBy(placer, stack);
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         BlockState blockState = level.getBlockState(worldPosition);
@@ -186,10 +189,10 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
     @Override
     protected void onSlotChange(IItemHandlerModifiable handler,
             int slot,
-            @Nonnull ItemStack before,
-            @Nonnull ItemStack after) {
-        // if (!level.isClientSide)
-        if (!level.isClientSide && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
+            @NotNull ItemStack before,
+            @NotNull ItemStack after) {
+        // if (!level.isClientSide())
+        if (!level.isClientSide() && !StackUtil.isSameItemSameDamageSameTagSameCount(before, after)) {
             if (handler == invResources) {
                 Optional.ofNullable(getBuilder()).ifPresent(SnapshotBuilder::resourcesChanged);
             }
@@ -200,7 +203,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
     @Override
     public void update() {
         ITickable.super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (isValid()) {
                 builder.tick();
             }
@@ -268,7 +271,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -287,7 +290,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
                 markerBox = buffer.readBoolean();
                 if (buffer.readBoolean()) {
                     UUID volumeBoxId = buffer.readUUID();
-                    VolumeBox volumeBox = level.isClientSide
+                    VolumeBox volumeBox = level.isClientSide()
                             ?
                             ClientVolumeBoxes.INSTANCE.volumeBoxes.stream()
                                     .filter(localVolumeBox -> localVolumeBox.id.equals(volumeBoxId))
@@ -332,7 +335,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
     }
 
     public void onStatementChange() {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             createAndSendMessage(NET_PATTERN, patternStatement::writeToBuffer);
         }
         finished = false;
@@ -369,9 +372,9 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
 //        super.readFromNBT(nbt);
         super.load(nbt);
         battery.deserializeNBT(nbt.getCompound("battery"));
-        canExcavate = nbt.getBoolean("canExcavate");
-        inverted = nbt.getBoolean("inverted");
-        finished = nbt.getBoolean("finished");
+        canExcavate = nbt.getBooleanOr("canExcavate", false);
+        inverted = nbt.getBooleanOr("inverted", false);
+        finished = nbt.getBooleanOr("finished", false);
         lockedTicks = nbt.getByte("lockedTicks");
         mode = Optional.ofNullable(NBTUtilBC.readEnum(nbt.get("mode"), Mode.class)).orElse(Mode.ON);
         box.initialize(nbt.getCompound("box"));
@@ -381,7 +384,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
                     .addons
                     .get(NBTUtilBC.readEnum(nbt.get("addonSlot"), EnumAddonSlot.class));
         }
-        markerBox = nbt.getBoolean("markerBox");
+        markerBox = nbt.getBooleanOr("markerBox", false);
         patternStatement.readFromNbt(nbt.getCompound("patternStatement"));
 //        updateBuildingInfo();
 //        if (nbt.contains("builder")) {
@@ -407,7 +410,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
 //        return true;
 //    }
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {
@@ -512,7 +515,7 @@ public class TileFiller extends TileBC_Neptune implements ITickable, IDebuggable
     }
 
     public boolean isValid() {
-        return hasBox() && (level.isClientSide || (addon != null ? addon.buildingInfo : buildingInfo) != null);
+        return hasBox() && (level.isClientSide() || (addon != null ? addon.buildingInfo : buildingInfo) != null);
     }
 
     @Override

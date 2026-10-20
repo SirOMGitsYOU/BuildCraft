@@ -18,10 +18,10 @@ import buildcraft.transport.tile.TilePipeHolder;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 
@@ -58,9 +58,9 @@ public final class PluggableHolder {
             pluggable = null;
             return;
         }
-        String id = nbt.getString("id");
+        String id = nbt.getStringOr("id", "");
         CompoundTag data = nbt.getCompound("data");
-        ResourceLocation identifier = new ResourceLocation(id);
+        Identifier identifier = Identifier.fromNamespaceAndPath(id);
         PluggableDefinition def = PipeApi.pluggableRegistry.getDefinition(identifier);
         if (def == null) {
             BCLog.logger.warn("Unknown pluggable id '" + id + "'");
@@ -102,7 +102,7 @@ public final class PluggableHolder {
     }
 
     private void readCreateInternal(FriendlyByteBuf buffer) throws InvalidInputDataException {
-        ResourceLocation identifier = new ResourceLocation(buffer.readUtf(256));
+        Identifier identifier = Identifier.fromNamespaceAndPath(buffer.readUtf(256));
         PluggableDefinition def = PipeApi.pluggableRegistry.getDefinition(identifier);
         if (def == null) {
             throw new InvalidInputDataException("Unknown remote pluggable \"" + identifier + "\"");
@@ -131,7 +131,7 @@ public final class PluggableHolder {
     }
 
     // public void readPayload(PacketBufferBC buffer, Dist netSide, MessageContext ctx) throws IOException
-    public void readPayload(PacketBufferBC buffer, NetworkDirection netSide, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(PacketBufferBC buffer, NetworkDirection netSide, CustomPayloadEvent.Context ctx) throws IOException {
         int id = buffer.readUnsignedByte();
         if (netSide == NetworkDirection.PLAY_TO_SERVER) {
             if (id == ID_UPDATE_PLUG) {

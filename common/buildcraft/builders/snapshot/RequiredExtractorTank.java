@@ -5,13 +5,16 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +22,9 @@ import java.util.Optional;
 public class RequiredExtractorTank extends RequiredExtractor {
     private NbtPath path = null;
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<FluidStack> extractFluidsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Optional.ofNullable(path.get(tileNbt))
                 .map(CompoundTag.class::cast)
                 .map(nbt -> !nbt.contains("Empty") ? FluidStack.loadFluidStackFromNBT(nbt) : null)
@@ -29,9 +32,9 @@ public class RequiredExtractorTank extends RequiredExtractor {
                 .orElseGet(Collections::emptyList);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<FluidStack> extractFluidsFromEntity(@NotNull CompoundTag entityNbt) {
         return Optional.ofNullable(path.get(entityNbt))
                 .map(CompoundTag.class::cast)
                 .map(nbt -> !nbt.contains("Empty") ? FluidStack.loadFluidStackFromNBT(nbt) : null)

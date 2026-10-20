@@ -21,7 +21,7 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.Slot;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ import java.io.InputStreamReader;
  * via json, more complex ones must be implemented in code. */
 public class BuildCraftJsonGui extends BuildCraftGui {
 
-    public final ResourceLocation jsonGuiDefinition;
+    public final Identifier jsonGuiDefinition;
 
     public final TypedKeyMap<String, Object> properties = TypedKeyMap.createHierachy();
     public final FunctionContext context = DefaultContexts.createWithAll();
@@ -49,12 +49,12 @@ public class BuildCraftJsonGui extends BuildCraftGui {
         time = context.putVariableDouble("time");
     }
 
-    public BuildCraftJsonGui(Screen gui, ResourceLocation jsonGuiDefinition) {
+    public BuildCraftJsonGui(Screen gui, Identifier jsonGuiDefinition) {
         super(gui);
         this.jsonGuiDefinition = jsonGuiDefinition;
     }
 
-    public BuildCraftJsonGui(Screen gui, IGuiArea rootElement, ResourceLocation jsonGuiDefinition) {
+    public BuildCraftJsonGui(Screen gui, IGuiArea rootElement, Identifier jsonGuiDefinition) {
         super(gui, rootElement);
         this.jsonGuiDefinition = jsonGuiDefinition;
     }

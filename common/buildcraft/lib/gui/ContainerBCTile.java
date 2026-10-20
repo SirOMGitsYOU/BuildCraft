@@ -22,7 +22,7 @@ public abstract class ContainerBCTile<T extends TileBC_Neptune & IBCTileMenuProv
         // Calen: Moved to MessageUtil#serverOpenTileGui:MessageUpdateTile msg = tile.onServerPlayerOpenNoSend(player);
         // to ensure the message received before GUI opened in client
         // Not called in Client. We just handle the MessageUpdateTile in Client
-//        if (!tile.getLevel().isClientSide) {
+//        if (!tile.getLevel().isClientSide()) {
 //            tile.onPlayerOpen(player);
 //        }
     }

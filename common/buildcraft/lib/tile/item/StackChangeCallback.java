@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
+
 
 @FunctionalInterface
 public interface StackChangeCallback {
-    void onStackChange(IItemHandlerModifiable itemHandler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after);
+    void onStackChange(IItemHandlerModifiable itemHandler, int slot, @NotNull ItemStack before, @NotNull ItemStack after);
 }

@@ -16,7 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
@@ -128,8 +128,8 @@ public class Lock {
             @Override
             public void readFromNBT(CompoundTag nbt) {
                 pos = NbtUtils.readBlockPos(nbt.getCompound("pos"));
-//                block = Block.REGISTRY.getObject(new ResourceLocation(nbt.getString("block")));
-                block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(nbt.getString("block")));
+//                block = Block.REGISTRY.getObject(Identifier.fromNamespaceAndPath(nbt.getStringOr("block", "")));
+                block = ForgeRegistries.BLOCKS.getValue(Identifier.parse(nbt.getStringOr("block", "")));
             }
 
             @Override
@@ -142,8 +142,8 @@ public class Lock {
             @Override
             public void fromBytes(FriendlyByteBuf buf) {
                 pos = MessageUtil.readBlockPos(buf);
-//                block = Block.REGISTRY.getObject(new ResourceLocation(buf.readString(1024)));
-                block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(buf.readUtf(1024)));
+//                block = Block.REGISTRY.getObject(Identifier.fromNamespaceAndPath(buf.readString(1024)));
+                block = ForgeRegistries.BLOCKS.getValue(Identifier.parse(buf.readUtf(1024)));
             }
 
             @Override

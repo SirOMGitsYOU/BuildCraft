@@ -1,15 +1,17 @@
 package buildcraft.lib.recipe.programming;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.api.recipes.IProgrammingRecipe;
 import buildcraft.api.recipes.IngredientStack;
 import com.google.gson.JsonObject;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Consumer;
 
 public class ProgrammingRecipeBuilder {
@@ -62,8 +64,8 @@ public class ProgrammingRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return new ResourceLocation(namespace, "programming/" + name);
+        public Identifier getId() {
+            return Identifier.fromNamespaceAndPath(namespace, "programming/" + name);
         }
 
         @Override
@@ -79,7 +81,7 @@ public class ProgrammingRecipeBuilder {
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementId() {
+        public Identifier getAdvancementId() {
             return null;
         }
     }

@@ -38,10 +38,10 @@ public class RetroGenData extends SavedData {
     public void readFromNBT(CompoundTag nbt) {
         gennedChunks.clear();
 
-        ListTag registry = nbt.getList("registry", Tag.TAG_STRING);
+        ListTag registry = nbt.getListOrEmpty("registry", Tag.TAG_STRING);
         String[] names = new String[registry.size()];
         for (int i = 0; i < registry.size(); i++) {
-            names[i] = registry.getString(i);
+            names[i] = registry.getStringOr(i, "");
         }
 
         if (DEBUG) {

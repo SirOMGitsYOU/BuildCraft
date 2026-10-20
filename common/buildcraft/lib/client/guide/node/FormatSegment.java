@@ -1,9 +1,11 @@
 package buildcraft.lib.client.guide.node;
 
+import org.jetbrains.annotations.Nullable;
+
 
 import net.minecraft.ChatFormatting;
 
-import javax.annotation.Nullable;
+
 import java.util.Set;
 
 /** A segment of a larger text */

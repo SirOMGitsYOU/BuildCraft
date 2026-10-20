@@ -17,7 +17,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
@@ -35,11 +35,11 @@ public class GuiIcon implements ISimpleDrawable {
         this.height = (int) (Math.abs(sprite.getInterpV(1) - sprite.getInterpV(0)) * textureSize);
     }
 
-    public GuiIcon(ResourceLocation texture, double u, double v, double width, double height, int texSize) {
+    public GuiIcon(Identifier texture, double u, double v, double width, double height, int texSize) {
         this(new SpriteRaw(texture, u, v, width, height, texSize), texSize);
     }
 
-    public GuiIcon(ResourceLocation texture, double u, double v, double width, double height) {
+    public GuiIcon(Identifier texture, double u, double v, double width, double height) {
         this(texture, u, v, width, height, 256);
     }
 

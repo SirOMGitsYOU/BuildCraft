@@ -16,7 +16,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 
 import java.io.File;
@@ -44,7 +44,7 @@ public class MapManager implements Runnable {
             return null;
         }
         Level world = (Level) levelAccessor;
-        if (world == null || world.isClientSide) {
+        if (world == null || world.isClientSide()) {
             return null;
         }
 

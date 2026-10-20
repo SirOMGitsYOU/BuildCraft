@@ -1,6 +1,8 @@
 package buildcraft.lib.misc.collect;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
+
 import java.util.HashMap;
 import java.util.Map;
 

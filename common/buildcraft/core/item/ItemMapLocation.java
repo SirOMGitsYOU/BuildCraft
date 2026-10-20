@@ -5,6 +5,7 @@
  */
 
 package buildcraft.core.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IAreaProvider;
 import buildcraft.api.core.IBox;
@@ -25,7 +26,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         CompoundTag cpt = NBTUtilBC.getItemData(stack);
 
         if (cpt.contains("name")) {
-            String name = cpt.getString("name");
+            String name = cpt.getStringOr("name", "");
             if (name.length() > 0) {
                 strings.add(Component.literal(name));
             }
@@ -78,10 +78,10 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         switch (type) {
             case SPOT: {
                 if (cpt.contains("x") && cpt.contains("y") && cpt.contains("z") && cpt.contains("side")) {
-                    int x = cpt.getInt("x");
-                    int y = cpt.getInt("y");
-                    int z = cpt.getInt("z");
-                    Direction side = Direction.VALUES[cpt.getByte("side")];
+                    int x = cpt.getIntOr("x", 0);
+                    int y = cpt.getIntOr("y", 0);
+                    int z = cpt.getIntOr("z", 0);
+                    Direction side = Direction.values()[cpt.getByte("side")];
 
                     strings.add(Component.literal(LocaleUtil.localize("{" + x + ", " + y + ", " + z + ", " + side + "}")));
                 }
@@ -90,12 +90,12 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
             case AREA: {
                 if (cpt.contains("xMin") && cpt.contains("yMin") && cpt.contains("zMin") && cpt.contains("xMax")
                         && cpt.contains("yMax") && cpt.contains("zMax")) {
-                    int x = cpt.getInt("xMin");
-                    int y = cpt.getInt("yMin");
-                    int z = cpt.getInt("zMin");
-                    int xLength = cpt.getInt("xMax") - x + 1;
-                    int yLength = cpt.getInt("yMax") - y + 1;
-                    int zLength = cpt.getInt("zMax") - z + 1;
+                    int x = cpt.getIntOr("xMin", 0);
+                    int y = cpt.getIntOr("yMin", 0);
+                    int z = cpt.getIntOr("zMin", 0);
+                    int xLength = cpt.getIntOr("xMax", 0) - x + 1;
+                    int yLength = cpt.getIntOr("yMax", 0) - y + 1;
+                    int zLength = cpt.getIntOr("zMax", 0) - z + 1;
 
                     strings.add(Component.literal(LocaleUtil.localize(
                             "{" + x + ", " + y + ", " + z + "} + {" + xLength + " x " + yLength + " x " + zLength + "}")));
@@ -128,9 +128,9 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
         if (player.isShiftKeyDown()) {
@@ -139,7 +139,7 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         return new InteractionResultHolder<>(InteractionResult.PASS, stack);
     }
 
-    private static InteractionResultHolder<ItemStack> clearMarkerData(@Nonnull ItemStack stack) {
+    private static InteractionResult clearMarkerData(@NotNull ItemStack stack) {
         if (MapLocationType.getFromStack(stack) == MapLocationType.CLEAN) {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
@@ -161,7 +161,7 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         BlockPos pos = context.getClickedPos();
         Direction side = context.getClickedFace();
         Player player = context.getPlayer();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.PASS;
         }
 
@@ -230,30 +230,30 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         return InteractionResult.SUCCESS;
     }
 
-    public static IBox getAreaBox(@Nonnull ItemStack item) {
+    public static IBox getAreaBox(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
-        int xMin = cpt.getInt("xMin");
-        int yMin = cpt.getInt("yMin");
-        int zMin = cpt.getInt("zMin");
+        int xMin = cpt.getIntOr("xMin", 0);
+        int yMin = cpt.getIntOr("yMin", 0);
+        int zMin = cpt.getIntOr("zMin", 0);
         BlockPos min = new BlockPos(xMin, yMin, zMin);
 
-        int xMax = cpt.getInt("xMax");
-        int yMax = cpt.getInt("yMax");
-        int zMax = cpt.getInt("zMax");
+        int xMax = cpt.getIntOr("xMax", 0);
+        int yMax = cpt.getIntOr("yMax", 0);
+        int zMax = cpt.getIntOr("zMax", 0);
         BlockPos max = new BlockPos(xMax, yMax, zMax);
 
         return new Box(min, max);
     }
 
-    public static IBox getPointBox(@Nonnull ItemStack item) {
+    public static IBox getPointBox(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
 
         switch (type) {
             case SPOT: {
-                int x = cpt.getInt("x");
-                int y = cpt.getInt("y");
-                int z = cpt.getInt("z");
+                int x = cpt.getIntOr("x", 0);
+                int y = cpt.getIntOr("y", 0);
+                int z = cpt.getIntOr("z", 0);
 
                 BlockPos pos = new BlockPos(x, y, z);
 
@@ -265,13 +265,13 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         }
     }
 
-    public static Direction getPointFace(@Nonnull ItemStack stack) {
+    public static Direction getPointFace(@NotNull ItemStack stack) {
         CompoundTag cpt = NBTUtilBC.getItemData(stack);
-        return Direction.VALUES[cpt.getByte("side")];
+        return Direction.values()[cpt.getByte("side")];
     }
 
     @Override
-    public IBox getBox(@Nonnull ItemStack item) {
+    public IBox getBox(@NotNull ItemStack item) {
         MapLocationType type = MapLocationType.getFromStack(item);
 
         switch (type) {
@@ -288,31 +288,31 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
     }
 
     @Override
-    public Direction getPointSide(@Nonnull ItemStack item) {
+    public Direction getPointSide(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
 
         if (type == MapLocationType.SPOT) {
-            return Direction.VALUES[cpt.getByte("side")];
+            return Direction.values()[cpt.getByte("side")];
         } else {
             return null;
         }
     }
 
     @Override
-    public BlockPos getPoint(@Nonnull ItemStack item) {
+    public BlockPos getPoint(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
 
         if (type == MapLocationType.SPOT) {
-            return new BlockPos(cpt.getInt("x"), cpt.getInt("y"), cpt.getInt("z"));
+            return new BlockPos(cpt.getIntOr("x", 0), cpt.getIntOr("y", 0), cpt.getIntOr("z", 0));
         } else {
             return null;
         }
     }
 
     @Override
-    public IZone getZone(@Nonnull ItemStack item) {
+    public IZone getZone(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
         switch (type) {
@@ -336,7 +336,7 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
     }
 
     @Override
-    public List<BlockPos> getPath(@Nonnull ItemStack item) {
+    public List<BlockPos> getPath(@NotNull ItemStack item) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType type = MapLocationType.getFromStack(item);
         switch (type) {
@@ -354,7 +354,7 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
             }
             case SPOT: {
                 List<BlockPos> indexList = new ArrayList<>();
-                indexList.add(new BlockPos(cpt.getInt("x"), cpt.getInt("y"), cpt.getInt("z")));
+                indexList.add(new BlockPos(cpt.getIntOr("x", 0), cpt.getIntOr("y", 0), cpt.getIntOr("z", 0)));
                 return indexList;
             }
             default: {
@@ -363,20 +363,20 @@ public class ItemMapLocation extends ItemBC_Neptune implements IMapLocation {
         }
     }
 
-    public static void setZone(@Nonnull ItemStack item, ZonePlan plan) {
+    public static void setZone(@NotNull ItemStack item, ZonePlan plan) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         MapLocationType.ZONE.setToStack(item);
         plan.writeToNBT(cpt);
     }
 
     @Override
-//    public String getName(@Nonnull ItemStack item)
-    public String getName_INamedItem(@Nonnull ItemStack item) {
+//    public String getName(@NotNull ItemStack item)
+    public String getName_INamedItem(@NotNull ItemStack item) {
         return NBTUtilBC.getItemData(item).getString("name");
     }
 
     @Override
-    public boolean setName(@Nonnull ItemStack item, String name) {
+    public boolean setName(@NotNull ItemStack item, String name) {
         CompoundTag cpt = NBTUtilBC.getItemData(item);
         cpt.putString("name", name);
         return true;

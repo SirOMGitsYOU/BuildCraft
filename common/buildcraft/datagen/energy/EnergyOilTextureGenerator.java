@@ -10,7 +10,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.GsonHelper;
@@ -34,10 +34,10 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
-        ResourceLocation[][] fromSprites = new ResourceLocation[3][2];
+        Identifier[][] fromSprites = new Identifier[3][2];
         for (int h = 0; h < 3; h++) {
-            fromSprites[h][0] = new ResourceLocation("buildcraftlib:block/fluid/heat_" + h + "_still");
-            fromSprites[h][1] = new ResourceLocation("buildcraftlib:block/fluid/heat_" + h + "_flow");
+            fromSprites[h][0] = new Identifier("buildcraftlib:block/fluid/heat_" + h + "_still");
+            fromSprites[h][1] = new Identifier("buildcraftlib:block/fluid/heat_" + h + "_flow");
         }
 
         List<CompletableFuture<?>> futures = new ArrayList<CompletableFuture<?>>();
@@ -45,7 +45,7 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
         Path mainOutput = packOutput.getOutputFolder();
         for (int index = 0; index < BCEnergyFluids.allFluids.size(); index++) {
             BCFluidRegistryContainer container = BCEnergyFluids.allFluids.get(index);
-            ResourceLocation[] sprites = fromSprites[container.getFluidType().getHeat()];
+            Identifier[] sprites = fromSprites[container.getFluidType().getHeat()];
             int lightColour = container.getFluidType().getLightColour();
             int darkColour = container.getFluidType().getDarkColour();
             int lightColour_christmas = ChristmasHandler.colours[index / 3][0];
@@ -56,11 +56,11 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
 
             try {
                 // Normal
-                futures.addAll(recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture), lightColour, darkColour, sprites[0], cache));
-                futures.addAll(recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture), lightColour, darkColour, sprites[1], cache));
+                futures.addAll(recolourAndSave(mainOutput, new Identifier(normalStillTexture), lightColour, darkColour, sprites[0], cache));
+                futures.addAll(recolourAndSave(mainOutput, new Identifier(normalFlowTexture), lightColour, darkColour, sprites[1], cache));
                 // Christmas
-                futures.addAll(recolourAndSave(mainOutput, new ResourceLocation(normalStillTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[0], cache));
-                futures.addAll(recolourAndSave(mainOutput, new ResourceLocation(normalFlowTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[1], cache));
+                futures.addAll(recolourAndSave(mainOutput, new Identifier(normalStillTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[0], cache));
+                futures.addAll(recolourAndSave(mainOutput, new Identifier(normalFlowTexture + "_christmas"), lightColour_christmas, darkColour_christmas, sprites[1], cache));
             } catch (IOException e) {
                 LOGGER.error("Couldn't save texture of {}", FluidUtilBC.getRegistryName(container.getStill()), e);
             }
@@ -68,7 +68,7 @@ public class EnergyOilTextureGenerator extends BCBaseTextureGenerator {
         return CompletableFuture.allOf(futures.toArray(CompletableFuture<?>[]::new));
     }
 
-    private List<CompletableFuture<?>> recolourAndSave(Path mainOutput, ResourceLocation fluid, int light, int dark, ResourceLocation baseTexture, CachedOutput cache) throws IOException {
+    private List<CompletableFuture<?>> recolourAndSave(Path mainOutput, Identifier fluid, int light, int dark, Identifier baseTexture, CachedOutput cache) throws IOException {
         Resource basePngResource = exFileHelper.getResource(baseTexture, PackType.CLIENT_RESOURCES, ".png", "textures");
         Resource baseMcmetaResource = exFileHelper.getResource(baseTexture, PackType.CLIENT_RESOURCES, ".png.mcmeta", "textures");
 

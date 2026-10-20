@@ -1,15 +1,17 @@
 package buildcraft.lib.recipe.refinery;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.recipes.IRefineryRecipeManager.IDistillationRecipe;
 import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 
 public class DistillationRecipeSerializer implements RecipeSerializer<IDistillationRecipe> {
     public static final DistillationRecipeSerializer INSTANCE;
@@ -19,7 +21,7 @@ public class DistillationRecipeSerializer implements RecipeSerializer<IDistillat
     }
 
     @Override
-    public IDistillationRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+    public IDistillationRecipe fromJson(Identifier recipeId, JsonObject json) {
         String type = GsonHelper.getAsString(json, "type");
         long powerRequired = json.get("powerRequired").getAsLong();
         FluidStack in = JsonUtil.deSerializeFluidStack(json.getAsJsonObject("in"));
@@ -38,7 +40,7 @@ public class DistillationRecipeSerializer implements RecipeSerializer<IDistillat
 
     @Nullable
     @Override
-    public IDistillationRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+    public IDistillationRecipe fromNetwork(Identifier recipeId, FriendlyByteBuf buffer) {
         long powerRequired = buffer.readLong();
         FluidStack in = buffer.readFluidStack();
         FluidStack outGas = buffer.readFluidStack();

@@ -8,7 +8,7 @@ package buildcraft.lib.block;
 
 import buildcraft.api.blocks.CustomPaintHelper;
 import buildcraft.api.blocks.ICustomPaintHandler;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -98,7 +98,7 @@ public class VanillaPaintHandlers {
         Arrays.stream(DyeColor.values()).toList().forEach(
                 c ->
                 {
-                    ResourceLocation blockName = new ResourceLocation(namespace, c.getSerializedName() + pathSuffix);
+                    Identifier blockName = Identifier.fromNamespaceAndPath(namespace, c.getSerializedName() + pathSuffix);
                     Block block = ForgeRegistries.BLOCKS.getValue(blockName);
                     if (block == null || block == Blocks.AIR)
                         throw new IllegalStateException("Unknown block: " + blockName.toString());

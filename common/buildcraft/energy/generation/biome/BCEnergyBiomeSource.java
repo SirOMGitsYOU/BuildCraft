@@ -10,7 +10,7 @@
 //import net.minecraft.core.Holder;
 //import net.minecraft.core.Registry;
 //import net.minecraft.resources.RegistryOps;
-//import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.Identifier;
 //import net.minecraft.util.ExtraCodecs;
 //import net.minecraft.world.level.biome.Biome;
 //import net.minecraft.world.level.biome.BiomeSource;
@@ -124,11 +124,11 @@
 //    }
 //
 //    public static class Preset extends MultiNoiseBiomeSource.Preset {
-//        static final Map<ResourceLocation, BCEnergyBiomeSource.Preset> BY_NAME = Maps.newHashMap();
-//        final ResourceLocation name;
+//        static final Map<Identifier, BCEnergyBiomeSource.Preset> BY_NAME = Maps.newHashMap();
+//        final Identifier name;
 //        private final Function<Registry<Biome>, Climate.ParameterList<Holder<Biome>>> parameterSource;
 //
-//        public Preset(ResourceLocation p_187090_, Function<Registry<Biome>, Climate.ParameterList<Holder<Biome>>> p_187091_) {
+//        public Preset(Identifier p_187090_, Function<Registry<Biome>, Climate.ParameterList<Holder<Biome>>> p_187091_) {
 //            super(p_187090_, p_187091_);
 //            this.name = p_187090_;
 //            this.parameterSource = p_187091_;
@@ -152,7 +152,7 @@
 //    public static record PresetInstance(BCEnergyBiomeSource.Preset preset, Registry<Biome> biomes) {
 //        public static final MapCodec<BCEnergyBiomeSource.PresetInstance> CODEC = RecordCodecBuilder.mapCodec((p_48558_) ->
 //        {
-//            return p_48558_.group(ResourceLocation.CODEC.flatXmap((p_151869_) ->
+//            return p_48558_.group(Identifier.CODEC.flatXmap((p_151869_) ->
 //            {
 //                return Optional.ofNullable(BCEnergyBiomeSource.Preset.BY_NAME.get(p_151869_)).map(DataResult::success).orElseGet(() ->
 //                {

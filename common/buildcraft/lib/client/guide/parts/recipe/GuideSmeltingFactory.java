@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts.recipe;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.parts.GuidePartFactory;
@@ -17,11 +18,11 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 
 public class GuideSmeltingFactory implements GuidePartFactory {
-    @Nonnull
+    @NotNull
 //    private final ItemStack input;
     private final NonNullList<Ingredient> input;
     private final ItemStack output;

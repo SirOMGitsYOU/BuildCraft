@@ -5,6 +5,9 @@
  */
 
 package buildcraft.energy.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.IMjConnector;
@@ -41,11 +44,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -83,11 +86,11 @@ public class TileEngineRF extends TileEngineBase_BC8 implements IBCTileMenuProvi
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        currentRF = nbt.getInt("currentRF");
+        currentRF = nbt.getIntOr("currentRF", 0);
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_GUI_DATA || id == NET_GUI_TICK) {
@@ -132,7 +135,7 @@ public class TileEngineRF extends TileEngineBase_BC8 implements IBCTileMenuProvi
                 return InteractionResult.PASS;
             }
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // BCEnergyGuis.ENGINE_RF.openGUI(player, getPos());
             MessageUtil.serverOpenTileGui(player, this);
         }
@@ -156,7 +159,7 @@ public class TileEngineRF extends TileEngineBase_BC8 implements IBCTileMenuProvi
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     protected IMjConnector createConnector() {
         return new EngineConnector(false);

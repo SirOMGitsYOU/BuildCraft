@@ -15,7 +15,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,7 +46,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
         Vector3f center = new Vector3f(0.5f, 0.5f, 0.5f);
         Vector3f radius = new Vector3f(0.25f, 0.25f, 0.25f);
 
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             MutableQuad quad = ModelUtil.createFace(face, center, radius, null);
             // Calen: "white" is missingno in 1.18.2
             // fixed by loading "white" in SpriteHolderRegistry
@@ -76,7 +76,7 @@ public enum DebugRenderHelper implements IDetachedRenderer {
 
     public static void renderAABB(PoseStack poseStack, VertexConsumer bb, AABB aabb, int colour) {
 //        bb.setTranslation(0, 0, 0);
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             MutableQuad quad = ModelUtil.createFace(
                     face,
                     new Vector3f(

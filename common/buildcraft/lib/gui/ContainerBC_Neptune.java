@@ -32,7 +32,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,7 +204,7 @@ public abstract class ContainerBC_Neptune<MENU_PROVIDER extends MenuProvider> ex
     }
 
     public final void sendMessage(int id) {
-        Dist side = player.level().isClientSide ? Dist.CLIENT : Dist.DEDICATED_SERVER;
+        Dist side = player.level().isClientSide() ? Dist.CLIENT : Dist.DEDICATED_SERVER;
         sendMessage(id, (buffer) -> writeMessage(id, buffer, side));
     }
 
@@ -212,7 +212,7 @@ public abstract class ContainerBC_Neptune<MENU_PROVIDER extends MenuProvider> ex
         PacketBufferBC payload = PacketBufferBC.write(writer);
 //        MessageContainer message = new MessageContainer(windowId, id, payload);
         MessageContainer message = new MessageContainer(containerId, id, payload);
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             MessageManager.sendToServer(message);
         } else {
             MessageManager.sendTo(message, (ServerPlayer) player);
@@ -222,7 +222,7 @@ public abstract class ContainerBC_Neptune<MENU_PROVIDER extends MenuProvider> ex
     public void writeMessage(int id, PacketBufferBC buffer, Dist side) {
     }
 
-    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection direction, NetworkEvent.Context ctx) throws IOException {
+    public void readMessage(int id, PacketBufferBC buffer, NetworkDirection direction, CustomPayloadEvent.Context ctx) throws IOException {
         if (id == NET_WIDGET) {
             int widgetId = buffer.readUnsignedShort();
             if (widgetId < 0 || widgetId >= widgets.size()) {
@@ -253,7 +253,7 @@ public abstract class ContainerBC_Neptune<MENU_PROVIDER extends MenuProvider> ex
         }
     }
 
-    private void readSingleSetPhantom(PacketBufferBC buffer, NetworkEvent.Context ctx) throws IOException {
+    private void readSingleSetPhantom(PacketBufferBC buffer, CustomPayloadEvent.Context ctx) throws IOException {
         int idx = buffer.readVarInt();
         ItemStack stack = buffer.readItem();
         if (idx >= 0 && idx < slots.size()) {

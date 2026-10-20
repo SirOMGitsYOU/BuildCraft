@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 
 import java.io.InputStreamReader;
@@ -44,9 +44,9 @@ public class JsonGuiInfo extends JsonVariableObject {
         }
 
         if (json.has("parent")) {
-//            String parent = JsonUtils.getString(json, "parent");
+//            String parent = JsonUtils.getStringOr(json, "parent", "");
             String parent = GsonHelper.getAsString(json, "parent");
-            ResourceLocation location = new ResourceLocation(parent + ".json");
+            Identifier location = Identifier.fromNamespaceAndPath(parent + ".json");
             try (InputStreamReader reader = loadHistory.startLoading(location)) {
                 JsonObject obj = new Gson().fromJson(reader, JsonObject.class);
                 JsonGuiInfo info = new JsonGuiInfo(obj, fnCtx, loadHistory);

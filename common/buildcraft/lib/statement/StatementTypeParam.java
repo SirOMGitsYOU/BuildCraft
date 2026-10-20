@@ -24,7 +24,7 @@ public class StatementTypeParam extends StatementType<IStatementParameter> {
 
     @Override
     public IStatementParameter readFromNbt(CompoundTag nbt) {
-        String kind = nbt.getString("kind");
+        String kind = nbt.getStringOr("kind", "");
         IParameterReader reader = StatementManager.getParameterReader(kind);
         if (reader == null) {
             return null;

@@ -10,11 +10,11 @@ import buildcraft.lib.gui.json.BuildCraftJsonGui;
 import buildcraft.lib.gui.json.SpriteDelegate;
 import buildcraft.lib.misc.collect.TypedKeyMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiFillerPlanner extends GuiBC8<ContainerFillerPlanner> {
-    private static final ResourceLocation LOCATION = new ResourceLocation("buildcraftbuilders:gui/filler_planner.json");
+    private static final Identifier LOCATION = Identifier.parse("buildcraftbuilders:gui/filler_planner.json");
     private static final SpriteDelegate SPRITE_PATTERN = new SpriteDelegate();
 
     public GuiFillerPlanner(ContainerFillerPlanner container, Inventory inventory, Component component) {

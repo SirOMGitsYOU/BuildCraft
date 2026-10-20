@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ public class ItemWaterGel extends ItemBC_Neptune {
 
     @Override
 //    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, InteractionHand hand)
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 //        Vec3 start = player.getPositionVector().addVector(0, player.getEyeHeight(), 0);
         Vec3 start = player.position().add(0, player.getEyeHeight(), 0);
@@ -50,12 +49,12 @@ public class ItemWaterGel extends ItemBC_Neptune {
 
 //        if (ray == null || ray.getLocation() == null)
         if (ray.getType() == HitResult.Type.MISS) {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+            return InteractionResult.FAIL;
         }
 
         Block b = world.getBlockState(ray.getBlockPos()).getBlock();
         if (b != Blocks.WATER) {
-            return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+            return InteractionResult.FAIL;
         }
 
 //        if (!player.capabilities.isCreativeMode)
@@ -70,7 +69,7 @@ public class ItemWaterGel extends ItemBC_Neptune {
 //                0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
                 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             world.setBlock(ray.getBlockPos(), BCFactoryBlocks.waterGel.get().defaultBlockState().setValue(BlockWaterGel.PROP_STAGE, BlockWaterGel.GelStage.SPREAD_0), Block.UPDATE_ALL);
             world.scheduleTick(ray.getBlockPos(), BCFactoryBlocks.waterGel.get(), 200);
 
@@ -82,7 +81,7 @@ public class ItemWaterGel extends ItemBC_Neptune {
         }
 
         // player.addStat(StatList.getObjectUseStats(this));
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
 }

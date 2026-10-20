@@ -5,6 +5,8 @@
  */
 
 package buildcraft.factory.client.render;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.factory.tile.TilePump;
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserRow;
@@ -121,7 +123,7 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TilePump tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TilePump tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TilePump tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         // Calen: get the white texture
         if (!whiteTextureFlag) {
@@ -131,9 +133,9 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
         VertexConsumer buffer = bufferSource.getBuffer(Sheets.solidBlockSheet());
 
 //        Minecraft.getMinecraft().mcProfiler.startSection("bc");
-        Minecraft.getInstance().getProfiler().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
 //        Minecraft.getMinecraft().mcProfiler.startSection("pump");
-        Minecraft.getInstance().getProfiler().push("pump");
+        net.minecraft.util.profiling.Profiler.get().push("pump");
 
 //        buffer.setTranslation(x, y, z);
 
@@ -169,9 +171,9 @@ public class RenderPump implements BlockEntityRenderer<TilePump> {
         tubeRenderer.render(tile, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
 //        Minecraft.getMinecraft().mcProfiler.endSection();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 //        Minecraft.getMinecraft().mcProfiler.endSection();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     @Override

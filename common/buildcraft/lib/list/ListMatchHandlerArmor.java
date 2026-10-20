@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.list;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.lists.ListMatchHandler;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.EnumSet;
 
 public class ListMatchHandlerArmor extends ListMatchHandler {
@@ -36,7 +37,7 @@ public class ListMatchHandlerArmor extends ListMatchHandler {
     }
 
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(Type type, @NotNull ItemStack stack, @NotNull ItemStack target, boolean precise) {
         if (type == Type.TYPE) {
             EnumSet<EquipmentSlot> armorTypeIDSource = getArmorTypes(stack);
             if (armorTypeIDSource.size() > 0) {
@@ -53,7 +54,7 @@ public class ListMatchHandlerArmor extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(Type type, @NotNull ItemStack stack) {
         return getArmorTypes(stack).size() > 0;
     }
 }

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.engine;
+import org.jetbrains.annotations.NotNull;
 
 
 import buildcraft.api.blocks.ICustomRotationHandler;
@@ -21,7 +22,7 @@ import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.LazyLoadedValue;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -40,7 +41,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientBlockExtensions;
 
-import javax.annotation.Nonnull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -70,7 +71,7 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType> exten
 //        return engineTileConstructors.containsKey(type);
 //    }
 
-    @Nonnull
+    @NotNull
 //    public ItemStack getStack(E type)
     public ItemStack getStack() {
 //        return new ItemStack(this, 1, type.ordinal());
@@ -87,7 +88,7 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType> exten
 
 //    @Override
 ////    protected BlockStateContainer createBlockState()
-//    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+//    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
 ////        super.createBlockStateDefinition(builder);
 ////        builder.add(getEngineProperty());
 //    }
@@ -229,7 +230,7 @@ public abstract class BlockEngineBase_BC8<E extends Enum<E> & IEngineType> exten
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean p_60514_) {
         super.neighborChanged(state, world, pos, block, fromPos, p_60514_);
-        if (world.isClientSide) return;
+        if (world.isClientSide()) return;
         BlockEntity tile = world.getBlockEntity(pos);
         if (tile instanceof TileEngineBase_BC8) {
             TileEngineBase_BC8 engine = (TileEngineBase_BC8) tile;

@@ -205,15 +205,15 @@ public class WorldSavedDataWireSystems extends SavedData {
         wireSystems.clear();
         this.elementsToWireSystemsIndex.clear();
 
-        ListTag entriesList = nbt.getList("entries", Tag.TAG_COMPOUND);
+        ListTag entriesList = nbt.getListOrEmpty("entries", Tag.TAG_COMPOUND);
         for (int i = 0; i < entriesList.size(); i++) {
             CompoundTag entry = entriesList.getCompound(i);
-            this.addWireSystem(new WireSystem(entry.getCompound("wireSystem")), entry.getBoolean("powered"));
+            this.addWireSystem(new WireSystem(entry.getCompound("wireSystem")), entry.getBooleanOr("powered", false));
         }
     }
 
     public static WorldSavedDataWireSystems get(Level world) {
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             throw new UnsupportedOperationException("Attempted to get WorldSavedDataWireSystems on the client!");
         }
         ServerLevel serverLevel = (ServerLevel) world;

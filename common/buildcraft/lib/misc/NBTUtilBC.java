@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BCLog;
 import com.google.common.collect.Sets;
@@ -13,8 +16,8 @@ import net.minecraft.nbt.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.BitSet;
 import java.util.EnumSet;
 import java.util.Optional;
@@ -63,7 +66,7 @@ public final class NBTUtilBC {
         return source;
     }
 
-    public static CompoundTag getItemData(@Nonnull ItemStack stack) {
+    public static CompoundTag getItemData(@NotNull ItemStack stack) {
         if (stack.isEmpty()) {
             return new CompoundTag();
         }
@@ -111,14 +114,14 @@ public final class NBTUtilBC {
                 CompoundTag nbt = (CompoundTag) base;
                 BlockPos pos = null;
                 if (nbt.contains("i")) {
-                    int i = nbt.getInt("i");
-                    int j = nbt.getInt("j");
-                    int k = nbt.getInt("k");
+                    int i = nbt.getIntOr("i", 0);
+                    int j = nbt.getIntOr("j", 0);
+                    int k = nbt.getIntOr("k", 0);
                     pos = new BlockPos(i, j, k);
                 } else if (nbt.contains("x")) {
-                    int x = nbt.getInt("x");
-                    int y = nbt.getInt("y");
-                    int z = nbt.getInt("z");
+                    int x = nbt.getIntOr("x", 0);
+                    int y = nbt.getIntOr("y", 0);
+                    int z = nbt.getIntOr("z", 0);
                     pos = new BlockPos(x, y, z);
                 } else if (nbt.contains("pos")) {
                     return readBlockPos(nbt.get("pos"));
@@ -149,7 +152,7 @@ public final class NBTUtilBC {
     }
 
     public static Vec3 readVec3d(ListTag list) {
-        return new Vec3(list.getDouble(0), list.getDouble(1), list.getDouble(2));
+        return new Vec3(list.getDoubleOr(0, 0.0), list.getDoubleOr(1, 0.0), list.getDoubleOr(2, 0.0));
     }
 
     private static final String NULL_ENUM_STRING = "_NULL";
@@ -211,7 +214,7 @@ public final class NBTUtilBC {
         if (tag instanceof ListTag) {
             ListTag list = (ListTag) tag;
             for (int i = 0; i < list.size() && i < intendedLength; i++) {
-                arr[i] = list.getDouble(i);
+                arr[i] = list.getDoubleOr(i, 0.0);
             }
         }
         return arr;
@@ -220,7 +223,7 @@ public final class NBTUtilBC {
     public static boolean[] readBooleanArray(ListTag tag) {
         boolean[] arr = new boolean[tag.size()];
         for (int i = 0; i < tag.size(); i++) {
-            arr[i] = tag.getInt(i) != 0;
+            arr[i] = tag.getIntOr(i, 0) != 0;
         }
         return arr;
     }

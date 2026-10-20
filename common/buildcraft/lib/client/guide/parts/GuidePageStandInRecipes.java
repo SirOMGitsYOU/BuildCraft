@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.guide.parts;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.client.guide.GuiGuide;
 import buildcraft.lib.client.guide.entry.ItemStackValueFilter;
@@ -16,7 +17,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class GuidePageStandInRecipes extends GuidePage {
         super(gui, parts, new PageValue<>(PageEntryItemStack.INSTANCE, new ItemStackValueFilter(stack)));
     }
 
-    @Nonnull
-    public static GuidePageFactory createFactory(@Nonnull ItemStack stack) {
+    @NotNull
+    public static GuidePageFactory createFactory(@NotNull ItemStack stack) {
 //        List<GuidePartFactory> factories = XmlPageLoader.loadAllCrafting(stack, new Profiler(), 0);
         List<GuidePartFactory> factories = XmlPageLoader.loadAllCrafting(stack, ProfilerUtil.newProfiler(), 0);
         if (factories.isEmpty()) {

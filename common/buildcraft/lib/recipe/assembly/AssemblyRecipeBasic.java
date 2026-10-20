@@ -5,17 +5,18 @@
  */
 
 package buildcraft.lib.recipe.assembly;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.recipes.IngredientStack;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -24,18 +25,18 @@ public class AssemblyRecipeBasic extends AssemblyRecipe {
     private final ImmutableSet<IngredientStack> requiredStacks;
     private final ImmutableSet<ItemStack> output;
 
-    public AssemblyRecipeBasic(ResourceLocation name, long requiredMicroJoules, ImmutableSet<IngredientStack> requiredStacks, @Nonnull ItemStack output) {
+    public AssemblyRecipeBasic(Identifier name, long requiredMicroJoules, ImmutableSet<IngredientStack> requiredStacks, @NotNull ItemStack output) {
         this.requiredMicroJoules = requiredMicroJoules;
         this.requiredStacks = ImmutableSet.copyOf(requiredStacks);
         this.output = ImmutableSet.of(output);
         this.name = name;
     }
 
-    public AssemblyRecipeBasic(String name, long requiredMicroJoules, ImmutableSet<IngredientStack> requiredStacks, @Nonnull ItemStack output) {
+    public AssemblyRecipeBasic(String name, long requiredMicroJoules, ImmutableSet<IngredientStack> requiredStacks, @NotNull ItemStack output) {
         this(BuildCraftAPI.nameToResourceLocation(name), requiredMicroJoules, requiredStacks, output);
     }
 
-    public AssemblyRecipeBasic(String name, long requiredMicroJoules, Set<IngredientStack> requiredStacks, @Nonnull ItemStack output) {
+    public AssemblyRecipeBasic(String name, long requiredMicroJoules, Set<IngredientStack> requiredStacks, @NotNull ItemStack output) {
         this(name, requiredMicroJoules, ImmutableSet.copyOf(requiredStacks), output);
     }
 
@@ -63,12 +64,12 @@ public class AssemblyRecipeBasic extends AssemblyRecipe {
     }
 
     @Override
-    public Set<IngredientStack> getInputsFor(@Nonnull ItemStack output) {
+    public Set<IngredientStack> getInputsFor(@NotNull ItemStack output) {
         return requiredStacks;
     }
 
     @Override
-    public long getRequiredMicroJoulesFor(@Nonnull ItemStack output) {
+    public long getRequiredMicroJoulesFor(@NotNull ItemStack output) {
         return requiredMicroJoules;
     }
 

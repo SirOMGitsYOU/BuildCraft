@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.boards.RedstoneBoardRegistry;
 import buildcraft.api.boards.RedstoneBoardRobotNBT;
 import buildcraft.api.events.RobotEvent;
@@ -28,7 +30,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -39,7 +41,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 // public class ItemRobot extends ItemBC_Neptune implements IEnergyContainerItem
@@ -96,7 +98,7 @@ public class ItemRobot extends ItemBC_Neptune implements IMjContainerItem {
         return getEnergy(getNBT(stack));
     }
 
-    public ResourceLocation getTextureRobot(ItemStack stack) {
+    public Identifier getTextureRobot(ItemStack stack) {
         return getRobotNBT(stack).getRobotTexture();
     }
 
@@ -216,7 +218,7 @@ public class ItemRobot extends ItemBC_Neptune implements IMjContainerItem {
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Direction side = context.getClickedFace();
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             Block b = world.getBlockState(pos).getBlock();
             // if (!(b instanceof BlockGenericPipe))
             if (!(b instanceof BlockPipeHolder)) {
@@ -299,7 +301,7 @@ public class ItemRobot extends ItemBC_Neptune implements IMjContainerItem {
 //    }
 
     private static long getEnergy(CompoundTag cpt) {
-        return cpt.getLong(MjBattery.NBT_STORED);
+        return cpt.getLongOr(MjBattery.NBT_STORED, 0L);
     }
 
     private static void setEnergy(CompoundTag cpt, long energy) {

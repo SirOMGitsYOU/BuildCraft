@@ -1,9 +1,11 @@
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 
-import javax.annotation.Nullable;
+
 
 public class ModUtil {
 

@@ -6,7 +6,7 @@
 
 package buildcraft.lib.misc;
 
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +27,9 @@ public class RegistryUtil {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static <T extends BlockEntity> void regTesrIfTilePresent(RegistryObject<BlockEntityType<T>> tileReg, BlockEntityRendererProvider<T> tesrConstructor) {
+    public static <T extends BlockEntity, S extends BlockEntityRenderState> void regTesrIfTilePresent(
+            RegistryObject<BlockEntityType<T>> tileReg,
+            BlockEntityRendererProvider<T, S> tesrConstructor) {
         if (tileReg != null && tileReg.isPresent()) {
             BlockEntityRenderers.register(tileReg.get(), tesrConstructor);
         }

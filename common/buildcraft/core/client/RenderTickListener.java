@@ -3,6 +3,8 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.client;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IBox;
 import buildcraft.api.items.IMapLocation.MapLocationType;
@@ -38,12 +40,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -64,7 +66,7 @@ public class RenderTickListener {
                 { { 0.5F, 0.9F, 0.5F }, { 0.5F, 1.2F, 0.2F } }, // Forth arrow part (-Z)
         };
 
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             Matrix4f matrix = MatrixUtil.rotateTowardsFace(Direction.UP, face);
             Vec3[][] arr = new Vec3[5][2];
             for (int i = 0; i < 5; i++) {
@@ -186,7 +188,7 @@ public class RenderTickListener {
         mc.getProfiler().pop();
     }
 
-    private static void renderMapLocation(@Nonnull ItemStack stack, PoseStack poseStack) {
+    private static void renderMapLocation(@NotNull ItemStack stack, PoseStack poseStack) {
         MapLocationType type = MapLocationType.getFromStack(stack);
         if (type == MapLocationType.SPOT) {
             Direction face = ItemMapLocation.getPointFace(stack);
@@ -231,7 +233,7 @@ public class RenderTickListener {
     }
 
     private static void renderMarkerConnector(ClientLevel world, Player player, PoseStack poseStack) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("marker");
         for (MarkerCache<?> cache : MarkerCache.CACHES) {
             profiler.push(cache.name);
@@ -242,7 +244,7 @@ public class RenderTickListener {
     }
 
     private static void renderMarkerCache(Player player, MarkerSubCache<?> cache, PoseStack poseStack) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("compute");
         Set<LaserData_BC8> toRender = new HashSet<>();
         for (final BlockPos a : cache.getAllMarkers()) {

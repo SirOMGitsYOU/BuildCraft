@@ -14,9 +14,9 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.MapRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,8 +45,8 @@ public class DynamicTextureBC {
 //        colorMap = dynamicTexture.getTextureData();
 
         // Calen 1.20.1
-        ResourceLocation resourcelocation = Minecraft.getInstance().textureManager.register("zone_planner/" + id, this.dynamicTexture);
-        this.renderType = createRenderType(resourcelocation);
+        Identifier Identifier = Minecraft.getInstance().textureManager.register("zone_planner/" + id, this.dynamicTexture);
+        this.renderType = createRenderType(Identifier);
     }
 
     public void setColord(int x, int y, double r, double g, double b, double a) {
@@ -129,8 +129,8 @@ public class DynamicTextureBC {
         return renderType;
     }
 
-    /** See {@link RenderType#text(ResourceLocation)} in {@link MapRenderer.MapInstance#MapInstance(int, MapItemSavedData)}. */
-    private static RenderType createRenderType(ResourceLocation locationIn) {
+    /** See {@link RenderType#text(Identifier)} in {@link MapRenderer.MapInstance#MapInstance(int, MapItemSavedData)}. */
+    private static RenderType createRenderType(Identifier locationIn) {
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setShaderState(RenderStateShard.RENDERTYPE_TEXT_SHADER)
                 .setCullState(RenderStateShard.NO_CULL)

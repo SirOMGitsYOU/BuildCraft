@@ -5,11 +5,12 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.tools.IToolWrench;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 
 public class EntityUtil {
     public static NonNullList<ItemStack> collectItems(Level world, BlockPos around, double radius) {
@@ -80,7 +81,7 @@ public class EntityUtil {
         }
     }
 
-    @Nonnull
+    @NotNull
 //    public static ItemStack getArrowStack(EntityArrow arrow)
     public static ItemStack getArrowStack(AbstractArrow arrow) {
         // FIXME: Replace this with an invocation of arrow.getArrowStack
@@ -94,14 +95,14 @@ public class EntityUtil {
 
     // Calen 1.20.1
     public static EntityType<?> getItemFromRegistryName(String name) {
-        return getItemFromRegistryName(new ResourceLocation(name));
+        return getItemFromRegistryName(Identifier.parse(name));
     }
 
-    public static EntityType<?> getItemFromRegistryName(ResourceLocation name) {
+    public static EntityType<?> getItemFromRegistryName(Identifier name) {
         return ForgeRegistries.ENTITY_TYPES.getValue(name);
     }
 
-    public static ResourceLocation getRegistryName(EntityType<?> type) {
+    public static Identifier getRegistryName(EntityType<?> type) {
         return type.builtInRegistryHolder().key().location();
     }
 }

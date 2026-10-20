@@ -15,7 +15,7 @@ import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.config.GuiConfigManager;
 import buildcraft.lib.misc.LocaleUtil;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class LedgerEngine extends Ledger_Neptune {
     private static final int OVERLAY_COLOUR = 0xFF_D4_6C_1F;// 0xFF_FF_55_11;// TEMP!
@@ -38,7 +38,7 @@ public class LedgerEngine extends Ledger_Neptune {
         appendText(() -> LocaleUtil.localizeHeat(engine.getHeat()), TEXT_COLOUR);
         calculateMaxSize();
 
-        setOpenProperty(GuiConfigManager.getOrAddBoolean(new ResourceLocation("buildcraftlib:engine"),
+        setOpenProperty(GuiConfigManager.getOrAddBoolean(Identifier.parse("buildcraftlib:engine"),
                 "ledger.power.is_open", false));
     }
 

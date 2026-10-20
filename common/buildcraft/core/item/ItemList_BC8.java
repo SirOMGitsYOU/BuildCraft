@@ -3,6 +3,9 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.item;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.items.IList;
 import buildcraft.core.BCCoreItems;
@@ -16,11 +19,10 @@ import buildcraft.lib.misc.NBTUtilBC;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,13 +33,13 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 //public class ItemList_BC8 extends ItemBC_Neptune implements IList
 public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider {
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftcore:list");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftcore:list");
 
     // Calen
     public static final String NBT_KEY = "label";
@@ -49,7 +51,7 @@ public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider 
 
     @Override
 //    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, EnumHand hand)
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
         AdvancementUtil.unlockAdvancement(player, ADVANCEMENT);
 //        BCCoreGuis.LIST.openGUI(player);
         MessageUtil.serverOpenItemGui(player, BCCoreItems.list.get());
@@ -83,22 +85,22 @@ public class ItemList_BC8 extends ItemBC_Neptune implements IList, MenuProvider 
     // IList
 
     @Override
-//    public Component getName(@Nonnull ItemStack stack)
-    public String getName_INamedItem(@Nonnull ItemStack stack) {
+//    public Component getName(@NotNull ItemStack stack)
+    public String getName_INamedItem(@NotNull ItemStack stack) {
 //        return Component.literal(NBTUtilBC.getItemData(stack).getString("label"));
 //        return Component.literal(NBTUtilBC.getItemData(stack).getString(NBT_KEY));
         return NBTUtilBC.getItemData(stack).getString(NBT_KEY);
     }
 
     @Override
-    public boolean setName(@Nonnull ItemStack stack, String name) {
+    public boolean setName(@NotNull ItemStack stack, String name) {
 //        NBTUtilBC.getItemData(stack).putString("label", name);
         NBTUtilBC.getItemData(stack).putString(NBT_KEY, name);
         return true;
     }
 
     @Override
-    public boolean matches(@Nonnull ItemStack stackList, @Nonnull ItemStack item) {
+    public boolean matches(@NotNull ItemStack stackList, @NotNull ItemStack item) {
         return ListHandler.matches(stackList, item);
     }
 

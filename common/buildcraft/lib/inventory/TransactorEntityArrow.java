@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.inventory.IItemTransactor.IItemExtractable;
@@ -14,7 +15,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class TransactorEntityArrow implements IItemExtractable {
 
@@ -24,7 +25,7 @@ public class TransactorEntityArrow implements IItemExtractable {
         this.entity = entity;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack extract(IStackFilter filter, int min, int max, boolean simulate) {
         if (!entity.isAlive() || entity.pickup != Pickup.ALLOWED || min > 1 || max < 1 || max < min) {

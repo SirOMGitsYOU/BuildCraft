@@ -5,6 +5,9 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.mj.MjAPI;
@@ -21,7 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -56,7 +59,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.level.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
@@ -67,8 +69,8 @@ import net.minecraftforge.fluids.capability.wrappers.BucketPickupHandlerWrapper;
 import net.minecraftforge.fluids.capability.wrappers.FluidBlockWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -131,7 +133,7 @@ public final class BlockUtil {
         return false;
     }
 
-    public static boolean harvestBlock(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
+    public static boolean harvestBlock(ServerLevel world, BlockPos pos, @NotNull ItemStack tool, GameProfile owner) {
         FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner);
         BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), fakePlayer);
         MinecraftForge.EVENT_BUS.post(breakEvent);
@@ -158,7 +160,7 @@ public final class BlockUtil {
         return true;
     }
 
-    public static boolean destroyBlock(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
+    public static boolean destroyBlock(ServerLevel world, BlockPos pos, @NotNull ItemStack tool, GameProfile owner) {
         FakePlayer fakePlayer = getFakePlayerWithTool(world, tool, owner);
         BreakEvent breakEvent = new BreakEvent(world, pos, world.getBlockState(pos), fakePlayer);
         MinecraftForge.EVENT_BUS.post(breakEvent);
@@ -170,7 +172,7 @@ public final class BlockUtil {
         return true;
     }
 
-    public static FakePlayer getFakePlayerWithTool(ServerLevel world, @Nonnull ItemStack tool, GameProfile owner) {
+    public static FakePlayer getFakePlayerWithTool(ServerLevel world, @NotNull ItemStack tool, GameProfile owner) {
         FakePlayer player = BuildCraftAPI.fakePlayerProvider.getFakePlayer(world, owner);
         int i = 0;
 
@@ -195,7 +197,7 @@ public final class BlockUtil {
             return false;
         }
 
-        if (!world.isEmptyBlock(pos) && !world.isClientSide && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
+        if (!world.isEmptyBlock(pos) && !world.isClientSide() && world.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) {
             drops.addAll(getItemStackFromBlock(world, pos, owner));
         }
         world.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
@@ -216,7 +218,7 @@ public final class BlockUtil {
         world.addFreshEntity(entityitem);
     }
 
-    public static Optional<List<ItemStack>> breakBlockAndGetDrops(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner) {
+    public static Optional<List<ItemStack>> breakBlockAndGetDrops(ServerLevel world, BlockPos pos, @NotNull ItemStack tool, GameProfile owner) {
         return breakBlockAndGetDrops(world, pos, tool, owner, false);
     }
 
@@ -224,7 +226,7 @@ public final class BlockUtil {
      * @param grabAll If true then this will pickup every item in range of the position, false to only get the items
      * that the dropped while breaking the block.
      */
-    public static Optional<List<ItemStack>> breakBlockAndGetDrops(ServerLevel world, BlockPos pos, @Nonnull ItemStack tool, GameProfile owner, boolean grabAll) {
+    public static Optional<List<ItemStack>> breakBlockAndGetDrops(ServerLevel world, BlockPos pos, @NotNull ItemStack tool, GameProfile owner, boolean grabAll) {
         AABB aabb = new AABB(pos).inflate(1);
         Set<Entity> entities;
         if (grabAll) {
@@ -453,7 +455,7 @@ public final class BlockUtil {
     /** Create an explosion which only affects a single block. */
     public static void explodeBlock(Level world, BlockPos pos) {
 //        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return;
         }
 
@@ -677,14 +679,14 @@ public final class BlockUtil {
 
     // Calen
     public static Block getBlockFromRegistryName(String name) {
-        return getBlockFromRegistryName(new ResourceLocation(name));
+        return getBlockFromRegistryName(Identifier.fromNamespaceAndPath(name));
     }
 
-    public static Block getBlockFromRegistryName(ResourceLocation name) {
+    public static Block getBlockFromRegistryName(Identifier name) {
         return ForgeRegistries.BLOCKS.getValue(name);
     }
 
-    public static ResourceLocation getRegistryName(Block block) {
+    public static Identifier getRegistryName(Block block) {
         return block.builtInRegistryHolder().key().location();
     }
 

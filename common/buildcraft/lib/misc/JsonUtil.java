@@ -22,7 +22,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class JsonUtil {
     {
         if (json.isJsonPrimitive() && json.getAsJsonPrimitive().isString()) {
             String name = json.getAsString();
-            ResourceLocation fluidName = new ResourceLocation(name); // Calen
+            Identifier fluidName = Identifier.fromNamespaceAndPath(name); // Calen
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidName); // Calen
             if (fluid == null) {
                 throw failAndListFluids(name);
@@ -55,16 +55,16 @@ public class JsonUtil {
             }
         } else if (json.isJsonObject()) {
             JsonObject obj = json.getAsJsonObject();
-//            String id = JsonUtils.getString(obj, "id");
+//            String id = JsonUtils.getStringOr(obj, "id", "");
             String id = GsonHelper.getAsString(obj, "id");
-            ResourceLocation fluidName = new ResourceLocation(id);
+            Identifier fluidName = Identifier.fromNamespaceAndPath(id);
             Fluid fluid = ForgeRegistries.FLUIDS.getValue(fluidName);
             if (fluid == null) {
                 throw failAndListFluids(id);
             }
             int amount = 1;
             if (obj.has("amount")) {
-//                amount = JsonUtils.getInt(obj, "amount");
+//                amount = JsonUtils.getIntOr(obj, "amount", 0);
                 amount = GsonHelper.getAsInt(obj, "amount");
             }
             // TODO: NBT
@@ -88,7 +88,7 @@ public class JsonUtil {
     {
         if (json.isJsonPrimitive() && json.getAsJsonPrimitive().isString()) {
             String name = json.getAsString();
-            ResourceLocation id = new ResourceLocation(name);
+            Identifier id = Identifier.fromNamespaceAndPath(name);
             if (!ForgeRegistries.ITEMS.containsKey(id)) {
                 throw new JsonSyntaxException("Unknown item '" + name + "'");
             } else {
@@ -96,24 +96,24 @@ public class JsonUtil {
             }
         } else if (json.isJsonObject()) {
             JsonObject obj = json.getAsJsonObject();
-//            String id = JsonUtils.getString(obj, "id");
+//            String id = JsonUtils.getStringOr(obj, "id", "");
             String id = GsonHelper.getAsString(obj, "id");
-            ResourceLocation loc = new ResourceLocation(id);
+            Identifier loc = Identifier.fromNamespaceAndPath(id);
             if (!ForgeRegistries.ITEMS.containsKey(loc)) {
                 throw new JsonSyntaxException("Unknown item '" + id + "'");
             }
             Item item = ForgeRegistries.ITEMS.getValue(loc);
             int count = 1;
             if (obj.has("count")) {
-                count = JsonUtil.getInt(obj, "count");
+                count = JsonUtil.getIntOr(obj, "count", 0);
             }
             int meta = 0;
             if (obj.has("data")) {
-                meta = JsonUtil.getInt(obj, "data");
+                meta = JsonUtil.getIntOr(obj, "data", 0);
             } else if (obj.has("meta")) {
 //                BCLog.logger.warn("[lib.recipe] Found deprecated item 'meta' tag inside of " + json);
                 BCLog.logger.error("[lib.recipe] Found deprecated item 'meta' tag inside of " + json);
-                meta = JsonUtil.getInt(obj, "meta");
+                meta = JsonUtil.getIntOr(obj, "meta", 0);
             }
             // TODO: NBT!
 //            return new ItemStack(item, count, meta);
@@ -221,7 +221,7 @@ public class JsonUtil {
      */
     public static MutableComponent getTextComponent(JsonObject json, String subPrefix, String localePrefix) {
         if (json.has(subPrefix)) {
-//            String str = JsonUtils.getString(json, subPrefix);
+//            String str = JsonUtils.getStringOr(json, subPrefix, "");
             String str = GsonHelper.getAsString(json, subPrefix);
             Object[] args;
             if (json.has(subPrefix + "_args")) {
@@ -231,7 +231,7 @@ public class JsonUtil {
             }
             return Component.translatable(localePrefix + str, args);
         } else if (json.has(subPrefix + "_raw")) {
-//            return Component.literal(JsonUtils.getString(json, subPrefix + "_raw"));
+//            return Component.literal(JsonUtils.getStringOr(json, subPrefix + "_raw", ""));
             return Component.literal(GsonHelper.getAsString(json, subPrefix + "_raw"));
         } else {
             throw new JsonSyntaxException(
@@ -239,19 +239,19 @@ public class JsonUtil {
         }
     }
 
-    public static ResourceLocation getIdentifier(JsonObject obj, String sub) {
-        ResourceLocation ident = getIdentifier(obj, sub, null);
+    public static Identifier getIdentifier(JsonObject obj, String sub) {
+        Identifier ident = getIdentifier(obj, sub, null);
         if (ident == null) {
             throw new JsonSyntaxException("Expected to find '" + sub + "' as a string, but found nothing!");
         }
         return ident;
     }
 
-    public static ResourceLocation getIdentifier(JsonObject obj, String sub, ResourceLocation _default) {
+    public static Identifier getIdentifier(JsonObject obj, String sub, Identifier _default) {
         if (!obj.has(sub)) {
             return _default;
         }
-//        String str = JsonUtils.getString(obj, sub).toLowerCase(Locale.ROOT);
+//        String str = JsonUtils.getStringOr(obj, sub, "").toLowerCase(Locale.ROOT);
         String str = GsonHelper.getAsString(obj, sub).toLowerCase(Locale.ROOT);
         int index = str.indexOf(':');
         if (index < 0) {
@@ -259,7 +259,7 @@ public class JsonUtil {
         }
         String domain = str.substring(0, index);
         String path = str.substring(index + 1);
-        return new ResourceLocation(domain, path);
+        return Identifier.fromNamespaceAndPath(domain, path);
     }
 
     public static int getInt(JsonObject obj, String string) {
@@ -613,7 +613,7 @@ public class JsonUtil {
 
     public static FluidStack deSerializeFluidStack(JsonObject json) {
         String fluidId = GsonHelper.getAsString(json, "fluid");
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(new ResourceLocation(fluidId));
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(Identifier.fromNamespaceAndPath(fluidId));
         int amount = GsonHelper.getAsInt(json, "amount");
         return new FluidStack(fluid, amount);
     }
@@ -632,7 +632,7 @@ public class JsonUtil {
 
     public static ItemStack deSerializeItemStack(JsonObject json) {
         String itemId = GsonHelper.getAsString(json, "item");
-        Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+        Item item = ForgeRegistries.ITEMS.getValue(Identifier.fromNamespaceAndPath(itemId));
         int count = 1;
         if (json.has("count")) {
             count = GsonHelper.getAsInt(json, "count");

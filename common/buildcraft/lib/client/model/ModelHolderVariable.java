@@ -6,6 +6,8 @@
 
 package buildcraft.lib.client.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.client.model.json.JsonTexture;
 import buildcraft.lib.client.model.json.JsonVariableModel;
@@ -17,11 +19,11 @@ import com.google.gson.JsonParseException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.resources.Identifier;
+import buildcraft.lib.misc.LazyLoadedValue;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nullable;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +53,7 @@ public class ModelHolderVariable extends ModelHolder {
     }
 
     @Override
-    protected void onTextureStitchPre(Set<ResourceLocation> toRegisterSprites) {
+    protected void onTextureStitchPre(Set<Identifier> toRegisterSprites) {
         rawModel = null;
         failReason = null;
 
@@ -73,7 +75,7 @@ public class ModelHolderVariable extends ModelHolder {
 
     // Calen 1.20.1
     @Override
-    protected void onDatagenTextureRegister(Set<ResourceLocation> toRegisterSprites, ExistingFileHelper fileHelper) {
+    protected void onDatagenTextureRegister(Set<Identifier> toRegisterSprites, ExistingFileHelper fileHelper) {
         rawModel = null;
         failReason = null;
 
@@ -118,9 +120,9 @@ public class ModelHolderVariable extends ModelHolder {
             }
         } else {
 //            sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(lookup);
-//            sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation(lookup));
+//            sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.fromNamespaceAndPath(lookup));
             String _lookup = lookup;
-            sprite = new LazyLoadedValue<>(() -> Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(new ResourceLocation(_lookup)));
+            sprite = new LazyLoadedValue<>(() -> Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(Identifier.parse(_lookup)));
         }
         ModelUtil.TexturedFace face = new ModelUtil.TexturedFace();
         face.sprite = sprite;

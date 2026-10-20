@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot.pattern.parameter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -21,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -92,7 +93,7 @@ public enum PatternParameterXZDir implements IStatementParameter {
         return BCBuildersSprites.PARAM_XZ_DIR.get(dir);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

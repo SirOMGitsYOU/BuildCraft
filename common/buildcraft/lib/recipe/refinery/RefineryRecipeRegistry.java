@@ -6,11 +6,13 @@
 
 package buildcraft.lib.recipe.refinery;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import buildcraft.lib.misc.StackUtil;
 import com.google.common.collect.Lists;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -18,7 +20,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nullable;
+
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -35,21 +37,21 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
 
     @Override
 //    public IHeatableRecipe createHeatingRecipe(FluidStack in, FluidStack out, int heatFrom, int heatTo)
-    public IHeatableRecipe createHeatingRecipe(ResourceLocation id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
+    public IHeatableRecipe createHeatingRecipe(Identifier id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
 //        return new HeatableRecipe(in, out, heatFrom, heatTo);
         return new HeatableRecipe(id, in, out, heatFrom, heatTo);
     }
 
     @Override
 //    public ICoolableRecipe createCoolableRecipe(FluidStack in, FluidStack out, int heatFrom, int heatTo)
-    public ICoolableRecipe createCoolableRecipe(ResourceLocation id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
+    public ICoolableRecipe createCoolableRecipe(Identifier id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
 //        return new CoolableRecipe(in, out, heatFrom, heatTo);
         return new CoolableRecipe(id, in, out, heatFrom, heatTo);
     }
 
     @Override
 //    public IDistillationRecipe createDistillationRecipe(FluidStack in, FluidStack outGas, FluidStack outLiquid, long powerRequired)
-    public IDistillationRecipe createDistillationRecipe(ResourceLocation id, FluidStack in, FluidStack outGas, FluidStack outLiquid, long powerRequired) {
+    public IDistillationRecipe createDistillationRecipe(Identifier id, FluidStack in, FluidStack outGas, FluidStack outLiquid, long powerRequired) {
 //        return new DistillationRecipe(powerRequired, in, outGas, outLiquid);
         return new DistillationRecipe(id, powerRequired, in, outGas, outLiquid);
     }
@@ -162,11 +164,11 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
     }
 
     public static abstract class RefineryRecipe implements IRefineryRecipe {
-        private final ResourceLocation id;
+        private final Identifier id;
         private final FluidStack in;
 
         // public RefineryRecipe(FluidStack in)
-        public RefineryRecipe(ResourceLocation id, FluidStack in) {
+        public RefineryRecipe(Identifier id, FluidStack in) {
             this.id = id;
             this.in = in;
         }
@@ -177,7 +179,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return id;
         }
 
@@ -222,7 +224,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
         private final long powerRequired;
 
         // public DistillationRecipe(long powerRequired, FluidStack in, FluidStack outGas, FluidStack outLiquid)
-        public DistillationRecipe(ResourceLocation id, long powerRequired, FluidStack in, FluidStack outGas, FluidStack outLiquid) {
+        public DistillationRecipe(Identifier id, long powerRequired, FluidStack in, FluidStack outGas, FluidStack outLiquid) {
 //            super(in);
             super(id, in);
             this.powerRequired = powerRequired;
@@ -256,7 +258,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
         private final int heatFrom, heatTo;
 
         // public HeatExchangeRecipe(FluidStack in, FluidStack out, int heatFrom, int heatTo)
-        public HeatExchangeRecipe(ResourceLocation id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
+        public HeatExchangeRecipe(Identifier id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
 //            super(in);
             super(id, in);
             this.out = out;
@@ -282,7 +284,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
 
     public static class HeatableRecipe extends HeatExchangeRecipe implements IHeatableRecipe {
         // public HeatableRecipe(FluidStack in, FluidStack out, int heatFrom, int heatTo)
-        public HeatableRecipe(ResourceLocation id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
+        public HeatableRecipe(Identifier id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
 //            super(in, out, heatFrom, heatTo);
             super(id, in, out, heatFrom, heatTo);
         }
@@ -295,7 +297,7 @@ public enum RefineryRecipeRegistry implements IRefineryRecipeManager {
 
     public static class CoolableRecipe extends HeatExchangeRecipe implements ICoolableRecipe {
         // public CoolableRecipe(FluidStack in, FluidStack out, int heatFrom, int heatTo)
-        public CoolableRecipe(ResourceLocation id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
+        public CoolableRecipe(Identifier id, FluidStack in, FluidStack out, int heatFrom, int heatTo) {
 //            super(in, out, heatFrom, heatTo);
             super(id, in, out, heatFrom, heatTo);
         }

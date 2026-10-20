@@ -9,7 +9,7 @@ package buildcraft.lib.recipe.coolant;
 import buildcraft.api.fuels.*;
 import buildcraft.lib.misc.StackUtil;
 import com.google.common.collect.Lists;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -45,14 +45,14 @@ public enum CoolantRegistry implements ICoolantManager {
 
     @Override
 //    public IFluidCoolant addCoolant(FluidStack fluid, float degreesCoolingPerMB)
-    public IFluidCoolant addCoolant(ResourceLocation id, FluidStack fluid, float degreesCoolingPerMB) {
+    public IFluidCoolant addCoolant(Identifier id, FluidStack fluid, float degreesCoolingPerMB) {
 //        return addCoolant(new FluidCoolant(fluid, degreesCoolingPerMB));
         return addUnregisteredFluidCoolant(new FluidCoolant(id, fluid, degreesCoolingPerMB));
     }
 
     @Override
 //    public ISolidCoolant addSolidCoolant(ItemStack solid, FluidStack fluid, float multiplier)
-    public ISolidCoolant addSolidCoolant(ResourceLocation id, ItemStack solid, FluidStack fluid, float multiplier) {
+    public ISolidCoolant addSolidCoolant(Identifier id, ItemStack solid, FluidStack fluid, float multiplier) {
 //        return addSolidCoolant(new SolidCoolant(solid, fluid, multiplier));
         return addUnregisteredSolidCoolant(new SolidCoolant(id, solid, fluid, multiplier));
     }
@@ -125,10 +125,10 @@ public enum CoolantRegistry implements ICoolantManager {
         private final FluidStack fluid;
         private final float degreesCoolingPerMB;
 
-        private final ResourceLocation id;
+        private final Identifier id;
 
         // public Coolant(FluidStack fluid, float degreesCoolingPerMB)
-        public FluidCoolant(ResourceLocation id, FluidStack fluid, float degreesCoolingPerMB) {
+        public FluidCoolant(Identifier id, FluidStack fluid, float degreesCoolingPerMB) {
             this.fluid = fluid;
             this.degreesCoolingPerMB = degreesCoolingPerMB;
             this.id = id;
@@ -164,7 +164,7 @@ public enum CoolantRegistry implements ICoolantManager {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return id;
         }
 
@@ -180,10 +180,10 @@ public enum CoolantRegistry implements ICoolantManager {
         private final FluidStack fluid;
         private final float multiplier;
 
-        private final ResourceLocation id;
+        private final Identifier id;
 
         // public SolidCoolant(ItemStack solid, FluidStack fluid, float multiplier)
-        public SolidCoolant(ResourceLocation id, ItemStack solid, FluidStack fluid, float multiplier) {
+        public SolidCoolant(Identifier id, ItemStack solid, FluidStack fluid, float multiplier) {
             this.solid = solid;
             this.fluid = fluid;
             this.multiplier = multiplier;
@@ -221,7 +221,7 @@ public enum CoolantRegistry implements ICoolantManager {
         }
 
         @Override
-        public ResourceLocation getId() {
+        public Identifier getId() {
             return id;
         }
 

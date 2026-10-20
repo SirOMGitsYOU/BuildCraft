@@ -4,6 +4,8 @@
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.statements;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.robots.DockingStation;
 import buildcraft.api.statements.IStatementContainer;
@@ -15,7 +17,7 @@ import buildcraft.robotics.RobotUtils;
 import buildcraft.robotics.entity.EntityRobot;
 import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 public class TriggerRobotInStation extends BCStatement implements ITriggerInternal {

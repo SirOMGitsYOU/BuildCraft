@@ -14,7 +14,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ChunkWatchEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 public enum BCTransportEventDist {
     INSTANCE;
@@ -22,7 +22,7 @@ public enum BCTransportEventDist {
     @SubscribeEvent
     public void onWorldTick(TickEvent.LevelTickEvent event) {
 //        if (!event.world.isRemote && event.world.getMinecraftServer() != null)
-        if (!event.level.isClientSide && event.level.getServer() != null) {
+        if (!event.level.isClientSide() && event.level.getServer() != null) {
             WorldSavedDataWireSystems.get(event.level).tick();
         }
     }

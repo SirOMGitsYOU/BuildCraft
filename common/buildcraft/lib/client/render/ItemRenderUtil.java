@@ -21,9 +21,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -238,7 +237,7 @@ public class ItemRenderUtil {
         if (stack.isEmpty()) {
             seed = 137;
         } else {
-            ResourceLocation regName = ItemUtil.getRegistryName(stack.getItem());
+            Identifier regName = ItemUtil.getRegistryName(stack.getItem());
             if (regName == null) {
                 seed = 127;
             } else {

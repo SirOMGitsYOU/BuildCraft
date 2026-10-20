@@ -13,9 +13,9 @@ import buildcraft.api.transport.pluggable.PluggableModelKey;
 import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.transport.BCTransportItems;
 import buildcraft.transport.client.model.key.KeyPlugBlocker;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -26,9 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PluggableBlocker extends PipePluggable {
     private static final VoxelShape[] BOXES = new VoxelShape[6];
 
-    private static final ResourceLocation ADVANCEMENT_PLACE_PLUG = new ResourceLocation(
-            "buildcrafttransport:plugging_the_gap"
-    );
+    private static final Identifier ADVANCEMENT_PLACE_PLUG = Identifier.parse("buildcrafttransport:plugging_the_gap");
 
     static {
         double ll = 2 / 16.0;
@@ -69,7 +67,7 @@ public class PluggableBlocker extends PipePluggable {
     @Override
     public void onPlacedBy(Player player) {
         super.onPlacedBy(player);
-        if (!holder.getPipeWorld().isClientSide && holder.getPipe().isConnected(side)) {
+        if (!holder.getPipeWorld().isClientSide() && holder.getPipe().isConnected(side)) {
             AdvancementUtil.unlockAdvancement(player, ADVANCEMENT_PLACE_PLUG);
         }
     }

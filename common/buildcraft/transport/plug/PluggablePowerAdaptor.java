@@ -1,4 +1,7 @@
 package buildcraft.transport.plug;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.mj.MjAPI;
 import buildcraft.api.transport.pipe.IPipeHolder;
@@ -7,7 +10,7 @@ import buildcraft.api.transport.pluggable.PluggableDefinition;
 import buildcraft.api.transport.pluggable.PluggableModelKey;
 import buildcraft.transport.BCTransportItems;
 import buildcraft.transport.client.model.key.KeyPlugPowerAdaptor;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -17,8 +20,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 
 public class PluggablePowerAdaptor extends PipePluggable {
 
@@ -71,7 +74,7 @@ public class PluggablePowerAdaptor extends PipePluggable {
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
         if (cap == MjAPI.CAP_CONNECTOR || cap == MjAPI.CAP_RECEIVER || cap == MjAPI.CAP_REDSTONE_RECEIVER) {
             return holder.getPipe().getBehaviour().getCapability(cap, side);
         }

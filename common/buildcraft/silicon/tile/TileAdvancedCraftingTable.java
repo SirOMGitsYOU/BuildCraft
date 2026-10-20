@@ -5,6 +5,9 @@
  */
 
 package buildcraft.silicon.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.EnumPipePart;
 import buildcraft.api.mj.MjAPI;
@@ -27,10 +30,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 
 public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAutoCraft {
@@ -52,7 +55,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
     }
 
     @Override
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
         super.onSlotChange(handler, slot, before, after);
         // if (!ItemStack.matches(before, after))
         if (!StackUtil.isSameItemSameDamageSameTagSameCount(before, after) && !ItemStack.matches(before, after)) {
@@ -62,13 +65,13 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
 
     @Override
     public long getTarget() {
-        return level.isClientSide ? POWER_REQ : crafting.canCraft() ? POWER_REQ : 0;
+        return level.isClientSide() ? POWER_REQ : crafting.canCraft() ? POWER_REQ : 0;
     }
 
     @Override
     public void update() {
         super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         boolean didChange = crafting.tick();
@@ -88,7 +91,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IAu
 
     @Override
 //    public void readPayload(int id, PacketBufferBC buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_GUI_DATA) {

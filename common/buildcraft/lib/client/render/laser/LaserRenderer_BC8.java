@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.client.render.laser;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.lib.client.render.laser.LaserData_BC8.LaserType;
 import buildcraft.lib.misc.SpriteUtil;
@@ -169,7 +170,7 @@ public class LaserRenderer_BC8 {
     }
 
     public static void renderLaserStatic(LaserData_BC8 data, PoseStack.Pose modelViewMatrix) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("compute");
         LaserCompiledList compiled = COMPILED_STATIC_LASERS.getUnchecked(data);
         profiler.popPush("render");
@@ -179,7 +180,7 @@ public class LaserRenderer_BC8 {
 
     /** Assumes the buffer uses {@link DefaultVertexFormat#BLOCK} */
     public static void renderLaserDynamic(LaserData_BC8 data, PoseStack.Pose pose, VertexConsumer buffer) {
-        ProfilerFiller profiler = Minecraft.getInstance().getProfiler();
+        ProfilerFiller profiler = net.minecraft.util.profiling.Profiler.get();
         profiler.push("compute");
         LaserCompiledBuffer compiled = COMPILED_DYNAMIC_LASERS.getUnchecked(data);
         profiler.popPush("render");

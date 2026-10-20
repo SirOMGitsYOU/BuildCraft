@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.factory.block;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.lib.block.BlockBCBase_Neptune;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 
-import javax.annotation.Nonnull;
+
 
 public class BlockPlastic extends BlockBCBase_Neptune {
     // TODO Calen: BlockPlastic not reg in 1.12.2
@@ -30,7 +31,7 @@ public class BlockPlastic extends BlockBCBase_Neptune {
 
     @Override
 //    protected BlockStateContainer createBlockState()
-    protected void createBlockStateDefinition(@Nonnull StateDefinition.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BuildCraftProperties.BLOCK_COLOR);
     }

@@ -149,19 +149,19 @@ public class DeltaInt {
     }
 
     public void readFromNBT(CompoundTag nbt) {
-        tick = nbt.getLong("tick");
-        staticStartValue = nbt.getInt("static-start");
-        staticEndValue = nbt.getInt("static-end");
+        tick = nbt.getLongOr("tick", 0L);
+        staticStartValue = nbt.getIntOr("static-start", 0);
+        staticEndValue = nbt.getIntOr("static-end", 0);
         // dynamic is calculated every tick so there is no need to read + write it
         changingEntries.clear();
-        ListTag list = nbt.getList("changing", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getListOrEmpty("changing", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entryNbt = list.getCompound(i);
-            long start = entryNbt.getLong("start");
-            long end = entryNbt.getLong("end");
-            int delta = entryNbt.getInt("delta");
+            long start = entryNbt.getLongOr("start", 0L);
+            long end = entryNbt.getLongOr("end", 0L);
+            int delta = entryNbt.getIntOr("delta", 0);
             DeltaIntEntry entry = new DeltaIntEntry(start, end, delta);
-            entry.hasStarted = entryNbt.getBoolean("started");
+            entry.hasStarted = entryNbt.getBooleanOr("started", false);
             changingEntries.add(entry);
         }
     }

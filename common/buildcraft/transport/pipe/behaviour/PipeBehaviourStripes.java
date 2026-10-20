@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.pipe.behaviour;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.mj.IMjConnector;
@@ -27,13 +30,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 
 public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActivator, IMjRedstoneReceiver {
@@ -63,7 +65,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
 
     @Override
 //    public void readPayload(PacketBuffer buffer, Dist side, MessageContext ctx) throws IOException
-    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(FriendlyByteBuf buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(buffer, side, ctx);
         direction = MessageUtil.readEnumOrNull(buffer, Direction.class);
     }
@@ -86,7 +88,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
             pipe.getHolder().runWhenWorldNotNull(
                     () ->
                     {
-                        if (!pipe.getHolder().getPipeWorld().isClientSide) {
+                        if (!pipe.getHolder().getPipeWorld().isClientSide()) {
                             pipe.getHolder().scheduleNetworkUpdate(PipeMessageReceiver.BEHAVIOUR);
                         }
                     },
@@ -99,7 +101,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
 
     @PipeEventHandler
     public void addInternalActions(PipeEventStatement.AddActionInternal event) {
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (!pipe.isConnected(face)) {
                 PipePluggable plug = pipe.getHolder().getPluggable(face);
                 if (plug == null || !plug.isBlocking()) {
@@ -111,7 +113,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
 
     @PipeEventHandler
     public void onActionActivate(PipeEventActionActivate event) {
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (event.action == BCTransportStatements.ACTION_PIPE_DIRECTION[face.ordinal()]) {
                 setDirection(face);
             }
@@ -121,7 +123,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
     // IMjRedstoneReceiver
 
     @Override
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 
@@ -146,13 +148,13 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
     public void onTick() {
         Level world = pipe.getHolder().getPipeWorld();
         BlockPos pos = pipe.getHolder().getPipePos();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return;
         }
         if (direction == null || pipe.isConnected(direction)) {
             int sides = 0;
             Direction dir = null;
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 if (pipe.isConnected(face)) {
                     sides++;
                     dir = face;
@@ -221,12 +223,12 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
     }
 
     @Override
-    public void dropItem(@Nonnull ItemStack stack, Direction direction) {
+    public void dropItem(@NotNull ItemStack stack, Direction direction) {
         InventoryUtil.drop(pipe.getHolder().getPipeWorld(), pipe.getHolder().getPipePos(), stack);
     }
 
     @Override
-    public boolean sendItem(@Nonnull ItemStack stack, Direction from) {
+    public boolean sendItem(@NotNull ItemStack stack, Direction from) {
         PipeFlow flow = pipe.getFlow();
         if (flow instanceof IFlowItems) {
             ((IFlowItems) flow).insertItemsForce(stack, from, null, 0.02);
@@ -237,7 +239,7 @@ public class PipeBehaviourStripes extends PipeBehaviour implements IStripesActiv
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (capability == MjAPI.CAP_REDSTONE_RECEIVER) {
 //            return MjAPI.CAP_REDSTONE_RECEIVER.cast(this);
             return LazyOptional.of(() -> this).cast();

@@ -9,7 +9,7 @@ import buildcraft.core.BCCoreConfig;
 import buildcraft.lib.config.ConfigCategory;
 import buildcraft.lib.config.Configuration;
 import buildcraft.lib.config.EnumRestartRequirement;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -86,11 +86,11 @@ public class RegistryConfig {
         return isEnabled(getMod(modId), category, resourcePath, langKey);
     }
 
-    public static boolean hasItemBeenDisabled(ResourceLocation loc) {
+    public static boolean hasItemBeenDisabled(Identifier loc) {
         return hasObjectBeenDisabled("items", loc) || hasObjectBeenDisabled("pipes", loc);
     }
 
-    public static boolean hasBlockBeenDisabled(ResourceLocation loc) {
+    public static boolean hasBlockBeenDisabled(Identifier loc) {
         return hasObjectBeenDisabled("blocks", loc);
     }
 
@@ -99,7 +99,7 @@ public class RegistryConfig {
      * {@link #isEnabled(String, String, String, String)}, and it returned false (because it has been disabled in the
      * appropriate mod's config)
      */
-    public static boolean hasObjectBeenDisabled(String category, ResourceLocation loc) {
+    public static boolean hasObjectBeenDisabled(String category, Identifier loc) {
         Set<String> locations = disabled.get(category);
         return locations != null && locations.contains(loc.getPath());
     }

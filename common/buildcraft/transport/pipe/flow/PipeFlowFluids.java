@@ -6,6 +6,8 @@
 
 package buildcraft.transport.pipe.flow;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.*;
 import buildcraft.api.robots.IDockingStationProvider;
 import buildcraft.api.tiles.IDebuggable;
@@ -28,7 +30,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -44,8 +45,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.network.NetworkDirection;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.*;
 
@@ -55,8 +56,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     private static final int COOLDOWN_INPUT = -DIRECTION_COOLDOWN;
     private static final int COOLDOWN_OUTPUT = DIRECTION_COOLDOWN;
 
-    private static final InteractionResultHolder<FluidStack> FAILED_EXTRACT = new InteractionResultHolder<>(InteractionResult.FAIL, null);
-    private static final InteractionResultHolder<FluidStack> PASSED_EXTRACT = new InteractionResultHolder<>(InteractionResult.PASS, null);
+    private static final InteractionResult FAILED_EXTRACT = new InteractionResultHolder<>(InteractionResult.FAIL, null);
+    private static final InteractionResult PASSED_EXTRACT = new InteractionResultHolder<>(InteractionResult.PASS, null);
 
     public static final int NET_FLUID_AMOUNTS = 2;
 
@@ -146,7 +147,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (capability == CapUtil.CAP_FLUIDS) {
 //            return CapUtil.CAP_FLUIDS.cast(sections.get(EnumPipePart.fromFacing(facing)));
             return LazyOptional.of(() -> sections.get(EnumPipePart.fromFacing(facing))).cast();
@@ -198,8 +199,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     }
 
     @Override
-//    public InteractionResultHolder<FluidStack> tryExtractFluidAdv(int millibuckets, Direction from, IFluidFilter filter, boolean simulate)
-    public InteractionResultHolder<FluidStack> tryExtractFluidAdv(int millibuckets, Direction from, IFluidFilter filter, IFluidHandler.FluidAction action) {
+//    public InteractionResult tryExtractFluidAdv(int millibuckets, Direction from, IFluidFilter filter, boolean simulate)
+    public InteractionResult tryExtractFluidAdv(int millibuckets, Direction from, IFluidFilter filter, IFluidHandler.FluidAction action) {
         FluidExtractor extractor = (mb, c, handler) ->
         {
             if (c != null) {
@@ -249,8 +250,8 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         FluidStack extract(int millibuckets, FluidStack current, IFluidHandler handler);
     }
 
-    // private InteractionResultHolder<FluidStack> tryExtractFluidInternal(int millibuckets, Direction from, FluidExtractor extractor, boolean simulate)
-    private InteractionResultHolder<FluidStack> tryExtractFluidInternal(int millibuckets, Direction from, FluidExtractor extractor, IFluidHandler.FluidAction action) {
+    // private InteractionResult tryExtractFluidInternal(int millibuckets, Direction from, FluidExtractor extractor, boolean simulate)
+    private InteractionResult tryExtractFluidInternal(int millibuckets, Direction from, FluidExtractor extractor, IFluidHandler.FluidAction action) {
         if (from == null || millibuckets <= 0) {
             return FAILED_EXTRACT;
         }
@@ -382,7 +383,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     @Override
 //    public void getDebugInfo(List<String> left, List<String> right, Direction side)
     public void getDebugInfo(List<Component> left, List<Component> right, Direction side) {
-        boolean isRemote = pipe.getHolder().getPipeWorld().isClientSide;
+        boolean isRemote = pipe.getHolder().getPipeWorld().isClientSide();
 
         FluidStack fluid = isRemote ? getFluidStackForRender() : currentFluid;
 //        left.add(" - FluidType = " + (fluid == null ? "empty" : fluid.getDisplayName()));
@@ -479,7 +480,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
     @Override
     public void onTick() {
         Level world = pipe.getHolder().getPipeWorld();
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             for (EnumPipePart part : EnumPipePart.VALUES) {
                 sections.get(part).tickClient();
             }
@@ -589,7 +590,7 @@ public class PipeFlowFluids extends PipeFlow implements IFlowFluid, IDebuggable 
         Set<Direction> realDirections = EnumSet.noneOf(Direction.class);
 
         // Move liquid from the center to the output sides
-        for (Direction direction : Direction.VALUES) {
+        for (Direction direction : Direction.values()) {
             Section section = sections.get(EnumPipePart.fromFacing(direction));
             if (!section.getCurrentDirection().canOutput()) {
                 continue;

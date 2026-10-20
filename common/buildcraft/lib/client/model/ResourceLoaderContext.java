@@ -8,7 +8,7 @@ package buildcraft.lib.client.model;
 
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -22,10 +22,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ResourceLoaderContext {
-    private final Set<ResourceLocation> loaded = new HashSet<>();
-    private final Deque<ResourceLocation> loadingStack = new ArrayDeque<>();
+    private final Set<Identifier> loaded = new HashSet<>();
+    private final Deque<Identifier> loadingStack = new ArrayDeque<>();
 
-    public InputStreamReader startLoading(ResourceLocation location) throws IOException {
+    public InputStreamReader startLoading(Identifier location) throws IOException {
         if (!loaded.add(location)) {
             throw new JsonSyntaxException("Already loaded " + location + " from " + loadingStack.peek());
         }
@@ -36,7 +36,7 @@ public class ResourceLoaderContext {
     }
 
     // Calen 1.20.1
-    public InputStreamReader datagenStartLoading(ResourceLocation location, ExistingFileHelper fileHelper) throws IOException {
+    public InputStreamReader datagenStartLoading(Identifier location, ExistingFileHelper fileHelper) throws IOException {
         if (!loaded.add(location)) {
             throw new JsonSyntaxException("Already loaded " + location + " from " + loadingStack.peek());
         }

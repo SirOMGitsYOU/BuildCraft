@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.client.particle;
+import org.jetbrains.annotations.NotNull;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
@@ -15,7 +16,7 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 @OnlyIn(Dist.CLIENT)
 // public class EntityRobotEnergyParticle extends EntityFX
@@ -137,7 +138,7 @@ public class EntityRobotEnergyParticle extends SmokeParticle {
         }
 
         @Override
-        public Particle createParticle(@Nonnull SimpleParticleType type, @Nonnull ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(@NotNull SimpleParticleType type, @NotNull ClientLevel world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             return new EntityRobotEnergyParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, this.spriteSet);
         }
     }

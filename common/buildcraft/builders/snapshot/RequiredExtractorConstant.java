@@ -5,6 +5,9 @@
  */
 
 package buildcraft.builders.snapshot;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.nbt.CompoundTag;
@@ -12,8 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +28,9 @@ public class RequiredExtractorConstant extends RequiredExtractor {
     @SerializedName("fluids")
     private List<FluidStackRef> fluidRefs = Collections.emptyList();
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<ItemStack> extractItemsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<ItemStack> extractItemsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Collections.unmodifiableList(
                 itemRefs.stream()
                         .map(ref -> ref.get(tileNbt))
@@ -35,9 +38,9 @@ public class RequiredExtractorConstant extends RequiredExtractor {
         );
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<FluidStack> extractFluidsFromBlock(@Nonnull BlockState blockState, @Nullable CompoundTag tileNbt) {
+    public List<FluidStack> extractFluidsFromBlock(@NotNull BlockState blockState, @Nullable CompoundTag tileNbt) {
         return Collections.unmodifiableList(
                 fluidRefs.stream()
                         .map(ref -> ref.get(tileNbt))
@@ -45,9 +48,9 @@ public class RequiredExtractorConstant extends RequiredExtractor {
         );
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<ItemStack> extractItemsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<ItemStack> extractItemsFromEntity(@NotNull CompoundTag entityNbt) {
         return Collections.unmodifiableList(
                 itemRefs.stream()
                         .map(ref -> ref.get(entityNbt))
@@ -55,9 +58,9 @@ public class RequiredExtractorConstant extends RequiredExtractor {
         );
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<FluidStack> extractFluidsFromEntity(@Nonnull CompoundTag entityNbt) {
+    public List<FluidStack> extractFluidsFromEntity(@NotNull CompoundTag entityNbt) {
         return Collections.unmodifiableList(
                 fluidRefs.stream()
                         .map(ref -> ref.get(entityNbt))

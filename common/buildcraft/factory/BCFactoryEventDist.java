@@ -10,7 +10,7 @@ import buildcraft.factory.tile.TileMiner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
 public enum BCFactoryEventDist {
     INSTANCE;

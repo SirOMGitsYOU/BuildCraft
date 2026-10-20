@@ -7,7 +7,7 @@ import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableCreator;
 import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNbtReader;
 import buildcraft.api.transport.pluggable.PluggableDefinition.IPluggableNetLoader;
 import buildcraft.silicon.plug.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BCSiliconPlugs {
 
@@ -42,11 +42,11 @@ public class BCSiliconPlugs {
         // TODO: remove this in 7.99.19!
         // This handles the migration of most of the transport pluggables into silicon
         String modId = BCModules.TRANSPORT.getModId();
-        PipeApi.pluggableRegistry.register(new ResourceLocation(modId, def.identifier.getPath()), def);
+        PipeApi.pluggableRegistry.register(Identifier.fromNamespaceAndPath(modId, def.identifier.getPath()), def);
         return def;
     }
 
-    private static ResourceLocation idFor(String name) {
-        return new ResourceLocation("buildcraftsilicon", name);
+    private static Identifier idFor(String name) {
+        return Identifier.fromNamespaceAndPath("buildcraftsilicon", name);
     }
 }

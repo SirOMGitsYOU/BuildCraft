@@ -5,12 +5,13 @@
  */
 
 package buildcraft.lib.tile.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.inventory.IItemHandlerFiltered;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nonnull;
+
 
 public class DelegateItemHandler implements IItemHandlerModifiable, IItemHandlerFiltered {
     private final IItemHandlerModifiable delegate;
@@ -30,18 +31,18 @@ public class DelegateItemHandler implements IItemHandlerModifiable, IItemHandler
     }
 
     @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
         return delegate.insertItem(slot, stack, simulate);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         return delegate.extractItem(slot, amount, simulate);
     }
 
     @Override
-    public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+    public void setStackInSlot(int slot, @NotNull ItemStack stack) {
         delegate.setStackInSlot(slot, stack);
     }
 
@@ -58,7 +59,7 @@ public class DelegateItemHandler implements IItemHandlerModifiable, IItemHandler
         return IItemHandlerFiltered.super.getFilter(slot);
     }
 
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
         return delegate.isItemValid(slot, stack);
     }
 }

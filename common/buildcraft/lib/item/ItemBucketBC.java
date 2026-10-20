@@ -1,9 +1,11 @@
 package buildcraft.lib.item;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.registry.CreativeTabManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -11,7 +13,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
+
 import java.util.function.Supplier;
 
 public class ItemBucketBC extends BucketItem {
@@ -32,7 +34,7 @@ public class ItemBucketBC extends BucketItem {
     }
 
     // Calen 1.20.1
-    public ResourceLocation getRegistryName() {
+    public Identifier getRegistryName() {
         return ForgeRegistries.ITEMS.getKey(this);
     }
 }

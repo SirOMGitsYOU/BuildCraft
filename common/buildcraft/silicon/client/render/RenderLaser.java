@@ -5,6 +5,8 @@
  */
 
 package buildcraft.silicon.client.render;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.core.client.BuildCraftLaserManager;
@@ -37,15 +39,15 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TileLaser tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TileLaser tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TileLaser tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         BlockState state = tile.getLevel().getBlockState(tile.getBlockPos());
         if (state.getBlock() != BCSiliconBlocks.laser.get()) {
             return;
         }
         if (BCSiliconConfig.renderLaserBeams || isPlayerWearingGoggles()) {
-            Minecraft.getInstance().getProfiler().push("bc");
-            Minecraft.getInstance().getProfiler().push("laser");
+            net.minecraft.util.profiling.Profiler.get().push("bc");
+            net.minecraft.util.profiling.Profiler.get().push("laser");
 
 //            buffer.setTranslation(x - tile.getBlockPos().getX(), y - tile.getBlockPos().getY(), z - tile.getBlockPos().getZ());
             poseStack.pushPose();
@@ -71,8 +73,8 @@ public class RenderLaser implements BlockEntityRenderer<TileLaser> {
             poseStack.popPose();
 
 
-            Minecraft.getInstance().getProfiler().pop();
-            Minecraft.getInstance().getProfiler().pop();
+            net.minecraft.util.profiling.Profiler.get().pop();
+            net.minecraft.util.profiling.Profiler.get().pop();
         }
     }
 

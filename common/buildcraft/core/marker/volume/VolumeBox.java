@@ -13,7 +13,7 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -52,7 +52,7 @@ public class VolumeBox {
         if (nbt.contains("held")) {
             held = NbtUtils.readBlockPos(nbt.getCompound("held"));
         }
-        dist = nbt.getDouble("dist");
+        dist = nbt.getDoubleOr("dist", 0.0);
         if (nbt.contains("oldMin")) {
             oldMin = NbtUtils.readBlockPos(nbt.getCompound("oldMin"));
         }
@@ -62,7 +62,7 @@ public class VolumeBox {
         NBTUtilBC.readCompoundList(nbt.get("addons")).forEach(addonsEntryTag ->
         {
             Class<? extends Addon> addonClass =
-                    AddonsRegistry.INSTANCE.getClassByName(new ResourceLocation(addonsEntryTag.getString("addonClass")));
+                    AddonsRegistry.INSTANCE.getClassByName(Identifier.fromNamespaceAndPath(addonsEntryTag.getStringOr("addonClass", "")));
             try {
                 Addon addon = addonClass.newInstance();
                 addon.volumeBox = this;
@@ -229,7 +229,7 @@ public class VolumeBox {
         int count = buf.readInt();
         for (int i = 0; i < count; i++) {
             EnumAddonSlot slot = buf.readEnum(EnumAddonSlot.class);
-            ResourceLocation rl = new ResourceLocation(buf.readUtf(1024));
+            Identifier rl = Identifier.fromNamespaceAndPath(buf.readUtf(1024));
             Class<? extends Addon> addonClass = AddonsRegistry.INSTANCE.getClassByName(rl);
             try {
                 if (addonClass == null) {

@@ -5,24 +5,25 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 import java.util.Objects;
 
 /** Predicate that compares values of specified NBT keys subset. */
 public class StackNbtMatcher implements StackMatchingPredicate {
     private String[] keys;
 
-    public StackNbtMatcher(@Nonnull String... keys) {
+    public StackNbtMatcher(@NotNull String... keys) {
         this.keys = keys;
     }
 
     @Override
-    public boolean isMatching(@Nonnull ItemStack base, @Nonnull ItemStack comparison) {
+    public boolean isMatching(@NotNull ItemStack base, @NotNull ItemStack comparison) {
         CompoundTag baseNBT = base.getTag();
         CompoundTag comparisonNBT = comparison.getTag();
 

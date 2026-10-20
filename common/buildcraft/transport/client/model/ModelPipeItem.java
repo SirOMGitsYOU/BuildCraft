@@ -6,6 +6,8 @@
 
 package buildcraft.transport.client.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.transport.pipe.EnumPipeColourType;
 import buildcraft.api.transport.pipe.IItemPipe;
 import buildcraft.api.transport.pipe.PipeDefinition;
@@ -23,7 +25,6 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.RandomSource;
@@ -36,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Vector3f;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public enum ModelPipeItem implements BakedModel {
             Vector3f radius = new Vector3f(0.25f, 0.5f, 0.25f);
             UvFaceData uvsY = UvFaceData.from16(4, 4, 12, 12);
             UvFaceData uvsXZ = UvFaceData.from16(4, 0, 12, 16);
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 UvFaceData uvs = face.getAxis() == Axis.Y ? uvsY : uvsXZ;
                 QUADS_SAME[face.ordinal()] = ModelUtil.createFace(face, center, radius, uvs);
             }
@@ -77,7 +78,7 @@ public enum ModelPipeItem implements BakedModel {
                 Vector3f radius = new Vector3f(0.25f, 0.125f, 0.25f);
                 UvFaceData uvsY = UvFaceData.from16(4, 4, 12, 12);
                 UvFaceData uvsXZ = UvFaceData.from16(4, 0, 12, 4);
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     if (face == Direction.DOWN) {
                         continue;
                     }
@@ -95,7 +96,7 @@ public enum ModelPipeItem implements BakedModel {
                 Vector3f radius = new Vector3f(0.25f, 0.25f, 0.25f);
                 UvFaceData uvsY = UvFaceData.from16(4, 4, 12, 12);
                 UvFaceData uvsXZ = UvFaceData.from16(4, 4, 12, 12);
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     if (face.getAxis() == Axis.Y) {
                         continue;
                     }
@@ -113,7 +114,7 @@ public enum ModelPipeItem implements BakedModel {
                 Vector3f radius = new Vector3f(0.25f, 0.125f, 0.25f);
                 UvFaceData uvsY = UvFaceData.from16(4, 4, 12, 12);
                 UvFaceData uvsXZ = UvFaceData.from16(4, 12, 12, 16);
-                for (Direction face : Direction.VALUES) {
+                for (Direction face : Direction.values()) {
                     if (face == Direction.UP) {
                         continue;
                     }
@@ -132,7 +133,7 @@ public enum ModelPipeItem implements BakedModel {
             Vector3f radius = new Vector3f(0.24f, 0.49f, 0.24f);
             UvFaceData uvsY = UvFaceData.from16(4, 4, 12, 12);
             UvFaceData uvsXZ = UvFaceData.from16(4, 0, 12, 16);
-            for (Direction face : Direction.VALUES) {
+            for (Direction face : Direction.values()) {
                 UvFaceData uvs = face.getAxis() == Axis.Y ? uvsY : uvsXZ;
                 QUADS_COLOUR[face.ordinal()] = ModelUtil.createFace(face, center, radius, uvs);
             }

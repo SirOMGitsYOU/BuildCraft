@@ -1,24 +1,26 @@
 package buildcraft.lib.fluid;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.energy.BCEnergyFluids;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundAction;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 
-import javax.annotation.Nullable;
+
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 // Calen add
 public class BCFluidAttributes extends FluidType {
     private final int colour, light, dark;
-    private final ResourceLocation overlayTexture;
+    private final Identifier overlayTexture;
 
-    private final ResourceLocation stillTexture, flowingTexture;
+    private final Identifier stillTexture, flowingTexture;
 
     protected BCFluidAttributes(Builder builder, FluidType.Properties properties) {
         super(properties);
@@ -62,15 +64,15 @@ public class BCFluidAttributes extends FluidType {
         return heatable;
     }
 
-    public ResourceLocation getOverlayTexture() {
+    public Identifier getOverlayTexture() {
         return overlayTexture;
     }
 
-    public ResourceLocation getStillTexture() {
+    public Identifier getStillTexture() {
         return stillTexture;
     }
 
-    public ResourceLocation getFlowingTexture() {
+    public Identifier getFlowingTexture() {
         return flowingTexture;
     }
 
@@ -83,17 +85,17 @@ public class BCFluidAttributes extends FluidType {
             }
 
             @Override
-            public ResourceLocation getStillTexture() {
+            public Identifier getStillTexture() {
                 return stillTexture;
             }
 
             @Override
-            public ResourceLocation getFlowingTexture() {
+            public Identifier getFlowingTexture() {
                 return flowingTexture;
             }
 
             @Override
-            public @Nullable ResourceLocation getOverlayTexture() {
+            public @Nullable Identifier getOverlayTexture() {
                 return overlayTexture;
             }
         });
@@ -119,16 +121,16 @@ public class BCFluidAttributes extends FluidType {
         return Component.translatable(getDescriptionId());
     }
 
-    public static BCFluidAttributes.Builder builder(ResourceLocation stillTexture, ResourceLocation flowingTexture) {
+    public static BCFluidAttributes.Builder builder(Identifier stillTexture, Identifier flowingTexture) {
         return new BCFluidAttributes.Builder(stillTexture, flowingTexture, BCFluidAttributes::new);
     }
 
     public static class Builder {
         private final BiFunction<Builder, Properties, BCFluidAttributes> factory;
-        private final ResourceLocation stillTexture, flowingTexture;
+        private final Identifier stillTexture, flowingTexture;
         private final FluidType.Properties properties = FluidType.Properties.create();
 
-        protected Builder(ResourceLocation stillTexture, ResourceLocation flowingTexture, BiFunction<Builder, Properties, BCFluidAttributes> factory) {
+        protected Builder(Identifier stillTexture, Identifier flowingTexture, BiFunction<Builder, Properties, BCFluidAttributes> factory) {
             this.factory = factory;
 
             this.stillTexture = stillTexture;
@@ -158,9 +160,9 @@ public class BCFluidAttributes extends FluidType {
             return this;
         }
 
-        private ResourceLocation overlayTexture;
+        private Identifier overlayTexture;
 
-        public final Builder overlay(ResourceLocation texture) {
+        public final Builder overlay(Identifier texture) {
             overlayTexture = texture;
             return this;
         }

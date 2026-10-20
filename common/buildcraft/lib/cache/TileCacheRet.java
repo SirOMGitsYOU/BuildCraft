@@ -1,8 +1,10 @@
 package buildcraft.lib.cache;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nullable;
+
 
 public final class TileCacheRet {
 

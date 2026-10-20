@@ -5,7 +5,7 @@ import buildcraft.lib.BCLibEventDistModBus;
 import buildcraft.transport.BCTransportSprites;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SpriteSourceProvider;
 
@@ -22,7 +22,7 @@ public class BCSpriteSourceProvider extends SpriteSourceProvider {
         BCLibEventDistModBus.onDatagenTextureRegister(this::addToBlockAtlas, existingFileHelper);
     }
 
-    protected void addToBlockAtlas(ResourceLocation spriteLocation) {
+    protected void addToBlockAtlas(Identifier spriteLocation) {
         SourceList atlas = atlas(BLOCKS_ATLAS);
         atlas.addSource(new SingleFile(spriteLocation, Optional.empty()));
     }

@@ -19,15 +19,15 @@ import buildcraft.lib.gui.pos.IGuiPosition;
 import buildcraft.lib.misc.LocaleUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GuiElectronicLibrary extends GuiBC8<ContainerElectronicLibrary> {
-    private static final ResourceLocation TEXTURE_BASE =
-            new ResourceLocation("buildcraftbuilders:textures/gui/electronic_library.png");
+    private static final Identifier TEXTURE_BASE =
+            Identifier.parse("buildcraftbuilders:textures/gui/electronic_library.png");
     private static final int SIZE_X = 244, SIZE_Y = 220;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_PROGRESS_DOWN = new GuiIcon(TEXTURE_BASE, 234, 240, 22, 16);

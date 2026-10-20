@@ -5,6 +5,7 @@
  */
 
 package buildcraft.silicon.tile;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.mj.*;
@@ -37,9 +38,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +165,7 @@ public class TileLaser extends TileBC_Neptune implements ITickable, IDebuggable,
     @Override
     public void update() {
         ITickable.super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             // set laser render position on client side
             if (clientLaserMoveInterval.markTimeIfDelay(level) || targetPos == null) {
                 updateLaser();
@@ -250,7 +251,7 @@ public class TileLaser extends TileBC_Neptune implements ITickable, IDebuggable,
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -283,7 +284,7 @@ public class TileLaser extends TileBC_Neptune implements ITickable, IDebuggable,
     public void clearRemoved() {
 //        super.validate();
         super.clearRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             LocalBlockUpdateNotifier.instance(level).registerSubscriberForUpdateNotifications(this);
         }
     }
@@ -293,12 +294,12 @@ public class TileLaser extends TileBC_Neptune implements ITickable, IDebuggable,
     public void setRemoved() {
 //        super.invalidate();
         super.setRemoved();
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             LocalBlockUpdateNotifier.instance(level).removeSubscriberFromUpdateNotifications(this);
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @OnlyIn(Dist.CLIENT)
     public AABB getRenderBoundingBox() {

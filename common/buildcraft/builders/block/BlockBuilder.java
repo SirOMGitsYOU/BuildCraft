@@ -70,7 +70,7 @@ public class BlockBuilder extends BlockBCTile_Neptune<TileBuilder> implements IB
     @Override
 //    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ)
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
 //            BCBuildersGuis.BUILDER.openGUI(player, pos);
             // Calen
             if (world.getBlockEntity(pos) instanceof TileBuilder tile) {

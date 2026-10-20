@@ -15,7 +15,7 @@ public class GateMeshDefinition {
 //
 //    public static GateMeshDefinition INSTANCE = new GateMeshDefinition();
 //
-//    public static final ResourceLocation LOCATION_BASE = BCModules.SILICON.createLocation("gate_complex");
+//    public static final Identifier LOCATION_BASE = BCModules.SILICON.createLocation("gate_complex");
 //
 //    public GateMeshDefinition() {
 //        super(Minecraft.getInstance().getModelManager());
@@ -25,7 +25,7 @@ public class GateMeshDefinition {
 ////    public ModelResourceLocation getModelLocation(ItemStack stack)
 //    public ModelResourceLocation getLocation(ItemStack stack) {
 //        GateVariant var = ItemPluggableGate.getVariant(StackUtil.asNonNull(stack));
-//        ResourceLocation loc = LOCATION_BASE;
+//        Identifier loc = LOCATION_BASE;
 //        String variant = var.getVariantName();
 //        return new ModelResourceLocation(loc, variant);
 //    }

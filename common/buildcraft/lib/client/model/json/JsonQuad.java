@@ -28,11 +28,11 @@ public class JsonQuad {
 
     public JsonQuad(JsonObject obj, float[] from, float[] to, Direction face) {
         this.face = face;
-//        tint = JsonUtils.getInt(obj, "tintindex", -1);
+//        tint = JsonUtils.getIntOr(obj, "tintindex", -1, 0);
         tint = GsonHelper.getAsInt(obj, "tintindex", -1);
-//        texture = JsonUtils.getString(obj, "texture");
+//        texture = JsonUtils.getStringOr(obj, "texture", "");
         texture = GsonHelper.getAsString(obj, "texture");
-//        int rotation = JsonUtils.getInt(obj, "rotation", 0);
+//        int rotation = JsonUtils.getIntOr(obj, "rotation", 0, 0);
         int rotation = GsonHelper.getAsInt(obj, "rotation", 0);
         float[] uv = JsonUtil.getSubAsFloatArray(obj, "uv");
         if (uv.length != 4) {

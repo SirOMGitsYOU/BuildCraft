@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.misc;
+import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
-import javax.annotation.Nonnull;
+
 
 /** Class for dealing with {@link Vec3}, {@link Vec3i}, {@link Direction}, {@link Axis} conversions and additions.
  * This is for simple functions ONLY, {@link PositionUtil} is for complex interactions */
@@ -57,7 +58,7 @@ public class VecUtil {
         );
     }
 
-    @Nonnull
+    @NotNull
     public static BlockPos replaceValue(Vec3i old, Axis axis, int with) {
         return new BlockPos(//
                 axis == Axis.X ? with : old.getX(),//

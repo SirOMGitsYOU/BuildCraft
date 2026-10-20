@@ -31,7 +31,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +51,7 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class TileChute extends TileBC_Neptune implements ITickable, IDebuggable, IBCTileMenuProvider {
-    private static final ResourceLocation ADVANCEMENT_DID_INSERT = new ResourceLocation("buildcraftfactory:retired_hopper");
+    private static final Identifier ADVANCEMENT_DID_INSERT = Identifier.parse("buildcraftfactory:retired_hopper");
 
     private static final int PICKUP_MAX = 3;
 
@@ -91,7 +91,7 @@ public class TileChute extends TileBC_Neptune implements ITickable, IDebuggable,
 
     private void putInNearInventories(Direction currentSide) {
         boolean[] didWork = { false };
-        List<Direction> sides = new ArrayList<>(Arrays.asList(Direction.VALUES));
+        List<Direction> sides = new ArrayList<>(Arrays.asList(Direction.values()));
         Collections.shuffle(sides, new Random());
         sides.removeIf(Predicate.isEqual(currentSide));
         Stream.<Pair<Direction, ICapabilityProvider>>concat(
@@ -122,7 +122,7 @@ public class TileChute extends TileBC_Neptune implements ITickable, IDebuggable,
     @Override
     public void update() {
         ITickable.super.update();
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
 
@@ -153,7 +153,7 @@ public class TileChute extends TileBC_Neptune implements ITickable, IDebuggable,
     public void load(CompoundTag nbt) {
 //        super.readFromNBT(nbt);
         super.load(nbt);
-        progress = nbt.getInt("progress");
+        progress = nbt.getIntOr("progress", 0);
         battery.deserializeNBT(nbt.getCompound("battery"));
     }
 

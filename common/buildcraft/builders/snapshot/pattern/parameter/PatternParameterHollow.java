@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.snapshot.pattern.parameter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.statements.IStatement;
@@ -19,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nonnull;
+
 
 public enum PatternParameterHollow implements IStatementParameter {
     FILLED_INNER(true, false),
@@ -35,8 +36,8 @@ public enum PatternParameterHollow implements IStatementParameter {
     }
 
     public static PatternParameterHollow readFromNbt(CompoundTag nbt) {
-        if (nbt.getBoolean("filled")) {
-            if (nbt.getBoolean("outer")) {
+        if (nbt.getBooleanOr("filled", false)) {
+            if (nbt.getBooleanOr("outer", false)) {
                 return FILLED_OUTER;
             } else {
                 return FILLED_INNER;
@@ -71,7 +72,7 @@ public enum PatternParameterHollow implements IStatementParameter {
         return BCBuildersSprites.PARAM_HOLLOW;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

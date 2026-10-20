@@ -12,7 +12,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -23,9 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 // We don't extend TileBC here because we have no need of any of its functions.
 public class TileSpringOil extends BlockEntity implements IDebuggable, ITileOilSpring {
 
-    private static final ResourceLocation ADVANCEMENT_PUMP_LARGE_OIL_WELL = new ResourceLocation(
-            "buildcraftfactory:black_gold"
-    );
+    private static final Identifier ADVANCEMENT_PUMP_LARGE_OIL_WELL = Identifier.parse("buildcraftfactory:black_gold");
 
     private final Map<GameProfile, PlayerPumpInfo> pumpProgress = new ConcurrentHashMap<>();
 
@@ -62,7 +60,7 @@ public class TileSpringOil extends BlockEntity implements IDebuggable, ITileOilS
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        ListTag list = nbt.getList("pumpProgress", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getListOrEmpty("pumpProgress", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             PlayerPumpInfo info = new PlayerPumpInfo(list.getCompound(i));
             pumpProgress.put(info.profile, info);
@@ -109,8 +107,8 @@ public class TileSpringOil extends BlockEntity implements IDebuggable, ITileOilS
 
         public PlayerPumpInfo(CompoundTag nbt) {
             profile = NbtUtils.readGameProfile(nbt.getCompound("profile"));
-            lastPumpTick = nbt.getLong("lastPumpTick");
-            sourcesPumped = nbt.getInt("sourcesPumped");
+            lastPumpTick = nbt.getLongOr("lastPumpTick", 0L);
+            sourcesPumped = nbt.getIntOr("sourcesPumped", 0);
         }
 
         public CompoundTag writeToNbt() {

@@ -6,6 +6,8 @@
 
 package buildcraft.lib.gui.ledger;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.core.render.ISprite;
 import buildcraft.lib.BCLibSprites;
 import buildcraft.lib.client.sprite.SpriteNineSliced;
@@ -25,7 +27,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntSupplier;

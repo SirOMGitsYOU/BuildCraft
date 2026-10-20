@@ -48,7 +48,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -145,7 +145,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, IT
         super.load(nbt);
         tankManager.deserializeNBT(nbt.getCompound("tanks"));
         mjBattery.deserializeNBT(nbt.getCompound("battery"));
-        distillPower = nbt.getLong("distillPower");
+        distillPower = nbt.getLongOr("distillPower", 0L);
         powerAvg.readFromNbt(nbt, "powerAvg");
     }
 
@@ -173,7 +173,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, IT
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -225,7 +225,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements IDebuggable, IT
         smoothedTankIn.tick(getLevel());
         smoothedTankGasOut.tick(getLevel());
         smoothedTankLiquidOut.tick(getLevel());
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             setClientModelVariables(1);
             clientModelData.tick();
             return;

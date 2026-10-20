@@ -16,7 +16,7 @@ import buildcraft.lib.gui.pos.IGuiPosition;
 import buildcraft.lib.gui.pos.PositionAbsolute;
 import buildcraft.lib.misc.GuiUtil;
 import buildcraft.lib.misc.SpriteUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ElementTypeSprite extends ElementType {
     public static final String NAME = "buildcraftlib:drawable";
@@ -74,7 +74,7 @@ public class ElementTypeSprite extends ElementType {
         ISprite sprite = gui.properties.get(origin, ISprite.class);
 
         if (sprite == null) {
-            ResourceLocation loc = SpriteUtil.transformLocation(new ResourceLocation(origin));
+            Identifier loc = SpriteUtil.transformLocation(Identifier.fromNamespaceAndPath(origin));
             sprite = new SpriteRaw(loc, 0, 0, 1, 1);
         }
 

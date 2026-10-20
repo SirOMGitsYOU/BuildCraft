@@ -3,6 +3,7 @@
  * The BuildCraft API is distributed under the terms of the MIT License. Please check the contents of the license, which
  * should be located as "LICENSE.API" in the BuildCraft source code distribution. */
 package buildcraft.robotics;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.robots.*;
 import buildcraft.lib.misc.NBTUtilBC;
@@ -12,28 +13,28 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
+
 
 public class StackRequest {
     private IRequestProvider requester;
 
     private int slot;
 
-    @Nonnull
+    @NotNull
     private ItemStack stack;
 
     private DockingStation station;
     private BlockPos stationIndex;
     private Direction stationSide;
 
-    public StackRequest(IRequestProvider requester, int slot, @Nonnull ItemStack stack) {
+    public StackRequest(IRequestProvider requester, int slot, @NotNull ItemStack stack) {
         this.requester = requester;
         this.slot = slot;
         this.stack = stack;
         this.station = null;
     }
 
-    private StackRequest(int slot, @Nonnull ItemStack stack, BlockPos stationIndex, Direction stationSide) {
+    private StackRequest(int slot, @NotNull ItemStack stack, BlockPos stationIndex, Direction stationSide) {
         requester = null;
         this.slot = slot;
         this.stack = stack;
@@ -56,7 +57,7 @@ public class StackRequest {
         return slot;
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getStack() {
         return stack;
     }
@@ -90,7 +91,7 @@ public class StackRequest {
 
     public static StackRequest loadFromNBT(CompoundTag nbt) {
         if (nbt.contains("stationIndex")) {
-            int slot = nbt.getInt("slot");
+            int slot = nbt.getIntOr("slot", 0);
 
             ItemStack stack = ItemStack.of(nbt.getCompound("stack"));
 

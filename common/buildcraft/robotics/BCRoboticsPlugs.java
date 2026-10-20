@@ -3,7 +3,7 @@ package buildcraft.robotics;
 import buildcraft.api.transport.pipe.PipeApi;
 import buildcraft.api.transport.pluggable.PluggableDefinition;
 import buildcraft.robotics.plug.PluggableRobotStation;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BCRoboticsPlugs {
     public static PluggableDefinition robotStation;
@@ -23,11 +23,11 @@ public class BCRoboticsPlugs {
 //        // TODO: remove this in 7.99.19!
 //        // This handles the migration of most of the transport pluggables into silicon
 //        String modId = BCModules.TRANSPORT.getModId();
-//        PipeApi.pluggableRegistry.register(new ResourceLocation(modId, def.identifier.getPath()), def);
+//        PipeApi.pluggableRegistry.register(Identifier.fromNamespaceAndPath(modId, def.identifier.getPath()), def);
         return def;
     }
 
-    private static ResourceLocation idFor(String name) {
-        return new ResourceLocation("buildcraftrobotics", name);
+    private static Identifier idFor(String name) {
+        return Identifier.fromNamespaceAndPath("buildcraftrobotics", name);
     }
 }

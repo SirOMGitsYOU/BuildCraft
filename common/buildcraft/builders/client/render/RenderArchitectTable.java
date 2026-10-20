@@ -5,6 +5,7 @@
  */
 
 package buildcraft.builders.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.builders.tile.TileArchitectTable;
 import buildcraft.core.client.BuildCraftLaserManager;
@@ -28,8 +29,8 @@ public class RenderArchitectTable implements BlockEntityRenderer<TileArchitectTa
         if (!tile.markerBox) {
             return;
         }
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("architect_table");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("architect_table");
 
 //        GL11.glPushMatrix();
         poseStack.pushPose();
@@ -37,17 +38,17 @@ public class RenderArchitectTable implements BlockEntityRenderer<TileArchitectTa
         poseStack.translate(-tile.getBlockPos().getX(), -tile.getBlockPos().getY(), -tile.getBlockPos().getZ());
 //        RenderHelper.disableStandardItemLighting();
 
-        Minecraft.getInstance().getProfiler().push("box");
+        net.minecraft.util.profiling.Profiler.get().push("box");
 //        LaserBoxRenderer.renderLaserBoxStatic(tile.box, BuildCraftLaserManager.STRIPES_READ, true);
         LaserBoxRenderer.renderLaserBoxStatic(tile.box, BuildCraftLaserManager.STRIPES_READ, poseStack.last(), true);
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
 
 //        RenderHelper.enableStandardItemLighting();
 //        GL11.glPopMatrix();
         poseStack.popPose();
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     @Override

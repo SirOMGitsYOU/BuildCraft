@@ -28,7 +28,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -62,7 +62,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
 
     @Override
     public void onTick() {
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             return;
         }
         toWaitTicks--;
@@ -80,7 +80,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
 
     @Override
     public void onEntityCollide(Entity entity) {
-        if (pipe.getHolder().getPipeWorld().isClientSide) {
+        if (pipe.getHolder().getPipeWorld().isClientSide()) {
             return;
         }
         Direction openFace = getOpenFace();
@@ -91,7 +91,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
 
     private Direction getOpenFace() {
         Direction openFace = null;
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (pipe.isConnected(face)) {
                 if (openFace == null) {
                     openFace = face.getOpposite();
@@ -188,7 +188,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
     // IMjRedstoneReceiver
 
     @Override
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 
@@ -223,7 +223,7 @@ public class PipeBehaviourObsidian extends PipeBehaviour implements IMjRedstoneR
         return microJoules - MjAPI.MJ;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         LazyOptional<T> cap = mjCaps.getCapability(capability, facing);

@@ -6,7 +6,7 @@ import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.ISimpleDrawable;
 import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.misc.GuiUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class StandardSpriteButtons {
 
@@ -21,7 +21,7 @@ public class StandardSpriteButtons {
     public static final GuiButtonDrawable.Builder TINY_BUTTON_DRAWABLE;
 
     static {
-        ResourceLocation buttonSheet = new ResourceLocation("buildcraftlib:textures/gui/buttons.png");
+        Identifier buttonSheet = Identifier.parse("buildcraftlib:textures/gui/buttons.png");
 
         ISprite sprite = new SpriteRaw(buttonSheet, 0, 0, 1, 1);
 

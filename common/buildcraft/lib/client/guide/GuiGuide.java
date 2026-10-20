@@ -6,6 +6,8 @@
 
 package buildcraft.lib.client.guide;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.BCLibItems;
 import buildcraft.lib.client.ToastInformation;
 import buildcraft.lib.client.guide.font.FontManager;
@@ -37,11 +39,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -49,22 +51,22 @@ import java.util.Optional;
 
 //public class GuiGuide extends GuiScreen
 public class GuiGuide extends Screen implements MenuAccess<ContainerGuide> {
-    public static final ResourceLocation ICONS_1 = Gui.GUI_ICONS_LOCATION;
-    public static final ResourceLocation ICONS_2 = new ResourceLocation("buildcraftlib:textures/gui/guide/icons.png");
-    public static final ResourceLocation COVER = new ResourceLocation("buildcraftlib:textures/gui/guide/cover.png");
-    public static final ResourceLocation LEFT_PAGE =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/left_page.png");
-    public static final ResourceLocation RIGHT_PAGE =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/right_page.png");
-    public static final ResourceLocation LEFT_PAGE_BACK =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/left_page_back.png");
-    public static final ResourceLocation RIGHT_PAGE_BACK =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/right_page_back.png");
-    public static final ResourceLocation LEFT_PAGE_FIRST =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/left_page_first.png");
-    public static final ResourceLocation RIGHT_PAGE_LAST =
-            new ResourceLocation("buildcraftlib:textures/gui/guide/right_page_last.png");
-    public static final ResourceLocation NOTE = new ResourceLocation("buildcraftlib:textures/gui/guide/note.png");
+    public static final Identifier ICONS_1 = Gui.GUI_ICONS_LOCATION;
+    public static final Identifier ICONS_2 = Identifier.parse("buildcraftlib:textures/gui/guide/icons.png");
+    public static final Identifier COVER = Identifier.parse("buildcraftlib:textures/gui/guide/cover.png");
+    public static final Identifier LEFT_PAGE =
+            Identifier.parse("buildcraftlib:textures/gui/guide/left_page.png");
+    public static final Identifier RIGHT_PAGE =
+            Identifier.parse("buildcraftlib:textures/gui/guide/right_page.png");
+    public static final Identifier LEFT_PAGE_BACK =
+            Identifier.parse("buildcraftlib:textures/gui/guide/left_page_back.png");
+    public static final Identifier RIGHT_PAGE_BACK =
+            Identifier.parse("buildcraftlib:textures/gui/guide/right_page_back.png");
+    public static final Identifier LEFT_PAGE_FIRST =
+            Identifier.parse("buildcraftlib:textures/gui/guide/left_page_first.png");
+    public static final Identifier RIGHT_PAGE_LAST =
+            Identifier.parse("buildcraftlib:textures/gui/guide/right_page_last.png");
+    public static final Identifier NOTE = Identifier.parse("buildcraftlib:textures/gui/guide/note.png");
 
     public static final GuiIcon BOOK_COVER = new GuiIcon(COVER, 0, 0, 202, 248);
     public static final GuiIcon BOOK_BINDING = new GuiIcon(COVER, 204, 0, 11, 248);

@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.recipe.assembly;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.recipes.IAssemblyRecipe;
 import com.google.common.collect.Lists;
@@ -12,7 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class AssemblyRecipeRegistry {
     public static IFacadeAssemblyRecipes FACADE_ASSEMBLY_RECIPE;
 
     @Deprecated
-    // public static final Map<ResourceLocation, AssemblyRecipe> REGISTRY = new HashMap<>();
+    // public static final Map<Identifier, AssemblyRecipe> REGISTRY = new HashMap<>();
     private static final List<IAssemblyRecipe> REGISTRY = new LinkedList<>();
 
     public static List<IAssemblyRecipe> getAll(Level world) {
@@ -38,9 +39,9 @@ public class AssemblyRecipeRegistry {
     }
 
     // Calen: never used in 1.12.2
-    @Nonnull
-//    public static List<AssemblyRecipe> getRecipesFor(@Nonnull NonNullList<ItemStack> possibleIn)
-    public static List<IAssemblyRecipe> getRecipesFor(Level world, @Nonnull NonNullList<ItemStack> possibleIn) {
+    @NotNull
+//    public static List<AssemblyRecipe> getRecipesFor(@NotNull NonNullList<ItemStack> possibleIn)
+    public static List<IAssemblyRecipe> getRecipesFor(Level world, @NotNull NonNullList<ItemStack> possibleIn) {
         List<IAssemblyRecipe> all = new ArrayList<>();
 //        for (AssemblyRecipe ar : REGISTRY.values())
         for (IAssemblyRecipe ar : getAll(world)) {

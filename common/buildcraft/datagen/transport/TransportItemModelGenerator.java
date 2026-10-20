@@ -7,12 +7,12 @@ import buildcraft.transport.BCTransportBlocks;
 import buildcraft.transport.BCTransportItems;
 import buildcraft.transport.pipe.PipeRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class TransportItemModelGenerator extends BCBaseItemModelGenerator {
     public TransportItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -46,7 +46,7 @@ public class TransportItemModelGenerator extends BCBaseItemModelGenerator {
     }
 
     private void with16Colours(ItemBC_Neptune item) {
-        ResourceLocation reg = item.getRegistryName();
+        Identifier reg = item.getRegistryName();
 
         ItemModelBuilder model = withExistingParent(reg.getNamespace() + ":item/" + reg.getPath(), HANDHELD);
         for (DyeColor colour : DyeColor.values()) {
@@ -56,7 +56,7 @@ public class TransportItemModelGenerator extends BCBaseItemModelGenerator {
                             withExistingParent(reg.getNamespace() + ":item/" + reg.getPath() + "/" + colour.getName().toLowerCase(), HANDHELD)
                                     .texture("layer0", reg.getNamespace() + ":item/" + reg.getPath() + "/" + colour.getName().toLowerCase())
                     )
-                    .predicate(new ResourceLocation("buildcraft", "colour"), colour.getId())
+                    .predicate(Identifier.fromNamespaceAndPath("buildcraft", "colour"), colour.getId())
                     .end();
         }
     }

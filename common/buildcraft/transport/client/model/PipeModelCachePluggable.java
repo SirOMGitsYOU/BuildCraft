@@ -16,7 +16,7 @@ import buildcraft.lib.client.model.ModelCacheMultipleSame;
 import buildcraft.transport.client.PipeRegistryClient;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
@@ -55,7 +55,7 @@ public class PipeModelCachePluggable {
         // public PluggableKey(BlockRenderLayer layer, IPipeHolder holder)
         public PluggableKey(RenderType layer, IPipeHolder holder) {
             ImmutableSet.Builder<PluggableModelKey> builder = ImmutableSet.builder();
-            for (Direction side : Direction.VALUES) {
+            for (Direction side : Direction.values()) {
                 PipePluggable pluggable = holder.getPluggable(side);
                 if (pluggable == null) continue;
                 PluggableModelKey key = pluggable.getModelRenderKey(layer);

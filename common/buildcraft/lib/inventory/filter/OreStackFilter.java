@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.inventory.filter;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.api.recipes.StackDefinition;
@@ -14,7 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nonnull;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class OreStackFilter implements IStackFilter {
     }
 
     @Override
-    public boolean matches(@Nonnull ItemStack stack) {
+    public boolean matches(@NotNull ItemStack stack) {
 //        int[] ids = OreDictionary.getOreIDs(stack);
 //
 //        if (ids.length == 0) {

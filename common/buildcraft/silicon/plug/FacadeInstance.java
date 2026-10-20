@@ -1,5 +1,7 @@
 package buildcraft.silicon.plug;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.facades.FacadeType;
 import buildcraft.api.facades.IFacade;
 import buildcraft.api.facades.IFacadePhasedState;
@@ -10,7 +12,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.DyeColor;
 
-import javax.annotation.Nullable;
+
 import java.util.Arrays;
 
 public class FacadeInstance implements IFacade {
@@ -37,7 +39,7 @@ public class FacadeInstance implements IFacade {
     }
 
     public static FacadeInstance readFromNbt(CompoundTag nbt) {
-        ListTag list = nbt.getList("states", Tag.TAG_COMPOUND);
+        ListTag list = nbt.getListOrEmpty("states", Tag.TAG_COMPOUND);
         if (list.isEmpty()) {
             return FacadeInstance.createSingle(FacadeStateManager.defaultState, false);
         }
@@ -45,7 +47,7 @@ public class FacadeInstance implements IFacade {
         for (int i = 0; i < list.size(); i++) {
             states[i] = FacadePhasedState.readFromNbt(list.getCompound(i));
         }
-        boolean hollow = nbt.getBoolean("isHollow");
+        boolean hollow = nbt.getBooleanOr("isHollow", false);
         return new FacadeInstance(states, hollow);
     }
 

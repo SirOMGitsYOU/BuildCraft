@@ -9,7 +9,7 @@ package buildcraft.builders.snapshot;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,7 +31,7 @@ public class FluidStackRef {
                 Objects.requireNonNull(
 //                        FluidRegistry.getFluid(
                         ForgeRegistries.FLUIDS.getValue(
-                                new ResourceLocation(
+                                Identifier.fromNamespaceAndPath(
                                         fluid
                                                 .get(nbt)
                                                 .orElseThrow(NullPointerException::new)
@@ -39,8 +39,7 @@ public class FluidStackRef {
                                                 .getAsString()
                                 )
                         )
-                ),
-                Optional.ofNullable(amount)
+                ), Optional.ofNullable(amount)
                         .flatMap(ref -> ref.get(nbt))
 //                        .map(IntTag::getInt)
                         .map(IntTag::getAsInt)

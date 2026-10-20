@@ -12,15 +12,15 @@ import buildcraft.lib.gui.GuiIcon;
 import buildcraft.lib.gui.pos.GuiRectangle;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 // TODO: Convert this gui into JSON!
 public class GuiBuilder extends GuiBC8<ContainerBuilder> {
-    private static final ResourceLocation TEXTURE_BASE =
-            new ResourceLocation("buildcraftbuilders:textures/gui/builder.png");
-    private static final ResourceLocation TEXTURE_BLUEPRINT =
-            new ResourceLocation("buildcraftbuilders:textures/gui/builder_blueprint.png");
+    private static final Identifier TEXTURE_BASE =
+            Identifier.parse("buildcraftbuilders:textures/gui/builder.png");
+    private static final Identifier TEXTURE_BLUEPRINT =
+            Identifier.parse("buildcraftbuilders:textures/gui/builder_blueprint.png");
     private static final int SIZE_X = 176, SIZE_BLUEPRINT_X = 256, SIZE_Y = 222, BLUEPRINT_WIDTH = 87;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
     private static final GuiIcon ICON_BLUEPRINT_GUI = new GuiIcon(

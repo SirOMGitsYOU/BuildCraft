@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.engine;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.*;
@@ -36,9 +37,9 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
     public static final double IDEAL_HEAT = 100;
     public static final double MAX_HEAT = 250;
 
-    @Nonnull
+    @NotNull
     public final IMjConnector mjConnector = createConnector();
     private final MjCapabilityHelper mjCaps = new MjCapabilityHelper(mjConnector);
 
@@ -85,11 +86,11 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
         if (currentDirection == null) {
             currentDirection = Direction.UP;
         }
-        isRedstonePowered = nbt.getBoolean("isRedstonePowered");
-        heat = nbt.getDouble("heat");
-        power = nbt.getLong("power");
-        progress = nbt.getFloat("progress");
-        progressPart = nbt.getInt("progressPart");
+        isRedstonePowered = nbt.getBooleanOr("isRedstonePowered", false);
+        heat = nbt.getDoubleOr("heat", 0.0);
+        power = nbt.getLongOr("power", 0L);
+        progress = nbt.getFloatOr("progress", 0.0f);
+        progressPart = nbt.getIntOr("progressPart", 0);
     }
 
     @Override
@@ -104,7 +105,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -223,7 +224,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
 
     @Override
     public final EnumPowerStage getPowerStage() {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             EnumPowerStage newStage = computePowerStage();
 
             if (powerStage != newStage) {
@@ -267,7 +268,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
         }
     }
 
-    @Nonnull
+    @NotNull
     protected abstract IMjConnector createConnector();
 
     @Override
@@ -285,7 +286,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
 
         boolean overheat = getPowerStage() == EnumPowerStage.OVERHEAT;
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             lastProgress = progress;
 
             if (isPumping) {
@@ -568,7 +569,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (facing == currentDirection) {
             return mjCaps.getCapability(capability, facing);
         } else {

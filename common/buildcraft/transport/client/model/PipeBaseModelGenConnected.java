@@ -13,7 +13,7 @@ import buildcraft.transport.client.model.PipeModelCacheBase.PipeBaseTranslucentK
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraftforge.client.event.TextureStitchEvent;
 
 import java.util.IdentityHashMap;
@@ -38,7 +38,7 @@ public enum PipeBaseModelGenConnected implements IPipeBaseModelGen {
 
     // Calen 1.20.1
     @Override
-    public void onDatagenTextureRegister(Consumer<ResourceLocation> consumer) {
+    public void onDatagenTextureRegister(Consumer<Identifier> consumer) {
         PipeBaseModelGenStandard.INSTANCE.onDatagenTextureRegister(consumer);
     }
 

@@ -3,6 +3,7 @@
  * BuildCraft is distributed under the terms of the Minecraft Mod Public License 1.0, or MMPL. Please check the contents
  * of the license located in http://www.mod-buildcraft.com/MMPL-1.0.txt */
 package buildcraft.robotics.entity;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.BCItems;
 import buildcraft.api.boards.RedstoneBoardNBT;
@@ -60,7 +61,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -95,9 +96,9 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -113,10 +114,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public static final int NET_SET_STEAM_DIRECTION = IDS.allocId("setSteamDirection");
     public static final int NET_SYNC_WEARABLES = IDS.allocId("syncWearables");
 
-    // public static final ResourceLocation ROBOT_BASE = new ResourceLocation(DefaultProps.TEXTURE_PATH_ROBOTS + "/robot_base.png");
-    // public static final ResourceLocation ROBOT_BASE = new ResourceLocation("buildcraftrobotics:textures/entities" + "/robot_base.png");
-    public static final ResourceLocation ROBOT_BASE = new ResourceLocation("buildcraftrobotics:entities/robot_base");
-    public static final ResourceLocation ROBOT_BASE_PNG = new ResourceLocation("buildcraftrobotics:entities/robot_base.png");
+    // public static final Identifier ROBOT_BASE = Identifier.fromNamespaceAndPath(DefaultProps.TEXTURE_PATH_ROBOTS + "/robot_base.png");
+    // public static final Identifier ROBOT_BASE = Identifier.parse("buildcraftrobotics:textures/entities" + "/robot_base.png");
+    public static final Identifier ROBOT_BASE = Identifier.parse("buildcraftrobotics:entities/robot_base");
+    public static final Identifier ROBOT_BASE_PNG = Identifier.parse("buildcraftrobotics:entities/robot_base.png");
 
     // private static final int DATA_LASER_TAIL_X = 12;
     // private static final int DATA_LASER_TAIL_Y = 13;
@@ -143,7 +144,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     public static final int MAX_WEARABLES = 8;
 
-    private static Set<ResourceLocation> blacklistedItemsForUpdate = Sets.newHashSet();
+    private static Set<Identifier> blacklistedItemsForUpdate = Sets.newHashSet();
     // public LaserData_BC8 laser = new LaserData_BC8(LASER_TYPE, new Vec3(0, 0, 0), new Vec3(0, 0, 0), 1 / 16D);
     public float laserEndX, laserEndY, laserEndZ;
     public DockingStation linkedDockingStation;
@@ -158,7 +159,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     public RedstoneBoardRobot board;
     public AIRobotMain mainAI;
 
-    @Nonnull
+    @NotNull
     // public ItemStack itemInUse;
     public ItemStack itemInUse = StackUtil.EMPTY;
     public float itemAimYaw = 0;
@@ -190,7 +191,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     // private int maxFluid = FluidAttributes.BUCKET_VOLUME * 4;
 
     public final Tank tank = new Tank("robotTank", FluidType.BUCKET_VOLUME * 4, this);
-    private ResourceLocation texture;
+    private Identifier texture;
 
     private WeakHashMap<Entity, Long> unreachableEntities = new WeakHashMap<Entity, Long>();
 
@@ -222,7 +223,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         board = boardNBT.create(this);
         entityData.set(DATA_BOARD_ID, board.getNBTHandler().getID().toString());
 
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             mainAI = new AIRobotMain(this);
             mainAI.start();
         }
@@ -301,7 +302,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         this.isLaserVisible = entityData.get(DATA_LASER_VISIBLE) == 1;
 
 //        RedstoneBoardNBT<?> boardNBT = RedstoneBoardRegistry.instance.getRedstoneBoard(dataWatcher.getWatchableObjectString(DATA_BOARD_ID));
-        RedstoneBoardNBT<?> boardNBT = RedstoneBoardRegistry.instance.getRedstoneBoard(new ResourceLocation(entityData.get(DATA_BOARD_ID)));
+        RedstoneBoardNBT<?> boardNBT = RedstoneBoardRegistry.instance.getRedstoneBoard(Identifier.fromNamespaceAndPath(entityData.get(DATA_BOARD_ID)));
 
         if (boardNBT != null) {
             // texture = ((RedstoneBoardRobotNBT) boardNBT).getRobotTexture();
@@ -332,7 +333,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     public boolean isActive() {
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             return isActiveClient;
         } else {
             return mainAI.getActiveAI() instanceof AIRobotSleep || mainAI.getActiveAI() instanceof AIRobotShutdown;
@@ -340,7 +341,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     protected void init() {
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             MessageManager.sendToServer(createMessage(NET_REQUEST_INITIALIZATION, (buf) -> {}));
         }
     }
@@ -375,7 +376,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         }
 
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             getRegistry().registerRobot(this);
         }
     }
@@ -403,7 +404,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             ticksCharging--;
         }
 
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             // The client-side sleep indicator should also display if the robot is charging.
             // To not break gates and other things checking for sleep, this is done here.
             entityData.set(DATA_ACTIVE_CLIENT, Byte.valueOf((byte) ((isActive() && ticksCharging == 0) ? 1 : 0)));
@@ -415,7 +416,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             }
         }
 
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             updateDataClient();
             updateRotationYaw(60.0f);
             updateEnergyFX();
@@ -434,7 +435,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             this.setPos(pos);
         }
 
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             if (linkedDockingStation == null) {
                 if (linkedDockingStationIndex != null) {
                     linkedDockingStation = getRegistry().getStation(linkedDockingStationIndex, linkedDockingStationSide);
@@ -594,7 +595,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         init();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     // public ItemStack getHeldItem()
     public ItemStack getItemInHand(InteractionHand hand) {
@@ -648,7 +649,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         return false;
     }
 
-    public ResourceLocation getTexture() {
+    public Identifier getTexture() {
         return texture;
     }
 
@@ -756,15 +757,15 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         // laser.readFromNBT(nbt.getCompound("laser"));
         CompoundTag laserNbt = nbt.getCompound("laser");
-        this.laserEndX = laserNbt.getFloat("endX");
-        this.laserEndY = laserNbt.getFloat("endY");
-        this.laserEndZ = laserNbt.getFloat("endZ");
+        this.laserEndX = laserNbt.getFloatOr("endX", 0.0f);
+        this.laserEndY = laserNbt.getFloatOr("endY", 0.0f);
+        this.laserEndZ = laserNbt.getFloatOr("endZ", 0.0f);
 
         battery.deserializeNBT(nbt.getCompound("battery"));
 
         wearables.clear();
         if (nbt.contains("wearables")) {
-            ListTag list = nbt.getList("wearables", 10);
+            ListTag list = nbt.getListOrEmpty("wearables", 10);
             for (int i = 0; i < list.size(); i++) {
                 ItemStack stack = ItemStack.of(list.getCompound(i));
 //                if (stack != null)
@@ -776,7 +777,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         if (nbt.contains("itemInUse")) {
             itemInUse = ItemStack.of(nbt.getCompound("itemInUse"));
-            itemActive = nbt.getBoolean("itemActive");
+            itemActive = nbt.getBooleanOr("itemActive", false);
         }
 
 //        for (int i = 0; i < inv.length; ++i) {
@@ -801,10 +802,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
         entityData.set(DATA_BOARD_ID, board.getNBTHandler().getID().toString());
 
-        stackRequestNBT = nbt.getList("stackRequests", Tag.TAG_COMPOUND);
+        stackRequestNBT = nbt.getListOrEmpty("stackRequests", Tag.TAG_COMPOUND);
 
         if (nbt.contains("robotId")) {
-            robotId = nbt.getLong("robotId");
+            robotId = nbt.getLongOr("robotId", 0L);
         }
 
 //        if (nbt.hasKey("tank")) {
@@ -952,8 +953,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     // Calen 1.18.2 from TileBC_Neptune
-    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @Nonnull ItemStack before, @Nonnull ItemStack after) {
-        if (!this.level().isClientSide) {
+    protected void onSlotChange(IItemHandlerModifiable handler, int slot, @NotNull ItemStack before, @NotNull ItemStack after) {
+        if (!this.level().isClientSide()) {
             this.updateClientSlot(slot);
         }
     }
@@ -975,7 +976,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     @Override
-    public void setItemInUse(@Nonnull ItemStack stack) {
+    public void setItemInUse(@NotNull ItemStack stack) {
         itemInUse = stack;
         IMessage message = createMessage(NET_CLIENT_SET_ITEM_IN_USE, (data) ->
         {
@@ -985,7 +986,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     private void setSteamDirection(final Vec3 direction) {
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             IMessage message = createMessage(NET_SET_STEAM_DIRECTION, (data) ->
             {
                 data.writeDouble(direction.x);
@@ -998,7 +999,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
     }
 
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (NET_CLIENT_SET_ITEM_IN_USE == id) {
                 itemInUse = buffer.readItem();
@@ -1083,7 +1084,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                 return false;
             }
 
-            if (!level().isClientSide) {
+            if (!level().isClientSide()) {
                 // hurtTime = maxHurtTime = 10;
                 hurtTime = hurtDuration = 10;
 
@@ -1164,7 +1165,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     @Override
     // protected float updateDistance(float targetYaw, float dist)
     protected float tickHeadTurn(float targetYaw, float dist) {
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             // float f2 = Mth.RAD_TO_DEG * (this.getXRot() - this.renderYawOffset);
             float f2 = (this.getXRot() - this.yBodyRot);
             this.yBodyRot += f2 * 0.5F;
@@ -1290,7 +1291,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
                         par1Entity.setSecondsOnFire(fireAspect * 4);
                     }
 
-                    if (par1Entity.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.tryBuild(BCRobotics.MODID, "robot"))), this), attackDamage)) {
+                    if (par1Entity.hurt(new DamageSource(level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.tryBuild(BCRobotics.MODID, "robot"))), this), attackDamage)) {
                         this.setLastHurtMob(par1Entity);
 
                         if (knockback > 0) {
@@ -1400,7 +1401,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     protected void onRobotHit(boolean attacked) {
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             if (attacked) {
                 convertToItems();
             } else {
@@ -1450,7 +1451,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
             onRobotHit(false);
 
-            // if (level.isClientSide) {
+            // if (level.isClientSide()) {
             //     ((ItemWrench_Neptune) stack.getItem()).wrenchUsed(player, this);
             if (stack.getItem() == BCItems.Core.WRENCH) {
                 ((IToolWrench) stack.getItem()).wrenchUsed(player, hand, stack, new EntityHitResult(this));
@@ -1460,7 +1461,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
         // else if (wearables.size() < MAX_WEARABLES && stack.getItem().isValidArmor(stack, 0, this))
         else if (wearables.size() < MAX_WEARABLES && stack.getItem().canEquip(stack, EquipmentSlot.HEAD, this)) {
-            if (!level().isClientSide) {
+            if (!level().isClientSide()) {
                 wearables.add(stack.split(1));
                 syncWearablesToClient();
             } else {
@@ -1470,7 +1471,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
             return InteractionResult.SUCCESS;
         } else if (wearables.size() < MAX_WEARABLES && stack.getItem() instanceof IRobotOverlayItem && ((IRobotOverlayItem) stack.getItem())
                 .isValidRobotOverlay(stack)) {
-            if (!level().isClientSide) {
+            if (!level().isClientSide()) {
                 wearables.add(stack.split(1));
                 syncWearablesToClient();
             } else {
@@ -1481,7 +1482,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
         }
         // else if (wearables.size() < MAX_WEARABLES && stack.getItem() instanceof SkullItem)
         else if (wearables.size() < MAX_WEARABLES && stack.is(Tags.Items.HEADS)) {
-            if (!level().isClientSide) {
+            if (!level().isClientSide()) {
                 ItemStack skullStack = stack.split(1);
                 initSkullItem(skullStack);
                 wearables.add(skullStack);
@@ -1503,8 +1504,8 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
             if (nbttagcompound.contains("SkullOwner", Tag.TAG_COMPOUND)) {
                 gameProfile = NbtUtils.readGameProfile(nbttagcompound.getCompound("SkullOwner"));
-            } else if (nbttagcompound.contains("SkullOwner", Tag.TAG_STRING) && !StringUtil.isNullOrEmpty(nbttagcompound.getString("SkullOwner"))) {
-                gameProfile = new GameProfile(null, nbttagcompound.getString("SkullOwner"));
+            } else if (nbttagcompound.contains("SkullOwner", Tag.TAG_STRING) && !StringUtil.isNullOrEmpty(nbttagcompound.getStringOr("SkullOwner", ""))) {
+                gameProfile = new GameProfile(null, nbttagcompound.getStringOr("SkullOwner", ""));
             }
             if (gameProfile != null && !StringUtil.isNullOrEmpty(gameProfile.getName())) {
                 if (!gameProfile.isComplete() || !gameProfile.getProperties().containsKey("textures")) {
@@ -1569,7 +1570,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     private void convertToItems() {
-        if (!level().isClientSide && !dead) {
+        if (!level().isClientSide() && !dead) {
             if (mainAI != null) {
                 mainAI.abort();
             }
@@ -1586,7 +1587,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     @Override
     public void kill() {
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             super.kill();
         }
     }
@@ -1795,10 +1796,10 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 //    @Override
 //    public void clear() {}
 
-    private void updateItem(@Nonnull ItemStack stack, int i, boolean held) {
+    private void updateItem(@NotNull ItemStack stack, int i, boolean held) {
         // if (stack != null && stack.getItem() != null)
         if (!stack.isEmpty()) {
-            ResourceLocation id = ItemUtil.getRegistryName(stack.getItem());
+            Identifier id = ItemUtil.getRegistryName(stack.getItem());
             // did this item not throw an exception before?
             if (!blacklistedItemsForUpdate.contains(id)) {
                 try {
@@ -1816,12 +1817,12 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     // Calen 1.18.2
     @Override
-    public final IMessage receivePayload(NetworkEvent.Context ctx, PacketBufferBC buffer) throws IOException {
+    public final IMessage receivePayload(CustomPayloadEvent.Context ctx, PacketBufferBC buffer) throws IOException {
         int id = buffer.readUnsignedShort();
         readPayload(id, buffer, ctx.getDirection(), ctx);
 
         // Make sure that we actually read the entire message rather than just discarding it
-        MessageUtil.ensureEmpty(buffer, level().isClientSide, getClass() + ", id = " + getIdAllocator().getNameFor(id));
+        MessageUtil.ensureEmpty(buffer, level().isClientSide(), getClass() + ", id = " + getIdAllocator().getNameFor(id));
 
         if (ctx.getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
             spawnReceiveParticles(id);
@@ -1836,7 +1837,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
     }
 
     private long readLongFromNbt(CompoundTag nbt) {
-        return nbt.getLong("v");
+        return nbt.getLongOr("v", 0L);
     }
 
     // Calen 1.18.2 from TileBC_Neptune
@@ -1863,7 +1864,7 @@ public class EntityRobot extends EntityRobotBase implements IEntityAdditionalSpa
 
     // Calen 1.18.2
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         LazyOptional<T> obj = caps.getCapability(capability, facing);
         if (!obj.isPresent()) {
             obj = super.getCapability(capability, facing);

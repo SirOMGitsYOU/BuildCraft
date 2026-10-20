@@ -6,12 +6,12 @@ import buildcraft.factory.BCFactoryBlocks;
 import buildcraft.factory.BCFactoryItems;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
     public FactoryItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -32,15 +32,15 @@ public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
 
         // Block Items
         // miningWell
-        withExistingParent(BCFactoryBlocks.miningWell.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/mining_well"));
+        withExistingParent(BCFactoryBlocks.miningWell.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/mining_well"));
         // floodGate
-        withExistingParent(BCFactoryBlocks.floodGate.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/flood_gate/true_true_true_true_true"));
+        withExistingParent(BCFactoryBlocks.floodGate.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/flood_gate/true_true_true_true_true"));
         // pump
-        withExistingParent(BCFactoryBlocks.pump.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/pump"));
+        withExistingParent(BCFactoryBlocks.pump.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/pump"));
         // autoWorkbenchItems
-        withExistingParent(BCFactoryBlocks.autoWorkbenchItems.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/autoworkbench_item"));
+        withExistingParent(BCFactoryBlocks.autoWorkbenchItems.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/autoworkbench_item"));
         // tank
-        withExistingParent(BCFactoryBlocks.tank.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/tank"))
+        withExistingParent(BCFactoryBlocks.tank.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/tank"))
                 .transforms()
                 .transform(ItemDisplayContext.GUI)
                 .rotation(30, 225, 0)
@@ -138,7 +138,7 @@ public class FactoryItemModelGenerator extends BCBaseItemModelGenerator {
         ;
 
         // chute
-        withExistingParent(BCFactoryBlocks.chute.get().getRegistryName().toString(), new ResourceLocation("buildcraftfactory:block/chute"))
+        withExistingParent(BCFactoryBlocks.chute.get().getRegistryName().toString(), Identifier.parse("buildcraftfactory:block/chute"))
                 .transforms()
                 .transform(ItemDisplayContext.GUI)
                 .rotation(30, 225, 0)

@@ -7,7 +7,7 @@ import buildcraft.energy.BCEnergyItems;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class EnergyItemModelGenerator extends BCBaseItemModelGenerator {
     public EnergyItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {

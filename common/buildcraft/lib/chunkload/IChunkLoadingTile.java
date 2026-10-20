@@ -6,6 +6,8 @@
 
 package buildcraft.lib.chunkload;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.BCLibConfig;
 import buildcraft.lib.BCLibConfig.ChunkLoaderLevel;
 import net.minecraft.core.BlockPos;
@@ -13,7 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-import javax.annotation.Nullable;
+
 import java.util.HashSet;
 import java.util.Set;
 

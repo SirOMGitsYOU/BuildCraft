@@ -20,7 +20,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
@@ -48,7 +48,7 @@ import net.minecraft.world.ticks.LevelTickAccess;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
+
 import java.util.List;
 
 @SuppressWarnings("NullableProblems")
@@ -57,7 +57,7 @@ public class FakeWorld extends IFakeWorld {
     // private static final ResourceKey<Biome> BIOME = Biomes.PLAINS;
     @SuppressWarnings("WeakerAccess")
     public static final BlockPos BLUEPRINT_OFFSET = new BlockPos(0, 127, 0);
-    public static final ResourceKey<DimensionType> DIMENSION_TYPE_KEY = ResourceKey.create(Registries.DIMENSION_TYPE, ResourceLocation.tryBuild(BCBuilders.MODID, "fake"));
+    public static final ResourceKey<DimensionType> DIMENSION_TYPE_KEY = ResourceKey.create(Registries.DIMENSION_TYPE, Identifier.tryBuild(BCBuilders.MODID, "fake"));
     private static final WritableLevelData LEVEL_DATA = new ClientLevel.ClientLevelData(Difficulty.PEACEFUL, true, false);
 
     private final FakeChunkProvider chunkProvider;
@@ -93,7 +93,7 @@ public class FakeWorld extends IFakeWorld {
                 LEVEL_DATA,
                 ResourceKey.create(
                         Registries.DIMENSION,
-                        new ResourceLocation(BCBuilders.MODID, "fake")
+                        Identifier.fromNamespaceAndPath(BCBuilders.MODID, "fake")
                 ),
                 Minecraft.getInstance().level.registryAccess(),
                 Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).getHolderOrThrow(DIMENSION_TYPE_KEY),

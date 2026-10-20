@@ -33,7 +33,7 @@ public class BlockAutoWorkbenchItems extends BlockBCTile_Neptune<TileAutoWorkben
     @Override
 //    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, Player player, InteractionHand hand, Direction side, float hitX, float hitY, float hitZ)
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
 //            BCFactoryGuis.AUTO_WORKBENCH_ITEMS.openGUI(player, pos);
             if (world.getBlockEntity(pos) instanceof TileAutoWorkbenchItems tile) {
                 MessageUtil.serverOpenTileGui(player, tile);

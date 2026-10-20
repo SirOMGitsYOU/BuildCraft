@@ -7,7 +7,7 @@ import buildcraft.lib.misc.AdvancementUtil;
 import buildcraft.lib.misc.SoundUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class ItemWrench_Neptune extends ItemBC_Neptune implements IToolWrench {
-    private static final ResourceLocation ADVANCEMENT = new ResourceLocation("buildcraftcore:wrenched");
+    private static final Identifier ADVANCEMENT = Identifier.parse("buildcraftcore:wrenched");
 
     public ItemWrench_Neptune(String idBC, Item.Properties properties) {
         super(idBC, properties);

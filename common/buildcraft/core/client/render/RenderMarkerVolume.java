@@ -3,6 +3,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
  * distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 package buildcraft.core.client.render;
+import net.minecraft.util.profiling.Profiler;
 
 import buildcraft.core.BCCoreConfig;
 import buildcraft.core.client.BuildCraftLaserManager;
@@ -57,9 +58,9 @@ public class RenderMarkerVolume implements BlockEntityRenderer<TileMarkerVolume>
         // Calen: red laser rendered in VolumeConnection#renderInWorld, blue laser rendered here
         if (marker == null || !marker.isShowingSignals()) return;
 
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("marker");
-        Minecraft.getInstance().getProfiler().push("volume");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("marker");
+        net.minecraft.util.profiling.Profiler.get().push("volume");
 
         poseStack.pushPose();
 
@@ -77,7 +78,7 @@ public class RenderMarkerVolume implements BlockEntityRenderer<TileMarkerVolume>
         BlockPos markerPos = marker.getBlockPos();
         poseStack.translate(-markerPos.getX(), -markerPos.getY(), -markerPos.getZ());
 
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (taken.contains(face.getAxis())) {
                 continue;
             }
@@ -90,9 +91,9 @@ public class RenderMarkerVolume implements BlockEntityRenderer<TileMarkerVolume>
 //        RenderHelper.enableStandardItemLighting();
 //        DetachedRenderer.fromWorldOriginPost();
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     private static void renderLaser(Vec3 minWorldPos, Vec3 maxWorldPos, Axis axis, PoseStack poseStack) {

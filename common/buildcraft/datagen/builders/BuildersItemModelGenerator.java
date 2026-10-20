@@ -8,11 +8,11 @@ import buildcraft.datagen.base.BCBaseItemModelGenerator;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class BuildersItemModelGenerator extends BCBaseItemModelGenerator {
     public BuildersItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -64,7 +64,7 @@ public class BuildersItemModelGenerator extends BCBaseItemModelGenerator {
                 .end()
         ;
         // filler
-        withExistingParent(BCBuildersBlocks.filler.get().getRegistryName().toString(), new ResourceLocation("buildcraftbuilders:block/filler/main"));
+        withExistingParent(BCBuildersBlocks.filler.get().getRegistryName().toString(), Identifier.parse("buildcraftbuilders:block/filler/main"));
         // frame
         withExistingParent(BCBuildersBlocks.frame.get().getRegistryName().toString(), CUBE_ALL)
                 .element()
@@ -77,27 +77,27 @@ public class BuildersItemModelGenerator extends BCBaseItemModelGenerator {
                 .face(Direction.WEST).texture("#all").cullface(Direction.WEST).end()
                 .face(Direction.EAST).texture("#all").cullface(Direction.EAST).end()
                 .end()
-                .texture("all", new ResourceLocation("buildcraftbuilders:block/frame/default"))
+                .texture("all", Identifier.parse("buildcraftbuilders:block/frame/default"))
         ;
         // quarry
-        withExistingParent(BCBuildersBlocks.quarry.get().getRegistryName().toString(), new ResourceLocation("buildcraftbuilders:block/quarry/false_false_false_false_false_false"));
+        withExistingParent(BCBuildersBlocks.quarry.get().getRegistryName().toString(), Identifier.parse("buildcraftbuilders:block/quarry/false_false_false_false_false_false"));
         // replacer
-        withExistingParent(BCBuildersBlocks.replacer.get().getRegistryName().toString(), new ResourceLocation("buildcraftbuilders:block/replacer"));
+        withExistingParent(BCBuildersBlocks.replacer.get().getRegistryName().toString(), Identifier.parse("buildcraftbuilders:block/replacer"));
 
         // Calen: these were declared in blockstates in 1.12.2, no single file
         // library
-        withExistingParent(BCBuildersBlocks.library.get().getRegistryName().toString(), new ResourceLocation("buildcraftbuilders:block/library"));
+        withExistingParent(BCBuildersBlocks.library.get().getRegistryName().toString(), Identifier.parse("buildcraftbuilders:block/library"));
         // architect
-        withExistingParent(BCBuildersBlocks.architect.get().getRegistryName().toString(), new ResourceLocation("buildcraftbuilders:block/architect_off"));
+        withExistingParent(BCBuildersBlocks.architect.get().getRegistryName().toString(), Identifier.parse("buildcraftbuilders:block/architect_off"));
 
         // Items
 
         // addonFillerPlanner
         withExistingParent(BCBuildersItems.addonFillerPlanner.get().getRegistryName().toString(), CUBE_ALL)
-                .texture("all", new ResourceLocation("buildcraftbuilders:addons/filler_planner"));
+                .texture("all", Identifier.parse("buildcraftbuilders:addons/filler_planner"));
 
         // schematicSingle
-        ResourceLocation schematicSingle = BCBuildersItems.schematicSingle.get().getRegistryName();
+        Identifier schematicSingle = BCBuildersItems.schematicSingle.get().getRegistryName();
         withExistingParent(schematicSingle.toString(), GENERATED)
                 .override()
                 .model(
@@ -115,7 +115,7 @@ public class BuildersItemModelGenerator extends BCBaseItemModelGenerator {
                 .end();
 
         // snapshotBLUEPRINT
-        ResourceLocation snapshotBLUEPRINT = BCBuildersItems.snapshotBLUEPRINT.get().getRegistryName();
+        Identifier snapshotBLUEPRINT = BCBuildersItems.snapshotBLUEPRINT.get().getRegistryName();
         withExistingParent(snapshotBLUEPRINT.toString(), GENERATED)
                 .override()
                 .model(
@@ -133,7 +133,7 @@ public class BuildersItemModelGenerator extends BCBaseItemModelGenerator {
                 .end();
 
         // snapshotTEMPLATE
-        ResourceLocation snapshotTEMPLATE = BCBuildersItems.snapshotTEMPLATE.get().getRegistryName();
+        Identifier snapshotTEMPLATE = BCBuildersItems.snapshotTEMPLATE.get().getRegistryName();
         withExistingParent(snapshotTEMPLATE.toString(), GENERATED)
                 .override()
                 .model(

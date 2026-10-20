@@ -18,7 +18,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -132,7 +132,7 @@ public class RulesLoader {
                                                                     boolean complex = base.contains("[");
 //                                                    return Block.getBlockFromName(
                                                                     return ForgeRegistries.BLOCKS.getValue(
-                                                                            new ResourceLocation(
+                                                                            Identifier.fromNamespaceAndPath(
                                                                                     complex
                                                                                             ? base.substring(0, base.indexOf("["))
                                                                                             : base
@@ -176,7 +176,7 @@ public class RulesLoader {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static Set<JsonRule> getRules(ResourceLocation entityId, CompoundTag tileNbt) {
+    public static Set<JsonRule> getRules(Identifier entityId, CompoundTag tileNbt) {
         // noinspection ConstantConditions
         return RulesLoader.RULES.stream()
                 .filter(rule -> rule.selectors != null)

@@ -14,7 +14,7 @@ import buildcraft.lib.gui.pos.GuiRectangle;
 import buildcraft.lib.gui.pos.IGuiPosition;
 import buildcraft.lib.misc.GuiUtil;
 import buildcraft.lib.misc.SpriteUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ElementTypeButton extends ElementType {
     public static final String NAME = "buildcraftlib:button";
@@ -117,7 +117,7 @@ public class ElementTypeButton extends ElementType {
         if (sprite != null) {
             sprite = GuiUtil.subRelative(sprite, uvs[0], uvs[1], uvs[2], uvs[3], texture.texSize);
         } else {
-            ResourceLocation loc = SpriteUtil.transformLocation(new ResourceLocation(texture.origin));
+            Identifier loc = SpriteUtil.transformLocation(Identifier.fromNamespaceAndPath(texture.origin));
             sprite = new SpriteRaw(loc, uvs[0], uvs[1], uvs[2], uvs[3], texture.texSize);
         }
         return new GuiSpriteScaled(sprite, sizeX, sizeY);

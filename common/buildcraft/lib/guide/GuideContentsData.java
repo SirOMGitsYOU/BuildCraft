@@ -1,10 +1,12 @@
 package buildcraft.lib.guide;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCModules;
 import buildcraft.lib.misc.LocaleUtil;
 import buildcraft.lib.misc.ModUtil;
 
-import javax.annotation.Nullable;
+
 import java.util.*;
 
 public class GuideContentsData {

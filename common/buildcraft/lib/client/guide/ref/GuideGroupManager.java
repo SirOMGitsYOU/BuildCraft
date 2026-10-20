@@ -1,21 +1,23 @@
 package buildcraft.lib.client.guide.ref;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.BCBlocks;
 import buildcraft.api.BCItems;
 import buildcraft.api.statements.IStatement;
 import buildcraft.lib.client.guide.entry.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-import javax.annotation.Nullable;
+
 import java.util.*;
 import java.util.function.Function;
 
 public class GuideGroupManager {
     public static final List<PageValueType<?>> knownTypes = new ArrayList<>();
-    public static final Map<ResourceLocation, GuideGroupSet> sets = new HashMap<>();
+    public static final Map<Identifier, GuideGroupSet> sets = new HashMap<>();
 
     private static final Map<Class<?>, PageValueType<?>> knownClasses = new WeakHashMap<>();
     private static final Map<Class<?>, Function<Object, PageValue<?>>> transformers = new WeakHashMap<>();
@@ -208,17 +210,17 @@ public class GuideGroupManager {
     // Internals
 
     @Nullable
-    public static GuideGroupSet get(ResourceLocation group) {
+    public static GuideGroupSet get(Identifier group) {
         return sets.get(group);
     }
 
     @Nullable
     public static GuideGroupSet get(String domain, String group) {
-        return get(new ResourceLocation(domain, group));
+        return get(Identifier.fromNamespaceAndPath(domain, group));
     }
 
     public static GuideGroupSet getOrCreate(String domain, String group) {
-        return sets.computeIfAbsent(new ResourceLocation(domain, group), GuideGroupSet::new);
+        return sets.computeIfAbsent(Identifier.fromNamespaceAndPath(domain, group), GuideGroupSet::new);
     }
 
     // Basic adders

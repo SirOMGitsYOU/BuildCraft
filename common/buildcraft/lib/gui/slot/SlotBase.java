@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.gui.slot;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.lib.tile.item.IItemHandlerAdv;
 import buildcraft.lib.tile.item.ItemHandlerSimple;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
-import javax.annotation.Nonnull;
+
 
 public class SlotBase extends SlotItemHandler {
     public final int handlerIndex;
@@ -28,7 +29,7 @@ public class SlotBase extends SlotItemHandler {
     }
 
     @Override
-    public boolean mayPlace(@Nonnull ItemStack stack) {
+    public boolean mayPlace(@NotNull ItemStack stack) {
         return itemHandler.canSet(handlerIndex, stack);
     }
 

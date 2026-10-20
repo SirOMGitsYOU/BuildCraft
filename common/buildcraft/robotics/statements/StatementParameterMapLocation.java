@@ -1,4 +1,5 @@
 package buildcraft.robotics.statements;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.items.IMapLocation;
 import buildcraft.api.statements.IStatement;
@@ -9,7 +10,7 @@ import buildcraft.lib.misc.StackUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class StatementParameterMapLocation extends StatementParameterItemStack {
     // Calen 1.18.2
@@ -38,7 +39,7 @@ public class StatementParameterMapLocation extends StatementParameterItemStack {
 
     @Override
     // public void onClick(IStatementContainer source, IStatement stmt, ItemStack stackIn, StatementMouseClick mouse)
-    public StatementParameterMapLocation onClick(IStatementContainer source, IStatement stmt, @Nonnull ItemStack stackIn, StatementMouseClick mouse) {
+    public StatementParameterMapLocation onClick(IStatementContainer source, IStatement stmt, @NotNull ItemStack stackIn, StatementMouseClick mouse) {
         ItemStack stack = stackIn;
         // if (stack != null && !(stack.getItem() instanceof IMapLocation))
         if (!stack.isEmpty() && !(stack.getItem() instanceof IMapLocation)) {

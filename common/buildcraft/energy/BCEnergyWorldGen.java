@@ -26,7 +26,7 @@ public class BCEnergyWorldGen {
 //            BCLog.logger.info("[energy.oilgen] Not registering the desert oil biome, as it has been disabled by the config file.");
 //        }
 //        if (BCCoreConfig.worldGen) {
-//            IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+//            EventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 //            modEventBus.addGenericListener(StructureFeature.class, OilStructureRegistry::register);
 //            if (BCEnergyConfig.enableOilOceanBiome || BCEnergyConfig.enableOilDesertBiome) {
 //                MinecraftForge.EVENT_BUS.register(new BiomeInitializer());

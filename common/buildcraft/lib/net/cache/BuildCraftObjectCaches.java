@@ -5,6 +5,7 @@
  */
 
 package buildcraft.lib.net.cache;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.BCLog;
 import buildcraft.lib.misc.ItemStackKey;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.ModLoadingStage;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
-import javax.annotation.Nonnull;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,12 +41,12 @@ public class BuildCraftObjectCaches {
     }
 
     /** @see NetworkedObjectCache.ServerView#store(Object) */
-    public static int storeItemStack(@Nonnull ItemStack stack) {
+    public static int storeItemStack(@NotNull ItemStack stack) {
         return CACHE_ITEMS.server().store(stack);
     }
 
     /** @see NetworkedObjectCache.ServerView#getId(Object) */
-    public static int getItemStackId(@Nonnull ItemStack stack) {
+    public static int getItemStackId(@NotNull ItemStack stack) {
         return CACHE_ITEMS.server().getId(stack);
     }
 

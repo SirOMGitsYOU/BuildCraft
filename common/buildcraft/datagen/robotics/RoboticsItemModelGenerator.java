@@ -6,11 +6,11 @@ import buildcraft.robotics.BCRoboticsBlocks;
 import buildcraft.robotics.BCRoboticsItems;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nonnull;
+
 
 public class RoboticsItemModelGenerator extends BCBaseItemModelGenerator {
     public RoboticsItemModelGenerator(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -20,8 +20,8 @@ public class RoboticsItemModelGenerator extends BCBaseItemModelGenerator {
     @Override
     protected void registerModels() {
         // blocks
-        withExistingParent(BCRoboticsBlocks.zonePlanner.get().getRegistryName().toString(), new ResourceLocation("buildcraftrobotics:block/zone_planner"));
-        withExistingParent(BCRoboticsBlocks.requester.get().getRegistryName().toString(), new ResourceLocation("buildcraftrobotics:block/requester"));
+        withExistingParent(BCRoboticsBlocks.zonePlanner.get().getRegistryName().toString(), Identifier.parse("buildcraftrobotics:block/zone_planner"));
+        withExistingParent(BCRoboticsBlocks.requester.get().getRegistryName().toString(), Identifier.parse("buildcraftrobotics:block/requester"));
 
         // robotStation
         getBuilder(BCRoboticsItems.robotStation.get().getRegistryName().toString()).parent(BUILTIN_ENTITY);

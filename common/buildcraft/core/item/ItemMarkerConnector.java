@@ -20,10 +20,9 @@ import buildcraft.lib.misc.VecUtil;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,8 +37,8 @@ import java.util.stream.Collectors;
 
 public class ItemMarkerConnector extends ItemBC_Neptune {
 
-    private static final ResourceLocation ADVANCEMENT_VOLUME_MARKER = new ResourceLocation("buildcraftcore:markers");
-    private static final ResourceLocation ADVANCEMENT_PATH_MARKER = new ResourceLocation("buildcraftcore:path_markers");
+    private static final Identifier ADVANCEMENT_VOLUME_MARKER = Identifier.parse("buildcraftcore:markers");
+    private static final Identifier ADVANCEMENT_PATH_MARKER = Identifier.parse("buildcraftcore:path_markers");
 
     public ItemMarkerConnector(String idBC, Item.Properties properties) {
         super(idBC, properties);
@@ -47,8 +46,8 @@ public class ItemMarkerConnector extends ItemBC_Neptune {
 
     @SuppressWarnings("NullableProblems")
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        if (!world.isClientSide) {
+    public InteractionResult use(Level world, Player player, InteractionHand hand) {
+        if (!world.isClientSide()) {
             for (MarkerCache<?> cache : MarkerCache.CACHES) {
                 if (interactCache(cache.getSubCache(world), player)) {
                     player.swing(hand);
@@ -96,7 +95,7 @@ public class ItemMarkerConnector extends ItemBC_Neptune {
     }
 
     private InteractionResult onItemRightClickVolumeBoxes(Level world, Player player) {
-        if (world.isClientSide) {
+        if (world.isClientSide()) {
             return InteractionResult.PASS;
         }
 

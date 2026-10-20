@@ -5,6 +5,7 @@
  */
 
 package buildcraft.silicon.item;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.transport.IItemPluggable;
 import buildcraft.api.transport.pipe.IPipeHolder;
@@ -28,7 +29,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.RegistryObject;
 
-import javax.annotation.Nonnull;
+
 import java.util.List;
 
 public class ItemPluggableGate extends ItemBC_Neptune implements IItemPluggable {
@@ -40,12 +41,12 @@ public class ItemPluggableGate extends ItemBC_Neptune implements IItemPluggable 
         this.VARIANT = variant;
     }
 
-    public static GateVariant getVariant(@Nonnull ItemStack stack) {
+    public static GateVariant getVariant(@NotNull ItemStack stack) {
 //        return new GateVariant(NBTUtilBC.getItemData(stack).getCompound("gate"));
         return ((ItemPluggableGate) stack.getItem()).VARIANT;
     }
 
-    @Nonnull
+    @NotNull
 //    public ItemStack getStack(GateVariant variant)
     public static ItemStack getStack(GateVariant variant) {
         RegistryObject<ItemPluggableGate> item = BCSiliconItems.variantGateMap.get(variant);
@@ -58,7 +59,7 @@ public class ItemPluggableGate extends ItemBC_Neptune implements IItemPluggable 
     }
 
     @Override
-    public PipePluggable onPlace(@Nonnull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
+    public PipePluggable onPlace(@NotNull ItemStack stack, IPipeHolder holder, Direction side, Player player, InteractionHand hand) {
 //        GateVariant variant = getVariant(stack);
         GateVariant variant = this.VARIANT;
         SoundUtil.playBlockPlace(holder.getPipeWorld(), holder.getPipePos(), variant.material.block.defaultBlockState());

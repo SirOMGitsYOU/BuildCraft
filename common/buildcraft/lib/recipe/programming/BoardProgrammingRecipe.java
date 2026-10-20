@@ -2,7 +2,7 @@ package buildcraft.lib.recipe.programming;
 
 import buildcraft.api.recipes.IProgrammingRecipe;
 import buildcraft.api.recipes.IngredientStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
@@ -26,12 +26,12 @@ public class BoardProgrammingRecipe implements IProgrammingRecipe {
 //        }
 //    }
 
-    private final ResourceLocation id;
+    private final Identifier id;
     private final IngredientStack input;
     private final ItemStack output;
     private final long energyCost;
 
-    public BoardProgrammingRecipe(ResourceLocation id, IngredientStack input, ItemStack output, long energyCost) {
+    public BoardProgrammingRecipe(Identifier id, IngredientStack input, ItemStack output, long energyCost) {
         this.id = id;
         this.input = input;
         this.output = output;
@@ -39,9 +39,9 @@ public class BoardProgrammingRecipe implements IProgrammingRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
+    public Identifier getId() {
         // return "buildcraft:redstone_board";
-        // return new ResourceLocation(BCModules.ROBOTICS.getModId(), "redstone_board");
+        // return Identifier.fromNamespaceAndPath(BCModules.ROBOTICS.getModId(), "redstone_board");
         return this.id;
     }
 

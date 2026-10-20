@@ -1,4 +1,7 @@
 package buildcraft.energy.tile;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.enums.EnumPowerStage;
 import buildcraft.api.mj.MjAPI;
@@ -47,10 +50,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -119,16 +122,16 @@ public class TileDynamoMJ extends TileBC_Neptune implements ITickable, IEngineLi
         if (currentDirection == null) {
             currentDirection = Direction.UP;
         }
-        isRedstonePowered = nbt.getBoolean("isRedstonePowered");
-        heat = nbt.getDouble("heat");
-        progress = nbt.getFloat("progress");
-        progressPart = nbt.getInt("progressPart");
-        currentRF = nbt.getInt("currentRF");
+        isRedstonePowered = nbt.getBooleanOr("isRedstonePowered", false);
+        heat = nbt.getDoubleOr("heat", 0.0);
+        progress = nbt.getFloatOr("progress", 0.0f);
+        progressPart = nbt.getIntOr("progressPart", 0);
+        currentRF = nbt.getIntOr("currentRF", 0);
         mjBattery.deserializeNBT(nbt.getCompound("mj"));
     }
 
     @Override
-    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, NetworkEvent.Context ctx) throws IOException {
+    public void readPayload(int id, PacketBufferBC buffer, NetworkDirection side, CustomPayloadEvent.Context ctx) throws IOException {
         super.readPayload(id, buffer, side, ctx);
         if (side == NetworkDirection.PLAY_TO_CLIENT) {
             if (id == NET_RENDER_DATA) {
@@ -241,7 +244,7 @@ public class TileDynamoMJ extends TileBC_Neptune implements ITickable, IEngineLi
 
     @Override
     public final EnumPowerStage getPowerStage() {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             EnumPowerStage newStage = computePowerStage();
 
             if (powerStage != newStage) {
@@ -295,7 +298,7 @@ public class TileDynamoMJ extends TileBC_Neptune implements ITickable, IEngineLi
 
         boolean overheat = getPowerStage() == EnumPowerStage.OVERHEAT;
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             lastProgress = progress;
 
             if (isPumping) {
@@ -506,7 +509,7 @@ public class TileDynamoMJ extends TileBC_Neptune implements ITickable, IEngineLi
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, Direction facing) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction facing) {
         if (facing == currentDirection) {
             if (ForgeCapabilities.ENERGY == capability) {
                 return LazyOptional.of(() -> rf).cast();
@@ -572,7 +575,7 @@ public class TileDynamoMJ extends TileBC_Neptune implements ITickable, IEngineLi
                 return InteractionResult.PASS;
             }
         }
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             // BCEnergyGuis.DYNAMO_MJ.openGUI(player, getPos());
             MessageUtil.serverOpenTileGui(player, this);
         }

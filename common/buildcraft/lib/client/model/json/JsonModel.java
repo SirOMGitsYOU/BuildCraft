@@ -11,7 +11,7 @@ import buildcraft.lib.misc.JsonUtil;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -25,16 +25,16 @@ public class JsonModel {
     public final Map<String, String> textures;
     public final JsonModelPart[] cutoutElements, translucentElements;
 
-    public static JsonModel deserialize(ResourceLocation from) throws JsonParseException, IOException {
+    public static JsonModel deserialize(Identifier from) throws JsonParseException, IOException {
         return deserialize(from, new ResourceLoaderContext());
     }
 
     // Calen 1.20.1
-    public static JsonModel datagenDeserialize(ResourceLocation from, ExistingFileHelper fileHelper) throws JsonParseException, IOException {
+    public static JsonModel datagenDeserialize(Identifier from, ExistingFileHelper fileHelper) throws JsonParseException, IOException {
         return datagenDeserialize(from, new ResourceLoaderContext(), fileHelper);
     }
 
-    public static JsonModel deserialize(ResourceLocation from, ResourceLoaderContext ctx) throws JsonParseException, IOException {
+    public static JsonModel deserialize(Identifier from, ResourceLoaderContext ctx) throws JsonParseException, IOException {
         try (InputStreamReader isr = ctx.startLoading(from)) {
             return new JsonModel(new Gson().fromJson(isr, JsonObject.class), ctx);
         } finally {
@@ -43,7 +43,7 @@ public class JsonModel {
     }
 
     // Calen 1.20.1
-    public static JsonModel datagenDeserialize(ResourceLocation from, ResourceLoaderContext ctx, ExistingFileHelper fileHelper) throws JsonParseException, IOException {
+    public static JsonModel datagenDeserialize(Identifier from, ResourceLoaderContext ctx, ExistingFileHelper fileHelper) throws JsonParseException, IOException {
         try (InputStreamReader isr = ctx.datagenStartLoading(from, fileHelper)) {
             return new JsonModel(new Gson().fromJson(isr, JsonObject.class), ctx);
         } finally {
@@ -54,7 +54,7 @@ public class JsonModel {
     public static void deserializePart(List<JsonModelPart> to, boolean translucent, JsonElement json, ResourceLoaderContext ctx) throws JsonParseException, IOException {
         if (json.isJsonPrimitive() && json.getAsJsonPrimitive().isString()) {
             String str = json.getAsString();
-            ResourceLocation parent = new ResourceLocation(str);
+            Identifier parent = Identifier.fromNamespaceAndPath(str);
             JsonModel model = deserialize(parent, ctx);
             if (translucent) {
                 Collections.addAll(to, model.translucentElements);
@@ -83,7 +83,7 @@ public class JsonModel {
     }
 
     public JsonModel(JsonObject obj, ResourceLoaderContext ctx) throws JsonParseException, IOException {
-//        ambientOcclusion = JsonUtils.getBoolean(obj, "ambientocclusion", false);
+//        ambientOcclusion = JsonUtils.getBooleanOr(obj, "ambientocclusion", false, false);
         ambientOcclusion = GsonHelper.getAsBoolean(obj, "ambientocclusion", false);
         textures = JsonUtil.getSubAsImmutableMap(obj, "textures", new TypeToken<HashMap<String, String>>() {
         });

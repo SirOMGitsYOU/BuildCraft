@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.inventory;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.core.IStackFilter;
 import buildcraft.lib.misc.StackUtil;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public final class InventoryWrapper extends AbstractInvItemTransactor {
     private final Container inventory;
@@ -21,8 +22,8 @@ public final class InventoryWrapper extends AbstractInvItemTransactor {
     }
 
     @Override
-    @Nonnull
-    protected ItemStack insert(int slot, @Nonnull ItemStack stack, boolean simulate) {
+    @NotNull
+    protected ItemStack insert(int slot, @NotNull ItemStack stack, boolean simulate) {
         ItemStack current = inventory.getItem(slot);
         if (!inventory.canPlaceItem(slot, stack)) {
             return stack;
@@ -61,7 +62,7 @@ public final class InventoryWrapper extends AbstractInvItemTransactor {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     protected ItemStack extract(int slot, IStackFilter filter, int min, int max, boolean simulate) {
         ItemStack current = inventory.getItem(slot);
         if (current.isEmpty()) {

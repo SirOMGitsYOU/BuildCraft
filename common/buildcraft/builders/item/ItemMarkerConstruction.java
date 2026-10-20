@@ -33,9 +33,9 @@ public class ItemMarkerConstruction extends ItemBlockBC_Neptune {
         CompoundTag nbt = NBTUtilBC.getItemData(marker);
 
         if (nbt.contains("x")) {
-            int ox = nbt.getInt("x");
-            int oy = nbt.getInt("y");
-            int oz = nbt.getInt("z");
+            int ox = nbt.getIntOr("x", 0);
+            int oy = nbt.getIntOr("y", 0);
+            int oz = nbt.getIntOr("z", 0);
 
             BlockEntity tile1 = world.getBlockEntity(new BlockPos(ox, oy, oz));
 

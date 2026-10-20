@@ -5,16 +5,17 @@
  */
 
 package buildcraft.lib.list;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.lists.ListMatchHandler;
 import buildcraft.api.lists.ListRegistry;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
+
 
 public class ListMatchHandlerClass extends ListMatchHandler {
     @Override
-    public boolean matches(Type type, @Nonnull ItemStack stack, @Nonnull ItemStack target, boolean precise) {
+    public boolean matches(Type type, @NotNull ItemStack stack, @NotNull ItemStack target, boolean precise) {
         if (type == Type.TYPE) {
             Class<?> kl = stack.getItem().getClass();
             // Calen FIX: target.getItem().getClass()!
@@ -25,7 +26,7 @@ public class ListMatchHandlerClass extends ListMatchHandler {
     }
 
     @Override
-    public boolean isValidSource(Type type, @Nonnull ItemStack stack) {
+    public boolean isValidSource(Type type, @NotNull ItemStack stack) {
         if (type == Type.TYPE) {
             Class<?> kl = stack.getItem().getClass();
             return ListRegistry.itemClassAsType.contains(kl);

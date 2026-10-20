@@ -18,11 +18,11 @@ import buildcraft.lib.gui.pos.IGuiArea;
 import buildcraft.lib.misc.LocaleUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GuiEngineStone_BC8 extends GuiBC8<ContainerEngineStone_BC8> {
-    private static final ResourceLocation TEXTURE_BASE = new ResourceLocation("buildcraftenergy:textures/gui/steam_engine_gui.png");
+    private static final Identifier TEXTURE_BASE = Identifier.parse("buildcraftenergy:textures/gui/steam_engine_gui.png");
     private static final int SIZE_X = 176, SIZE_Y = 166;
     private static final GuiIcon ICON_GUI = new GuiIcon(TEXTURE_BASE, 0, 0, SIZE_X, SIZE_Y);
 

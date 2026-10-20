@@ -5,6 +5,8 @@
  */
 
 package buildcraft.factory.client.render;
+import net.minecraft.util.profiling.Profiler;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.properties.BuildCraftProperties;
 import buildcraft.factory.BCFactoryBlocks;
@@ -19,7 +21,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
@@ -78,7 +80,7 @@ public class RenderMiningWell implements BlockEntityRenderer<TileMiningWell> {
     }
 
     @Override
-//    public void renderTileEntityFast(@Nonnull TileMiningWell tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @Nonnull BufferBuilder buffer)
+//    public void renderTileEntityFast(@NotNull TileMiningWell tile, double x, double y, double z, float partialTicks, int destroyStage, float partial, @NotNull BufferBuilder buffer)
     public void render(TileMiningWell tile, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
         // Calen: get the white texture
         if (!whiteTextureFlag) {
@@ -87,8 +89,8 @@ public class RenderMiningWell implements BlockEntityRenderer<TileMiningWell> {
 
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.solid());
 
-        Minecraft.getInstance().getProfiler().push("bc");
-        Minecraft.getInstance().getProfiler().push("miner");
+        net.minecraft.util.profiling.Profiler.get().push("bc");
+        net.minecraft.util.profiling.Profiler.get().push("miner");
 
 //        buffer.setTranslation(x, y, z);
         Direction facing = Direction.NORTH;
@@ -145,8 +147,8 @@ public class RenderMiningWell implements BlockEntityRenderer<TileMiningWell> {
 //        tubeRenderer.renderTileEntityFast(tile, x, y, z, partialTicks, destroyStage, partial, buffer);
         tubeRenderer.render(tile, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
-        Minecraft.getInstance().getProfiler().pop();
-        Minecraft.getInstance().getProfiler().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
+        net.minecraft.util.profiling.Profiler.get().pop();
     }
 
     @Override

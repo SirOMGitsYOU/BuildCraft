@@ -91,7 +91,7 @@ public class VolumeSubCache extends MarkerSubCache<VolumeConnection> {
         }
 
         ImmutableList.Builder<BlockPos> valids = ImmutableList.builder();
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (taken.contains(face.getAxis())) continue;
             for (int i = 1; i <= BCCoreConfig.markerMaxDistance; i++) {
                 BlockPos toTry = from.relative(face, i);

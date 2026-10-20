@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -18,7 +18,7 @@ public class LootConditionSpreading implements LootItemCondition {
     public static LootItemConditionType TYPE;
 
     public static void reg() {
-        TYPE = Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, new ResourceLocation(BCFactory.MODID, "spreading"), new LootItemConditionType(new LootConditionSpreading.ConditionSerializer()));
+        TYPE = Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Identifier.fromNamespaceAndPath(BCFactory.MODID, "spreading"), new LootItemConditionType(new LootConditionSpreading.ConditionSerializer()));
     }
 
     public LootConditionSpreading() {

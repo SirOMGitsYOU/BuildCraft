@@ -5,13 +5,14 @@
  */
 
 package buildcraft.lib.mj;
+import org.jetbrains.annotations.NotNull;
 
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjReadable;
 import buildcraft.api.mj.IMjReceiver;
 import buildcraft.api.mj.MjBattery;
 
-import javax.annotation.Nonnull;
+
 
 public class MjBatteryReceiver implements IMjReceiver, IMjReadable {
     private final MjBattery battery;
@@ -21,7 +22,7 @@ public class MjBatteryReceiver implements IMjReceiver, IMjReadable {
     }
 
     @Override
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 

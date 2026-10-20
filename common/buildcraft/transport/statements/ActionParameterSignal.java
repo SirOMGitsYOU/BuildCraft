@@ -5,6 +5,9 @@
  */
 
 package buildcraft.transport.statements;
+import org.jetbrains.annotations.NotNull;
+
+import org.jetbrains.annotations.Nullable;
 
 import buildcraft.api.core.render.ISprite;
 import buildcraft.api.gates.IGate;
@@ -21,8 +24,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.*;
 
 public class ActionParameterSignal implements IStatementParameter {
@@ -131,7 +134,7 @@ public class ActionParameterSignal implements IStatementParameter {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getItemStack() {
         return StackUtil.EMPTY;

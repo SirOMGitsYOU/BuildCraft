@@ -6,6 +6,8 @@
 
 package buildcraft.transport.pipe.behaviour;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.api.mj.IMjConnector;
 import buildcraft.api.mj.IMjRedstoneReceiver;
 import buildcraft.api.mj.MjAPI;
@@ -24,8 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+
 import java.util.List;
 
 public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRedstoneReceiver, IDebuggable {
@@ -105,7 +107,7 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
     // IMjRedstoneReceiver
 
     @Override
-    public boolean canConnect(@Nonnull IMjConnector other) {
+    public boolean canConnect(@NotNull IMjConnector other) {
         return true;
     }
 

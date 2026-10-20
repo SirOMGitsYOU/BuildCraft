@@ -6,6 +6,8 @@
 
 package buildcraft.lib.misc;
 
+import org.jetbrains.annotations.Nullable;
+
 import buildcraft.lib.particle.ParticlePipes;
 import buildcraft.lib.particle.ParticlePosition;
 import net.minecraft.core.BlockPos;
@@ -15,7 +17,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import javax.annotation.Nullable;
+
 
 public class ParticleUtil {
     public static void showChangeColour(Level world, Vec3 pos, @Nullable DyeColor colour) {

@@ -5,7 +5,7 @@
 package buildcraft.lib.registry;
 
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -26,7 +26,7 @@ public class TagManager {
 
     public static Item getItem(String id) {
         String regTag = getTag(id, EnumTagType.REGISTRY_NAME);
-        ResourceLocation loc = new ResourceLocation(regTag);
+        Identifier loc = Identifier.fromNamespaceAndPath(regTag);
         if (ForgeRegistries.ITEMS.containsKey(loc)) {
             return ForgeRegistries.ITEMS.getValue(loc);
         } else {

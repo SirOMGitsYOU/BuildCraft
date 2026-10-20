@@ -83,7 +83,7 @@ public class PipeWireRenderer {
         uvs.maxU = (off + 1) / 16f;
         uvs.minV = 0;
         uvs.maxV = 1 / 16f;
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             quads[face.ordinal()] = ModelUtil.createFace(face, center, radius, uvs);
         }
         return quads;
@@ -145,7 +145,7 @@ public class PipeWireRenderer {
         Vector3f centerFloat = VecUtil.convertFloat(center);
         Vector3f radiusFloat = VecUtil.convertFloat(radius);
 
-        for (Direction face : Direction.VALUES) {
+        for (Direction face : Direction.values()) {
             if (face.getAxis() == between.mainAxis) {
                 continue;
             }
